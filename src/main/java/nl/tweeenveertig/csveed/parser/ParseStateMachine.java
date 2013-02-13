@@ -22,7 +22,7 @@ public class ParseStateMachine {
     public String offerSymbol(int symbolCharacter) {
         EncounteredSymbol symbol = symbolMapping.find(symbolCharacter, state);
         ParseState newState = determineState(symbol);
-        System.out.println((char)symbolCharacter+" / "+symbol+": "+state+" => "+newState);
+//        System.out.println((char)symbolCharacter+" / "+symbol+": "+state+" => "+newState);
         if (newState.isTokenize()) {
             token.append((char)symbolCharacter);
         }
