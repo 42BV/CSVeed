@@ -1,12 +1,16 @@
 package nl.tweeenveertig.csveed.testclasses;
 
+/**
+* Note how gamma, beta and alpha are printed in reverse order. This is done on purpose to test whether the
+* declaration order is taken into account
+*/
 public class BeanWithMultipleStrings {
 
-    private String alpha;
+    private String gamma;
 
     private String beta;
 
-    private String gamma;
+    private String alpha;
 
     public String getAlpha() {
         return alpha;

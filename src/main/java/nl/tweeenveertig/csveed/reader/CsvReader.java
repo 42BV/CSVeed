@@ -6,9 +6,11 @@ import nl.tweeenveertig.csveed.bean.instructions.BeanProperty;
 import nl.tweeenveertig.csveed.csv.header.CsvHeader;
 import nl.tweeenveertig.csveed.csv.parser.LineReader;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CsvReader<T> {
@@ -69,6 +71,12 @@ public class CsvReader<T> {
             if (beanProperty == null) {
                 // error condition
                 continue;
+            }
+            if (beanProperty.getConverter() != null) {
+                beanWrapper.registerCustomEditor(
+                        beanProperty.getPropertyDescriptor().getPropertyType(),
+                        beanProperty.getPropertyDescriptor().getName(), // ascertain the converted is only used on this property
+                        beanProperty.getConverter());
             }
             beanWrapper.setPropertyValue(beanProperty.getPropertyDescriptor().getName(), cell);
             indexColumn++;
