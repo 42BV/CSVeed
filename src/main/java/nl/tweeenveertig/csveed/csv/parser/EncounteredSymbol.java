@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.parser;
+package nl.tweeenveertig.csveed.csv.parser;
 
 public enum EncounteredSymbol {
     SEPARATOR_SYMBOL,

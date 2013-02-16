@@ -1,8 +1,8 @@
-package nl.tweeenveertig.csveed.parser;
+package nl.tweeenveertig.csveed.csv.parser;
 
 import java.util.*;
 
-import static nl.tweeenveertig.csveed.parser.EncounteredSymbol.*;
+import static nl.tweeenveertig.csveed.csv.parser.EncounteredSymbol.*;
 
 public class SymbolMapping {
 
@@ -20,11 +20,11 @@ public class SymbolMapping {
         addMapping(EncounteredSymbol.ESCAPE_SYMBOL, '"');
         addMapping(EncounteredSymbol.QUOTE_SYMBOL, '"');
         addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, ';');
-        addMapping(EncounteredSymbol.EOL_SYMBOL, new Character[]{ '\r', '\n' } );
+        addMapping(EncounteredSymbol.EOL_SYMBOL, new char[]{ '\r', '\n' } );
     }
 
     public void addMapping(EncounteredSymbol symbol, Character character) {
-        addMapping(symbol, new Character[] { character } );
+        addMapping(symbol, new char[] { character } );
         if (symbol.isCheckForSimilarEscapeAndQuote()) {
             storeCharacterForLaterComparison(symbol, character);
         }
@@ -38,7 +38,7 @@ public class SymbolMapping {
         }
     }
 
-    public void addMapping(EncounteredSymbol symbol, Character[] characters) {
+    public void addMapping(EncounteredSymbol symbol, char[] characters) {
         for (Character character : characters) {
             charToSymbol.put(character, symbol);
         }

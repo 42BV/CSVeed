@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.annotations;
+package nl.tweeenveertig.csveed.bean.annotations;
 
 import java.beans.PropertyEditor;
 import java.lang.annotation.ElementType;

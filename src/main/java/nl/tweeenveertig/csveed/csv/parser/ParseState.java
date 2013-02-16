@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.parser;
+package nl.tweeenveertig.csveed.csv.parser;
 
 public enum ParseState {
     OUTSIDE_FIELD                  (false, false, false, false),

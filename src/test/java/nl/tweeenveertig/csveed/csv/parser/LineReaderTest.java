@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.parser;
+package nl.tweeenveertig.csveed.csv.parser;
 
 import org.junit.Test;
 
@@ -10,6 +10,22 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 
 public class LineReaderTest {
+
+    @Test
+    public void nonContentBeforeLines() {
+        Reader reader = new StringReader(
+                "# line 1\n"+
+                "# line 2\n"+
+                "# line 3\n"+
+                "alpha;beta;gamma\n"+
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
+                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"
+        );
+        LineReader lineReader = new LineReader();
+        lineReader.setStartLine(3);
+        lineReader.setHeaderLine(3);
+        List<List<String>> lines = lineReader.readAllLines(reader);
+    }
 
     @Test
     public void roughRide() throws IOException {
@@ -37,10 +53,8 @@ public class LineReaderTest {
     public void backSlashesAsEscape() throws IOException {
         SymbolMapping mapping = new SymbolMapping();
         mapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, '\\');
-        ParseStateMachine machine = new ParseStateMachine();
-        machine.setSymbolMapping(mapping);
         LineReader lineReader = new LineReader();
-        lineReader.setStateMachine(machine);
+        lineReader.setSymbolMapping(mapping);
 
         Reader reader = new StringReader("\"\\\"very literal\\\"\";\"a\\\"b\\\"c\"\n\"abc\";\"first this, \\\"then that\\\"\"");
         checkEscapedStrings(lineReader.readAllLines(reader));

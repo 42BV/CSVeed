@@ -1,5 +1,6 @@
-package nl.tweeenveertig.csveed.parser;
+package nl.tweeenveertig.csveed.csv.parser;
 
+import nl.tweeenveertig.csveed.csv.parser.ParseStateMachine;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

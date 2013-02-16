@@ -1,7 +1,7 @@
-package nl.tweeenveertig.csveed.parser;
+package nl.tweeenveertig.csveed.csv.parser;
 
-import static nl.tweeenveertig.csveed.parser.ParseState.*;
-import static nl.tweeenveertig.csveed.parser.EncounteredSymbol.*;
+import static nl.tweeenveertig.csveed.csv.parser.ParseState.*;
+import static nl.tweeenveertig.csveed.csv.parser.EncounteredSymbol.*;
 
 /**
 * Yep, a state machine. Managing all kinds of booleans to form a pseudo-state doesn't work really well
@@ -19,10 +19,13 @@ public class ParseStateMachine {
 
     private SymbolMapping symbolMapping = new SymbolMapping();
 
+    public boolean isEol(int symbolCharacter) {
+        return symbolMapping.find(symbolCharacter, OUTSIDE_FIELD) == EOL_SYMBOL;
+    }
+
     public String offerSymbol(int symbolCharacter) {
         EncounteredSymbol symbol = symbolMapping.find(symbolCharacter, state);
         ParseState newState = determineState(symbol);
-//        System.out.println((char)symbolCharacter+" / "+symbol+": "+state+" => "+newState);
         if (newState.isTokenize()) {
             token.append((char)symbolCharacter);
         }

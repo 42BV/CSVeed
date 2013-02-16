@@ -1,5 +1,8 @@
-package nl.tweeenveertig.csveed.parser;
+package nl.tweeenveertig.csveed.csv.parser;
 
+import nl.tweeenveertig.csveed.csv.parser.EncounteredSymbol;
+import nl.tweeenveertig.csveed.csv.parser.ParseState;
+import nl.tweeenveertig.csveed.csv.parser.SymbolMapping;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -29,7 +32,7 @@ public class SymbolMappingTest {
     @Test
     public void eol() {
         SymbolMapping mapping = new SymbolMapping();
-        mapping.addMapping(EncounteredSymbol.EOL_SYMBOL, new Character[] { '\r', '\n' });
+        mapping.addMapping(EncounteredSymbol.EOL_SYMBOL, new char[] { '\r', '\n' });
         assertEquals(EncounteredSymbol.EOL_SYMBOL, mapping.find('\r', ParseState.ESCAPING));
         assertEquals(EncounteredSymbol.EOL_SYMBOL, mapping.find('\n', ParseState.INSIDE_FIELD));
     }

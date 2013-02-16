@@ -1,14 +1,13 @@
-package nl.tweeenveertig.csveed.annotations;
+package nl.tweeenveertig.csveed.bean.annotations;
 
-import java.beans.PropertyEditor;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
-* Various settings for a Bean translating to a CSV cell. By default every field in a Bean is expected to be
-* a CsvCell, even if not so marked. Use @CsvIgnore to prevent a Bean field from being taken into account for
+* Various settings for a BeanInstructions translating to a CSV cell. By default every field in a BeanInstructions is expected to be
+* a CsvCell, even if not so marked. Use @CsvIgnore to prevent a BeanInstructions field from being taken into account for
 * both serialization and deserialization.
 * @author Robert Bor
 */
@@ -18,7 +17,7 @@ public @interface CsvCell {
 
     /**
     * By default the name is inferred from the header name. However, if CsvFile.useHeaders == false, or the
-    * naming is not what you want in the Bean, you can override the name to map to using this value.
+    * naming is not what you want in the BeanInstructions, you can override the name to map to using this value.
     * @return the name in the CSV file to map to
     */
     String name() default "";
