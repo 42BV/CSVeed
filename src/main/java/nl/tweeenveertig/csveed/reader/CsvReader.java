@@ -1,13 +1,12 @@
 package nl.tweeenveertig.csveed.reader;
 
+import nl.tweeenveertig.csveed.bean.annotations.MappingStrategy;
 import nl.tweeenveertig.csveed.bean.instructions.BeanInstructions;
 import nl.tweeenveertig.csveed.bean.instructions.BeanParser;
-import nl.tweeenveertig.csveed.bean.instructions.BeanProperty;
 import nl.tweeenveertig.csveed.csv.header.CsvHeader;
 import nl.tweeenveertig.csveed.csv.parser.LineReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanWrapperImpl;
 
 import java.io.Reader;
 import java.util.ArrayList;
@@ -23,6 +22,8 @@ public class CsvReader<T> {
 
     private CsvHeader header;
 
+    private AbstractMappingStrategy<T> strategy;
+
     public CsvReader(Class<T> beanClass) {
         this(new BeanParser<T>(beanClass).getBeanInstructions());
     }
@@ -37,11 +38,12 @@ public class CsvReader<T> {
 
         if (this.beanInstructions.isUseHeader()) {
             this.lineReader.setHeaderLine(beanInstructions.getStartRow());
-            LOG.info("- CSV config / header line: yes");
+            LOG.info("- CSV config / has header line? yes");
         } else {
             this.lineReader.setHeaderLine(-1);
-            LOG.info("- CSV config / header line: no");
+            LOG.info("- CSV config / has header line? no");
         }
+        LOG.info("- CSV config / mapping strategy: "+beanInstructions.getMappingStrategy());
     }
 
     public List<T> read(Reader reader) {
@@ -63,32 +65,21 @@ public class CsvReader<T> {
         if (lineReader.isHeaderLine()) {
             header = new CsvHeader(unmappedLine);
         } else {
-            return mapLineToBean(unmappedLine);
+            if (strategy == null) {
+                strategy = createStrategy(beanInstructions, header, unmappedLine);
+            }
+            return strategy.convert(this.beanInstructions.newInstance(), unmappedLine);
         }
         return null;
     }
 
-    public T mapLineToBean(List<String> line) {
-        T bean = this.beanInstructions.newInstance();
-        BeanWrapperImpl beanWrapper = new BeanWrapperImpl(bean);
-
-        int indexColumn = 0;
-        for (String cell : line) {
-            BeanProperty beanProperty = beanInstructions.getBeanPropertyWithIndex(indexColumn);
-            if (beanProperty == null) {
-                // error condition
-                continue;
-            }
-            if (beanProperty.getConverter() != null) {
-                beanWrapper.registerCustomEditor(
-                        beanProperty.getPropertyDescriptor().getPropertyType(),
-                        beanProperty.getPropertyDescriptor().getName(), // ascertain the converted is only used on this property
-                        beanProperty.getConverter());
-            }
-            beanWrapper.setPropertyValue(beanProperty.getPropertyDescriptor().getName(), cell);
-            indexColumn++;
+    protected AbstractMappingStrategy<T> createStrategy(BeanInstructions<T> beanInstructions, CsvHeader header, List<String> line) {
+        if (beanInstructions.getMappingStrategy() == MappingStrategy.COLUMN_INDEX) {
+            return new ColumnIndexStrategy<T>(beanInstructions, header, line);
+        } else if (beanInstructions.getMappingStrategy() == MappingStrategy.NAME_MATCHING) {
+            return new NameMatchingStrategy<T>(beanInstructions, header);
         }
-        return bean;
+        return null;
     }
 
     public List<List<String>> readUnmapped(Reader reader) {

@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.bean.instructions;
 
+import nl.tweeenveertig.csveed.bean.annotations.MappingStrategy;
 import nl.tweeenveertig.csveed.csv.parser.SymbolMapping;
 
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ public class BeanInstructions<T> {
     private List<BeanProperty> properties = new ArrayList<BeanProperty>();
 
     private Class<T> beanClass;
+
+    private MappingStrategy mappingStrategy = MappingStrategy.COLUMN_INDEX;
 
     public BeanInstructions(Class<T> beanClass) {
         this.beanClass = beanClass;
@@ -61,6 +64,15 @@ public class BeanInstructions<T> {
         return this.properties;
     }
 
+    public BeanProperty getBeanPropertyWithName(String name) {
+        for (BeanProperty beanProperty : getProperties()) {
+            if (beanProperty.getName() != null && beanProperty.getName().equals(name)) {
+                return beanProperty;
+            }
+        }
+        return null;
+    }
+
     public BeanProperty getBeanPropertyWithIndex(int indexColumn) {
         for (BeanProperty beanProperty : getProperties()) {
             if (beanProperty.getIndexColumn() == indexColumn) {
@@ -70,4 +82,11 @@ public class BeanInstructions<T> {
         return null;
     }
 
+    public MappingStrategy getMappingStrategy() {
+        return mappingStrategy;
+    }
+
+    public void setMappingStrategy(MappingStrategy mappingStrategy) {
+        this.mappingStrategy = mappingStrategy;
+    }
 }

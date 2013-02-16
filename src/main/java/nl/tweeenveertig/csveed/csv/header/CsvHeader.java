@@ -8,10 +8,12 @@ public class CsvHeader {
 
     private int numberOfColumns;
 
+    private List<String> header;
     private Map<Integer, String> indexToName = new TreeMap<Integer, String>();
     private Map<String, Integer> nameToIndex = new TreeMap<String, Integer>();
 
     public CsvHeader(List<String> header) {
+        this.header = header;
         this.numberOfColumns = header.size();
         int indexColumn = 0;
         for (String headerCell : header) {
@@ -19,6 +21,10 @@ public class CsvHeader {
             this.nameToIndex.put(headerCell, indexColumn);
             indexColumn++;
         }
+    }
+
+    public List<String> getHeader() {
+        return this.header;
     }
 
     public String getName(Integer indexColumn) {

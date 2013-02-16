@@ -51,4 +51,11 @@ public @interface CsvFile {
     */
     int startRow() default 0;
 
+    /**
+    * Determines the strategy to employ for mapping between CSV and Bean. The default will be to map on the
+    * basis of the column index
+    * @return the mapping strategy
+    */
+    MappingStrategy mappingStrategy() default MappingStrategy.COLUMN_INDEX;
+
 }

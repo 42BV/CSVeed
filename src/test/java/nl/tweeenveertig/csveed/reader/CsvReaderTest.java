@@ -1,8 +1,6 @@
 package nl.tweeenveertig.csveed.reader;
 
-import nl.tweeenveertig.csveed.testclasses.BeanWithAlienSettings;
-import nl.tweeenveertig.csveed.testclasses.BeanWithMultipleStrings;
-import nl.tweeenveertig.csveed.testclasses.BeanWithVariousTypes;
+import nl.tweeenveertig.csveed.testclasses.*;
 import org.junit.Test;
 
 import java.io.Reader;
@@ -66,4 +64,30 @@ public class CsvReaderTest {
         formatter = new SimpleDateFormat("yyyy-MM");
         assertEquals("2013-04", formatter.format(bean.getYearMonth()));
     }
+
+    @Test
+    public void noHeader() {
+        Reader reader = new StringReader(
+            "\"a bit of text\";1984;42.42;1972-01-13;2013-04\n"
+        );
+        CsvReader<BeanWithoutHeader> csvReader = new CsvReader<BeanWithoutHeader>(BeanWithoutHeader.class);
+        List<BeanWithoutHeader> beans = csvReader.read(reader);
+        assertEquals(1, beans.size());
+    }
+    
+    @Test
+    public void nameMatching() {
+        Reader reader = new StringReader(
+                "street;city;postal code;ignore this\n"+
+                "\"Some street\";\"Some city\";\"Some postal code\";\"Some ignoring\""
+        );
+        CsvReader<BeanWithNameMatching> csvReader = new CsvReader<BeanWithNameMatching>(BeanWithNameMatching.class);
+        List<BeanWithNameMatching> beans = csvReader.read(reader);
+        assertEquals(1, beans.size());
+        BeanWithNameMatching bean = beans.get(0);
+        assertEquals("Some street", bean.getLine1());
+        assertEquals("Some city", bean.getLine2());
+        assertEquals("Some postal code", bean.getLine3());
+    }
+
 }

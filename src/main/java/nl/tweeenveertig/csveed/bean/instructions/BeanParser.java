@@ -4,6 +4,8 @@ import nl.tweeenveertig.csveed.bean.annotations.*;
 
 import nl.tweeenveertig.csveed.csv.parser.EncounteredSymbol;
 import nl.tweeenveertig.csveed.csv.parser.SymbolMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 import java.beans.BeanInfo;
@@ -20,6 +22,8 @@ import java.text.SimpleDateFormat;
 */
 public class BeanParser<T> {
 
+    public static final Logger LOG = LoggerFactory.getLogger(BeanParser.class);
+
     private Class<T> beanClass;
 
     private int indexColumn = 0;
@@ -30,12 +34,12 @@ public class BeanParser<T> {
 
     public BeanInstructions<T> getBeanInstructions() {
 
-        BeanInstructions beanMapper = new BeanInstructions<T>(beanClass);
+        BeanInstructions beanInstructions = new BeanInstructions<T>(beanClass);
 
         Annotation[] annotations = this.beanClass.getAnnotations();
         for (Annotation annotation : annotations) {
             if (annotation instanceof CsvFile) {
-                parseCsvFile(beanMapper, (CsvFile)annotation);
+                parseCsvFile(beanInstructions, (CsvFile)annotation);
             }
         }
 
@@ -55,12 +59,14 @@ public class BeanParser<T> {
                 continue;
             }
             BeanProperty beanProperty = getBeanProperty(propertyDescriptor);
-            if (beanProperty != null) {
-                beanMapper.addProperty(beanProperty);
+            if (beanProperty == null) {
+                LOG.info("Ignoring "+beanClass.getName()+"."+field.getName());
+            } else {
+                beanInstructions.addProperty(beanProperty);
             }
         }
 
-        return beanMapper;
+        return beanInstructions;
     }
 
     private PropertyDescriptor getPropertyDescriptor(PropertyDescriptor[] propertyDescriptors, Field field) {
@@ -101,19 +107,20 @@ public class BeanParser<T> {
         return beanProperty;
     }
 
-    private BeanInstructions parseCsvFile(BeanInstructions beanMapper, CsvFile csvFile) {
+    private BeanInstructions parseCsvFile(BeanInstructions beanInstructions, CsvFile csvFile) {
 
         SymbolMapping symbolMapping = new SymbolMapping();
         symbolMapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, csvFile.escape());
         symbolMapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, csvFile.quote());
         symbolMapping.addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, csvFile.separator());
         symbolMapping.addMapping(EncounteredSymbol.EOL_SYMBOL, csvFile.endOfLine());
-        beanMapper.setSymbolMapping(symbolMapping);
+        beanInstructions.setSymbolMapping(symbolMapping);
 
-        beanMapper.setStartRow(csvFile.startRow());
-        beanMapper.setUseHeader(csvFile.useHeader());
+        beanInstructions.setMappingStrategy(csvFile.mappingStrategy());
+        beanInstructions.setStartRow(csvFile.startRow());
+        beanInstructions.setUseHeader(csvFile.useHeader());
 
-        return beanMapper;
+        return beanInstructions;
     }
 
     private BeanProperty parseCsvDate(BeanProperty beanProperty, CsvDate csvDate) {
