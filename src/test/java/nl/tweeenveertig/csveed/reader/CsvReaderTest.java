@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.reader;
 
+import nl.tweeenveertig.csveed.testclasses.BeanWithAlienSettings;
 import nl.tweeenveertig.csveed.testclasses.BeanWithMultipleStrings;
 import nl.tweeenveertig.csveed.testclasses.BeanWithVariousTypes;
 import org.junit.Test;
@@ -26,6 +27,23 @@ public class CsvReaderTest {
         assertEquals(3, beans.size());
         BeanWithMultipleStrings bean = beans.get(0);
         assertEquals("row 1, cell 1", bean.getGamma());
+        assertEquals("row 1, cell 2", bean.getBeta());
+        assertEquals("row 1, cell 3", bean.getAlpha());
+    }
+
+    @Test
+    public void tabSeparated() {
+        Reader reader = new StringReader(
+            "alpha;beta;gamma\n"+
+            "'\\'row\\' 1, cell 1'\t'row 1, cell 2'\t'row 1, cell 3'\r"+
+            "'\\'row\\' 2, cell 1'\t'row 2, cell 2'\t'row 2, cell 3'\r"+
+            "'\\'row\\' 3, cell 1'\t'row 3, cell 2'\t'row 3, cell 3'"
+        );
+        CsvReader<BeanWithAlienSettings> csvReader = new CsvReader<BeanWithAlienSettings>(BeanWithAlienSettings.class);
+        List<BeanWithAlienSettings> beans = csvReader.read(reader);
+        assertEquals(3, beans.size());
+        BeanWithAlienSettings bean = beans.get(0);
+        assertEquals("'row' 1, cell 1", bean.getGamma());
         assertEquals("row 1, cell 2", bean.getBeta());
         assertEquals("row 1, cell 3", bean.getAlpha());
     }

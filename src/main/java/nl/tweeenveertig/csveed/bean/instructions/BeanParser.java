@@ -105,7 +105,7 @@ public class BeanParser<T> {
 
         SymbolMapping symbolMapping = new SymbolMapping();
         symbolMapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, csvFile.escape());
-        symbolMapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, csvFile.escape());
+        symbolMapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, csvFile.quote());
         symbolMapping.addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, csvFile.separator());
         symbolMapping.addMapping(EncounteredSymbol.EOL_SYMBOL, csvFile.endOfLine());
         beanMapper.setSymbolMapping(symbolMapping);

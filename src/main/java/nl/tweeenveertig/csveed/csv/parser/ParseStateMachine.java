@@ -1,5 +1,8 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static nl.tweeenveertig.csveed.csv.parser.ParseState.*;
 import static nl.tweeenveertig.csveed.csv.parser.EncounteredSymbol.*;
 
@@ -10,6 +13,8 @@ import static nl.tweeenveertig.csveed.csv.parser.EncounteredSymbol.*;
 * @author Robert Bor
 */
 public class ParseStateMachine {
+
+    public static final Logger LOG = LoggerFactory.getLogger(ParseStateMachine.class);
 
     private ParseState state = OUTSIDE_FIELD;
 
@@ -26,6 +31,7 @@ public class ParseStateMachine {
     public String offerSymbol(int symbolCharacter) {
         EncounteredSymbol symbol = symbolMapping.find(symbolCharacter, state);
         ParseState newState = determineState(symbol);
+        LOG.debug((char)symbolCharacter+" ("+symbol+"): "+state+" => "+newState);
         if (newState.isTokenize()) {
             token.append((char)symbolCharacter);
         }
@@ -115,6 +121,10 @@ public class ParseStateMachine {
 
     public void setSymbolMapping(SymbolMapping symbolMapping) {
         this.symbolMapping = symbolMapping;
+    }
+
+    public SymbolMapping getSymbolMapping() {
+        return this.symbolMapping;
     }
 
 }

@@ -1,11 +1,17 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.*;
 
 import static nl.tweeenveertig.csveed.csv.parser.EncounteredSymbol.*;
 
 public class SymbolMapping {
 
+    public static final Logger LOG = LoggerFactory.getLogger(SymbolMapping.class);
+
+    private Map<EncounteredSymbol, char[]> symbolToChars = new TreeMap<EncounteredSymbol, char[]>();
     private Map<Character, EncounteredSymbol> charToSymbol = new TreeMap<Character, EncounteredSymbol>();
 
     private Character escapeCharacter;
@@ -30,17 +36,43 @@ public class SymbolMapping {
         }
     }
 
+    public void addMapping(EncounteredSymbol symbol, char[] characters) {
+        for (Character character : characters) {
+            charToSymbol.put(character, symbol);
+        }
+        symbolToChars.put(symbol, characters);
+    }
+
+    public void logSettings() {
+        for (EncounteredSymbol symbol : symbolToChars.keySet()) {
+            char[] characters = symbolToChars.get(symbol);
+            LOG.info("- CSV config / Characters for "+symbol+" "+charactersToString(characters));
+        }
+    }
+
+    private String charactersToString(char[] characters) {
+        StringBuilder returnString = new StringBuilder();
+        for (char currentChar : characters) {
+            returnString.append(charToPrintable(currentChar));
+            returnString.append(" ");
+        }
+        return returnString.toString();
+    }
+
+    private String charToPrintable(char character) {
+        switch(character) {
+            case '\t' : return "\\t";
+            case '\n' : return "\\n";
+            case '\r' : return "\\r";
+            default: return Character.toString(character);
+        }
+    }
+
     private void storeCharacterForLaterComparison(EncounteredSymbol symbol, Character character) {
         if (symbol == ESCAPE_SYMBOL) {
             escapeCharacter = character;
         } else if (symbol == QUOTE_SYMBOL) {
             quoteCharacter = character;
-        }
-    }
-
-    public void addMapping(EncounteredSymbol symbol, char[] characters) {
-        for (Character character : characters) {
-            charToSymbol.put(character, symbol);
         }
     }
 

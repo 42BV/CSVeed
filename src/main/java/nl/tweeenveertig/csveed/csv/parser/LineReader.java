@@ -88,6 +88,10 @@ public class LineReader {
         this.stateMachine.setSymbolMapping(symbolMapping);
     }
 
+    public SymbolMapping getSymbolMapping() {
+        return this.stateMachine.getSymbolMapping();
+    }
+
     public void setStartLine(int startLine) {
         this.startLine = startLine;
     }
