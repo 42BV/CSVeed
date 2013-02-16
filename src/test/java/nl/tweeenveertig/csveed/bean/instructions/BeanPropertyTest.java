@@ -1,6 +1,6 @@
 package nl.tweeenveertig.csveed.bean.instructions;
 
-import nl.tweeenveertig.csveed.testclasses.SimpleBean;
+import nl.tweeenveertig.csveed.testclasses.BeanSimple;
 import org.junit.Test;
 import org.springframework.beans.propertyeditors.URLEditor;
 
@@ -17,7 +17,7 @@ public class BeanPropertyTest {
     public void construct() throws IntrospectionException {
         BeanProperty property = new BeanProperty();
         PropertyEditor editor = new URLEditor();
-        PropertyDescriptor propertyDescriptor = new PropertyDescriptor("name", SimpleBean.class);
+        PropertyDescriptor propertyDescriptor = new PropertyDescriptor("name", BeanSimple.class);
         property.setConverter(editor);
         property.setIndexColumn(3);
         property.setName("name");

@@ -139,7 +139,7 @@ public class BeanParser<T> {
     }
 
     private BeanProperty parseCsvCell(BeanProperty beanProperty, CsvCell csvCell) {
-        beanProperty.setName(csvCell.name());
+        beanProperty.setName((csvCell.name() == null || csvCell.name().equals("")) ? beanProperty.getName() : csvCell.name());
         beanProperty.setRequired(csvCell.required());
         indexColumn = csvCell.indexColumn() != -1 ? csvCell.indexColumn() : indexColumn;
         return beanProperty;

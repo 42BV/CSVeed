@@ -90,4 +90,28 @@ public class CsvReaderTest {
         assertEquals("Some postal code", bean.getLine3());
     }
 
+    @Test
+    public void indexMatching() {
+        Reader reader = new StringReader(
+            "\"line-1\";\"line0\";\"line1\";\"line2\";\"line3\""
+        );
+        CsvReader<BeanWithCustomIndexes> csvReader = new CsvReader<BeanWithCustomIndexes>(BeanWithCustomIndexes.class);
+        BeanWithCustomIndexes bean = csvReader.readLine(reader);
+        assertEquals("line0", bean.getLine0());
+        assertEquals("line1", bean.getLine1());
+        assertEquals("line2", bean.getLine2());
+        assertEquals("line3", bean.getLine3());
+    }
+    
+    @Test
+    public void numberOfIgnores() {
+        Reader reader = new StringReader(
+                "14;28;42"
+        );
+        CsvReader<BeanLotsOfIgnores> csvReader = new CsvReader<BeanLotsOfIgnores>(BeanLotsOfIgnores.class);
+        BeanLotsOfIgnores bean = csvReader.readLine(reader);
+        assertEquals((Integer)14, bean.getTakeThis1());
+        assertEquals((Integer)28, bean.getPickThis1());
+        assertEquals((Integer)42, bean.getChooseThis1());
+    }
 }

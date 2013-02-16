@@ -22,7 +22,7 @@ public abstract class AbstractMappingStrategy<T> {
         for (String cell : line) {
             BeanProperty beanProperty = getBeanProperty(indexColumn);
             if (beanProperty == null) {
-                // error condition
+                indexColumn++;
                 continue;
             }
             if (beanProperty.getConverter() != null) {

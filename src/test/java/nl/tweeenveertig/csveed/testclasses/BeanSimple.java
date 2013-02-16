@@ -1,6 +1,6 @@
 package nl.tweeenveertig.csveed.testclasses;
 
-public class SimpleBean {
+public class BeanSimple {
 
     public String name;
 

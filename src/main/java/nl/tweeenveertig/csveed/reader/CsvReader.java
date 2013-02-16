@@ -87,8 +87,7 @@ public class CsvReader<T> {
     }
 
     public List<String> readLineUnmapped(Reader reader) {
-        List<String> unmappedLine = lineReader.readLine(reader);
-        return unmappedLine;
+        return lineReader.readLine(reader);
     }
 
     public int getCurrentLine() {

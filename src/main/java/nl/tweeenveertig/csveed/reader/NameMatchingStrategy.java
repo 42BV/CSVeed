@@ -17,6 +17,7 @@ public class NameMatchingStrategy<T> extends AbstractMappingStrategy<T> {
             BeanProperty beanProperty = beanInstructions.getBeanPropertyWithName(headerColumn);
             if (beanProperty == null) {
                 LOG.info("Column index "+indexColumn+ ": ["+headerColumn+"] -> no match");
+                indexColumn++;
                 continue;
             }
             indexToProperty.put(indexColumn, beanProperty);
