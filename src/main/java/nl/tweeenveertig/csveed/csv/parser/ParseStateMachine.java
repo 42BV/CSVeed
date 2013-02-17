@@ -26,8 +26,10 @@ public class ParseStateMachine {
 
     private TokenState tokenState = TokenState.RESET;
 
+    private boolean trim = true;
+
     public boolean isEol(int symbolCharacter) {
-        return symbolMapping.find(symbolCharacter, OUTSIDE_FIELD) == EOL_SYMBOL;
+        return symbolMapping.find(symbolCharacter, OUTSIDE_BEFORE_FIELD) == EOL_SYMBOL;
     }
 
     public String offerSymbol(int symbolCharacter) throws ParseException {
@@ -41,6 +43,7 @@ public class ParseStateMachine {
 
         if (newState.isTokenize()) {
             if (tokenState.isReset()) {
+                trim = newState.trim();
                 tokenState = tokenState.next();
             }
             token.append((char)symbolCharacter);
@@ -49,6 +52,9 @@ public class ParseStateMachine {
 
         if (newState.isPopToken()) {
             returnToken = token.toString();
+            if (trim) {
+                returnToken = returnToken.trim();
+            }
             token = new StringBuilder();
             tokenState = tokenState.next();
         }
@@ -91,6 +97,8 @@ public class ParseStateMachine {
             case START_OF_LINE:
             case SEPARATOR:
                 switch(symbol) {
+                    case SPACE_SYMBOL:
+                        return OUTSIDE_BEFORE_FIELD;
                     case QUOTE_SYMBOL:
                         return FIRST_CHAR_INSIDE_QUOTED_FIELD;
                     case SEPARATOR_SYMBOL :
@@ -102,8 +110,25 @@ public class ParseStateMachine {
                     default :
                         return INSIDE_FIELD;
                 }
-            case OUTSIDE_FIELD:
+            case OUTSIDE_BEFORE_FIELD:
                 switch(symbol) {
+                    case SPACE_SYMBOL:
+                        return OUTSIDE_BEFORE_FIELD;
+                    case SEPARATOR_SYMBOL :
+                        return SEPARATOR;
+                    case END_OF_FILE_SYMBOL:
+                        return FINISHED;
+                    case EOL_SYMBOL :
+                        return LINE_FINISHED;
+                    case QUOTE_SYMBOL:
+                        return FIRST_CHAR_INSIDE_QUOTED_FIELD;
+                    default :
+                        return INSIDE_FIELD;
+                }
+            case OUTSIDE_AFTER_FIELD:
+                switch (symbol) {
+                    case SPACE_SYMBOL:
+                        return OUTSIDE_AFTER_FIELD;
                     case SEPARATOR_SYMBOL :
                         return SEPARATOR;
                     case END_OF_FILE_SYMBOL:
@@ -130,7 +155,7 @@ public class ParseStateMachine {
             case INSIDE_QUOTED_FIELD:
                 switch (symbol) {
                     case QUOTE_SYMBOL :
-                        return OUTSIDE_FIELD;
+                        return OUTSIDE_AFTER_FIELD;
                     case ESCAPE_SYMBOL :
                         return ESCAPING;
                     case END_OF_FILE_SYMBOL:
@@ -141,6 +166,8 @@ public class ParseStateMachine {
             case ESCAPING:
                 if (symbolMapping.isSameCharactersForEscapeAndQuote()) { // This is the default
                     switch (symbol) {
+                        case SPACE_SYMBOL:
+                            return OUTSIDE_AFTER_FIELD;
                         case QUOTE_SYMBOL :
                             return INSIDE_QUOTED_FIELD;
                         case EOL_SYMBOL: // Needed when quote/escape are the same: ...abc"\n

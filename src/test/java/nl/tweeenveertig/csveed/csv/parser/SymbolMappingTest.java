@@ -1,8 +1,5 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
-import nl.tweeenveertig.csveed.csv.parser.EncounteredSymbol;
-import nl.tweeenveertig.csveed.csv.parser.ParseState;
-import nl.tweeenveertig.csveed.csv.parser.SymbolMapping;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -15,7 +12,7 @@ public class SymbolMappingTest {
         mapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, '"');
         mapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, '"');
         assertEquals(EncounteredSymbol.ESCAPE_SYMBOL, mapping.find('"', ParseState.INSIDE_QUOTED_FIELD));
-        assertEquals(EncounteredSymbol.QUOTE_SYMBOL, mapping.find('"', ParseState.OUTSIDE_FIELD));
+        assertEquals(EncounteredSymbol.QUOTE_SYMBOL, mapping.find('"', ParseState.OUTSIDE_BEFORE_FIELD));
     }
 
     @Test
@@ -23,8 +20,8 @@ public class SymbolMappingTest {
         SymbolMapping mapping = new SymbolMapping();
         mapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, '\\');
         mapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, '"');
-        assertEquals(EncounteredSymbol.ESCAPE_SYMBOL, mapping.find('\\', ParseState.OUTSIDE_FIELD));
-        assertEquals(EncounteredSymbol.QUOTE_SYMBOL, mapping.find('"', ParseState.OUTSIDE_FIELD));
+        assertEquals(EncounteredSymbol.ESCAPE_SYMBOL, mapping.find('\\', ParseState.OUTSIDE_BEFORE_FIELD));
+        assertEquals(EncounteredSymbol.QUOTE_SYMBOL, mapping.find('"', ParseState.OUTSIDE_BEFORE_FIELD));
         assertEquals(EncounteredSymbol.ESCAPE_SYMBOL, mapping.find('\\', ParseState.INSIDE_QUOTED_FIELD));
         assertEquals(EncounteredSymbol.QUOTE_SYMBOL, mapping.find('"', ParseState.INSIDE_QUOTED_FIELD));
     }

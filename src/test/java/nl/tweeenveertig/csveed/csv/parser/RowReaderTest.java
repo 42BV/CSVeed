@@ -92,6 +92,28 @@ public class RowReaderTest {
     }
 
     @Test
+    public void spacesBeforeAndAfter() {
+        Reader reader = new StringReader("    \"alpha\"  ; \"beta\"   ; \"gamma\" ");
+        RowReader rowReader = new RowReader();
+        Row row = rowReader.readLine(reader);
+        assertEquals(3, row.size());
+        assertEquals("alpha", row.get(0));
+        assertEquals("beta", row.get(1));
+        assertEquals("gamma", row.get(2));
+    }
+
+    @Test
+    public void spaceWithoutQuotesFields() {
+        Reader reader = new StringReader("    alpha  ; beta   ; gamma ");
+        RowReader rowReader = new RowReader();
+        Row row = rowReader.readLine(reader);
+        assertEquals(3, row.size());
+        assertEquals("alpha", row.get(0));
+        assertEquals("beta", row.get(1));
+        assertEquals("gamma", row.get(2));
+    }
+
+    @Test
     public void reportSimple() {
         Reader reader = new StringReader("17.51;23.19;-100.23");
         RowReader rowReader = new RowReader();

@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
 public enum EncounteredSymbol {
+    SPACE_SYMBOL,
     SEPARATOR_SYMBOL,
     QUOTE_SYMBOL(true),
     ESCAPE_SYMBOL(true),

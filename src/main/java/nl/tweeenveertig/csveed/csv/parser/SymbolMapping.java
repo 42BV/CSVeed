@@ -27,6 +27,7 @@ public class SymbolMapping {
         addMapping(EncounteredSymbol.QUOTE_SYMBOL, '"');
         addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, ';');
         addMapping(EncounteredSymbol.EOL_SYMBOL, new char[]{ '\r', '\n' } );
+        addMapping(EncounteredSymbol.SPACE_SYMBOL, ' ');
     }
 
     public void addMapping(EncounteredSymbol symbol, Character character) {
