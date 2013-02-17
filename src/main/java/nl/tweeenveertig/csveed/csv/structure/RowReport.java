@@ -55,11 +55,13 @@ public class RowReport {
         lines.add(line.toString());
 
         line = new StringBuilder();
+        boolean placedMarkers = false;
         for (RowPart token : parts) {
             if (token.isHighlight()) {
                 for (int i = 0; i < token.getToken().length(); i++) {
                     if (i == 0 || i == token.getToken().length() - 1) {
                         line.append('^');
+                        placedMarkers = true;
                     } else {
                         line.append('-');
                     }
@@ -69,6 +71,9 @@ public class RowReport {
                     line.append(' ');
                 }
             }
+        }
+        if (!placedMarkers) { // Essentially only at the end-of-line
+            line.append('^');
         }
         lines.add(line.toString());
 

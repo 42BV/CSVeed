@@ -40,11 +40,12 @@ public abstract class AbstractMappingStrategy<T> {
                 beanWrapper.setPropertyValue(beanProperty.getPropertyDescriptor().getName(), cell);
             } catch (Exception err) {
                 LOG.error(err.getMessage());
-                LOG.error("Problem converting ["+cell+"] to "+beanProperty.getPropertyDescriptor().getPropertyType().getName());
+                String errorMessage = "Problem converting ["+cell+"] to "+beanProperty.getPropertyDescriptor().getPropertyType().getName();
+                LOG.error(errorMessage);
                 for (String line : row.reportOnColumn(indexColumn).getPrintableLines()) {
                     LOG.error(lineNumber+": "+line);
                 }
-                throw new CsvException(err.getMessage(), row.reportOnColumn(indexColumn));
+                throw new CsvException(errorMessage, err, row.reportOnColumn(indexColumn), lineNumber);
             }
             indexColumn++;
         }

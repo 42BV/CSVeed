@@ -63,7 +63,7 @@ public class RowReader {
                 token = stateMachine.offerSymbol(symbol);
             } catch (ParseException e) {
                 LOG.error(e.getMessage());
-                throw new CsvException(e.getMessage(), row.reportOnEndOfLine());
+                throw new CsvException(e.getMessage(), e, row.reportOnEndOfLine(), getCurrentLine());
             }
             if (stateMachine.isTokenStart()) {
                 row.markStartOfColumn();

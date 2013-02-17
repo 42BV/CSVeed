@@ -6,10 +6,10 @@ public class CsvException extends RuntimeException {
 
     private RowReport report;
 
-    private String message;
+    private int lineNumber;
 
-    public CsvException(String message, RowReport report) {
-        this.message = message;
+    public CsvException(String message, Throwable err, RowReport report, int lineNumber) {
+        super(message, err);
         this.report = report;
     }
 
@@ -17,7 +17,7 @@ public class CsvException extends RuntimeException {
         return this.report;
     }
 
-    public String getMessage() {
-        return message;
+    public int getLineNumber() {
+        return lineNumber;
     }
 }
