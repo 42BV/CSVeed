@@ -16,7 +16,7 @@ public class ParseStateMachine {
 
     public static final Logger LOG = LoggerFactory.getLogger(ParseStateMachine.class);
 
-    private ParseState state = OUTSIDE_FIELD;
+    private ParseState state = START_OF_LINE;
 
     private StringBuilder token = new StringBuilder();
 
@@ -24,27 +24,46 @@ public class ParseStateMachine {
 
     private SymbolMapping symbolMapping = new SymbolMapping();
 
+    private TokenState tokenState = TokenState.RESET;
+
     public boolean isEol(int symbolCharacter) {
         return symbolMapping.find(symbolCharacter, OUTSIDE_FIELD) == EOL_SYMBOL;
     }
 
-    public String offerSymbol(int symbolCharacter) {
+    public String offerSymbol(int symbolCharacter) throws ParseException {
+        if (tokenState.isStart()) {
+            tokenState = tokenState.next();
+        }
+
         EncounteredSymbol symbol = symbolMapping.find(symbolCharacter, state);
-        ParseState newState = determineState(symbol);
+        ParseState newState = determineState(symbolCharacter, symbol);
         LOG.debug((char)symbolCharacter+" ("+symbol+"): "+state+" => "+newState);
+
         if (newState.isTokenize()) {
+            if (tokenState.isReset()) {
+                tokenState = tokenState.next();
+            }
             token.append((char)symbolCharacter);
         }
         String returnToken = null;
+
         if (newState.isPopToken()) {
             returnToken = token.toString();
             token = new StringBuilder();
+            tokenState = tokenState.next();
         }
+
         if (!newState.isLineFinished()) {
             charactersRead++;
         }
+
         state = newState;
+
         return returnToken;
+    }
+
+    public boolean isTokenStart() {
+        return tokenState.isStart();
     }
 
     public boolean isLineFinished() {
@@ -61,35 +80,49 @@ public class ParseStateMachine {
 
     public void newLine() {
         if (state != FINISHED) {
-            state = OUTSIDE_FIELD;
+            state = START_OF_LINE;
         }
         charactersRead = 0;
     }
 
-    protected ParseState determineState(EncounteredSymbol symbol) {
-        if (symbol == END_OF_FILE_SYMBOL) {
-            return FINISHED;
-        }
+    protected ParseState determineState(int symbolCharacter, EncounteredSymbol symbol) throws ParseException {
 
         switch (state) {
+            case START_OF_LINE:
             case SEPARATOR:
-            case OUTSIDE_FIELD:
                 switch(symbol) {
                     case QUOTE_SYMBOL:
                         return FIRST_CHAR_INSIDE_QUOTED_FIELD;
                     case SEPARATOR_SYMBOL :
                         return SEPARATOR;
+                    case END_OF_FILE_SYMBOL:
+                        return FINISHED;
                     case EOL_SYMBOL :
                         return LINE_FINISHED;
                     default :
                         return INSIDE_FIELD;
                 }
+            case OUTSIDE_FIELD:
+                switch(symbol) {
+                    case SEPARATOR_SYMBOL :
+                        return SEPARATOR;
+                    case END_OF_FILE_SYMBOL:
+                        return FINISHED;
+                    case EOL_SYMBOL :
+                        return LINE_FINISHED;
+                    default :
+                        throw new ParseException(state, symbolCharacter, symbol);
+                }
             case INSIDE_FIELD:
                 switch (symbol) {
                     case SEPARATOR_SYMBOL :
                         return SEPARATOR;
+                    case END_OF_FILE_SYMBOL:
+                        return FINISHED;
                     case EOL_SYMBOL :
                         return LINE_FINISHED;
+                    case QUOTE_SYMBOL :
+                        throw new ParseException(state, symbolCharacter, symbol);
                     default :
                         return INSIDE_FIELD;
                 }
@@ -100,22 +133,30 @@ public class ParseStateMachine {
                         return OUTSIDE_FIELD;
                     case ESCAPE_SYMBOL :
                         return ESCAPING;
+                    case END_OF_FILE_SYMBOL:
+                        throw new ParseException(state, symbolCharacter, symbol);
                     default :
                         return INSIDE_QUOTED_FIELD;
                 }
             case ESCAPING:
-                switch (symbol) {
-                    case QUOTE_SYMBOL :
-                        return INSIDE_QUOTED_FIELD;
-                    case EOL_SYMBOL:
-                        return LINE_FINISHED;
-                    case SEPARATOR_SYMBOL :
-                        return SEPARATOR;
-                    default :
-                        throw new RuntimeException("Cannot have "+symbol+" at this position");
+                if (symbolMapping.isSameCharactersForEscapeAndQuote()) { // This is the default
+                    switch (symbol) {
+                        case QUOTE_SYMBOL :
+                            return INSIDE_QUOTED_FIELD;
+                        case EOL_SYMBOL: // Needed when quote/escape are the same: ...abc"\n
+                            return LINE_FINISHED;
+                        case SEPARATOR_SYMBOL : // Needed when quote/escape are the same: ...abc";
+                            return SEPARATOR;
+                        case END_OF_FILE_SYMBOL:
+                            return FINISHED;
+                        default :
+                            throw new ParseException(state, symbolCharacter, symbol);
+                    }
+                } else { // We're lenient -- accept everything
+                    return INSIDE_QUOTED_FIELD;
                 }
             default :
-                throw new RuntimeException("Illegal state");
+                throw new ParseException(state, symbolCharacter, symbol);
         }
     }
 

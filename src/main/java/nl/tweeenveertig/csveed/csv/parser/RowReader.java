@@ -2,6 +2,10 @@ package nl.tweeenveertig.csveed.csv.parser;
 
 import nl.tweeenveertig.csveed.csv.structure.Row;
 import nl.tweeenveertig.csveed.csv.structure.RowWithInfo;
+import nl.tweeenveertig.csveed.report.CsvException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.util.LocaleServiceProviderPool;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -48,14 +52,24 @@ public class RowReader {
 
         while (!stateMachine.isLineFinished()) {
             final String token;
+            final int symbol;
             try {
-                token = stateMachine.offerSymbol(reader.read());
+                symbol = reader.read();
             } catch (IOException err) {
                 throw new RuntimeException(err);
+            }
+            try {
+                token = stateMachine.offerSymbol(symbol);
+            } catch (ParseException e) {
+                throw new CsvException(e.getError(), row.reportOnEndOfLine());
+            }
+            if (stateMachine.isTokenStart()) {
+                row.markStartOfColumn();
             }
             if (token != null) {
                 row.addCell(token);
             }
+            row.addCharacter(symbol);
         }
         row = stateMachine.isEmptyLine() ? null : row;
         stateMachine.newLine();

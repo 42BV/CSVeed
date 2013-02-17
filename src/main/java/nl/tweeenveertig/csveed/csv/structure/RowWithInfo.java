@@ -1,10 +1,13 @@
 package nl.tweeenveertig.csveed.csv.structure;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.*;
 
 public class RowWithInfo implements Row {
 
-    public static final int MAX_REPORT_SIZE = 80;
+    public static final Logger LOG = LoggerFactory.getLogger(RowWithInfo.class);
 
     private List<String> cells = new ArrayList<String>();
 
@@ -18,6 +21,9 @@ public class RowWithInfo implements Row {
 
     public void addCell(String cell) {
         this.cells.add(cell);
+        if (cell == null || "".equals(cell)) {
+            markStartOfColumn();
+        }
         markEndOfColumn();
     }
 
@@ -26,10 +32,12 @@ public class RowWithInfo implements Row {
     }
 
     public void markStartOfColumn() {
+        LOG.debug("Start of column: "+printLength);
         getCellPosition(currentColumn).setStart(printLength);
     }
 
     protected void markEndOfColumn() {
+        LOG.debug("End of column: "+printLength);
         getCellPosition(currentColumn++).setEnd(printLength);
     }
 
@@ -42,20 +50,21 @@ public class RowWithInfo implements Row {
         return cellPosition;
     }
 
-    public void addCharacter(char character) {
-        String printableChar = convertToPrintable(character);
+    public void addCharacter(int symbol) {
+        String printableChar = convertToPrintable(symbol);
         originalLine.append(printableChar);
         printLength += printableChar.length();
     }
 
-    public String convertToPrintable(char character) {
-        switch (character) {
+    public String convertToPrintable(int symbol) {
+        switch (symbol) {
+            case -1 : return "[EOF]";
             case '\b' : return "\\b";
             case '\f' : return "\\f";
             case '\n' : return "\\n";
             case '\r' : return "\\r";
             case '\t' : return "\\t";
-            default: return Character.toString(character);
+            default: return Character.toString((char)symbol);
         }
     }
 

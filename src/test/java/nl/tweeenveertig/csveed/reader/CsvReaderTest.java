@@ -1,5 +1,7 @@
 package nl.tweeenveertig.csveed.reader;
 
+import nl.tweeenveertig.csveed.csv.structure.RowReport;
+import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.testclasses.*;
 import org.junit.Test;
 
@@ -117,4 +119,14 @@ public class CsvReaderTest {
         assertNull(bean.getDitchThat1());
         assertNull(bean.getLeaveThat1());
     }
+
+    @Test(expected = CsvException.class)
+    public void illegalToken() {
+        Reader reader = new StringReader(
+            "\"alpha\";\"beta\";\"gamma\"a\n"
+        );
+        CsvReader<BeanSimple> csvReader = new CsvReader<BeanSimple>(BeanSimple.class);
+        csvReader.read(reader);
+    }
+
 }

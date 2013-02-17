@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
 public enum ParseState {
+    START_OF_LINE                  (false, false, false, false),
     OUTSIDE_FIELD                  (false, false, false, false),
     INSIDE_FIELD                   (true,  false, false, false),
     FIRST_CHAR_INSIDE_QUOTED_FIELD (false, false, false, true),

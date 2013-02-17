@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
 import nl.tweeenveertig.csveed.csv.structure.Row;
+import nl.tweeenveertig.csveed.csv.structure.RowReport;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -88,6 +89,28 @@ public class RowReaderTest {
         assertEquals("23.19", row.get(1));
         assertEquals("-100.23", row.get(2));
         assertEquals("", row.get(3));
+    }
+
+    @Test
+    public void reportSimple() {
+        Reader reader = new StringReader("17.51;23.19;-100.23");
+        RowReader rowReader = new RowReader();
+        Row row = rowReader.readLine(reader);
+        RowReport report = row.reportOnColumn(2);
+        assertEquals("17.51;23.19;-100.23[EOF]", report.getPrintableLines().get(0));
+        assertEquals("            ^-----^     ", report.getPrintableLines().get(1));
+    }
+
+    @Test
+    public void reportEscapingAndQuotes() {
+        Reader reader = new StringReader("\"alpha\";\"\";;\"b\te\tt\ta\";gamma;\"een \"\"echte\"\" test\";\"1\n2\n3\n\"\"regels\"\"\"");
+        RowReader rowReader = new RowReader();
+        Row row = rowReader.readLine(reader);
+        RowReport report = row.reportOnColumn(3);
+        assertEquals("\"alpha\";\"\";;\"b\\te\\tt\\ta\";gamma;\"een \"\"echte\"\" test\";\"1\\n2\\n3\\n\"\"regels\"\"\"[EOF]", report.getPrintableLines().get(0));
+        assertEquals("             ^---------^                                                      ", report.getPrintableLines().get(1));
+        report = row.reportOnColumn(2);
+        assertEquals("           ^                                                                  ", report.getPrintableLines().get(1));
     }
 
 }
