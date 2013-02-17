@@ -6,6 +6,7 @@ import nl.tweeenveertig.csveed.bean.instructions.BeanParser;
 import nl.tweeenveertig.csveed.csv.structure.CsvHeader;
 import nl.tweeenveertig.csveed.csv.parser.RowReader;
 import nl.tweeenveertig.csveed.csv.structure.Row;
+import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

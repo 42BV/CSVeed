@@ -32,6 +32,12 @@ public class ParseStateMachineTest {
         feedStateMachine(machine, "\"alpha\";\"beta\";\"ga");
     }
 
+    @Test(expected = ParseException.class)
+    public void doubleQuotesAfterFieldInfoStarted() throws ParseException {
+        ParseStateMachine machine = new ParseStateMachine();
+        feedStateMachine(machine, "some text and... \"double quote\"... WAT?;\"beta\";\"ga\"");
+    }
+
     protected void feedStateMachine(ParseStateMachine machine, String symbols) throws ParseException {
         for (char symbol : symbols.toCharArray()) {
             machine.offerSymbol(symbol);

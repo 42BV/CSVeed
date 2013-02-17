@@ -2,12 +2,17 @@ package nl.tweeenveertig.csveed.reader;
 
 import nl.tweeenveertig.csveed.bean.instructions.BeanProperty;
 import nl.tweeenveertig.csveed.csv.structure.Row;
+import nl.tweeenveertig.csveed.report.CsvException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapperImpl;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 public abstract class AbstractMappingStrategy<T> {
+
+    public static final Logger LOG = LoggerFactory.getLogger(AbstractMappingStrategy.class);
 
     protected Map<Integer, BeanProperty> indexToProperty = new TreeMap<Integer, BeanProperty>();
 
@@ -31,7 +36,15 @@ public abstract class AbstractMappingStrategy<T> {
                         beanProperty.getPropertyDescriptor().getName(), // ascertain the converter is only used on this property
                         beanProperty.getConverter());
             }
-            beanWrapper.setPropertyValue(beanProperty.getPropertyDescriptor().getName(), cell);
+            try {
+                beanWrapper.setPropertyValue(beanProperty.getPropertyDescriptor().getName(), cell);
+            } catch (Exception err) {
+                LOG.error(err.getMessage());
+                for (String line : row.reportOnColumn(indexColumn).getPrintableLines()) {
+                    LOG.error(line);
+                }
+                throw new CsvException(err.getMessage(), row.reportOnColumn(indexColumn));
+            }
             indexColumn++;
         }
         return bean;

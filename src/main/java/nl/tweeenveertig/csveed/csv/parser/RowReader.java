@@ -5,7 +5,6 @@ import nl.tweeenveertig.csveed.csv.structure.RowWithInfo;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.util.LocaleServiceProviderPool;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -18,6 +17,8 @@ import java.util.List;
 * @author Robert Bor
 */
 public class RowReader {
+
+    public static final Logger LOG = LoggerFactory.getLogger(RowReader.class);
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
@@ -61,7 +62,8 @@ public class RowReader {
             try {
                 token = stateMachine.offerSymbol(symbol);
             } catch (ParseException e) {
-                throw new CsvException(e.getError(), row.reportOnEndOfLine());
+                LOG.error(e.getMessage());
+                throw new CsvException(e.getMessage(), row.reportOnEndOfLine());
             }
             if (stateMachine.isTokenStart()) {
                 row.markStartOfColumn();

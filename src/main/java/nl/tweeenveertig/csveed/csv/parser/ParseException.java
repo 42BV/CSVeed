@@ -26,7 +26,8 @@ public class ParseException extends Exception {
         return symbolCharacter;
     }
 
-    public String getError() {
+    @Override
+    public String getMessage() {
         return "Illegal state transition: Parsing symbol "+getSymbol()+" ["+getSymbolCharacter()+"] in state "+getState();
     }
 

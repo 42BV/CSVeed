@@ -1,6 +1,5 @@
 package nl.tweeenveertig.csveed.reader;
 
-import nl.tweeenveertig.csveed.csv.structure.RowReport;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.testclasses.*;
 import org.junit.Test;
@@ -126,6 +125,25 @@ public class CsvReaderTest {
             "\"alpha\";\"beta\";\"gamma\"a\n"
         );
         CsvReader<BeanSimple> csvReader = new CsvReader<BeanSimple>(BeanSimple.class);
+        csvReader.read(reader);
+    }
+
+    @Test(expected = CsvException.class)
+    public void beanMappingError() {
+        Reader reader = new StringReader(
+                "text;year;number;date;year and month\n"+
+                "\"a bit of text\";UNEXPECTED TEXT!!!;42.42;1972-01-13;2013-04\n"
+        );
+        CsvReader<BeanWithVariousTypes> csvReader = new CsvReader<BeanWithVariousTypes>(BeanWithVariousTypes.class);
+        csvReader.read(reader);
+    }
+
+    @Test(expected = CsvException.class)
+    public void cannotConvertToNonStandardObject() {
+        Reader reader = new StringReader(
+            "\"can I convert this to bean simple?\""
+        );
+        CsvReader<BeanWithNonStandardObject> csvReader = new CsvReader<BeanWithNonStandardObject>(BeanWithNonStandardObject.class);
         csvReader.read(reader);
     }
 
