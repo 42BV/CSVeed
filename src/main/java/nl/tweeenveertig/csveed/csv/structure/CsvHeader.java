@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.csv.header;
+package nl.tweeenveertig.csveed.csv.structure;
 
 import java.util.List;
 import java.util.Map;
@@ -8,12 +8,12 @@ public class CsvHeader {
 
     private int numberOfColumns;
 
-    private List<String> header;
+    private Row header;
     private Map<Integer, String> indexToName = new TreeMap<Integer, String>();
     private Map<String, Integer> nameToIndex = new TreeMap<String, Integer>();
 
-    public CsvHeader(List<String> header) {
-        this.header = header;
+    public CsvHeader(Row row) {
+        this.header = row;
         this.numberOfColumns = header.size();
         int indexColumn = 0;
         for (String headerCell : header) {
@@ -23,7 +23,7 @@ public class CsvHeader {
         }
     }
 
-    public List<String> getHeader() {
+    public Row getHeader() {
         return this.header;
     }
 

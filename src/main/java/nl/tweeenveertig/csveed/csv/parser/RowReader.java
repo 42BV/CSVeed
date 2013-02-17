@@ -1,5 +1,8 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
+import nl.tweeenveertig.csveed.csv.structure.Row;
+import nl.tweeenveertig.csveed.csv.structure.RowWithInfo;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -10,7 +13,7 @@ import java.util.List;
 * can support a per-line parse approach as well.
 * @author Robert Bor
 */
-public class LineReader {
+public class RowReader {
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
@@ -20,12 +23,12 @@ public class LineReader {
 
     private int headerLine = 0;
 
-    public List<List<String>> readAllLines(Reader reader) {
-        List<List<String>> allLines = new ArrayList<List<String>>();
+    public List<Row> readAllLines(Reader reader) {
+        List<Row> allLines = new ArrayList<Row>();
         while (!stateMachine.isFinished()) {
-            List<String> cells = readLine(reader);
-            if (cells != null && cells.size() > 0) {
-                allLines.add(cells);
+            Row row = readLine(reader);
+            if (row != null && row.size() > 0) {
+                allLines.add(row);
             }
         }
         return allLines;
@@ -35,8 +38,8 @@ public class LineReader {
         return stateMachine.isFinished();
     }
 
-    public List<String> readLine(Reader reader) {
-        List<String> cells = new ArrayList<String>();
+    public Row readLine(Reader reader) {
+        RowWithInfo row = new RowWithInfo();
         this.currentLine++;
 
         if (isBeforeStartLine()) {
@@ -51,12 +54,12 @@ public class LineReader {
                 throw new RuntimeException(err);
             }
             if (token != null) {
-                cells.add(token);
+                row.addCell(token);
             }
         }
-        cells = stateMachine.isEmptyLine() ? null : cells;
+        row = stateMachine.isEmptyLine() ? null : row;
         stateMachine.newLine();
-        return cells;
+        return row;
     }
 
     private boolean isBeforeStartLine() {

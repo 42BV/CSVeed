@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 public @interface CsvCell {
 
     /**
-    * By default the name is inferred from the header name. However, if CsvFile.useHeaders == false, or the
+    * By default the name is inferred from the structure name. However, if CsvFile.useHeaders == false, or the
     * naming is not what you want in the BeanInstructions, you can override the name to map to using this value.
     * @return the name in the CSV file to map to
     */

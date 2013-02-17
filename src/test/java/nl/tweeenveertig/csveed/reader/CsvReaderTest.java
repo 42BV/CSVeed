@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 public class CsvReaderTest {
 
@@ -78,8 +79,8 @@ public class CsvReaderTest {
     @Test
     public void nameMatching() {
         Reader reader = new StringReader(
-                "street;city;postal code;ignore this\n"+
-                "\"Some street\";\"Some city\";\"Some postal code\";\"Some ignoring\""
+            "street;city;postal code;ignore this\n"+
+            "\"Some street\";\"Some city\";\"Some postal code\";\"Some ignoring\""
         );
         CsvReader<BeanWithNameMatching> csvReader = new CsvReader<BeanWithNameMatching>(BeanWithNameMatching.class);
         List<BeanWithNameMatching> beans = csvReader.read(reader);
@@ -106,12 +107,14 @@ public class CsvReaderTest {
     @Test
     public void numberOfIgnores() {
         Reader reader = new StringReader(
-                "14;28;42"
+            "14;28;42"
         );
         CsvReader<BeanLotsOfIgnores> csvReader = new CsvReader<BeanLotsOfIgnores>(BeanLotsOfIgnores.class);
         BeanLotsOfIgnores bean = csvReader.readLine(reader);
         assertEquals((Integer)14, bean.getTakeThis1());
         assertEquals((Integer)28, bean.getPickThis1());
         assertEquals((Integer)42, bean.getChooseThis1());
+        assertNull(bean.getDitchThat1());
+        assertNull(bean.getLeaveThat1());
     }
 }

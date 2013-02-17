@@ -2,7 +2,7 @@ package nl.tweeenveertig.csveed.reader;
 
 import nl.tweeenveertig.csveed.bean.instructions.BeanInstructions;
 import nl.tweeenveertig.csveed.bean.instructions.BeanProperty;
-import nl.tweeenveertig.csveed.csv.header.CsvHeader;
+import nl.tweeenveertig.csveed.csv.structure.CsvHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

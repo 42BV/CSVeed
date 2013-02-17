@@ -1,9 +1,9 @@
 package nl.tweeenveertig.csveed.reader;
 
 import nl.tweeenveertig.csveed.bean.instructions.BeanProperty;
+import nl.tweeenveertig.csveed.csv.structure.Row;
 import org.springframework.beans.BeanWrapperImpl;
 
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,11 +15,11 @@ public abstract class AbstractMappingStrategy<T> {
         return indexToProperty.get(indexColumn);
     }
 
-    public T convert(T bean, List<String> line) {
+    public T convert(T bean, Row row) {
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(bean);
 
         int indexColumn = 0;
-        for (String cell : line) {
+        for (String cell : row) {
             BeanProperty beanProperty = getBeanProperty(indexColumn);
             if (beanProperty == null) {
                 indexColumn++;

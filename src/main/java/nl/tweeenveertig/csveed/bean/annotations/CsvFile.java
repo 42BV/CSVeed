@@ -38,14 +38,14 @@ public @interface CsvFile {
     char[] endOfLine() default { '\r', '\n' };
 
     /**
-    * States whether the first line will be used as a header line. If this is not the case, the mapping
+    * States whether the first line will be used as a structure line. If this is not the case, the mapping
     * will be done based on column indexes.
-    * @return whether to use the first line as a header or not
+    * @return whether to use the first line as a structure or not
     */
     boolean useHeader() default true;
 
     /**
-    * The point from where the lines must be read, including the header (if applicable). By default,
+    * The point from where the lines must be read, including the structure (if applicable). By default,
     * this value is 0.
     * @return the point from where lines must be converted
     */
