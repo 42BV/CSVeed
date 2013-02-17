@@ -141,7 +141,7 @@ public class CsvReaderTest {
     @Test(expected = CsvException.class)
     public void cannotConvertToNonStandardObject() {
         Reader reader = new StringReader(
-            "\"can I convert this to bean simple?\""
+            "\"can I convert this to a simple bean?\""
         );
         CsvReader<BeanWithNonStandardObject> csvReader = new CsvReader<BeanWithNonStandardObject>(BeanWithNonStandardObject.class);
         csvReader.read(reader);

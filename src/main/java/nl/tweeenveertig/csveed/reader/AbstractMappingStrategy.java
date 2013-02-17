@@ -20,7 +20,7 @@ public abstract class AbstractMappingStrategy<T> {
         return indexToProperty.get(indexColumn);
     }
 
-    public T convert(T bean, Row row) {
+    public T convert(T bean, Row row, int lineNumber) {
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(bean);
 
         int indexColumn = 0;
@@ -40,8 +40,9 @@ public abstract class AbstractMappingStrategy<T> {
                 beanWrapper.setPropertyValue(beanProperty.getPropertyDescriptor().getName(), cell);
             } catch (Exception err) {
                 LOG.error(err.getMessage());
+                LOG.error("Problem converting ["+cell+"] to "+beanProperty.getPropertyDescriptor().getPropertyType().getName());
                 for (String line : row.reportOnColumn(indexColumn).getPrintableLines()) {
-                    LOG.error(line);
+                    LOG.error(lineNumber+": "+line);
                 }
                 throw new CsvException(err.getMessage(), row.reportOnColumn(indexColumn));
             }

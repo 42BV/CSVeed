@@ -70,7 +70,7 @@ public class CsvReader<T> {
             if (strategy == null) {
                 strategy = createStrategy(beanInstructions, header, unmappedLine);
             }
-            return strategy.convert(this.beanInstructions.newInstance(), unmappedLine);
+            return strategy.convert(this.beanInstructions.newInstance(), unmappedLine, getCurrentLine());
         }
         return null;
     }
