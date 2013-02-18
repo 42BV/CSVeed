@@ -2,6 +2,7 @@ package nl.tweeenveertig.csveed.csv.parser;
 
 import nl.tweeenveertig.csveed.csv.structure.Row;
 import nl.tweeenveertig.csveed.csv.structure.RowReport;
+import nl.tweeenveertig.csveed.report.CsvException;
 import org.junit.Test;
 
 import java.io.IOException;

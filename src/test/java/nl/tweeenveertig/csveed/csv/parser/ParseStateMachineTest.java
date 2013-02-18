@@ -1,9 +1,11 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
+import nl.tweeenveertig.csveed.csv.structure.Row;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
 public class ParseStateMachineTest {
 
@@ -24,6 +26,43 @@ public class ParseStateMachineTest {
         assertEquals("", machine.offerSymbol(';'));
         assertEquals("", machine.offerSymbol(';'));
         assertEquals("", machine.offerSymbol(-1));
+    }
+
+    @Test(expected = ParseException.class)
+    public void illegalState() throws ParseException {
+        ParseStateMachine machine = new ParseStateMachine();
+        machine.offerSymbol(-1);
+        machine.offerSymbol(-1);
+    }
+
+    @Test(expected = ParseException.class)
+    public void illegalCharactersAfterQuotedContent() throws ParseException {
+        ParseStateMachine machine = new ParseStateMachine();
+        feedStateMachine(machine, "    \"alpha\"  ; \"beta\"   x; \"gamma\" ");
+    }
+
+    @Test
+    public void beforeFieldWithEOL() throws ParseException {
+        ParseStateMachine machine = new ParseStateMachine();
+        machine.offerSymbol(' ');
+        machine.offerSymbol('\n');
+        assertTrue(machine.isLineFinished());
+    }
+
+    @Test
+    public void beforeFieldWithEOF() throws ParseException {
+        ParseStateMachine machine = new ParseStateMachine();
+        machine.offerSymbol(' ');
+        machine.offerSymbol(-1);
+        assertTrue(machine.isLineFinished());
+        assertTrue(machine.isFinished());
+    }
+
+    @Test
+    public void beforeFieldWithSeparator() throws ParseException {
+        ParseStateMachine machine = new ParseStateMachine();
+        assertNull(machine.offerSymbol(' '));
+        assertEquals("", machine.offerSymbol(';'));
     }
 
     @Test(expected = ParseException.class)
