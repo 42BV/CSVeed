@@ -24,6 +24,10 @@ public class BeanInstructions<T> {
         this.beanClass = beanClass;
     }
 
+    public Class<T> getBeanClass() {
+        return this.beanClass;
+    }
+
     public T newInstance() {
         try {
             return this.beanClass.newInstance();
@@ -66,7 +70,7 @@ public class BeanInstructions<T> {
 
     public BeanProperty getBeanPropertyWithName(String name) {
         for (BeanProperty beanProperty : getProperties()) {
-            if (beanProperty.getName() != null && beanProperty.getName().equals(name)) {
+            if (beanProperty.getName().equals(name)) {
                 return beanProperty;
             }
         }

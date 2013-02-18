@@ -147,4 +147,13 @@ public class CsvReaderTest {
         csvReader.read(reader);
     }
 
+    @Test(expected = CsvException.class)
+    public void nonInstantiableBean() {
+        Reader reader = new StringReader(
+                "\"can I convert this to a simple bean?\""
+        );
+        CsvReader<BeanWithoutNoArgPublicConstructor> csvReader = new CsvReader<BeanWithoutNoArgPublicConstructor>(BeanWithoutNoArgPublicConstructor.class);
+        csvReader.read(reader);
+    }
+
 }

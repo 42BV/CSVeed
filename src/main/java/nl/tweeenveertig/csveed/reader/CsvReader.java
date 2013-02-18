@@ -67,12 +67,26 @@ public class CsvReader<T> {
         if (rowReader.isHeaderLine()) {
             header = new CsvHeader(unmappedLine);
         } else {
+
             if (strategy == null) {
                 strategy = createStrategy(beanInstructions, header, unmappedLine);
             }
-            return strategy.convert(this.beanInstructions.newInstance(), unmappedLine, getCurrentLine());
+
+            return strategy.convert(instantiateBean(), unmappedLine, getCurrentLine());
         }
         return null;
+    }
+
+    private T instantiateBean() {
+        try {
+            return this.beanInstructions.newInstance();
+        } catch (Exception err) {
+            String errorMessage =
+                    "Unable to instantiate the bean class "+this.beanInstructions.getBeanClass().getName()+
+                    ". Does it have a no-arg public constructor?";
+            LOG.error(errorMessage);
+            throw new CsvException(errorMessage, err);
+        }
     }
 
     protected AbstractMappingStrategy<T> createStrategy(BeanInstructions<T> beanInstructions, CsvHeader header, Row row) {
