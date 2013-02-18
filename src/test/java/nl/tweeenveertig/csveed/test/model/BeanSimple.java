@@ -1,9 +1,12 @@
 package nl.tweeenveertig.csveed.test.model;
 
-@Deprecated
+import nl.tweeenveertig.csveed.test.annotations.IgnoreClass;
+import nl.tweeenveertig.csveed.test.annotations.IgnoreField;
+
+@IgnoreClass
 public class BeanSimple {
 
-    @Deprecated
+    @IgnoreField
     public String name;
 
     public String getName() {

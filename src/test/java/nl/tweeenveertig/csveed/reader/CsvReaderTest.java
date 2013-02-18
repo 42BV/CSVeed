@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.reader;
 
+import nl.tweeenveertig.csveed.csv.structure.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.test.model.*;
 import org.junit.Test;
@@ -13,6 +14,19 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 
 public class CsvReaderTest {
+
+    @Test
+    public void readUnmapped() {
+        Reader reader = new StringReader(
+            "alpha;beta;gamma\n"+
+            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
+            "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"+
+            "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\""
+        );
+        CsvReader<BeanWithMultipleStrings> csvReader = new CsvReader<BeanWithMultipleStrings>(BeanWithMultipleStrings.class);
+        List<Row> rows = csvReader.readUnmapped(reader);
+        assertEquals(4, rows.size());
+    }
 
     @Test
     public void getBeans() {

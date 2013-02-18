@@ -92,10 +92,9 @@ public class CsvReader<T> {
     protected AbstractMappingStrategy<T> createStrategy(BeanInstructions<T> beanInstructions, CsvHeader header, Row row) {
         if (beanInstructions.getMappingStrategy() == MappingStrategy.COLUMN_INDEX) {
             return new ColumnIndexStrategy<T>(beanInstructions, header, row);
-        } else if (beanInstructions.getMappingStrategy() == MappingStrategy.NAME_MATCHING) {
+        } else {
             return new NameMatchingStrategy<T>(beanInstructions, header);
         }
-        return null;
     }
 
     public List<Row> readUnmapped(Reader reader) {
