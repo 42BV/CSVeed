@@ -77,7 +77,7 @@ public class RowWithInfo implements Row {
     }
 
     public RowReport reportOnColumn(int columnIndex) {
-        CellPositionInRow cellPosition = getCellPosition(columnIndex);
+        CellPositionInRow cellPosition = cellPositions.get(columnIndex);
         if (cellPosition == null) {
             return null;
         }

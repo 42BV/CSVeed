@@ -3,8 +3,38 @@ package nl.tweeenveertig.csveed.csv.structure;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 public class RowWithInfoTest {
+
+    @Test
+    public void cellIsNull() {
+        RowWithInfo row = new RowWithInfo();
+        row.addCell(null);
+        assertEquals(0, row.getCellPosition(0).getStart());
+        assertEquals(0, row.getCellPosition(0).getEnd());
+    }
+
+    @Test
+    public void cellIsEmpty() {
+        RowWithInfo row = new RowWithInfo();
+        row.addCell("");
+        assertEquals(0, row.getCellPosition(0).getStart());
+        assertEquals(0, row.getCellPosition(0).getEnd());
+    }
+
+    @Test
+    public void convertCharacters() {
+        RowWithInfo row = new RowWithInfo();
+        assertEquals("\\b", row.convertToPrintable('\b'));
+        assertEquals("\\f", row.convertToPrintable('\f'));
+    }
+
+    @Test
+    public void nonExistingCell() {
+        RowWithInfo row = new RowWithInfo();
+        assertNull(row.reportOnColumn(0));
+    }
 
     @Test
     public void simpleWord() {
