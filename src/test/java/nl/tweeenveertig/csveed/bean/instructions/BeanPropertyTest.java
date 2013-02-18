@@ -1,6 +1,6 @@
 package nl.tweeenveertig.csveed.bean.instructions;
 
-import nl.tweeenveertig.csveed.testclasses.BeanSimple;
+import nl.tweeenveertig.csveed.test.model.BeanSimple;
 import org.junit.Test;
 import org.springframework.beans.propertyeditors.URLEditor;
 

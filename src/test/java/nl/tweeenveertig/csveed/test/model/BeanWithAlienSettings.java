@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.testclasses;
+package nl.tweeenveertig.csveed.test.model;
 
 import nl.tweeenveertig.csveed.bean.annotations.CsvFile;
 

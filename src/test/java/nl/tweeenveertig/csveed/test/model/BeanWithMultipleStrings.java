@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.testclasses;
+package nl.tweeenveertig.csveed.test.model;
 
 /**
 * Note how gamma, beta and alpha are printed in reverse order. This is done on purpose to test whether the

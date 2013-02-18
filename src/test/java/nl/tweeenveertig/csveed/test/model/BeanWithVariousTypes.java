@@ -1,12 +1,10 @@
-package nl.tweeenveertig.csveed.testclasses;
+package nl.tweeenveertig.csveed.test.model;
 
 import nl.tweeenveertig.csveed.bean.annotations.CsvDate;
-import nl.tweeenveertig.csveed.bean.annotations.CsvFile;
 
 import java.util.Date;
 
-@CsvFile(useHeader = false)
-public class BeanWithoutHeader {
+public class BeanWithVariousTypes {
 
     private String text;
 

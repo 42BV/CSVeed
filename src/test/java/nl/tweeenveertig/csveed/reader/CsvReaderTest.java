@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.reader;
 
 import nl.tweeenveertig.csveed.report.CsvException;
-import nl.tweeenveertig.csveed.testclasses.*;
+import nl.tweeenveertig.csveed.test.model.*;
 import org.junit.Test;
 
 import java.io.Reader;
@@ -119,6 +119,16 @@ public class CsvReaderTest {
         assertNull(bean.getLeaveThat1());
     }
 
+    @Test
+    public void customPropertyEditor() {
+        Reader reader = new StringReader(
+            "\"some text\""
+        );
+        CsvReader<BeanWithConverter> csvReader = new CsvReader<BeanWithConverter>(BeanWithConverter.class);
+        BeanWithConverter bean = csvReader.readLine(reader);
+        assertEquals("some text", bean.getBean().getName());
+    }
+
     @Test(expected = CsvException.class)
     public void illegalToken() {
         Reader reader = new StringReader(
@@ -131,8 +141,8 @@ public class CsvReaderTest {
     @Test(expected = CsvException.class)
     public void beanMappingError() {
         Reader reader = new StringReader(
-                "text;year;number;date;year and month\n"+
-                "\"a bit of text\";UNEXPECTED TEXT!!!;42.42;1972-01-13;2013-04\n"
+            "text;year;number;date;year and month\n"+
+            "\"a bit of text\";UNEXPECTED TEXT!!!;42.42;1972-01-13;2013-04\n"
         );
         CsvReader<BeanWithVariousTypes> csvReader = new CsvReader<BeanWithVariousTypes>(BeanWithVariousTypes.class);
         csvReader.read(reader);
