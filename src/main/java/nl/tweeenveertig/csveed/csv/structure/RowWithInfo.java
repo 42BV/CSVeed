@@ -57,15 +57,13 @@ public class RowWithInfo implements Row {
     }
 
     public String convertToPrintable(int symbol) {
-        switch (symbol) {
-            case -1 : return "[EOF]";
-            case '\b' : return "\\b";
-            case '\f' : return "\\f";
-            case '\n' : return "\\n";
-            case '\r' : return "\\r";
-            case '\t' : return "\\t";
-            default: return Character.toString((char)symbol);
-        }
+        if (symbol == -1) return "[EOF]";
+        else if (symbol == '\b') return "\\b";
+        else if (symbol == '\f') return "\\f";
+        else if (symbol == '\n') return "\\n";
+        else if (symbol == '\r') return "\\r";
+        else if (symbol == '\t') return "\\t";
+        else return Character.toString((char)symbol);
     }
 
     public int size() {
