@@ -104,11 +104,11 @@ public class RowReaderTest {
 
     @Test
     public void spaceWithoutQuotesFields() {
-        Reader reader = new StringReader("    alpha  ; beta   ; gamma ");
+        Reader reader = new StringReader("    alpha one  ; beta   ; gamma ");
         RowReader rowReader = new RowReader();
         Row row = rowReader.readLine(reader);
         assertEquals(3, row.size());
-        assertEquals("alpha", row.get(0));
+        assertEquals("alpha one", row.get(0));
         assertEquals("beta", row.get(1));
         assertEquals("gamma", row.get(2));
     }
