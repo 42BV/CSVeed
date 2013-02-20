@@ -1,6 +1,8 @@
 package nl.tweeenveertig.csveed.reader;
 
+import nl.tweeenveertig.csveed.bean.instructions.BeanInstructions;
 import nl.tweeenveertig.csveed.bean.instructions.BeanProperty;
+import nl.tweeenveertig.csveed.csv.structure.CsvHeader;
 import nl.tweeenveertig.csveed.csv.structure.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
@@ -15,6 +17,8 @@ public abstract class AbstractMappingStrategy<T> {
     public static final Logger LOG = LoggerFactory.getLogger(AbstractMappingStrategy.class);
 
     protected Map<Integer, BeanProperty> indexToProperty = new TreeMap<Integer, BeanProperty>();
+
+    public abstract void instruct(BeanInstructions beanInstructions, CsvHeader header, Row row);
 
     public BeanProperty getBeanProperty(int indexColumn) {
         return indexToProperty.get(indexColumn);

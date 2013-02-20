@@ -1,6 +1,5 @@
 package nl.tweeenveertig.csveed.reader;
 
-import nl.tweeenveertig.csveed.bean.annotations.MappingStrategy;
 import nl.tweeenveertig.csveed.bean.instructions.BeanInstructions;
 import nl.tweeenveertig.csveed.bean.instructions.BeanParser;
 import nl.tweeenveertig.csveed.csv.structure.CsvHeader;
@@ -68,9 +67,8 @@ public class CsvReader<T> {
             header = new CsvHeader(unmappedLine);
         } else {
 
-            if (strategy == null) {
-                strategy = createStrategy(beanInstructions, header, unmappedLine);
-            }
+            strategy = beanInstructions.createMappingStrategy();
+            strategy.instruct(beanInstructions, header, unmappedLine);
 
             return strategy.convert(instantiateBean(), unmappedLine, getCurrentLine());
         }
@@ -86,14 +84,6 @@ public class CsvReader<T> {
                     ". Does it have a no-arg public constructor?";
             LOG.error(errorMessage);
             throw new CsvException(errorMessage, err);
-        }
-    }
-
-    protected AbstractMappingStrategy<T> createStrategy(BeanInstructions<T> beanInstructions, CsvHeader header, Row row) {
-        if (beanInstructions.getMappingStrategy() == MappingStrategy.COLUMN_INDEX) {
-            return new ColumnIndexStrategy<T>(beanInstructions, header, row);
-        } else {
-            return new NameMatchingStrategy<T>(beanInstructions, header);
         }
     }
 

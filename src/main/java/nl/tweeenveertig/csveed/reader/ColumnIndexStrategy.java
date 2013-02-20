@@ -11,7 +11,7 @@ public class ColumnIndexStrategy<T> extends AbstractMappingStrategy<T> {
 
     public static final Logger LOG = LoggerFactory.getLogger(ColumnIndexStrategy.class);
 
-    public ColumnIndexStrategy(BeanInstructions beanInstructions, CsvHeader header, Row row) {
+    public void instruct(BeanInstructions beanInstructions, CsvHeader header, Row row) {
 
         int indexColumn = 0;
         for (String cell : row) {

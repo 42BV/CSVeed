@@ -1,5 +1,9 @@
 package nl.tweeenveertig.csveed.bean.annotations;
 
+import nl.tweeenveertig.csveed.reader.AbstractMappingStrategy;
+import nl.tweeenveertig.csveed.reader.ColumnIndexStrategy;
+
+import java.beans.PropertyEditor;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -56,6 +60,6 @@ public @interface CsvFile {
     * basis of the column index
     * @return the mapping strategy
     */
-    MappingStrategy mappingStrategy() default MappingStrategy.COLUMN_INDEX;
+    Class<? extends AbstractMappingStrategy> mappingStrategy() default ColumnIndexStrategy.class;
 
 }
