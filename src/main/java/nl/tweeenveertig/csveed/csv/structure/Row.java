@@ -8,8 +8,16 @@ public interface Row extends Iterable<String> {
 
     String get(String columnName);
 
+    String getColumnName(int index);
+
+    boolean hasHeader();
+
+    Header getHeader();
+
     RowReport reportOnEndOfLine();
 
     RowReport reportOnColumn(int columnIndex);
+
+    boolean validateNumberOfColumns();
 
 }

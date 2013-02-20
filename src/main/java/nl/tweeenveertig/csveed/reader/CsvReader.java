@@ -71,7 +71,7 @@ public class CsvReader<T> {
     protected AbstractMappingStrategy<T> getStrategy(Row unmappedRow) {
         if (strategy == null) {
             strategy = beanInstructions.createMappingStrategy();
-            strategy.instruct(beanInstructions, header, unmappedRow);
+            strategy.instruct(beanInstructions, unmappedRow);
         }
         return strategy;
     }

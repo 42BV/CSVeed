@@ -15,7 +15,7 @@ public class RowImpl implements Row {
         this.header = header;
     }
 
-    protected Header getHeader() {
+    public Header getHeader() {
         if (this.header == null) {
             throw new CsvException("No header has been found for this file");
         }
@@ -32,6 +32,16 @@ public class RowImpl implements Row {
 
     public String get(String columnName) {
         return line.get(header.getIndex(columnName));
+    }
+
+    @Override
+    public String getColumnName(int index) {
+        return getHeader().getName(index);
+    }
+
+    @Override
+    public boolean hasHeader() {
+        return header != null;
     }
 
     public int size() {

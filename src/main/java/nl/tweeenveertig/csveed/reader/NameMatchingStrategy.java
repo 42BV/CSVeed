@@ -13,14 +13,10 @@ public class NameMatchingStrategy<T> extends AbstractMappingStrategy<T> {
 
     public static final Logger LOG = LoggerFactory.getLogger(NameMatchingStrategy.class);
 
-    public void instruct(BeanInstructions beanInstructions, Header header, Row row) {
-
-        if (header == null) {
-            throw new CsvException("A NameMatchingStrategy requires a header row in the CSV file");
-        }
+    public void instruct(BeanInstructions beanInstructions, Row row) {
 
         int indexColumn = 0;
-        for (String headerColumn : header.getHeader()) {
+        for (String headerColumn : row.getHeader()) {
             BeanProperty beanProperty = beanInstructions.getBeanPropertyWithName(headerColumn);
             if (beanProperty == null) {
                 LOG.info("Column index "+indexColumn+ ": ["+headerColumn+"] -> no match");

@@ -12,7 +12,7 @@ public class ColumnIndexStrategy<T> extends AbstractMappingStrategy<T> {
 
     public static final Logger LOG = LoggerFactory.getLogger(ColumnIndexStrategy.class);
 
-    public void instruct(BeanInstructions beanInstructions, Header header, Row row) {
+    public void instruct(BeanInstructions beanInstructions, Row row) {
 
         int indexColumn = 0;
         for (String cell : row) {
@@ -24,8 +24,8 @@ public class ColumnIndexStrategy<T> extends AbstractMappingStrategy<T> {
             }
             indexToProperty.put(indexColumn, beanProperty);
             String headerColumn = null;
-            if (header != null) {
-                headerColumn = header.getName(indexColumn);
+            if (row.hasHeader()) {
+                headerColumn = row.getColumnName(indexColumn);
             }
             LOG.info("Column index "+indexColumn+": "+(headerColumn == null ? "" : "[" + headerColumn + "] to [")+beanProperty.getName()+"]");
             indexColumn++;

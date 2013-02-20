@@ -1,9 +1,10 @@
 package nl.tweeenveertig.csveed.csv.structure;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Header {
+public class Header implements Iterable<String> {
 
     private int numberOfColumns;
 
@@ -22,10 +23,6 @@ public class Header {
         }
     }
 
-    public Line getHeader() {
-        return this.header;
-    }
-
     public String getName(Integer indexColumn) {
         return this.indexToName.get(indexColumn);
     }
@@ -36,6 +33,10 @@ public class Header {
 
     public boolean checkLine(Line line) {
         return line.size() == this.numberOfColumns;
+    }
+
+    public Iterator<String> iterator() {
+        return header.iterator();
     }
 
 }

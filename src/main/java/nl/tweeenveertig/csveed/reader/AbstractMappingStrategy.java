@@ -19,7 +19,7 @@ public abstract class AbstractMappingStrategy<T> {
 
     protected Map<Integer, BeanProperty> indexToProperty = new TreeMap<Integer, BeanProperty>();
 
-    public abstract void instruct(BeanInstructions beanInstructions, Header header, Row row);
+    public abstract void instruct(BeanInstructions beanInstructions, Row row);
 
     public BeanProperty getBeanProperty(int indexColumn) {
         return indexToProperty.get(indexColumn);
