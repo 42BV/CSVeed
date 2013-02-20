@@ -3,24 +3,26 @@ package nl.tweeenveertig.csveed.csv.structure;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class CsvHeader {
+public class Header {
 
     private int numberOfColumns;
 
-    private Row header;
+    private Line header;
     private Map<Integer, String> indexToName = new TreeMap<Integer, String>();
+    private Map<String, Integer> nameToIndex = new TreeMap<String, Integer>();
 
-    public CsvHeader(Row row) {
+    public Header(Line row) {
         this.header = row;
         this.numberOfColumns = header.size();
         int indexColumn = 0;
         for (String headerCell : header) {
             this.indexToName.put(indexColumn, headerCell);
+            this.nameToIndex.put(headerCell, indexColumn);
             indexColumn++;
         }
     }
 
-    public Row getHeader() {
+    public Line getHeader() {
         return this.header;
     }
 
@@ -28,7 +30,11 @@ public class CsvHeader {
         return this.indexToName.get(indexColumn);
     }
 
-    public boolean checkLine(Row line) {
+    public Integer getIndex(String columnName) {
+        return this.nameToIndex.get(columnName);
+    }
+
+    public boolean checkLine(Line line) {
         return line.size() == this.numberOfColumns;
     }
 

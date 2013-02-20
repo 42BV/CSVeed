@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.reader;
 
+import nl.tweeenveertig.csveed.csv.structure.Line;
 import nl.tweeenveertig.csveed.csv.structure.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.test.model.*;
@@ -25,7 +26,7 @@ public class CsvReaderTest {
         );
         CsvReader<BeanWithMultipleStrings> csvReader = new CsvReader<BeanWithMultipleStrings>(BeanWithMultipleStrings.class);
         List<Row> rows = csvReader.readUnmapped(reader);
-        assertEquals(4, rows.size());
+        assertEquals(3, rows.size());
     }
 
     @Test

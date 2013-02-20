@@ -2,9 +2,11 @@ package nl.tweeenveertig.csveed.reader;
 
 import nl.tweeenveertig.csveed.bean.instructions.BeanInstructions;
 import nl.tweeenveertig.csveed.bean.instructions.BeanParser;
-import nl.tweeenveertig.csveed.csv.structure.CsvHeader;
-import nl.tweeenveertig.csveed.csv.parser.RowReader;
+import nl.tweeenveertig.csveed.csv.parser.LineReader;
+import nl.tweeenveertig.csveed.csv.structure.Header;
+import nl.tweeenveertig.csveed.csv.structure.Line;
 import nl.tweeenveertig.csveed.csv.structure.Row;
+import nl.tweeenveertig.csveed.csv.structure.RowImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +19,11 @@ public class CsvReader<T> {
 
     public static final Logger LOG = LoggerFactory.getLogger(CsvReader.class);
 
-    private RowReader rowReader;
+    private LineReader lineReader;
 
     private BeanInstructions<T> beanInstructions;
 
-    private CsvHeader header;
+    private Header header;
 
     private AbstractMappingStrategy<T> strategy;
 
@@ -31,17 +33,17 @@ public class CsvReader<T> {
 
     public CsvReader(BeanInstructions<T> beanInstructions) {
         this.beanInstructions = beanInstructions;
-        this.rowReader = new RowReader();
-        this.rowReader.setSymbolMapping(beanInstructions.getSymbolMapping());
-        this.rowReader.getSymbolMapping().logSettings();
-        this.rowReader.setStartLine(beanInstructions.getStartRow());
+        this.lineReader = new LineReader();
+        this.lineReader.setSymbolMapping(beanInstructions.getSymbolMapping());
+        this.lineReader.getSymbolMapping().logSettings();
+        this.lineReader.setStartLine(beanInstructions.getStartRow());
         LOG.info("- CSV config / start line: "+beanInstructions.getStartRow());
 
         if (this.beanInstructions.isUseHeader()) {
-            this.rowReader.setHeaderLine(beanInstructions.getStartRow());
+            this.lineReader.setHeaderLine(beanInstructions.getStartRow());
             LOG.info("- CSV config / has structure line? yes");
         } else {
-            this.rowReader.setHeaderLine(-1);
+            this.lineReader.setHeaderLine(-1);
             LOG.info("- CSV config / has structure line? no");
         }
         LOG.info("- CSV config / mapping strategy: "+beanInstructions.getMappingStrategy());
@@ -59,20 +61,19 @@ public class CsvReader<T> {
     }
 
     public T readLine(Reader reader) {
-        Row unmappedLine = readLineUnmapped(reader);
-        if (unmappedLine == null) {
+        Row unmappedRow = readLineUnmapped(reader);
+        if (unmappedRow == null) {
             return null;
         }
-        if (rowReader.isHeaderLine()) {
-            header = new CsvHeader(unmappedLine);
-        } else {
+        return getStrategy(unmappedRow).convert(instantiateBean(), unmappedRow, getCurrentLine());
+    }
 
+    protected AbstractMappingStrategy<T> getStrategy(Row unmappedRow) {
+        if (strategy == null) {
             strategy = beanInstructions.createMappingStrategy();
-            strategy.instruct(beanInstructions, header, unmappedLine);
-
-            return strategy.convert(instantiateBean(), unmappedLine, getCurrentLine());
+            strategy.instruct(beanInstructions, header, unmappedRow);
         }
-        return null;
+        return strategy;
     }
 
     private T instantiateBean() {
@@ -88,19 +89,34 @@ public class CsvReader<T> {
     }
 
     public List<Row> readUnmapped(Reader reader) {
-        return rowReader.readAllLines(reader);
+        List<Row> allRows = new ArrayList<Row>();
+        while (!isFinished()) {
+            Row row = readLineUnmapped(reader);
+            if (row != null && row.size() > 0) {
+                allRows.add(row);
+            }
+        }
+        return allRows;
     }
 
     public Row readLineUnmapped(Reader reader) {
-        return rowReader.readLine(reader);
+        Line unmappedLine = lineReader.readLine(reader);
+        if (unmappedLine == null) {
+            return null;
+        }
+        if (lineReader.isHeaderLine()) {
+            header = new Header(unmappedLine);
+            unmappedLine = lineReader.readLine(reader);
+        }
+        return new RowImpl(unmappedLine, header);
     }
 
     public int getCurrentLine() {
-        return this.rowReader.getCurrentLine();
+        return this.lineReader.getCurrentLine();
     }
 
     public boolean isFinished() {
-        return rowReader.isFinished();
+        return lineReader.isFinished();
     }
 
 }

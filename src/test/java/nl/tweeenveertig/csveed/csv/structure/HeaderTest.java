@@ -1,7 +1,6 @@
 package nl.tweeenveertig.csveed.csv.structure;
 
-import nl.tweeenveertig.csveed.reader.CsvReader;
-import nl.tweeenveertig.csveed.test.model.BeanSimple;
+import nl.tweeenveertig.csveed.csv.parser.LineReader;
 import org.junit.Test;
 
 import java.io.Reader;
@@ -10,18 +9,18 @@ import java.io.StringReader;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-public class CsvHeaderTest {
+public class HeaderTest {
 
     @Test
     public void checkNumberOfColumns() {
-        CsvHeader header = new CsvHeader(getRow("alpha;beta;gamma"));
+        Header header = new Header(getRow("alpha;beta;gamma"));
         assertFalse(header.checkLine(getRow("1;2;3;4")));
         assertTrue(header.checkLine(getRow("1;2;3")));
     }
 
-    public Row getRow(String row) {
+    public Line getRow(String row) {
         Reader reader = new StringReader(row);
-        CsvReader<BeanSimple> csvReader = new CsvReader<BeanSimple>(BeanSimple.class);
-        return csvReader.readLineUnmapped(reader);
+        LineReader lineReader = new LineReader();
+        return lineReader.readLine(reader);
     }
 }

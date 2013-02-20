@@ -2,8 +2,10 @@ package nl.tweeenveertig.csveed.reader;
 
 import nl.tweeenveertig.csveed.bean.instructions.BeanInstructions;
 import nl.tweeenveertig.csveed.bean.instructions.BeanProperty;
-import nl.tweeenveertig.csveed.csv.structure.CsvHeader;
+import nl.tweeenveertig.csveed.csv.structure.Header;
+import nl.tweeenveertig.csveed.csv.structure.Line;
 import nl.tweeenveertig.csveed.csv.structure.Row;
+import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +13,11 @@ public class NameMatchingStrategy<T> extends AbstractMappingStrategy<T> {
 
     public static final Logger LOG = LoggerFactory.getLogger(NameMatchingStrategy.class);
 
-    public void instruct(BeanInstructions beanInstructions, CsvHeader header, Row row) {
+    public void instruct(BeanInstructions beanInstructions, Header header, Row row) {
+
+        if (header == null) {
+            throw new CsvException("A NameMatchingStrategy requires a header row in the CSV file");
+        }
 
         int indexColumn = 0;
         for (String headerColumn : header.getHeader()) {

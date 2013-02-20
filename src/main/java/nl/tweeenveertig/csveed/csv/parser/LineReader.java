@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
-import nl.tweeenveertig.csveed.csv.structure.Row;
-import nl.tweeenveertig.csveed.csv.structure.RowWithInfo;
+import nl.tweeenveertig.csveed.csv.structure.Line;
+import nl.tweeenveertig.csveed.csv.structure.LineWithInfo;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +16,9 @@ import java.util.List;
 * can support a per-line parse approach as well.
 * @author Robert Bor
 */
-public class RowReader {
+public class LineReader {
 
-    public static final Logger LOG = LoggerFactory.getLogger(RowReader.class);
+    public static final Logger LOG = LoggerFactory.getLogger(LineReader.class);
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
@@ -28,10 +28,10 @@ public class RowReader {
 
     private int headerLine = 0;
 
-    public List<Row> readAllLines(Reader reader) {
-        List<Row> allLines = new ArrayList<Row>();
+    public List<Line> readAllLines(Reader reader) {
+        List<Line> allLines = new ArrayList<Line>();
         while (!stateMachine.isFinished()) {
-            Row row = readLine(reader);
+            Line row = readLine(reader);
             if (row != null && row.size() > 0) {
                 allLines.add(row);
             }
@@ -43,8 +43,8 @@ public class RowReader {
         return stateMachine.isFinished();
     }
 
-    public Row readLine(Reader reader) {
-        RowWithInfo row = new RowWithInfo();
+    public Line readLine(Reader reader) {
+        LineWithInfo line = new LineWithInfo();
         this.currentLine++;
 
         if (isBeforeStartLine()) {
@@ -63,19 +63,19 @@ public class RowReader {
                 token = stateMachine.offerSymbol(symbol);
             } catch (ParseException e) {
                 LOG.error(e.getMessage());
-                throw new CsvException(e.getMessage(), e, row.reportOnEndOfLine(), getCurrentLine());
+                throw new CsvException(e.getMessage(), e, line.reportOnEndOfLine(), getCurrentLine());
             }
             if (stateMachine.isTokenStart()) {
-                row.markStartOfColumn();
+                line.markStartOfColumn();
             }
             if (token != null) {
-                row.addCell(token);
+                line.addCell(token);
             }
-            row.addCharacter(symbol);
+            line.addCharacter(symbol);
         }
-        row = stateMachine.isEmptyLine() ? null : row;
+        line = stateMachine.isEmptyLine() ? null : line;
         stateMachine.newLine();
-        return row;
+        return line;
     }
 
     private boolean isBeforeStartLine() {

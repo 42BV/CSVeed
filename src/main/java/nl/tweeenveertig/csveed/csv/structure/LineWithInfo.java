@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public class RowWithInfo implements Row {
+public class LineWithInfo implements Line {
 
-    public static final Logger LOG = LoggerFactory.getLogger(RowWithInfo.class);
+    public static final Logger LOG = LoggerFactory.getLogger(LineWithInfo.class);
 
     private List<String> cells = new ArrayList<String>();
 

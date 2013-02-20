@@ -5,11 +5,11 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 
-public class RowWithInfoTest {
+public class LineWithInfoTest {
 
     @Test
     public void cellIsNull() {
-        RowWithInfo row = new RowWithInfo();
+        LineWithInfo row = new LineWithInfo();
         row.addCell(null);
         assertEquals(0, row.getCellPosition(0).getStart());
         assertEquals(0, row.getCellPosition(0).getEnd());
@@ -17,7 +17,7 @@ public class RowWithInfoTest {
 
     @Test
     public void cellIsEmpty() {
-        RowWithInfo row = new RowWithInfo();
+        LineWithInfo row = new LineWithInfo();
         row.addCell("");
         assertEquals(0, row.getCellPosition(0).getStart());
         assertEquals(0, row.getCellPosition(0).getEnd());
@@ -25,20 +25,20 @@ public class RowWithInfoTest {
 
     @Test
     public void convertCharacters() {
-        RowWithInfo row = new RowWithInfo();
+        LineWithInfo row = new LineWithInfo();
         assertEquals("\\b", row.convertToPrintable('\b'));
         assertEquals("\\f", row.convertToPrintable('\f'));
     }
 
     @Test
     public void nonExistingCell() {
-        RowWithInfo row = new RowWithInfo();
+        LineWithInfo row = new LineWithInfo();
         assertNull(row.reportOnColumn(0));
     }
 
     @Test
     public void simpleWord() {
-        RowWithInfo row = new RowWithInfo();
+        LineWithInfo row = new LineWithInfo();
         row = addString(row, "Hello");
         RowReport report = row.reportOnColumn(0);
         assertEquals("Hello", report.getRow());
@@ -48,7 +48,7 @@ public class RowWithInfoTest {
 
     @Test
     public void coupleOfWords() {
-        RowWithInfo row = new RowWithInfo();
+        LineWithInfo row = new LineWithInfo();
         row = addString(row, "Alpha");
         row.addCharacter(';');
         row = addString(row, "Beta");
@@ -62,7 +62,7 @@ public class RowWithInfoTest {
 
     @Test
     public void variousNonPrintables() {
-        RowWithInfo row = new RowWithInfo();
+        LineWithInfo row = new LineWithInfo();
         row = addString(row, "Alpha");
         row.addCharacter('\t');
         row = addString(row, "Beta");
@@ -76,7 +76,7 @@ public class RowWithInfoTest {
 
     @Test
     public void reportOnEndOfLine() {
-        RowWithInfo row = new RowWithInfo();
+        LineWithInfo row = new LineWithInfo();
         row = addString(row, "Alpha");
         row.addCharacter('\t');
         row = addString(row, "Beta");
@@ -87,7 +87,7 @@ public class RowWithInfoTest {
         assertEquals(12, report.getEnd());
     }
 
-    protected RowWithInfo addString(RowWithInfo row, String text) {
+    protected LineWithInfo addString(LineWithInfo row, String text) {
         row.markStartOfColumn();
         for (char character : text.toCharArray()) {
             row.addCharacter(character);
