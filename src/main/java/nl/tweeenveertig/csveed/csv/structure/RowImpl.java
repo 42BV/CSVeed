@@ -55,4 +55,9 @@ public class RowImpl implements Row {
     public Iterator<String> iterator() {
         return line.iterator();
     }
+
+    public boolean validNumberOfColumns() {
+        return !hasHeader() || getHeader().checkLine(line);
+    }
+
 }

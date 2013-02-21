@@ -34,7 +34,7 @@ public class BeanParser<T> {
 
     public BeanInstructions<T> getBeanInstructions() {
 
-        BeanInstructions beanInstructions = new BeanInstructions<T>(beanClass);
+        BeanInstructions<T> beanInstructions = new BeanInstructions<T>(beanClass);
 
         Annotation[] annotations = this.beanClass.getAnnotations();
         for (Annotation annotation : annotations) {
@@ -55,11 +55,12 @@ public class BeanParser<T> {
         // use is guaranteed to be the declaration order from JDK 6+, which is exactly what we need.
         for(Field field : this.beanClass.getDeclaredFields()) {
             PropertyDescriptor propertyDescriptor = getPropertyDescriptor(propertyDescriptors, field);
-            if (propertyDescriptor.getWriteMethod() == null) {
+            if (propertyDescriptor == null || propertyDescriptor.getWriteMethod() == null) {
+                LOG.info("Skipping "+beanClass.getName()+"."+field.getName());
                 continue;
             }
             BeanProperty beanProperty = getBeanProperty(propertyDescriptor);
-            if (beanProperty == null) {
+            if (beanProperty == null) { // Happens with @CsvIgnore
                 LOG.info("Ignoring "+beanClass.getName()+"."+field.getName());
             } else {
                 beanInstructions.addProperty(beanProperty);
