@@ -21,6 +21,6 @@ public class HeaderTest {
     public Line getRow(String row) {
         Reader reader = new StringReader(row);
         LineReader lineReader = new LineReader();
-        return lineReader.readLine(reader);
+        return lineReader.readBareLine(reader);
     }
 }

@@ -3,11 +3,9 @@ package nl.tweeenveertig.csveed.reader;
 import nl.tweeenveertig.csveed.bean.instructions.BeanInstructions;
 import nl.tweeenveertig.csveed.bean.instructions.BeanParser;
 import nl.tweeenveertig.csveed.csv.parser.LineReader;
-import nl.tweeenveertig.csveed.csv.structure.Header;
-import nl.tweeenveertig.csveed.csv.structure.Line;
 import nl.tweeenveertig.csveed.csv.structure.Row;
-import nl.tweeenveertig.csveed.csv.structure.RowImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +20,6 @@ public class CsvReader<T> {
     private LineReader lineReader;
 
     private BeanInstructions<T> beanInstructions;
-
-    private Header header;
 
     private AbstractMappingStrategy<T> strategy;
 
@@ -89,26 +85,11 @@ public class CsvReader<T> {
     }
 
     public List<Row> readUnmapped(Reader reader) {
-        List<Row> allRows = new ArrayList<Row>();
-        while (!isFinished()) {
-            Row row = readLineUnmapped(reader);
-            if (row != null && row.size() > 0) {
-                allRows.add(row);
-            }
-        }
-        return allRows;
+        return lineReader.read(reader);
     }
 
     public Row readLineUnmapped(Reader reader) {
-        Line unmappedLine = lineReader.readLine(reader);
-        if (unmappedLine == null) {
-            return null;
-        }
-        if (lineReader.isHeaderLine()) {
-            header = new Header(unmappedLine);
-            unmappedLine = lineReader.readLine(reader);
-        }
-        return new RowImpl(unmappedLine, header);
+        return lineReader.readLine(reader);
     }
 
     public int getCurrentLine() {

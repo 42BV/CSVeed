@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
 import nl.tweeenveertig.csveed.csv.structure.Line;
+import nl.tweeenveertig.csveed.csv.structure.Row;
 import nl.tweeenveertig.csveed.csv.structure.RowReport;
 import org.junit.Test;
 
@@ -26,14 +27,15 @@ public class LineReaderTest {
         LineReader lineReader = new LineReader();
         lineReader.setStartLine(3);
         lineReader.setHeaderLine(3);
-        List<Line> lines = lineReader.readAllLines(reader);
+        List<Row> rows = lineReader.read(reader);
+        assertEquals(2, rows.size());
     }
 
     @Test
     public void roughRide() throws IOException {
         Reader reader = new StringReader("\"alpha\";\"\";;\"beta\";gamma;\"een \"\"echte\"\" test\";\"1\n2\n3\n\"\"regels\"\"\"");
         LineReader lineReader = new LineReader();
-        Line cells = lineReader.readLine(reader);
+        Line cells = lineReader.readBareLine(reader);
         assertEquals(7, cells.size());
         assertEquals("alpha", cells.get(0));
         assertEquals("", cells.get(1));
@@ -48,7 +50,8 @@ public class LineReaderTest {
     public void doubleQuotesAsEscape() throws IOException {
         Reader reader = new StringReader("\"\"\"very literal\"\"\";\"a\"\"b\"\"c\"\n\"abc\";\"first this, \"\"then that\"\"\"");
         LineReader lineReader = new LineReader();
-        checkEscapedStrings(lineReader.readAllLines(reader));
+        lineReader.setHeaderLine(-1);
+        checkEscapedStrings(lineReader.read(reader));
     }
 
     @Test
@@ -56,14 +59,15 @@ public class LineReaderTest {
         SymbolMapping mapping = new SymbolMapping();
         mapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, '\\');
         LineReader lineReader = new LineReader();
+        lineReader.setHeaderLine(-1);
         lineReader.setSymbolMapping(mapping);
 
         Reader reader = new StringReader("\"\\\"very literal\\\"\";\"a\\\"b\\\"c\"\n\"abc\";\"first this, \\\"then that\\\"\"");
-        checkEscapedStrings(lineReader.readAllLines(reader));
+        checkEscapedStrings(lineReader.read(reader));
     }
 
-    private void checkEscapedStrings(List<Line> lines) {
-        Line row = lines.get(0);
+    private void checkEscapedStrings(List<Row> lines) {
+        Row row = lines.get(0);
         assertEquals("\"very literal\"", row.get(0));
         assertEquals("a\"b\"c", row.get(1));
         row = lines.get(1);
@@ -75,7 +79,8 @@ public class LineReaderTest {
     public void readAllLines() throws IOException {
         Reader reader = new StringReader(";;;\n;;;\n;;;\n");
         LineReader lineReader = new LineReader();
-        List<Line> allLines = lineReader.readAllLines(reader);
+        lineReader.setHeaderLine(-1);
+        List<Row> allLines = lineReader.read(reader);
         assertEquals(3, allLines.size());
     }
 
@@ -83,7 +88,7 @@ public class LineReaderTest {
     public void allNumbers() throws IOException {
         Reader reader = new StringReader("17.51;23.19;-100.23;");
         LineReader lineReader = new LineReader();
-        Line row = lineReader.readLine(reader);
+        Line row = lineReader.readBareLine(reader);
         assertEquals(4, row.size());
         assertEquals("17.51", row.get(0));
         assertEquals("23.19", row.get(1));
@@ -95,7 +100,7 @@ public class LineReaderTest {
     public void spacesBeforeAndAfter() {
         Reader reader = new StringReader("    \"alpha\"  ; \"beta\"   ; \"gamma\" ");
         LineReader lineReader = new LineReader();
-        Line row = lineReader.readLine(reader);
+        Line row = lineReader.readBareLine(reader);
         assertEquals(3, row.size());
         assertEquals("alpha", row.get(0));
         assertEquals("beta", row.get(1));
@@ -106,7 +111,7 @@ public class LineReaderTest {
     public void spaceWithoutQuotesFields() {
         Reader reader = new StringReader("    alpha one  ; beta   ; gamma ");
         LineReader lineReader = new LineReader();
-        Line row = lineReader.readLine(reader);
+        Line row = lineReader.readBareLine(reader);
         assertEquals(3, row.size());
         assertEquals("alpha one", row.get(0));
         assertEquals("beta", row.get(1));
@@ -117,7 +122,7 @@ public class LineReaderTest {
     public void reportSimple() {
         Reader reader = new StringReader("17.51;23.19;-100.23");
         LineReader lineReader = new LineReader();
-        Line row = lineReader.readLine(reader);
+        Line row = lineReader.readBareLine(reader);
         RowReport report = row.reportOnColumn(2);
         assertEquals("17.51;23.19;-100.23[EOF]", report.getPrintableLines().get(0));
         assertEquals("            ^-----^     ", report.getPrintableLines().get(1));
@@ -127,7 +132,7 @@ public class LineReaderTest {
     public void reportEscapingAndQuotes() {
         Reader reader = new StringReader("\"alpha\";\"\";;\"b\te\tt\ta\";gamma;\"een \"\"echte\"\" test\";\"1\n2\n3\n\"\"regels\"\"\"");
         LineReader lineReader = new LineReader();
-        Line row = lineReader.readLine(reader);
+        Line row = lineReader.readBareLine(reader);
         RowReport report = row.reportOnColumn(3);
         assertEquals("\"alpha\";\"\";;\"b\\te\\tt\\ta\";gamma;\"een \"\"echte\"\" test\";\"1\\n2\\n3\\n\"\"regels\"\"\"[EOF]", report.getPrintableLines().get(0));
         assertEquals("             ^---------^                                                      ", report.getPrintableLines().get(1));

@@ -1,7 +1,6 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
-import nl.tweeenveertig.csveed.csv.structure.Line;
-import nl.tweeenveertig.csveed.csv.structure.LineWithInfo;
+import nl.tweeenveertig.csveed.csv.structure.*;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,22 +27,36 @@ public class LineReader {
 
     private int headerLine = 0;
 
-    public List<Line> readAllLines(Reader reader) {
-        List<Line> allLines = new ArrayList<Line>();
-        while (!stateMachine.isFinished()) {
-            Line row = readLine(reader);
+    private Header header;
+
+    public List<Row> read(Reader reader) {
+        List<Row> allRows = new ArrayList<Row>();
+        while (!isFinished()) {
+            Row row = readLine(reader);
             if (row != null && row.size() > 0) {
-                allLines.add(row);
+                allRows.add(row);
             }
         }
-        return allLines;
+        return allRows;
+    }
+
+    public Row readLine(Reader reader) {
+        Line unmappedLine = readBareLine(reader);
+        if (unmappedLine == null) {
+            return null;
+        }
+        if (isHeaderLine()) {
+            header = new Header(unmappedLine);
+            unmappedLine = readBareLine(reader);
+        }
+        return new RowImpl(unmappedLine, header);
     }
 
     public boolean isFinished() {
         return stateMachine.isFinished();
     }
 
-    public Line readLine(Reader reader) {
+    public Line readBareLine(Reader reader) {
         LineWithInfo line = new LineWithInfo();
         this.currentLine++;
 
