@@ -29,19 +29,7 @@ public class CsvReader<T> {
 
     public CsvReader(BeanInstructions<T> beanInstructions) {
         this.beanInstructions = beanInstructions;
-        this.lineReader = new LineReader();
-        this.lineReader.setSymbolMapping(beanInstructions.getSymbolMapping());
-        this.lineReader.getSymbolMapping().logSettings();
-        this.lineReader.setStartLine(beanInstructions.getStartRow());
-        LOG.info("- CSV config / start line: "+beanInstructions.getStartRow());
-
-        if (this.beanInstructions.isUseHeader()) {
-            this.lineReader.setHeaderLine(beanInstructions.getStartRow());
-            LOG.info("- CSV config / has structure line? yes");
-        } else {
-            this.lineReader.setHeaderLine(-1);
-            LOG.info("- CSV config / has structure line? no");
-        }
+        this.lineReader = new LineReader(this.beanInstructions.getCsvInstructions());
         LOG.info("- CSV config / mapping strategy: "+beanInstructions.getMappingStrategy());
     }
 

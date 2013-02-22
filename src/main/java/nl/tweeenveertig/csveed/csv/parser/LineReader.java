@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.csv.parser;
 
+import nl.tweeenveertig.csveed.bean.instructions.CsvInstructions;
 import nl.tweeenveertig.csveed.csv.structure.*;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
@@ -28,6 +29,23 @@ public class LineReader {
     private int headerLine = 0;
 
     private Header header;
+
+    public LineReader() {}
+
+    public LineReader(CsvInstructions instructions) {
+        this.setSymbolMapping(instructions.getSymbolMapping());
+        this.getSymbolMapping().logSettings();
+        this.setStartLine(instructions.getStartRow());
+        LOG.info("- CSV config / start line: "+instructions.getStartRow());
+
+        if (instructions.isUseHeader()) {
+            this.setHeaderLine(instructions.getStartRow());
+            LOG.info("- CSV config / has header line? yes");
+        } else {
+            this.setHeaderLine(-1);
+            LOG.info("- CSV config / has header line? no");
+        }
+    }
 
     public List<Row> read(Reader reader) {
         List<Row> allRows = new ArrayList<Row>();

@@ -1,6 +1,5 @@
 package nl.tweeenveertig.csveed.bean.instructions;
 
-import nl.tweeenveertig.csveed.csv.parser.SymbolMapping;
 import nl.tweeenveertig.csveed.reader.AbstractMappingStrategy;
 import nl.tweeenveertig.csveed.reader.ColumnIndexStrategy;
 import nl.tweeenveertig.csveed.report.CsvException;
@@ -10,11 +9,7 @@ import java.util.List;
 
 public class BeanInstructions<T> {
 
-    private SymbolMapping symbolMapping = new SymbolMapping();
-
-    private boolean useHeader = true;
-
-    private int startRow = 0;
+    private CsvInstructions csvInstructions = new CsvInstructions();
 
     private List<BeanProperty> properties = new ArrayList<BeanProperty>();
 
@@ -38,28 +33,16 @@ public class BeanInstructions<T> {
         }
     }
 
-    public SymbolMapping getSymbolMapping() {
-        return symbolMapping;
-    }
-
-    public void setSymbolMapping(SymbolMapping symbolMapping) {
-        this.symbolMapping = symbolMapping;
-    }
-
-    public boolean isUseHeader() {
-        return useHeader;
+    public CsvInstructions getCsvInstructions() {
+        return this.csvInstructions;
     }
 
     public void setUseHeader(boolean useHeader) {
-        this.useHeader = useHeader;
-    }
-
-    public int getStartRow() {
-        return startRow;
+        this.csvInstructions.setUseHeader(useHeader);
     }
 
     public void setStartRow(int startRow) {
-        this.startRow = startRow;
+        this.csvInstructions.setStartRow(startRow);
     }
 
     public void addProperty(BeanProperty beanProperty) {

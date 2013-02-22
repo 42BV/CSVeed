@@ -2,8 +2,6 @@ package nl.tweeenveertig.csveed.bean.instructions;
 
 import nl.tweeenveertig.csveed.bean.annotations.*;
 
-import nl.tweeenveertig.csveed.csv.parser.EncounteredSymbol;
-import nl.tweeenveertig.csveed.csv.parser.SymbolMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -110,13 +108,10 @@ public class BeanParser<T> {
 
     private BeanInstructions parseCsvFile(BeanInstructions beanInstructions, CsvFile csvFile) {
 
-        SymbolMapping symbolMapping = new SymbolMapping();
-        symbolMapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, csvFile.escape());
-        symbolMapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, csvFile.quote());
-        symbolMapping.addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, csvFile.separator());
-        symbolMapping.addMapping(EncounteredSymbol.EOL_SYMBOL, csvFile.endOfLine());
-        beanInstructions.setSymbolMapping(symbolMapping);
-
+        beanInstructions.getCsvInstructions().setEscape(csvFile.escape());
+        beanInstructions.getCsvInstructions().setQuote(csvFile.quote());
+        beanInstructions.getCsvInstructions().setSeparator(csvFile.separator());
+        beanInstructions.getCsvInstructions().setEndOfLine(csvFile.endOfLine());
         beanInstructions.setMappingStrategy(csvFile.mappingStrategy());
         beanInstructions.setStartRow(csvFile.startRow());
         beanInstructions.setUseHeader(csvFile.useHeader());
