@@ -10,7 +10,7 @@ import java.util.*;
 
 public class BeanProperties implements Iterable<BeanProperty> {
 
-    public static final Logger LOG = LoggerFactory.getLogger(BeanParser.class);
+    public static final Logger LOG = LoggerFactory.getLogger(BeanProperties.class);
 
     private List<BeanProperty> properties = new ArrayList<BeanProperty>();
 

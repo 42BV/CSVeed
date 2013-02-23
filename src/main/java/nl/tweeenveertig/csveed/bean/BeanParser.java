@@ -9,9 +9,6 @@ import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-/**
-*
-*/
 public class BeanParser<T> {
 
     private BeanReaderInstructions<T> beanReaderInstructions;
