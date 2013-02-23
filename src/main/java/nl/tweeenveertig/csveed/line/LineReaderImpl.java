@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.line;
 
+import nl.tweeenveertig.csveed.api.LineReader;
 import nl.tweeenveertig.csveed.api.LineReaderInstructions;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
@@ -19,7 +20,7 @@ import java.util.List;
 * can support a per-line parse approach as well.
 * @author Robert Bor
 */
-public class LineReaderImpl {
+public class LineReaderImpl implements LineReader {
 
     public static final Logger LOG = LoggerFactory.getLogger(LineReaderImpl.class);
 

@@ -2,6 +2,7 @@ package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.api.BeanReader;
 import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
+import nl.tweeenveertig.csveed.api.LineReader;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.line.LineReaderImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
@@ -16,7 +17,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     public static final Logger LOG = LoggerFactory.getLogger(BeanReaderImpl.class);
 
-    private LineReaderImpl lineReader;
+    private LineReader lineReader;
 
     private BeanReaderInstructionsImpl<T> beanReaderInstructions;
 
@@ -51,6 +52,14 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return getStrategy(unmappedRow).convert(instantiateBean(), unmappedRow, getCurrentLine());
     }
 
+    public int getCurrentLine() {
+        return this.lineReader.getCurrentLine();
+    }
+
+    public boolean isFinished() {
+        return lineReader.isFinished();
+    }
+
     protected AbstractMappingStrategy<T> getStrategy(Row unmappedRow) {
         if (strategy == null) {
             strategy = beanReaderInstructions.createMappingStrategy();
@@ -69,14 +78,6 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
             LOG.error(errorMessage);
             throw new CsvException(errorMessage, err);
         }
-    }
-
-    public int getCurrentLine() {
-        return this.lineReader.getCurrentLine();
-    }
-
-    public boolean isFinished() {
-        return lineReader.isFinished();
     }
 
 }
