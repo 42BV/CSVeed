@@ -1,8 +1,9 @@
 package nl.tweeenveertig.csveed.bean;
 
+import nl.tweeenveertig.csveed.api.BeanReader;
 import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
 import nl.tweeenveertig.csveed.api.Row;
-import nl.tweeenveertig.csveed.line.LineReader;
+import nl.tweeenveertig.csveed.line.LineReaderImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,23 +12,23 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BeanReader<T> {
+public class BeanReaderImpl<T> implements BeanReader<T> {
 
-    public static final Logger LOG = LoggerFactory.getLogger(BeanReader.class);
+    public static final Logger LOG = LoggerFactory.getLogger(BeanReaderImpl.class);
 
-    private LineReader lineReader;
+    private LineReaderImpl lineReader;
 
     private BeanReaderInstructionsImpl<T> beanReaderInstructions;
 
     private AbstractMappingStrategy<T> strategy;
 
-    public BeanReader(Class<T> beanClass) {
+    public BeanReaderImpl(Class<T> beanClass) {
         this(new BeanParser<T>().getBeanInstructions(beanClass));
     }
 
-    public BeanReader(BeanReaderInstructions<T> beanReaderInstructions) {
+    public BeanReaderImpl(BeanReaderInstructions<T> beanReaderInstructions) {
         this.beanReaderInstructions = (BeanReaderInstructionsImpl<T>)beanReaderInstructions;
-        this.lineReader = new LineReader(this.beanReaderInstructions.getLineReaderInstructions());
+        this.lineReader = new LineReaderImpl(this.beanReaderInstructions.getLineReaderInstructions());
         LOG.info("- CSV config / mapping strategy: "+ this.beanReaderInstructions.getMappingStrategy());
     }
 
@@ -43,7 +44,7 @@ public class BeanReader<T> {
     }
 
     public T readLine(Reader reader) {
-        Row unmappedRow = readLineUnmapped(reader);
+        Row unmappedRow = lineReader.readLine(reader);
         if (unmappedRow == null) {
             return null;
         }
@@ -68,14 +69,6 @@ public class BeanReader<T> {
             LOG.error(errorMessage);
             throw new CsvException(errorMessage, err);
         }
-    }
-
-    public List<Row> readUnmapped(Reader reader) {
-        return lineReader.read(reader);
-    }
-
-    public Row readLineUnmapped(Reader reader) {
-        return lineReader.readLine(reader);
     }
 
     public int getCurrentLine() {

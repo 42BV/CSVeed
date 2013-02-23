@@ -9,7 +9,7 @@ import java.beans.PropertyEditor;
 
 public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> {
 
-    private LineReaderInstructionsImpl lineReaderInstructionsImpl = new LineReaderInstructionsImpl();
+    private LineReaderInstructions lineReaderInstructions = new LineReaderInstructionsImpl();
 
     private BeanProperties properties;
 
@@ -35,36 +35,36 @@ public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> 
     }
 
     public LineReaderInstructions getLineReaderInstructions() {
-        return this.lineReaderInstructionsImpl;
+        return this.lineReaderInstructions;
     }
 
     public BeanReaderInstructions<T> setUseHeader(boolean useHeader) {
-        this.lineReaderInstructionsImpl.setUseHeader(useHeader);
+        this.lineReaderInstructions.setUseHeader(useHeader);
         return this;
     }
 
     public BeanReaderInstructions<T> setStartRow(int startRow) {
-        this.lineReaderInstructionsImpl.setStartRow(startRow);
+        this.lineReaderInstructions.setStartRow(startRow);
         return this;
     }
 
     public BeanReaderInstructions<T> setEscape(char symbol) {
-        this.lineReaderInstructionsImpl.setEscape(symbol);
+        this.lineReaderInstructions.setEscape(symbol);
         return this;
     }
 
     public BeanReaderInstructions<T> setQuote(char symbol) {
-        this.lineReaderInstructionsImpl.setQuote(symbol);
+        this.lineReaderInstructions.setQuote(symbol);
         return this;
     }
 
     public BeanReaderInstructions<T> setSeparator(char symbol) {
-        this.lineReaderInstructionsImpl.setSeparator(symbol);
+        this.lineReaderInstructions.setSeparator(symbol);
         return this;
     }
 
     public BeanReaderInstructions<T> setEndOfLine(char[] symbols) {
-        this.lineReaderInstructionsImpl.setEndOfLine(symbols);
+        this.lineReaderInstructions.setEndOfLine(symbols);
         return this;
     }
 

@@ -19,9 +19,9 @@ import java.util.List;
 * can support a per-line parse approach as well.
 * @author Robert Bor
 */
-public class LineReader {
+public class LineReaderImpl {
 
-    public static final Logger LOG = LoggerFactory.getLogger(LineReader.class);
+    public static final Logger LOG = LoggerFactory.getLogger(LineReaderImpl.class);
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
@@ -33,20 +33,25 @@ public class LineReader {
 
     private Header header;
 
-    public LineReader() {}
+    public LineReaderImpl() {
+        this(new LineReaderInstructionsImpl());
+    }
 
-    public LineReader(LineReaderInstructions instructionsInterface) {
-        LineReaderInstructionsImpl instructions = (LineReaderInstructionsImpl)instructionsInterface;
-        this.setSymbolMapping(instructions.getSymbolMapping());
-        this.getSymbolMapping().logSettings();
-        this.setStartLine(instructions.getStartRow());
+    public LineReaderImpl(LineReaderInstructions instructionsInterface) {
+        init((LineReaderInstructionsImpl) instructionsInterface);
+    }
+
+    private void init(LineReaderInstructionsImpl instructions) {
+        this.stateMachine.setSymbolMapping(instructions.getSymbolMapping());
+        this.stateMachine.getSymbolMapping().logSettings();
+        this.startLine = instructions.getStartRow();
         LOG.info("- CSV config / start line: "+instructions.getStartRow());
 
         if (instructions.isUseHeader()) {
-            this.setHeaderLine(instructions.getStartRow());
+            this.headerLine = instructions.getStartRow();
             LOG.info("- CSV config / has header line? yes");
         } else {
-            this.setHeaderLine(-1);
+            this.headerLine = -1;
             LOG.info("- CSV config / has header line? no");
         }
     }
@@ -78,7 +83,11 @@ public class LineReader {
         return stateMachine.isFinished();
     }
 
-    public Line readBareLine(Reader reader) {
+    public int getCurrentLine() {
+        return this.currentLine;
+    }
+
+    protected Line readBareLine(Reader reader) {
         LineWithInfo line = new LineWithInfo();
         this.currentLine++;
 
@@ -134,27 +143,7 @@ public class LineReader {
         }
     }
 
-    public int getCurrentLine() {
-        return this.currentLine;
-    }
-
-    public void setSymbolMapping(SymbolMapping symbolMapping) {
-        this.stateMachine.setSymbolMapping(symbolMapping);
-    }
-
-    public SymbolMapping getSymbolMapping() {
-        return this.stateMachine.getSymbolMapping();
-    }
-
-    public void setStartLine(int startLine) {
-        this.startLine = startLine;
-    }
-
-    public void setHeaderLine(int headerLine) {
-        this.headerLine = headerLine;
-    }
-
-    public boolean isHeaderLine() {
+    private boolean isHeaderLine() {
         return getCurrentLine() == this.headerLine;
     }
 

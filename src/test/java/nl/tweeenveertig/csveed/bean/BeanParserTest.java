@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.bean;
 
+import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
 import nl.tweeenveertig.csveed.test.model.BeanWithoutGettersAndSetters;
 import org.junit.Test;
 
@@ -11,7 +12,8 @@ public class BeanParserTest {
     public void noGettersAndSetters() {
         BeanParser<BeanWithoutGettersAndSetters> beanParser =
                 new BeanParser<BeanWithoutGettersAndSetters>();
-        BeanReaderInstructionsImpl<BeanWithoutGettersAndSetters> instructions = beanParser.getBeanInstructions(BeanWithoutGettersAndSetters.class);
-        assertNull(instructions.getBeanPropertyWithName("a"));
+        BeanReaderInstructions<BeanWithoutGettersAndSetters> instructions =
+                beanParser.getBeanInstructions(BeanWithoutGettersAndSetters.class);
+        assertNull(((BeanReaderInstructionsImpl)instructions).getBeanPropertyWithName("a"));
     }
 }

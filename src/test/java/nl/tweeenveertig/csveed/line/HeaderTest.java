@@ -19,7 +19,7 @@ public class HeaderTest {
 
     public Line getRow(String row) {
         Reader reader = new StringReader(row);
-        LineReader lineReader = new LineReader();
+        LineReaderImpl lineReader = new LineReaderImpl();
         return lineReader.readBareLine(reader);
     }
 }

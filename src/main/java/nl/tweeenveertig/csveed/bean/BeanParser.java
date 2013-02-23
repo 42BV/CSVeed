@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.annotations.*;
+import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 import java.lang.annotation.Annotation;
@@ -13,13 +14,13 @@ import java.text.SimpleDateFormat;
 */
 public class BeanParser<T> {
 
-    private BeanReaderInstructionsImpl<T> beanReaderInstructionsImpl;
+    private BeanReaderInstructions<T> beanReaderInstructions;
 
     private int columnIndex = 0;
 
-    public BeanReaderInstructionsImpl<T> getBeanInstructions(Class<T> beanClass) {
+    public BeanReaderInstructions<T> getBeanInstructions(Class<T> beanClass) {
 
-        this.beanReaderInstructionsImpl = new BeanReaderInstructionsImpl<T>(beanClass);
+        this.beanReaderInstructions = new BeanReaderInstructionsImpl<T>(beanClass);
 
         Annotation[] annotations = beanClass.getAnnotations();
         for (Annotation annotation : annotations) {
@@ -28,11 +29,11 @@ public class BeanParser<T> {
             }
         }
 
-        for (BeanProperty beanProperty : beanReaderInstructionsImpl.getProperties()) {
+        for (BeanProperty beanProperty : ((BeanReaderInstructionsImpl<T>)beanReaderInstructions).getProperties()) {
             checkForAnnotations(beanProperty);
         }
 
-        return this.beanReaderInstructionsImpl;
+        return this.beanReaderInstructions;
     }
 
     public void checkForAnnotations(BeanProperty beanProperty) {
@@ -48,16 +49,16 @@ public class BeanParser<T> {
             } else if (annotation instanceof CsvDate) {
                 parseCsvDate(propertyName, (CsvDate)annotation);
             } else if (annotation instanceof CsvIgnore) {
-                this.beanReaderInstructionsImpl.ignoreProperty(propertyName);
+                this.beanReaderInstructions.ignoreProperty(propertyName);
                 return;
             }
         }
-        this.beanReaderInstructionsImpl.mapIndexToProperty(columnIndex++, propertyName);
+        this.beanReaderInstructions.mapIndexToProperty(columnIndex++, propertyName);
     }
 
     private void parseCsvFile(CsvFile csvFile) {
 
-        this.beanReaderInstructionsImpl
+        this.beanReaderInstructions
             .setEscape(csvFile.escape())
             .setQuote(csvFile.quote())
             .setSeparator(csvFile.separator())
@@ -70,12 +71,12 @@ public class BeanParser<T> {
 
     private void parseCsvDate(String propertyName, CsvDate csvDate) {
         DateFormat dateFormat = new SimpleDateFormat(csvDate.format());
-        this.beanReaderInstructionsImpl.setConverter(propertyName, new CustomDateEditor(dateFormat, true));
+        this.beanReaderInstructions.setConverter(propertyName, new CustomDateEditor(dateFormat, true));
     }
 
     private void parseCsvConverter(String propertyName, CsvConverter csvConverter) {
         try {
-            this.beanReaderInstructionsImpl.setConverter(propertyName, csvConverter.converter().newInstance());
+            this.beanReaderInstructions.setConverter(propertyName, csvConverter.converter().newInstance());
         } catch (Exception err) {
             throw new RuntimeException(err);
         }
@@ -83,8 +84,8 @@ public class BeanParser<T> {
 
     private void parseCsvCell(String propertyName, CsvCell csvCell) {
         String columnName = (csvCell.name() == null || csvCell.name().equals("")) ? propertyName : csvCell.name();
-        this.beanReaderInstructionsImpl.mapNameToProperty(columnName, propertyName);
-        this.beanReaderInstructionsImpl.setRequired(propertyName, csvCell.required());
+        this.beanReaderInstructions.mapNameToProperty(columnName, propertyName);
+        this.beanReaderInstructions.setRequired(propertyName, csvCell.required());
         columnIndex = csvCell.indexColumn() != -1 ? csvCell.indexColumn() : columnIndex;
     }
 
