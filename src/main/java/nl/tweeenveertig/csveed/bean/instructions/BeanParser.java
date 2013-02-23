@@ -57,7 +57,7 @@ public class BeanParser<T> {
                 LOG.info("Skipping "+beanClass.getName()+"."+field.getName());
                 continue;
             }
-            BeanProperty beanProperty = getBeanProperty(propertyDescriptor);
+            BeanProperty beanProperty = getBeanProperty(field, propertyDescriptor);
             if (beanProperty == null) { // Happens with @CsvIgnore
                 LOG.info("Ignoring "+beanClass.getName()+"."+field.getName());
             } else {
@@ -77,18 +77,11 @@ public class BeanParser<T> {
         return null;
     }
 
-    public BeanProperty getBeanProperty(PropertyDescriptor propertyDescriptor) {
+    public BeanProperty getBeanProperty(Field currentField, PropertyDescriptor propertyDescriptor) {
 
         BeanProperty beanProperty = new BeanProperty();
         beanProperty.setPropertyDescriptor(propertyDescriptor);
         beanProperty.setName(propertyDescriptor.getName());
-
-        final Field currentField;
-        try {
-            currentField = this.beanClass.getDeclaredField(propertyDescriptor.getName());
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
 
         Annotation[] annotations = currentField.getDeclaredAnnotations();
         for (Annotation annotation : annotations) {
@@ -108,15 +101,15 @@ public class BeanParser<T> {
 
     private BeanInstructions parseCsvFile(BeanInstructions beanInstructions, CsvFile csvFile) {
 
-        beanInstructions.getCsvInstructions().setEscape(csvFile.escape());
-        beanInstructions.getCsvInstructions().setQuote(csvFile.quote());
-        beanInstructions.getCsvInstructions().setSeparator(csvFile.separator());
-        beanInstructions.getCsvInstructions().setEndOfLine(csvFile.endOfLine());
-        beanInstructions.setMappingStrategy(csvFile.mappingStrategy());
-        beanInstructions.setStartRow(csvFile.startRow());
-        beanInstructions.setUseHeader(csvFile.useHeader());
+        return beanInstructions
+                .setEscape(csvFile.escape())
+                .setQuote(csvFile.quote())
+                .setSeparator(csvFile.separator())
+                .setEndOfLine(csvFile.endOfLine())
+                .setMappingStrategy(csvFile.mappingStrategy())
+                .setStartRow(csvFile.startRow())
+                .setUseHeader(csvFile.useHeader());
 
-        return beanInstructions;
     }
 
     private BeanProperty parseCsvDate(BeanProperty beanProperty, CsvDate csvDate) {

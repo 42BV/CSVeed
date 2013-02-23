@@ -37,12 +37,43 @@ public class BeanInstructions<T> {
         return this.csvInstructions;
     }
 
-    public void setUseHeader(boolean useHeader) {
+    public BeanInstructions<T> setUseHeader(boolean useHeader) {
         this.csvInstructions.setUseHeader(useHeader);
+        return this;
     }
 
-    public void setStartRow(int startRow) {
+    public BeanInstructions<T> setStartRow(int startRow) {
         this.csvInstructions.setStartRow(startRow);
+        return this;
+    }
+
+    public BeanInstructions<T> setEscape(char symbol) {
+        this.csvInstructions.setEscape(symbol);
+        return this;
+    }
+
+    public BeanInstructions<T> setQuote(char symbol) {
+        this.csvInstructions.setQuote(symbol);
+        return this;
+    }
+
+    public BeanInstructions<T> setSeparator(char symbol) {
+        this.csvInstructions.setSeparator(symbol);
+        return this;
+    }
+
+    public BeanInstructions<T> setEndOfLine(char[] symbols) {
+        this.csvInstructions.setEndOfLine(symbols);
+        return this;
+    }
+
+    public BeanInstructions<T> setMappingStrategy(Class<? extends AbstractMappingStrategy> mappingStrategy) {
+        this.mappingStrategy = mappingStrategy;
+        return this;
+    }
+
+    public Class<? extends AbstractMappingStrategy> getMappingStrategy() {
+        return this.mappingStrategy;
     }
 
     public void addProperty(BeanProperty beanProperty) {
@@ -80,11 +111,4 @@ public class BeanInstructions<T> {
         }
     }
 
-    public Class<? extends AbstractMappingStrategy> getMappingStrategy() {
-        return this.mappingStrategy;
-    }
-
-    public void setMappingStrategy(Class<? extends AbstractMappingStrategy> mappingStrategy) {
-        this.mappingStrategy = mappingStrategy;
-    }
 }
