@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.reader;
 
-import nl.tweeenveertig.csveed.csv.structure.Line;
-import nl.tweeenveertig.csveed.csv.structure.Row;
+import nl.tweeenveertig.csveed.api.Row;
+import nl.tweeenveertig.csveed.bean.CsvReader;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.test.model.*;
 import org.junit.Test;

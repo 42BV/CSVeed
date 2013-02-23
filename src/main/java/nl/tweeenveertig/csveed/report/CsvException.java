@@ -1,7 +1,5 @@
 package nl.tweeenveertig.csveed.report;
 
-import nl.tweeenveertig.csveed.csv.structure.RowReport;
-
 public class CsvException extends RuntimeException {
 
     private RowReport report;

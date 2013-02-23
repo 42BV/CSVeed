@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.test.model;
 
-import nl.tweeenveertig.csveed.bean.annotations.CsvFile;
-import nl.tweeenveertig.csveed.bean.annotations.CsvIgnore;
+import nl.tweeenveertig.csveed.annotations.CsvFile;
+import nl.tweeenveertig.csveed.annotations.CsvIgnore;
 
 @CsvFile(useHeader = false)
 public class BeanLotsOfIgnores {

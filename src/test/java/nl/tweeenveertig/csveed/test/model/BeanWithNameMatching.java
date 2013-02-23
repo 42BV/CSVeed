@@ -1,8 +1,8 @@
 package nl.tweeenveertig.csveed.test.model;
 
-import nl.tweeenveertig.csveed.bean.annotations.CsvCell;
-import nl.tweeenveertig.csveed.bean.annotations.CsvFile;
-import nl.tweeenveertig.csveed.reader.NameMatchingStrategy;
+import nl.tweeenveertig.csveed.annotations.CsvCell;
+import nl.tweeenveertig.csveed.annotations.CsvFile;
+import nl.tweeenveertig.csveed.bean.NameMatchingStrategy;
 
 @CsvFile(mappingStrategy = NameMatchingStrategy.class)
 public class BeanWithNameMatching {

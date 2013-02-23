@@ -1,6 +1,6 @@
 package nl.tweeenveertig.csveed.test.model;
 
-import nl.tweeenveertig.csveed.bean.annotations.CsvDate;
+import nl.tweeenveertig.csveed.annotations.CsvDate;
 
 import java.util.Date;
 

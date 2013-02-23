@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.test.model;
 
-import nl.tweeenveertig.csveed.bean.annotations.CsvDate;
-import nl.tweeenveertig.csveed.bean.annotations.CsvFile;
+import nl.tweeenveertig.csveed.annotations.CsvDate;
+import nl.tweeenveertig.csveed.annotations.CsvFile;
 
 import java.util.Date;
 
