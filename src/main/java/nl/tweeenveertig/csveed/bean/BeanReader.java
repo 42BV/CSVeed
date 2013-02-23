@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.bean;
 
+import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.line.LineReader;
 import nl.tweeenveertig.csveed.report.CsvException;
@@ -16,7 +17,7 @@ public class BeanReader<T> {
 
     private LineReader lineReader;
 
-    private BeanReaderInstructionsImpl<T> beanReaderInstructionsImpl;
+    private BeanReaderInstructionsImpl<T> beanReaderInstructions;
 
     private AbstractMappingStrategy<T> strategy;
 
@@ -24,10 +25,10 @@ public class BeanReader<T> {
         this(new BeanParser<T>().getBeanInstructions(beanClass));
     }
 
-    public BeanReader(BeanReaderInstructionsImpl<T> beanReaderInstructionsImpl) {
-        this.beanReaderInstructionsImpl = beanReaderInstructionsImpl;
-        this.lineReader = new LineReader(this.beanReaderInstructionsImpl.getLineReaderInstructions());
-        LOG.info("- CSV config / mapping strategy: "+ beanReaderInstructionsImpl.getMappingStrategy());
+    public BeanReader(BeanReaderInstructions<T> beanReaderInstructions) {
+        this.beanReaderInstructions = (BeanReaderInstructionsImpl<T>)beanReaderInstructions;
+        this.lineReader = new LineReader(this.beanReaderInstructions.getLineReaderInstructions());
+        LOG.info("- CSV config / mapping strategy: "+ this.beanReaderInstructions.getMappingStrategy());
     }
 
     public List<T> read(Reader reader) {
@@ -51,18 +52,18 @@ public class BeanReader<T> {
 
     protected AbstractMappingStrategy<T> getStrategy(Row unmappedRow) {
         if (strategy == null) {
-            strategy = beanReaderInstructionsImpl.createMappingStrategy();
-            strategy.instruct(beanReaderInstructionsImpl, unmappedRow);
+            strategy = beanReaderInstructions.createMappingStrategy();
+            strategy.instruct(beanReaderInstructions, unmappedRow);
         }
         return strategy;
     }
 
     private T instantiateBean() {
         try {
-            return this.beanReaderInstructionsImpl.newInstance();
+            return this.beanReaderInstructions.newInstance();
         } catch (Exception err) {
             String errorMessage =
-                    "Unable to instantiate the bean class "+this.beanReaderInstructionsImpl.getBeanClass().getName()+
+                    "Unable to instantiate the bean class "+this.beanReaderInstructions.getBeanClass().getName()+
                     ". Does it have a no-arg public constructor?";
             LOG.error(errorMessage);
             throw new CsvException(errorMessage, err);

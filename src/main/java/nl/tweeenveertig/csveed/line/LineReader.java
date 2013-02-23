@@ -35,7 +35,8 @@ public class LineReader {
 
     public LineReader() {}
 
-    public LineReader(LineReaderInstructions instructions) {
+    public LineReader(LineReaderInstructions instructionsInterface) {
+        LineReaderInstructionsImpl instructions = (LineReaderInstructionsImpl)instructionsInterface;
         this.setSymbolMapping(instructions.getSymbolMapping());
         this.getSymbolMapping().logSettings();
         this.setStartLine(instructions.getStartRow());

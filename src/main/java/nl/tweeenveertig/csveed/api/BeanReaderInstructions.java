@@ -1,18 +1,10 @@
 package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.AbstractMappingStrategy;
-import nl.tweeenveertig.csveed.bean.BeanProperties;
-import nl.tweeenveertig.csveed.bean.BeanProperty;
 
 import java.beans.PropertyEditor;
 
 public interface BeanReaderInstructions<T> {
-
-    Class<T> getBeanClass();
-
-    T newInstance();
-
-    LineReaderInstructions getLineReaderInstructions();
 
     BeanReaderInstructions<T> setUseHeader(boolean useHeader);
 
@@ -38,14 +30,4 @@ public interface BeanReaderInstructions<T> {
 
     BeanReaderInstructions<T> mapNameToProperty(String columnName, String propertyName);
 
-    Class<? extends AbstractMappingStrategy> getMappingStrategy();
-
-    BeanProperties getProperties();
-
-    BeanProperty getBeanPropertyWithName(String columnName);
-
-    BeanProperty getBeanPropertyWithIndex(int columnIndex);
-
-    AbstractMappingStrategy<T> createMappingStrategy();
-    
 }
