@@ -8,11 +8,11 @@ public class NameMatchingStrategy<T> extends AbstractMappingStrategy<T> {
 
     public static final Logger LOG = LoggerFactory.getLogger(NameMatchingStrategy.class);
 
-    public void instruct(BeanInstructions beanInstructions, Row row) {
+    public void instruct(BeanReaderInstructionsImpl beanReaderInstructionsImpl, Row row) {
 
         int indexColumn = 0;
         for (String headerColumn : row.getHeader()) {
-            BeanProperty beanProperty = beanInstructions.getBeanPropertyWithName(headerColumn);
+            BeanProperty beanProperty = beanReaderInstructionsImpl.getBeanPropertyWithName(headerColumn);
             if (beanProperty == null) {
                 LOG.info("Column index "+indexColumn+ ": ["+headerColumn+"] -> no match");
                 indexColumn++;

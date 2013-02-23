@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.line;
 
+import nl.tweeenveertig.csveed.api.LineReaderInstructions;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.token.ParseException;
@@ -34,7 +35,7 @@ public class LineReader {
 
     public LineReader() {}
 
-    public LineReader(CsvInstructions instructions) {
+    public LineReader(LineReaderInstructions instructions) {
         this.setSymbolMapping(instructions.getSymbolMapping());
         this.getSymbolMapping().logSettings();
         this.setStartLine(instructions.getStartRow());

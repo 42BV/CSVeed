@@ -27,13 +27,4 @@ public class CsvException extends RuntimeException {
         return lineNumber;
     }
 
-//    public String getMessage() {
-//        StringBuilder returnString = new StringBuilder();
-//        returnString.append(super.getMessage());
-//        for (String line : getReport().getPrintableLines()) {
-//            returnString.append("\n"+lineNumber+": "+line);
-//        }
-//        return returnString.toString();
-//    }
-
 }

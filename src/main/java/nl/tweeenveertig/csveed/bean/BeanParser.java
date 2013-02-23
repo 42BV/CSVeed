@@ -13,13 +13,13 @@ import java.text.SimpleDateFormat;
 */
 public class BeanParser<T> {
 
-    private BeanInstructions<T> beanInstructions;
+    private BeanReaderInstructionsImpl<T> beanReaderInstructionsImpl;
 
     private int columnIndex = 0;
 
-    public BeanInstructions<T> getBeanInstructions(Class<T> beanClass) {
+    public BeanReaderInstructionsImpl<T> getBeanInstructions(Class<T> beanClass) {
 
-        this.beanInstructions = new BeanInstructions<T>(beanClass);
+        this.beanReaderInstructionsImpl = new BeanReaderInstructionsImpl<T>(beanClass);
 
         Annotation[] annotations = beanClass.getAnnotations();
         for (Annotation annotation : annotations) {
@@ -28,11 +28,11 @@ public class BeanParser<T> {
             }
         }
 
-        for (BeanProperty beanProperty : beanInstructions.getProperties()) {
+        for (BeanProperty beanProperty : beanReaderInstructionsImpl.getProperties()) {
             checkForAnnotations(beanProperty);
         }
 
-        return this.beanInstructions;
+        return this.beanReaderInstructionsImpl;
     }
 
     public void checkForAnnotations(BeanProperty beanProperty) {
@@ -48,16 +48,16 @@ public class BeanParser<T> {
             } else if (annotation instanceof CsvDate) {
                 parseCsvDate(propertyName, (CsvDate)annotation);
             } else if (annotation instanceof CsvIgnore) {
-                this.beanInstructions.ignoreProperty(propertyName);
+                this.beanReaderInstructionsImpl.ignoreProperty(propertyName);
                 return;
             }
         }
-        this.beanInstructions.mapIndexToProperty(columnIndex++, propertyName);
+        this.beanReaderInstructionsImpl.mapIndexToProperty(columnIndex++, propertyName);
     }
 
     private void parseCsvFile(CsvFile csvFile) {
 
-        this.beanInstructions
+        this.beanReaderInstructionsImpl
             .setEscape(csvFile.escape())
             .setQuote(csvFile.quote())
             .setSeparator(csvFile.separator())
@@ -70,12 +70,12 @@ public class BeanParser<T> {
 
     private void parseCsvDate(String propertyName, CsvDate csvDate) {
         DateFormat dateFormat = new SimpleDateFormat(csvDate.format());
-        this.beanInstructions.setConverter(propertyName, new CustomDateEditor(dateFormat, true));
+        this.beanReaderInstructionsImpl.setConverter(propertyName, new CustomDateEditor(dateFormat, true));
     }
 
     private void parseCsvConverter(String propertyName, CsvConverter csvConverter) {
         try {
-            this.beanInstructions.setConverter(propertyName, csvConverter.converter().newInstance());
+            this.beanReaderInstructionsImpl.setConverter(propertyName, csvConverter.converter().newInstance());
         } catch (Exception err) {
             throw new RuntimeException(err);
         }
@@ -83,8 +83,8 @@ public class BeanParser<T> {
 
     private void parseCsvCell(String propertyName, CsvCell csvCell) {
         String columnName = (csvCell.name() == null || csvCell.name().equals("")) ? propertyName : csvCell.name();
-        this.beanInstructions.mapNameToProperty(columnName, propertyName);
-        this.beanInstructions.setRequired(propertyName, csvCell.required());
+        this.beanReaderInstructionsImpl.mapNameToProperty(columnName, propertyName);
+        this.beanReaderInstructionsImpl.setRequired(propertyName, csvCell.required());
         columnIndex = csvCell.indexColumn() != -1 ? csvCell.indexColumn() : columnIndex;
     }
 

@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.reader;
 
 import nl.tweeenveertig.csveed.api.Row;
-import nl.tweeenveertig.csveed.bean.CsvReader;
+import nl.tweeenveertig.csveed.bean.BeanReader;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.test.model.*;
 import org.junit.Test;
@@ -24,8 +24,8 @@ public class CsvReaderTest {
             "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"+
             "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\""
         );
-        CsvReader<BeanWithMultipleStrings> csvReader = new CsvReader<BeanWithMultipleStrings>(BeanWithMultipleStrings.class);
-        List<Row> rows = csvReader.readUnmapped(reader);
+        BeanReader<BeanWithMultipleStrings> beanReader = new BeanReader<BeanWithMultipleStrings>(BeanWithMultipleStrings.class);
+        List<Row> rows = beanReader.readUnmapped(reader);
         assertEquals(3, rows.size());
     }
 
@@ -37,8 +37,8 @@ public class CsvReaderTest {
             "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"+
             "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\""
         );
-        CsvReader<BeanWithMultipleStrings> csvReader = new CsvReader<BeanWithMultipleStrings>(BeanWithMultipleStrings.class);
-        List<BeanWithMultipleStrings> beans = csvReader.read(reader);
+        BeanReader<BeanWithMultipleStrings> beanReader = new BeanReader<BeanWithMultipleStrings>(BeanWithMultipleStrings.class);
+        List<BeanWithMultipleStrings> beans = beanReader.read(reader);
         assertEquals(3, beans.size());
         BeanWithMultipleStrings bean = beans.get(0);
         assertEquals("row 1, cell 1", bean.getGamma());
@@ -54,8 +54,8 @@ public class CsvReaderTest {
             "'\\'row\\' 2, cell 1'\t'row 2, cell 2'\t'row 2, cell 3'\r"+
             "'\\'row\\' 3, cell 1'\t'row 3, cell 2'\t'row 3, cell 3'"
         );
-        CsvReader<BeanWithAlienSettings> csvReader = new CsvReader<BeanWithAlienSettings>(BeanWithAlienSettings.class);
-        List<BeanWithAlienSettings> beans = csvReader.read(reader);
+        BeanReader<BeanWithAlienSettings> beanReader = new BeanReader<BeanWithAlienSettings>(BeanWithAlienSettings.class);
+        List<BeanWithAlienSettings> beans = beanReader.read(reader);
         assertEquals(3, beans.size());
         BeanWithAlienSettings bean = beans.get(0);
         assertEquals("'row' 1, cell 1", bean.getGamma());
@@ -69,8 +69,8 @@ public class CsvReaderTest {
             "text;year;number;date;year and month\n"+
             "\"a bit of text\";1984;42.42;1972-01-13;2013-04\n"
         );
-        CsvReader<BeanWithVariousTypes> csvReader = new CsvReader<BeanWithVariousTypes>(BeanWithVariousTypes.class);
-        List<BeanWithVariousTypes> beans = csvReader.read(reader);
+        BeanReader<BeanWithVariousTypes> beanReader = new BeanReader<BeanWithVariousTypes>(BeanWithVariousTypes.class);
+        List<BeanWithVariousTypes> beans = beanReader.read(reader);
         assertEquals(1, beans.size());
         BeanWithVariousTypes bean = beans.get(0);
         assertEquals("a bit of text", bean.getText());
@@ -87,8 +87,8 @@ public class CsvReaderTest {
         Reader reader = new StringReader(
             "\"a bit of text\";1984;42.42;1972-01-13;2013-04\n"
         );
-        CsvReader<BeanWithoutHeader> csvReader = new CsvReader<BeanWithoutHeader>(BeanWithoutHeader.class);
-        List<BeanWithoutHeader> beans = csvReader.read(reader);
+        BeanReader<BeanWithoutHeader> beanReader = new BeanReader<BeanWithoutHeader>(BeanWithoutHeader.class);
+        List<BeanWithoutHeader> beans = beanReader.read(reader);
         assertEquals(1, beans.size());
     }
     
@@ -98,8 +98,8 @@ public class CsvReaderTest {
             "street;city;postal code;ignore this\n"+
             "\"Some street\";\"Some city\";\"Some postal code\";\"Some ignoring\""
         );
-        CsvReader<BeanWithNameMatching> csvReader = new CsvReader<BeanWithNameMatching>(BeanWithNameMatching.class);
-        List<BeanWithNameMatching> beans = csvReader.read(reader);
+        BeanReader<BeanWithNameMatching> beanReader = new BeanReader<BeanWithNameMatching>(BeanWithNameMatching.class);
+        List<BeanWithNameMatching> beans = beanReader.read(reader);
         assertEquals(1, beans.size());
         BeanWithNameMatching bean = beans.get(0);
         assertEquals("Some street", bean.getLine1());
@@ -112,8 +112,8 @@ public class CsvReaderTest {
         Reader reader = new StringReader(
             "\"line-1\";\"line0\";\"line1\";\"line2\";\"line3\""
         );
-        CsvReader<BeanWithCustomIndexes> csvReader = new CsvReader<BeanWithCustomIndexes>(BeanWithCustomIndexes.class);
-        BeanWithCustomIndexes bean = csvReader.readLine(reader);
+        BeanReader<BeanWithCustomIndexes> beanReader = new BeanReader<BeanWithCustomIndexes>(BeanWithCustomIndexes.class);
+        BeanWithCustomIndexes bean = beanReader.readLine(reader);
         assertEquals("line0", bean.getLine0());
         assertEquals("line1", bean.getLine1());
         assertEquals("line2", bean.getLine2());
@@ -125,8 +125,8 @@ public class CsvReaderTest {
         Reader reader = new StringReader(
             "14;28;42"
         );
-        CsvReader<BeanLotsOfIgnores> csvReader = new CsvReader<BeanLotsOfIgnores>(BeanLotsOfIgnores.class);
-        BeanLotsOfIgnores bean = csvReader.readLine(reader);
+        BeanReader<BeanLotsOfIgnores> beanReader = new BeanReader<BeanLotsOfIgnores>(BeanLotsOfIgnores.class);
+        BeanLotsOfIgnores bean = beanReader.readLine(reader);
         assertEquals((Integer)14, bean.getTakeThis1());
         assertEquals((Integer)28, bean.getPickThis1());
         assertEquals((Integer)42, bean.getChooseThis1());
@@ -139,8 +139,8 @@ public class CsvReaderTest {
         Reader reader = new StringReader(
             "\"some text\""
         );
-        CsvReader<BeanWithConverter> csvReader = new CsvReader<BeanWithConverter>(BeanWithConverter.class);
-        BeanWithConverter bean = csvReader.readLine(reader);
+        BeanReader<BeanWithConverter> beanReader = new BeanReader<BeanWithConverter>(BeanWithConverter.class);
+        BeanWithConverter bean = beanReader.readLine(reader);
         assertEquals("some text", bean.getBean().getName());
     }
 
@@ -149,8 +149,8 @@ public class CsvReaderTest {
         Reader reader = new StringReader(
             "\"alpha\";\"beta\";\"gamma\"a\n"
         );
-        CsvReader<BeanSimple> csvReader = new CsvReader<BeanSimple>(BeanSimple.class);
-        csvReader.read(reader);
+        BeanReader<BeanSimple> beanReader = new BeanReader<BeanSimple>(BeanSimple.class);
+        beanReader.read(reader);
     }
 
     @Test(expected = CsvException.class)
@@ -159,8 +159,8 @@ public class CsvReaderTest {
             "text;year;number;date;year and month\n"+
             "\"a bit of text\";UNEXPECTED TEXT!!!;42.42;1972-01-13;2013-04\n"
         );
-        CsvReader<BeanWithVariousTypes> csvReader = new CsvReader<BeanWithVariousTypes>(BeanWithVariousTypes.class);
-        csvReader.read(reader);
+        BeanReader<BeanWithVariousTypes> beanReader = new BeanReader<BeanWithVariousTypes>(BeanWithVariousTypes.class);
+        beanReader.read(reader);
     }
 
     @Test(expected = CsvException.class)
@@ -168,8 +168,8 @@ public class CsvReaderTest {
         Reader reader = new StringReader(
             "\"can I convert this to a simple bean?\""
         );
-        CsvReader<BeanWithNonStandardObject> csvReader = new CsvReader<BeanWithNonStandardObject>(BeanWithNonStandardObject.class);
-        csvReader.read(reader);
+        BeanReader<BeanWithNonStandardObject> beanReader = new BeanReader<BeanWithNonStandardObject>(BeanWithNonStandardObject.class);
+        beanReader.read(reader);
     }
 
     @Test(expected = CsvException.class)
@@ -177,8 +177,8 @@ public class CsvReaderTest {
         Reader reader = new StringReader(
                 "\"can I convert this to a simple bean?\""
         );
-        CsvReader<BeanWithoutNoArgPublicConstructor> csvReader = new CsvReader<BeanWithoutNoArgPublicConstructor>(BeanWithoutNoArgPublicConstructor.class);
-        csvReader.read(reader);
+        BeanReader<BeanWithoutNoArgPublicConstructor> beanReader = new BeanReader<BeanWithoutNoArgPublicConstructor>(BeanWithoutNoArgPublicConstructor.class);
+        beanReader.read(reader);
     }
 
 }

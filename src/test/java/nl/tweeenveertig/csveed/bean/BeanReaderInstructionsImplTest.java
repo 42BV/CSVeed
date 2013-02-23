@@ -5,11 +5,11 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertNull;
 
-public class BeanInstructionsTest {
+public class BeanReaderInstructionsImplTest {
 
     @Test
     public void propertyNameIsNull() {
-        BeanInstructions<BeanSimple> instructions = new BeanInstructions<BeanSimple>(BeanSimple.class);
+        BeanReaderInstructionsImpl<BeanSimple> instructions = new BeanReaderInstructionsImpl<BeanSimple>(BeanSimple.class);
         assertNull(instructions.getBeanPropertyWithName("definitelyNotHere"));
     }
 

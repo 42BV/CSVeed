@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
-* Various settings for a BeanInstructions translating to a CSV cell. By default every field in a BeanInstructions is expected to be
-* a CsvCell, even if not so marked. Use @CsvIgnore to prevent a BeanInstructions field from being taken into account for
+* Various settings for a BeanReaderInstructionsImpl translating to a CSV cell. By default every field in a BeanReaderInstructionsImpl is expected to be
+* a CsvCell, even if not so marked. Use @CsvIgnore to prevent a BeanReaderInstructionsImpl field from being taken into account for
 * both serialization and deserialization.
 * @author Robert Bor
 */

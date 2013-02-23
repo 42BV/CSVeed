@@ -1,13 +1,15 @@
 package nl.tweeenveertig.csveed.bean;
 
-import nl.tweeenveertig.csveed.line.CsvInstructions;
+import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
+import nl.tweeenveertig.csveed.api.LineReaderInstructions;
+import nl.tweeenveertig.csveed.line.LineReaderInstructionsImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
 
 import java.beans.PropertyEditor;
 
-public class BeanInstructions<T> {
+public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> {
 
-    private CsvInstructions csvInstructions = new CsvInstructions();
+    private LineReaderInstructionsImpl lineReaderInstructionsImpl = new LineReaderInstructionsImpl();
 
     private BeanProperties properties;
 
@@ -15,7 +17,7 @@ public class BeanInstructions<T> {
 
     private Class<? extends AbstractMappingStrategy> mappingStrategy = ColumnIndexStrategy.class;
 
-    public BeanInstructions(Class<T> beanClass) {
+    public BeanReaderInstructionsImpl(Class<T> beanClass) {
         this.beanClass = beanClass;
         this.properties = new BeanProperties(beanClass);
     }
@@ -32,66 +34,66 @@ public class BeanInstructions<T> {
         }
     }
 
-    public CsvInstructions getCsvInstructions() {
-        return this.csvInstructions;
+    public LineReaderInstructions getLineReaderInstructions() {
+        return this.lineReaderInstructionsImpl;
     }
 
-    public BeanInstructions<T> setUseHeader(boolean useHeader) {
-        this.csvInstructions.setUseHeader(useHeader);
+    public BeanReaderInstructions<T> setUseHeader(boolean useHeader) {
+        this.lineReaderInstructionsImpl.setUseHeader(useHeader);
         return this;
     }
 
-    public BeanInstructions<T> setStartRow(int startRow) {
-        this.csvInstructions.setStartRow(startRow);
+    public BeanReaderInstructions<T> setStartRow(int startRow) {
+        this.lineReaderInstructionsImpl.setStartRow(startRow);
         return this;
     }
 
-    public BeanInstructions<T> setEscape(char symbol) {
-        this.csvInstructions.setEscape(symbol);
+    public BeanReaderInstructions<T> setEscape(char symbol) {
+        this.lineReaderInstructionsImpl.setEscape(symbol);
         return this;
     }
 
-    public BeanInstructions<T> setQuote(char symbol) {
-        this.csvInstructions.setQuote(symbol);
+    public BeanReaderInstructions<T> setQuote(char symbol) {
+        this.lineReaderInstructionsImpl.setQuote(symbol);
         return this;
     }
 
-    public BeanInstructions<T> setSeparator(char symbol) {
-        this.csvInstructions.setSeparator(symbol);
+    public BeanReaderInstructions<T> setSeparator(char symbol) {
+        this.lineReaderInstructionsImpl.setSeparator(symbol);
         return this;
     }
 
-    public BeanInstructions<T> setEndOfLine(char[] symbols) {
-        this.csvInstructions.setEndOfLine(symbols);
+    public BeanReaderInstructions<T> setEndOfLine(char[] symbols) {
+        this.lineReaderInstructionsImpl.setEndOfLine(symbols);
         return this;
     }
 
-    public BeanInstructions<T> setMappingStrategy(Class<? extends AbstractMappingStrategy> mappingStrategy) {
+    public BeanReaderInstructions<T> setMappingStrategy(Class<? extends AbstractMappingStrategy> mappingStrategy) {
         this.mappingStrategy = mappingStrategy;
         return this;
     }
 
-    public BeanInstructions<T> setRequired(String propertyName, boolean required) {
+    public BeanReaderInstructions<T> setRequired(String propertyName, boolean required) {
         this.getProperties().setRequired(propertyName, required);
         return this;
     }
 
-    public BeanInstructions<T> setConverter(String propertyName, PropertyEditor converter) {
+    public BeanReaderInstructions<T> setConverter(String propertyName, PropertyEditor converter) {
         this.getProperties().setConverter(propertyName, converter);
         return this;
     }
 
-    public BeanInstructions<T> ignoreProperty(String propertyName) {
+    public BeanReaderInstructions<T> ignoreProperty(String propertyName) {
         this.getProperties().ignoreProperty(propertyName);
         return this;
     }
 
-    public BeanInstructions<T> mapIndexToProperty(int columnIndex, String propertyName) {
+    public BeanReaderInstructions<T> mapIndexToProperty(int columnIndex, String propertyName) {
         this.getProperties().mapIndexToProperty(columnIndex, propertyName);
         return this;
     }
 
-    public BeanInstructions<T> mapNameToProperty(String columnName, String propertyName) {
+    public BeanReaderInstructions<T> mapNameToProperty(String columnName, String propertyName) {
         this.getProperties().mapNameToProperty(columnName, propertyName);
         return this;
     }

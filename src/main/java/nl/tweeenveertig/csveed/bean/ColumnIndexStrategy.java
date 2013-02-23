@@ -8,11 +8,11 @@ public class ColumnIndexStrategy<T> extends AbstractMappingStrategy<T> {
 
     public static final Logger LOG = LoggerFactory.getLogger(ColumnIndexStrategy.class);
 
-    public void instruct(BeanInstructions beanInstructions, Row row) {
+    public void instruct(BeanReaderInstructionsImpl beanReaderInstructionsImpl, Row row) {
 
         int indexColumn = 0;
         for (String cell : row) {
-            BeanProperty beanProperty = beanInstructions.getBeanPropertyWithIndex(indexColumn);
+            BeanProperty beanProperty = beanReaderInstructionsImpl.getBeanPropertyWithIndex(indexColumn);
             if (beanProperty == null) {
                 LOG.info("Column index "+indexColumn+": no match");
                 indexColumn++;

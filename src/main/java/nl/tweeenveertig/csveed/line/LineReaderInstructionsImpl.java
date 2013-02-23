@@ -1,9 +1,10 @@
 package nl.tweeenveertig.csveed.line;
 
+import nl.tweeenveertig.csveed.api.LineReaderInstructions;
 import nl.tweeenveertig.csveed.token.EncounteredSymbol;
 import nl.tweeenveertig.csveed.token.SymbolMapping;
 
-public class CsvInstructions {
+public class LineReaderInstructionsImpl implements LineReaderInstructions {
 
     private SymbolMapping symbolMapping = new SymbolMapping();
 
@@ -19,7 +20,7 @@ public class CsvInstructions {
         return useHeader;
     }
 
-    public CsvInstructions setUseHeader(boolean useHeader) {
+    public LineReaderInstructions setUseHeader(boolean useHeader) {
         this.useHeader = useHeader;
         return this;
     }
@@ -28,27 +29,27 @@ public class CsvInstructions {
         return startRow;
     }
 
-    public CsvInstructions setStartRow(int startRow) {
+    public LineReaderInstructions setStartRow(int startRow) {
         this.startRow = startRow;
         return this;
     }
 
-    public CsvInstructions setEscape(char symbol) {
+    public LineReaderInstructions setEscape(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, symbol);
         return this;
     }
 
-    public CsvInstructions setQuote(char symbol) {
+    public LineReaderInstructions setQuote(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, symbol);
         return this;
     }
 
-    public CsvInstructions setSeparator(char symbol) {
+    public LineReaderInstructions setSeparator(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, symbol);
         return this;
     }
 
-    public CsvInstructions setEndOfLine(char[] symbols) {
+    public LineReaderInstructions setEndOfLine(char[] symbols) {
         this.symbolMapping.addMapping(EncounteredSymbol.EOL_SYMBOL, symbols);
         return this;
     }
