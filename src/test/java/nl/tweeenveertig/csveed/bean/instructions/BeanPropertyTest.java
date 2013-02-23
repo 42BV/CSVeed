@@ -19,13 +19,13 @@ public class BeanPropertyTest {
         PropertyEditor editor = new URLEditor();
         PropertyDescriptor propertyDescriptor = new PropertyDescriptor("name", BeanSimple.class);
         property.setConverter(editor);
-        property.setIndexColumn(3);
-        property.setName("name");
+        property.setColumnIndex(3);
+        property.setColumnName("name");
         property.setPropertyDescriptor(propertyDescriptor);
         property.setRequired(true);
         assertEquals(editor, property.getConverter());
-        assertEquals(3, property.getIndexColumn());
-        assertEquals("name", property.getName());
+        assertEquals(3, property.getColumnIndex());
+        assertEquals("name", property.getColumnName());
         assertEquals(propertyDescriptor, property.getPropertyDescriptor());
         assertTrue(property.isRequired());
     }

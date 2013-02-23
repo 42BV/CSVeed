@@ -24,7 +24,7 @@ public class CsvReader<T> {
     private AbstractMappingStrategy<T> strategy;
 
     public CsvReader(Class<T> beanClass) {
-        this(new BeanParser<T>(beanClass).getBeanInstructions());
+        this(new BeanParser<T>().getBeanInstructions(beanClass));
     }
 
     public CsvReader(BeanInstructions<T> beanInstructions) {

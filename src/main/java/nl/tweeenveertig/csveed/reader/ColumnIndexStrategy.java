@@ -2,8 +2,6 @@ package nl.tweeenveertig.csveed.reader;
 
 import nl.tweeenveertig.csveed.bean.instructions.BeanInstructions;
 import nl.tweeenveertig.csveed.bean.instructions.BeanProperty;
-import nl.tweeenveertig.csveed.csv.structure.Header;
-import nl.tweeenveertig.csveed.csv.structure.Line;
 import nl.tweeenveertig.csveed.csv.structure.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +25,7 @@ public class ColumnIndexStrategy<T> extends AbstractMappingStrategy<T> {
             if (row.hasHeader()) {
                 headerColumn = row.getColumnName(indexColumn);
             }
-            LOG.info("Column index "+indexColumn+": "+(headerColumn == null ? "" : "[" + headerColumn + "] to [")+beanProperty.getName()+"]");
+            LOG.info("Column index "+indexColumn+": "+(headerColumn == null ? "" : "[" + headerColumn + "] to [")+beanProperty.getPropertyName()+"]");
             indexColumn++;
         }
     }

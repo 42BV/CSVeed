@@ -4,14 +4,13 @@ import nl.tweeenveertig.csveed.reader.AbstractMappingStrategy;
 import nl.tweeenveertig.csveed.reader.ColumnIndexStrategy;
 import nl.tweeenveertig.csveed.report.CsvException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.beans.PropertyEditor;
 
 public class BeanInstructions<T> {
 
     private CsvInstructions csvInstructions = new CsvInstructions();
 
-    private List<BeanProperty> properties = new ArrayList<BeanProperty>();
+    private BeanProperties properties;
 
     private Class<T> beanClass;
 
@@ -19,6 +18,7 @@ public class BeanInstructions<T> {
 
     public BeanInstructions(Class<T> beanClass) {
         this.beanClass = beanClass;
+        this.properties = new BeanProperties(beanClass);
     }
 
     public Class<T> getBeanClass() {
@@ -72,34 +72,45 @@ public class BeanInstructions<T> {
         return this;
     }
 
+    public BeanInstructions<T> setRequired(String propertyName, boolean required) {
+        this.getProperties().setRequired(propertyName, required);
+        return this;
+    }
+
+    public BeanInstructions<T> setConverter(String propertyName, PropertyEditor converter) {
+        this.getProperties().setConverter(propertyName, converter);
+        return this;
+    }
+
+    public BeanInstructions<T> ignoreProperty(String propertyName) {
+        this.getProperties().ignoreProperty(propertyName);
+        return this;
+    }
+
+    public BeanInstructions<T> mapIndexToProperty(int columnIndex, String propertyName) {
+        this.getProperties().mapIndexToProperty(columnIndex, propertyName);
+        return this;
+    }
+
+    public BeanInstructions<T> mapNameToProperty(String columnName, String propertyName) {
+        this.getProperties().mapNameToProperty(columnName, propertyName);
+        return this;
+    }
+
     public Class<? extends AbstractMappingStrategy> getMappingStrategy() {
         return this.mappingStrategy;
     }
 
-    public void addProperty(BeanProperty beanProperty) {
-        this.properties.add(beanProperty);
-    }
-
-    public List<BeanProperty> getProperties() {
+    public BeanProperties getProperties() {
         return this.properties;
     }
 
-    public BeanProperty getBeanPropertyWithName(String name) {
-        for (BeanProperty beanProperty : getProperties()) {
-            if (beanProperty.getName().equals(name)) {
-                return beanProperty;
-            }
-        }
-        return null;
+    public BeanProperty getBeanPropertyWithName(String columnName) {
+        return this.properties.fromName(columnName);
     }
 
-    public BeanProperty getBeanPropertyWithIndex(int indexColumn) {
-        for (BeanProperty beanProperty : getProperties()) {
-            if (beanProperty.getIndexColumn() == indexColumn) {
-                return beanProperty;
-            }
-        }
-        return null;
+    public BeanProperty getBeanPropertyWithIndex(int columnIndex) {
+        return this.properties.fromIndex(columnIndex);
     }
 
     @SuppressWarnings("unchecked")
