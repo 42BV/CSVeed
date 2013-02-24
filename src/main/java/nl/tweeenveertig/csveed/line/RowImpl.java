@@ -58,8 +58,4 @@ public class RowImpl implements Row {
         return line.iterator();
     }
 
-    public boolean validNumberOfColumns() {
-        return !hasHeader() || getHeader().checkLine(line);
-    }
-
 }

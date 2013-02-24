@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.line;
 
 import nl.tweeenveertig.csveed.api.Row;
+import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.report.RowReport;
 import nl.tweeenveertig.csveed.token.EncounteredSymbol;
 import nl.tweeenveertig.csveed.token.SymbolMapping;
@@ -14,6 +15,17 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 
 public class LineReaderImplTest {
+
+    @Test(expected = CsvException.class)
+    public void dissimilarNumberOfColumns() {
+        Reader reader = new StringReader(
+            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
+            "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"+
+            "\"row 3, cell 1\";\"row 3, cell 2\""
+        );
+        LineReaderImpl lineReader = new LineReaderImpl();
+        lineReader.read(reader);
+    }
 
     @Test
     public void readUnmapped() {

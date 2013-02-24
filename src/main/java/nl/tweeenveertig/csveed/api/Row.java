@@ -21,6 +21,4 @@ public interface Row extends Iterable<String> {
 
     RowReport reportOnColumn(int columnIndex);
 
-    boolean validNumberOfColumns();
-
 }

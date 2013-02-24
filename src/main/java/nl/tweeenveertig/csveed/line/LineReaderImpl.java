@@ -32,6 +32,8 @@ public class LineReaderImpl implements LineReader {
 
     private int headerLine = 0;
 
+    private int numberOfColumns = -1;
+
     private Header header;
 
     public LineReaderImpl() {
@@ -73,11 +75,27 @@ public class LineReaderImpl implements LineReader {
         if (unmappedLine == null) {
             return null;
         }
+        checkNumberOfColumns(unmappedLine);
         if (isHeaderLine()) {
             header = new Header(unmappedLine);
             unmappedLine = readBareLine(reader);
         }
         return new RowImpl(unmappedLine, header);
+    }
+
+    private void checkNumberOfColumns(Line unmappedLine) {
+        if (numberOfColumns == -1) {
+            numberOfColumns = unmappedLine.size();
+        } else {
+            if (unmappedLine.size() != numberOfColumns) {
+                String message = "The expected number of columns is "+numberOfColumns+", whereas it is supposed to be "+unmappedLine.size();
+                LOG.error(message);
+                for (String line : unmappedLine.reportOnEndOfLine().getPrintableLines()) {
+                    LOG.error(getCurrentLine()+": "+line);
+                }
+                throw new CsvException(message, null, unmappedLine.reportOnEndOfLine(), getCurrentLine());
+            }
+        }
     }
 
     public boolean isFinished() {
