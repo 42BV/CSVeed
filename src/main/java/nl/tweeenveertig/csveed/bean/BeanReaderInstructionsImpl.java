@@ -88,12 +88,12 @@ public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> 
         return this;
     }
 
-    public BeanReaderInstructions<T> mapIndexToProperty(int columnIndex, String propertyName) {
+    public BeanReaderInstructions<T> mapColumnIndexToProperty(int columnIndex, String propertyName) {
         this.getProperties().mapIndexToProperty(columnIndex, propertyName);
         return this;
     }
 
-    public BeanReaderInstructions<T> mapNameToProperty(String columnName, String propertyName) {
+    public BeanReaderInstructions<T> mapColumnNameToProperty(String columnName, String propertyName) {
         this.getProperties().mapNameToProperty(columnName, propertyName);
         return this;
     }

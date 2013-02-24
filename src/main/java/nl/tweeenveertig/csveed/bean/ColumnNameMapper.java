@@ -13,8 +13,7 @@ public class ColumnNameMapper<T> extends AbstractMapper<T, String> {
 
     @Override
     public BeanProperty getBeanProperty(Row row, int columnIndex) {
-        String columnName = row.getHeader().getName(columnIndex);
-        return beanReaderInstructions.getProperties().fromName(columnName);
+        return getBeanProperty(row.getHeader().getName(columnIndex));
     }
 
     @Override
@@ -22,14 +21,21 @@ public class ColumnNameMapper<T> extends AbstractMapper<T, String> {
         return beanReaderInstructions.getProperties().columnNameKeys();
     }
 
+    protected BeanProperty getBeanProperty(String columnName) {
+        return beanReaderInstructions.getProperties().fromName(columnName);
+    }
+
     @Override
     protected void checkKey(Row row, String key) {
         if (row.getHeader().getIndex(key) == null) {
             String errorMessage =
-                    "The header does not contain field \""+key+"\". Originally mapped to property \""+
-                    beanReaderInstructions.getProperties().fromName(key).getPropertyName()+"\"";
+                    "The header row does not contain column \""+key+"\". Originally mapped to property \""+
+                    getBeanProperty(key).getPropertyName()+"\"";
             LOG.error(errorMessage);
-            throw new CsvException(errorMessage);
+            for (String line : row.getHeader().reportOnEndOfLine().getPrintableLines()) {
+                LOG.error(line);
+            }
+            throw new CsvException(errorMessage, null, row.getHeader().reportOnEndOfLine(), 0);
         }
     }
 

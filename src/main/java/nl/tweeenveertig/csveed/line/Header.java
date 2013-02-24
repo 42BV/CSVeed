@@ -1,5 +1,7 @@
 package nl.tweeenveertig.csveed.line;
 
+import nl.tweeenveertig.csveed.report.RowReport;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -37,6 +39,10 @@ public class Header implements Iterable<String> {
 
     public Iterator<String> iterator() {
         return header.iterator();
+    }
+
+    public RowReport reportOnEndOfLine() {
+        return header.reportOnEndOfLine();
     }
 
 }

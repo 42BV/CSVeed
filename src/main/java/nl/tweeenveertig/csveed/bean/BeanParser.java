@@ -50,7 +50,7 @@ public class BeanParser<T> {
                 return;
             }
         }
-        this.beanReaderInstructions.mapIndexToProperty(columnIndex++, propertyName);
+        this.beanReaderInstructions.mapColumnIndexToProperty(columnIndex++, propertyName);
     }
 
     private void parseCsvFile(CsvFile csvFile) {
@@ -81,7 +81,7 @@ public class BeanParser<T> {
 
     private void parseCsvCell(String propertyName, CsvCell csvCell) {
         String columnName = (csvCell.name() == null || csvCell.name().equals("")) ? propertyName : csvCell.name();
-        this.beanReaderInstructions.mapNameToProperty(columnName, propertyName);
+        this.beanReaderInstructions.mapColumnNameToProperty(columnName, propertyName);
         this.beanReaderInstructions.setRequired(propertyName, csvCell.required());
         columnIndex = csvCell.indexColumn() != -1 ? csvCell.indexColumn() : columnIndex;
     }

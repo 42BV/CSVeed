@@ -76,7 +76,7 @@ public interface BeanReaderInstructions<T> {
     * method is called whenever {@link nl.tweeenveertig.csveed.annotations.CsvFile#mappingStrategy()} is
     * used. The default mapping strategy is {@link nl.tweeenveertig.csveed.bean.ColumnIndexMapper}, which
     * looks at either the position of a property within the class or the custom index if
-    * {@link nl.tweeenveertig.csveed.annotations.CsvCell#indexColumn()} or {@link #mapIndexToProperty(int, String)}
+    * {@link nl.tweeenveertig.csveed.annotations.CsvCell#indexColumn()} or {@link #mapColumnIndexToProperty(int, String)}
     * has been set.
     * @param mapper the mapping strategy to employ for mapping cells to bean properties
     * @return convenience for chaining
@@ -122,7 +122,7 @@ public interface BeanReaderInstructions<T> {
     * @param propertyName property to which the index-based mapping must be applied
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> mapIndexToProperty(int columnIndex, String propertyName);
+    BeanReaderInstructions<T> mapColumnIndexToProperty(int columnIndex, String propertyName);
 
     /**
     * Maps a column name (which is found in the header) to a specific property. Note that to use this, headers
@@ -133,6 +133,6 @@ public interface BeanReaderInstructions<T> {
     * @param propertyName property to which the name-based mapping must be applied
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> mapNameToProperty(String columnName, String propertyName);
+    BeanReaderInstructions<T> mapColumnNameToProperty(String columnName, String propertyName);
 
 }

@@ -19,9 +19,9 @@ public class BeanReaderTest {
     @Test (expected = CsvException.class)
     public void illegalColumnIndexMappingTooLow() {
         checkIllegalMapping(
-            new BeanReaderInstructionsImpl<BeanWithMultipleStrings>(BeanWithMultipleStrings.class)
-                .setMapper(ColumnIndexMapper.class)
-                .mapIndexToProperty(-1, "alpha")
+                new BeanReaderInstructionsImpl<BeanWithMultipleStrings>(BeanWithMultipleStrings.class)
+                        .setMapper(ColumnIndexMapper.class)
+                        .mapColumnIndexToProperty(-1, "alpha")
         );
     }
 
@@ -30,7 +30,7 @@ public class BeanReaderTest {
         checkIllegalMapping(
             new BeanReaderInstructionsImpl<BeanWithMultipleStrings>(BeanWithMultipleStrings.class)
                 .setMapper(ColumnIndexMapper.class)
-                .mapIndexToProperty(99, "alpha")
+                .mapColumnIndexToProperty(99, "alpha")
         );
     }
 
@@ -39,7 +39,7 @@ public class BeanReaderTest {
         checkIllegalMapping(
             new BeanReaderInstructionsImpl<BeanWithMultipleStrings>(BeanWithMultipleStrings.class)
                 .setMapper(ColumnNameMapper.class)
-                .mapNameToProperty("Alphabetical", "alpha")
+                .mapColumnNameToProperty("Alphabetical", "alpha")
         );
     }
 

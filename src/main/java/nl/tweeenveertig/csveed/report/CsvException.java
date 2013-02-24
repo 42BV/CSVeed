@@ -17,6 +17,7 @@ public class CsvException extends RuntimeException {
     public CsvException(String message, Throwable err, RowReport report, int lineNumber) {
         super(message, err);
         this.report = report;
+        this.lineNumber = lineNumber;
     }
 
     public RowReport getReport() {
