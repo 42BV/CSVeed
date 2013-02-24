@@ -21,7 +21,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private BeanReaderInstructionsImpl<T> beanReaderInstructions;
 
-    private AbstractMappingStrategy<T> strategy;
+    private AbstractMapper<T> strategy;
 
     public BeanReaderImpl(Class<T> beanClass) {
         this(new BeanParser<T>().getBeanInstructions(beanClass));
@@ -60,7 +60,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return lineReader.isFinished();
     }
 
-    protected AbstractMappingStrategy<T> getStrategy(Row unmappedRow) {
+    protected AbstractMapper<T> getStrategy(Row unmappedRow) {
         if (strategy == null) {
             strategy = beanReaderInstructions.createMappingStrategy();
             strategy.instruct(beanReaderInstructions, unmappedRow);

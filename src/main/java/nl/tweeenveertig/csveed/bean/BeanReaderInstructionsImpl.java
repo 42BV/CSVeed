@@ -15,7 +15,7 @@ public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> 
 
     private Class<T> beanClass;
 
-    private Class<? extends AbstractMappingStrategy> mappingStrategy = ColumnIndexStrategy.class;
+    private Class<? extends AbstractMapper> mappingStrategy = ColumnIndexMapper.class;
 
     public BeanReaderInstructionsImpl(Class<T> beanClass) {
         this.beanClass = beanClass;
@@ -68,8 +68,8 @@ public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> 
         return this;
     }
 
-    public BeanReaderInstructions<T> setMappingStrategy(Class<? extends AbstractMappingStrategy> mappingStrategy) {
-        this.mappingStrategy = mappingStrategy;
+    public BeanReaderInstructions<T> setMapper(Class<? extends AbstractMapper> mapper) {
+        this.mappingStrategy = mapper;
         return this;
     }
 
@@ -98,7 +98,7 @@ public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> 
         return this;
     }
 
-    public Class<? extends AbstractMappingStrategy> getMappingStrategy() {
+    public Class<? extends AbstractMapper> getMappingStrategy() {
         return this.mappingStrategy;
     }
 
@@ -115,7 +115,7 @@ public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> 
     }
 
     @SuppressWarnings("unchecked")
-    public AbstractMappingStrategy<T> createMappingStrategy() {
+    public AbstractMapper<T> createMappingStrategy() {
         try {
             return this.mappingStrategy.newInstance();
         } catch (Exception err) {

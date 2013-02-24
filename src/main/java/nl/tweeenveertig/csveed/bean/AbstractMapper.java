@@ -9,13 +9,13 @@ import org.springframework.beans.BeanWrapperImpl;
 import java.util.Map;
 import java.util.TreeMap;
 
-public abstract class AbstractMappingStrategy<T> {
+public abstract class AbstractMapper<T> {
 
-    public static final Logger LOG = LoggerFactory.getLogger(AbstractMappingStrategy.class);
+    public static final Logger LOG = LoggerFactory.getLogger(AbstractMapper.class);
 
     protected Map<Integer, BeanProperty> indexToProperty = new TreeMap<Integer, BeanProperty>();
 
-    public abstract void instruct(BeanReaderInstructionsImpl beanReaderInstructionsImpl, Row row);
+    public abstract void instruct(BeanReaderInstructionsImpl beanReaderInstructions, Row row);
 
     public BeanProperty getBeanProperty(int indexColumn) {
         return indexToProperty.get(indexColumn);

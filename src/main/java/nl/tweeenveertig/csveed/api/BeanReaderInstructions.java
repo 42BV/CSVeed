@@ -1,6 +1,6 @@
 package nl.tweeenveertig.csveed.api;
 
-import nl.tweeenveertig.csveed.bean.AbstractMappingStrategy;
+import nl.tweeenveertig.csveed.bean.AbstractMapper;
 
 import java.beans.PropertyEditor;
 
@@ -74,14 +74,14 @@ public interface BeanReaderInstructions<T> {
     /**
     * Determines which mapping strategy is to be employed for mapping cells to bean properties. This
     * method is called whenever {@link nl.tweeenveertig.csveed.annotations.CsvFile#mappingStrategy()} is
-    * used. The default mapping strategy is {@link nl.tweeenveertig.csveed.bean.ColumnIndexStrategy}, which
+    * used. The default mapping strategy is {@link nl.tweeenveertig.csveed.bean.ColumnIndexMapper}, which
     * looks at either the position of a property within the class or the custom index if
     * {@link nl.tweeenveertig.csveed.annotations.CsvCell#indexColumn()} or {@link #mapIndexToProperty(int, String)}
     * has been set.
-    * @param mappingStrategy the mapping strategy to employ for mapping cells to bean properties
+    * @param mapper the mapping strategy to employ for mapping cells to bean properties
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setMappingStrategy(Class<? extends AbstractMappingStrategy> mappingStrategy);
+    BeanReaderInstructions<T> setMapper(Class<? extends AbstractMapper> mapper);
 
     /**
     * Determines if the field is required. If so, the cell may not be empty and a
@@ -128,8 +128,8 @@ public interface BeanReaderInstructions<T> {
     * Maps a column name (which is found in the header) to a specific property. Note that to use this, headers
     * must be enabled. This method is called whenever {@link nl.tweeenveertig.csveed.annotations.CsvCell#name()}
     * is used. By default there is NO mapping when custom instructions are used, so you should roll your own.
-    * Also, don't forget to {@link #setMappingStrategy(Class)} to
-    * {@link nl.tweeenveertig.csveed.bean.NameMatchingStrategy} for this to work.
+    * Also, don't forget to {@link #setMapper(Class)} to
+    * {@link nl.tweeenveertig.csveed.bean.ColumnNameMapper} for this to work.
     * @param propertyName property to which the name-based mapping must be applied
     * @return convenience for chaining
     */

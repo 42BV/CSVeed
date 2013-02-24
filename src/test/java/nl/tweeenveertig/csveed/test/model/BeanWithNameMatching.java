@@ -2,9 +2,9 @@ package nl.tweeenveertig.csveed.test.model;
 
 import nl.tweeenveertig.csveed.annotations.CsvCell;
 import nl.tweeenveertig.csveed.annotations.CsvFile;
-import nl.tweeenveertig.csveed.bean.NameMatchingStrategy;
+import nl.tweeenveertig.csveed.bean.ColumnNameMapper;
 
-@CsvFile(mappingStrategy = NameMatchingStrategy.class)
+@CsvFile(mappingStrategy = ColumnNameMapper.class)
 public class BeanWithNameMatching {
 
     @CsvCell(name = "postal code")

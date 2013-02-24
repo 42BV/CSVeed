@@ -60,7 +60,7 @@ public class BeanParser<T> {
             .setQuote(csvFile.quote())
             .setSeparator(csvFile.separator())
             .setEndOfLine(csvFile.endOfLine())
-            .setMappingStrategy(csvFile.mappingStrategy())
+            .setMapper(csvFile.mappingStrategy())
             .setStartRow(csvFile.startRow())
             .setUseHeader(csvFile.useHeader());
 
