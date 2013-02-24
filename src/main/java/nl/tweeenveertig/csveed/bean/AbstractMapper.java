@@ -6,27 +6,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapperImpl;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 public abstract class AbstractMapper<T> {
 
     public static final Logger LOG = LoggerFactory.getLogger(AbstractMapper.class);
 
-    protected Map<Integer, BeanProperty> indexToProperty = new TreeMap<Integer, BeanProperty>();
+    protected BeanReaderInstructionsImpl<T> beanReaderInstructions;
 
-    public abstract void instruct(BeanReaderInstructionsImpl beanReaderInstructions, Row row);
-
-    public BeanProperty getBeanProperty(int indexColumn) {
-        return indexToProperty.get(indexColumn);
-    }
+    public abstract BeanProperty getBeanProperty(Row row, int columnIndex);
 
     public T convert(T bean, Row row, int lineNumber) {
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(bean);
 
         int indexColumn = 0;
         for (String cell : row) {
-            BeanProperty beanProperty = getBeanProperty(indexColumn);
+            BeanProperty beanProperty = getBeanProperty(row, indexColumn);
             if (beanProperty == null) {
                 indexColumn++;
                 continue;
@@ -51,6 +44,10 @@ public abstract class AbstractMapper<T> {
             indexColumn++;
         }
         return bean;
+    }
+
+    public void setBeanReaderInstructions(BeanReaderInstructionsImpl<T> beanReaderInstructions) {
+        this.beanReaderInstructions = beanReaderInstructions;
     }
 
 }
