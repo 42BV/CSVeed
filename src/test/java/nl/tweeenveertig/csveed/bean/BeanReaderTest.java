@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.bean;
 
-import nl.tweeenveertig.csveed.bean.BeanReaderImpl;
+import nl.tweeenveertig.csveed.api.BeanReader;
+import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.test.model.*;
 import org.junit.Test;
@@ -14,6 +15,42 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 
 public class BeanReaderTest {
+
+    @Test (expected = CsvException.class)
+    public void illegalColumnIndexMappingTooLow() {
+        checkIllegalMapping(
+            new BeanReaderInstructionsImpl<BeanWithMultipleStrings>(BeanWithMultipleStrings.class)
+                .setMapper(ColumnIndexMapper.class)
+                .mapIndexToProperty(-1, "alpha")
+        );
+    }
+
+    @Test (expected = CsvException.class)
+    public void illegalColumnIndexMappingTooHigh() {
+        checkIllegalMapping(
+            new BeanReaderInstructionsImpl<BeanWithMultipleStrings>(BeanWithMultipleStrings.class)
+                .setMapper(ColumnIndexMapper.class)
+                .mapIndexToProperty(99, "alpha")
+        );
+    }
+
+    @Test (expected = CsvException.class)
+    public void illegalColumnName() {
+        checkIllegalMapping(
+            new BeanReaderInstructionsImpl<BeanWithMultipleStrings>(BeanWithMultipleStrings.class)
+                .setMapper(ColumnNameMapper.class)
+                .mapNameToProperty("Alphabetical", "alpha")
+        );
+    }
+
+    protected void checkIllegalMapping(BeanReaderInstructions<BeanWithMultipleStrings> beanReaderInstructions) {
+        Reader reader = new StringReader(
+                "alpha;beta;gamma\n"+
+                        "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
+        );
+        BeanReader<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(beanReaderInstructions);
+        beanReader.readLine(reader);
+    }
 
     @Test
     public void getBeans() {

@@ -106,16 +106,8 @@ public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> 
         return this.properties;
     }
 
-    public BeanProperty getBeanPropertyWithName(String columnName) {
-        return this.properties.fromName(columnName);
-    }
-
-    public BeanProperty getBeanPropertyWithIndex(int columnIndex) {
-        return this.properties.fromIndex(columnIndex);
-    }
-
     @SuppressWarnings("unchecked")
-    public AbstractMapper<T> createMappingStrategy() {
+    public AbstractMapper<T, Object> createMappingStrategy() {
         try {
             return this.mappingStrategy.newInstance();
         } catch (Exception err) {

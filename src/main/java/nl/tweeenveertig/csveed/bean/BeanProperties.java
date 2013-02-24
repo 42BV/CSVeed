@@ -114,4 +114,13 @@ public class BeanProperties implements Iterable<BeanProperty> {
     public Iterator<BeanProperty> iterator() {
         return ((List<BeanProperty>)((ArrayList)this.properties).clone()).iterator();
     }
+
+    public Set<Integer> columnIndexKeys() {
+        return this.indexToProperty.keySet();
+    }
+
+    public Set<String> columnNameKeys() {
+        return this.nameToProperty.keySet();
+    }
+
 }

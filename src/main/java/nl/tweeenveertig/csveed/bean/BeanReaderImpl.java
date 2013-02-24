@@ -21,7 +21,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private BeanReaderInstructionsImpl<T> beanReaderInstructions;
 
-    private AbstractMapper<T> mapper;
+    private AbstractMapper<T, Object> mapper;
 
     public BeanReaderImpl(Class<T> beanClass) {
         this(new BeanParser<T>().getBeanInstructions(beanClass));
@@ -49,6 +49,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         if (unmappedRow == null) {
             return null;
         }
+        getMapper().verifyHeader(unmappedRow);
         return getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine());
     }
 
@@ -60,7 +61,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return lineReader.isFinished();
     }
 
-    protected AbstractMapper<T> getMapper() {
+    protected AbstractMapper<T, Object> getMapper() {
         if (mapper == null) {
             mapper = beanReaderInstructions.createMappingStrategy();
             mapper.setBeanReaderInstructions(beanReaderInstructions);

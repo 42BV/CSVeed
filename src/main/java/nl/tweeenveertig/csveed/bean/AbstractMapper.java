@@ -6,13 +6,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapperImpl;
 
-public abstract class AbstractMapper<T> {
+import java.util.Set;
+
+public abstract class AbstractMapper<T, K extends Object> {
 
     public static final Logger LOG = LoggerFactory.getLogger(AbstractMapper.class);
 
     protected BeanReaderInstructionsImpl<T> beanReaderInstructions;
 
+    private boolean verified = false;
+
     public abstract BeanProperty getBeanProperty(Row row, int columnIndex);
+
+    protected abstract Set<K> keys();
+
+    protected abstract void checkKey(Row row, K key);
+
+    public void verifyHeader(Row row) {
+        if (verified) {
+            return;
+        }
+        for (K key : keys()) {
+            checkKey(row, key);
+        }
+        verified = true;
+    }
 
     public T convert(T bean, Row row, int lineNumber) {
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(bean);

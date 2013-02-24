@@ -14,6 +14,6 @@ public class BeanParserTest {
                 new BeanParser<BeanWithoutGettersAndSetters>();
         BeanReaderInstructions<BeanWithoutGettersAndSetters> instructions =
                 beanParser.getBeanInstructions(BeanWithoutGettersAndSetters.class);
-        assertNull(((BeanReaderInstructionsImpl)instructions).getBeanPropertyWithName("a"));
+        assertNull(((BeanReaderInstructionsImpl)instructions).getProperties().fromName("a"));
     }
 }
