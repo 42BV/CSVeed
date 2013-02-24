@@ -2,10 +2,14 @@ package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
 public class ColumnIndexMapper<T> extends AbstractMapper<T, Integer> {
+
+    public static final Logger LOG = LoggerFactory.getLogger(ColumnIndexMapper.class);
 
     @Override
     public BeanProperty getBeanProperty(Row row, int columnIndex) {

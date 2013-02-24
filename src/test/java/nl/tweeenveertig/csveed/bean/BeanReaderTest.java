@@ -45,8 +45,8 @@ public class BeanReaderTest {
 
     protected void checkIllegalMapping(BeanReaderInstructions<BeanWithMultipleStrings> beanReaderInstructions) {
         Reader reader = new StringReader(
-                "alpha;beta;gamma\n"+
-                        "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
+            "alpha;beta;gamma\n"+
+            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
         );
         BeanReader<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(beanReaderInstructions);
         beanReader.readLine(reader);
@@ -198,7 +198,7 @@ public class BeanReaderTest {
     @Test(expected = CsvException.class)
     public void nonInstantiableBean() {
         Reader reader = new StringReader(
-                "\"can I convert this to a simple bean?\""
+            "\"can I convert this to a simple bean?\""
         );
         BeanReaderImpl<BeanWithoutNoArgPublicConstructor> beanReader = new BeanReaderImpl<BeanWithoutNoArgPublicConstructor>(BeanWithoutNoArgPublicConstructor.class);
         beanReader.read(reader);

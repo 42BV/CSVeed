@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class ColumnNameMapper<T> extends AbstractMapper<T, String> {
 
-    public static final Logger LOG = LoggerFactory.getLogger(AbstractMapper.class);
+    public static final Logger LOG = LoggerFactory.getLogger(ColumnNameMapper.class);
 
     @Override
     public BeanProperty getBeanProperty(Row row, int columnIndex) {
