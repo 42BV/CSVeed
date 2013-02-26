@@ -30,6 +30,8 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     public BeanReaderImpl(BeanReaderInstructions<T> beanReaderInstructions) {
         this.beanReaderInstructions = (BeanReaderInstructionsImpl<T>)beanReaderInstructions;
         this.lineReader = new LineReaderImpl(this.beanReaderInstructions.getLineReaderInstructions());
+        this.mapper = this.beanReaderInstructions.createMappingStrategy();
+        mapper.setBeanReaderInstructions(this.beanReaderInstructions);
         LOG.info("- CSV config / mapping strategy: "+ this.beanReaderInstructions.getMappingStrategy());
     }
 
@@ -49,8 +51,8 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         if (unmappedRow == null) {
             return null;
         }
-        getMapper().verifyHeader(unmappedRow);
-        return getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine());
+        mapper.verifyHeader(unmappedRow);
+        return mapper.convert(instantiateBean(), unmappedRow, getCurrentLine());
     }
 
     public int getCurrentLine() {
@@ -59,14 +61,6 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     public boolean isFinished() {
         return lineReader.isFinished();
-    }
-
-    protected AbstractMapper<T, Object> getMapper() {
-        if (mapper == null) {
-            mapper = beanReaderInstructions.createMappingStrategy();
-            mapper.setBeanReaderInstructions(beanReaderInstructions);
-        }
-        return mapper;
     }
 
     private T instantiateBean() {

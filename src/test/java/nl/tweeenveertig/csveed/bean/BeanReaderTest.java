@@ -53,6 +53,29 @@ public class BeanReaderTest {
     }
 
     @Test
+    public void getBeansManualMapping() {
+        Reader reader = new StringReader(
+            "a;c;b\n"+
+            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
+            "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"+
+            "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\""
+        );
+        BeanReaderImpl<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(
+                new BeanReaderInstructionsImpl<BeanWithMultipleStrings>(BeanWithMultipleStrings.class)
+                .setMapper(ColumnNameMapper.class)
+                .mapColumnNameToProperty("a", "alpha")
+                .mapColumnNameToProperty("b", "beta")
+                .mapColumnNameToProperty("c", "gamma")
+        );
+        List<BeanWithMultipleStrings> beans = beanReader.read(reader);
+        assertEquals(3, beans.size());
+        BeanWithMultipleStrings bean = beans.get(0);
+        assertEquals("row 1, cell 1", bean.getAlpha());
+        assertEquals("row 1, cell 2", bean.getGamma());
+        assertEquals("row 1, cell 3", bean.getBeta());
+    }
+
+    @Test
     public void getBeans() {
         Reader reader = new StringReader(
             "alpha;beta;gamma\n"+

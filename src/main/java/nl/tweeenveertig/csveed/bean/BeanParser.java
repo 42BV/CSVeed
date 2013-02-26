@@ -38,9 +38,10 @@ public class BeanParser<T> {
         Field currentField = beanProperty.getField();
         Annotation[] annotations = currentField.getDeclaredAnnotations();
         String propertyName = beanProperty.getPropertyName();
+        String columnName = propertyName;
         for (Annotation annotation : annotations) {
             if (annotation instanceof CsvCell) {
-                parseCsvCell(propertyName, (CsvCell)annotation);
+                columnName = parseCsvCell(propertyName, (CsvCell)annotation);
             } else if (annotation instanceof CsvConverter) {
                 parseCsvConverter(propertyName, (CsvConverter)annotation);
             } else if (annotation instanceof CsvDate) {
@@ -50,6 +51,7 @@ public class BeanParser<T> {
                 return;
             }
         }
+        this.beanReaderInstructions.mapColumnNameToProperty(columnName, propertyName);
         this.beanReaderInstructions.mapColumnIndexToProperty(columnIndex++, propertyName);
     }
 
@@ -79,11 +81,11 @@ public class BeanParser<T> {
         }
     }
 
-    private void parseCsvCell(String propertyName, CsvCell csvCell) {
+    private String parseCsvCell(String propertyName, CsvCell csvCell) {
         String columnName = (csvCell.name() == null || csvCell.name().equals("")) ? propertyName : csvCell.name();
-        this.beanReaderInstructions.mapColumnNameToProperty(columnName, propertyName);
         this.beanReaderInstructions.setRequired(propertyName, csvCell.required());
         columnIndex = csvCell.indexColumn() != -1 ? csvCell.indexColumn() : columnIndex;
+        return columnName;
     }
 
 }
