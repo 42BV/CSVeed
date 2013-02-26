@@ -1,6 +1,7 @@
-package nl.tweeenveertig.csveed.api;
+package nl.tweeenveertig.csveed.bean;
 
-import java.io.Reader;
+import nl.tweeenveertig.csveed.line.LineReader;
+
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
 * <ul>
 *     <li>Point it to class. The {@link nl.tweeenveertig.csveed.annotations} in the class are read, as is the order
 *         of the properties within the class.</li>
-*     <li>Roll your own. Pass a {@link nl.tweeenveertig.csveed.api.BeanReaderInstructions} implementation with your
+*     <li>Roll your own. Pass a {@link BeanReaderInstructions} implementation with your
 *         own configuration settings</li>
 * </ul>
 *
@@ -25,13 +26,13 @@ public interface BeanReader<T> {
     * Reads all rows from the file and return these as beans.
     * @return all beans read from the Reader
     */
-    public List<T> read();
+    public List<T> readBeans();
 
     /**
     * Reads a single row and returns this as a bean. The LineReader will keep track of its state.
     * @return Bean read from the Reader
     */
-    public T readLine();
+    public T readBean();
 
     /**
     * Returns the line from which the bean was read. Note that a line is seen as a legitimate CSV row, not
@@ -45,5 +46,11 @@ public interface BeanReader<T> {
     * @return true if file is finished
     */
     public boolean isFinished();
+
+    /**
+    * Returns the underlying line reader for the bean reader
+    * @return the underlying line reader
+    */
+    public LineReader getLineReader();
 
 }

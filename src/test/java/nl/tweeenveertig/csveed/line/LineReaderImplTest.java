@@ -3,8 +3,6 @@ package nl.tweeenveertig.csveed.line;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.report.RowReport;
-import nl.tweeenveertig.csveed.token.EncounteredSymbol;
-import nl.tweeenveertig.csveed.token.SymbolMapping;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -24,7 +22,7 @@ public class LineReaderImplTest {
             "\"row 3, cell 1\";\"row 3, cell 2\""
         );
         LineReaderImpl lineReader = new LineReaderImpl(reader);
-        lineReader.read();
+        lineReader.readLines();
     }
 
     @Test
@@ -36,7 +34,7 @@ public class LineReaderImplTest {
                 "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\""
         );
         LineReaderImpl lineReader = new LineReaderImpl(reader);
-        List<Row> rows = lineReader.read();
+        List<Row> rows = lineReader.readLines();
         assertEquals(3, rows.size());
     }
 
@@ -56,7 +54,7 @@ public class LineReaderImplTest {
                 .setStartRow(3)
                 .setUseHeader(true)
         );
-        List<Row> rows = lineReader.read();
+        List<Row> rows = lineReader.readLines();
         assertEquals(2, rows.size());
     }
 
@@ -83,7 +81,7 @@ public class LineReaderImplTest {
             new LineReaderInstructionsImpl()
                 .setUseHeader(false)
         );
-        checkEscapedStrings(lineReader.read());
+        checkEscapedStrings(lineReader.readLines());
     }
 
     @Test
@@ -95,7 +93,7 @@ public class LineReaderImplTest {
                 .setUseHeader(false)
                 .setEscape('\\')
         );
-        checkEscapedStrings(lineReader.read());
+        checkEscapedStrings(lineReader.readLines());
     }
 
     private void checkEscapedStrings(List<Row> lines) {
@@ -115,7 +113,7 @@ public class LineReaderImplTest {
             new LineReaderInstructionsImpl()
                 .setUseHeader(false)
         );
-        List<Row> allLines = lineReader.read();
+        List<Row> allLines = lineReader.readLines();
         assertEquals(3, allLines.size());
     }
 

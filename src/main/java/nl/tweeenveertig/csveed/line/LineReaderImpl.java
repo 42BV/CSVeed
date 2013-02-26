@@ -1,12 +1,9 @@
 package nl.tweeenveertig.csveed.line;
 
-import nl.tweeenveertig.csveed.api.LineReader;
-import nl.tweeenveertig.csveed.api.LineReaderInstructions;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.token.ParseException;
 import nl.tweeenveertig.csveed.token.ParseStateMachine;
-import nl.tweeenveertig.csveed.token.SymbolMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +59,7 @@ public class LineReaderImpl implements LineReader {
         }
     }
 
-    public List<Row> read() {
+    public List<Row> readLines() {
         List<Row> allRows = new ArrayList<Row>();
         while (!isFinished()) {
             Row row = readLine();

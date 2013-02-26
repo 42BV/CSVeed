@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.api;
+package nl.tweeenveertig.csveed.line;
 
 /**
 * These instructions are used to power the {@link LineReader}. Note that the instructions are also used

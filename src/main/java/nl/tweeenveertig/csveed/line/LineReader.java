@@ -1,4 +1,6 @@
-package nl.tweeenveertig.csveed.api;
+package nl.tweeenveertig.csveed.line;
+
+import nl.tweeenveertig.csveed.api.Row;
 
 import java.util.List;
 
@@ -12,7 +14,7 @@ public interface LineReader {
     * Reads all rows from the file and returns them as a List. After this, the LineReader will be finished
     * @return all Rows read from the Reader
     */
-    public List<Row> read();
+    public List<Row> readLines();
 
     /**
     * Reads a single row from the file and returns this. The LineReader will keep track of its state.

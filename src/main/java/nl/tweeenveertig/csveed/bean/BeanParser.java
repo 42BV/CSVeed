@@ -1,7 +1,6 @@
 package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.annotations.*;
-import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 import java.lang.annotation.Annotation;

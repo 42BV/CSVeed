@@ -1,8 +1,6 @@
 package nl.tweeenveertig.csveed.bean;
 
-import nl.tweeenveertig.csveed.api.BeanReader;
-import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
-import nl.tweeenveertig.csveed.api.LineReader;
+import nl.tweeenveertig.csveed.line.LineReader;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.line.LineReaderImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
@@ -23,14 +21,11 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private AbstractMapper<T, Object> mapper;
 
-    private Reader reader;
-
     public BeanReaderImpl(Reader reader, Class<T> beanClass) {
         this(reader, new BeanParser<T>().getBeanInstructions(beanClass));
     }
 
     public BeanReaderImpl(Reader reader, BeanReaderInstructions<T> beanReaderInstructions) {
-        this.reader = reader;
         this.beanReaderInstructions = (BeanReaderInstructionsImpl<T>)beanReaderInstructions;
         this.lineReader = new LineReaderImpl(reader, this.beanReaderInstructions.getLineReaderInstructions());
         this.mapper = this.beanReaderInstructions.createMappingStrategy();
@@ -38,10 +33,10 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         LOG.info("- CSV config / mapping strategy: "+ this.beanReaderInstructions.getMappingStrategy());
     }
 
-    public List<T> read() {
+    public List<T> readBeans() {
         List<T> beans = new ArrayList<T>();
         while (!isFinished()) {
-            T bean = readLine();
+            T bean = readBean();
             if (bean != null) {
                 beans.add(bean);
             }
@@ -49,7 +44,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return beans;
     }
 
-    public T readLine() {
+    public T readBean() {
         Row unmappedRow = lineReader.readLine();
         if (unmappedRow == null) {
             return null;
@@ -64,6 +59,11 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     public boolean isFinished() {
         return lineReader.isFinished();
+    }
+
+    @Override
+    public LineReader getLineReader() {
+        return this.lineReader;
     }
 
     private T instantiateBean() {

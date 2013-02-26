@@ -1,7 +1,6 @@
 package nl.tweeenveertig.csveed.bean;
 
-import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
-import nl.tweeenveertig.csveed.api.LineReaderInstructions;
+import nl.tweeenveertig.csveed.line.LineReaderInstructions;
 import nl.tweeenveertig.csveed.line.LineReaderInstructionsImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
 

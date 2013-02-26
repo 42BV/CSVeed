@@ -1,6 +1,5 @@
 package nl.tweeenveertig.csveed.bean;
 
-import nl.tweeenveertig.csveed.api.BeanReaderInstructions;
 import nl.tweeenveertig.csveed.test.model.BeanWithoutGettersAndSetters;
 import org.junit.Test;
 
@@ -14,6 +13,6 @@ public class BeanParserTest {
                 new BeanParser<BeanWithoutGettersAndSetters>();
         BeanReaderInstructions<BeanWithoutGettersAndSetters> instructions =
                 beanParser.getBeanInstructions(BeanWithoutGettersAndSetters.class);
-        assertNull(((BeanReaderInstructionsImpl)instructions).getProperties().fromName("a"));
+        assertNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName("a"));
     }
 }

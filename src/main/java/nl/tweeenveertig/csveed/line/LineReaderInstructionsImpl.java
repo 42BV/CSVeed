@@ -1,6 +1,5 @@
 package nl.tweeenveertig.csveed.line;
 
-import nl.tweeenveertig.csveed.api.LineReaderInstructions;
 import nl.tweeenveertig.csveed.token.EncounteredSymbol;
 import nl.tweeenveertig.csveed.token.SymbolMapping;
 
