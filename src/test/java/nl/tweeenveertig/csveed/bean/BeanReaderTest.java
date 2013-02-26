@@ -48,8 +48,8 @@ public class BeanReaderTest {
             "alpha;beta;gamma\n"+
             "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
         );
-        BeanReader<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(beanReaderInstructions);
-        beanReader.readLine(reader);
+        BeanReader<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(reader, beanReaderInstructions);
+        beanReader.readLine();
     }
 
     @Test
@@ -61,13 +61,14 @@ public class BeanReaderTest {
             "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\""
         );
         BeanReaderImpl<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(
+                reader,
                 new BeanReaderInstructionsImpl<BeanWithMultipleStrings>(BeanWithMultipleStrings.class)
                 .setMapper(ColumnNameMapper.class)
                 .mapColumnNameToProperty("a", "alpha")
                 .mapColumnNameToProperty("b", "beta")
                 .mapColumnNameToProperty("c", "gamma")
         );
-        List<BeanWithMultipleStrings> beans = beanReader.read(reader);
+        List<BeanWithMultipleStrings> beans = beanReader.read();
         assertEquals(3, beans.size());
         BeanWithMultipleStrings bean = beans.get(0);
         assertEquals("row 1, cell 1", bean.getAlpha());
@@ -83,8 +84,9 @@ public class BeanReaderTest {
             "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"+
             "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\""
         );
-        BeanReaderImpl<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(BeanWithMultipleStrings.class);
-        List<BeanWithMultipleStrings> beans = beanReader.read(reader);
+        BeanReaderImpl<BeanWithMultipleStrings> beanReader =
+                new BeanReaderImpl<BeanWithMultipleStrings>(reader, BeanWithMultipleStrings.class);
+        List<BeanWithMultipleStrings> beans = beanReader.read();
         assertEquals(3, beans.size());
         BeanWithMultipleStrings bean = beans.get(0);
         assertEquals("row 1, cell 1", bean.getGamma());
@@ -100,8 +102,9 @@ public class BeanReaderTest {
             "'\\'row\\' 2, cell 1'\t'row 2, cell 2'\t'row 2, cell 3'\r"+
             "'\\'row\\' 3, cell 1'\t'row 3, cell 2'\t'row 3, cell 3'"
         );
-        BeanReaderImpl<BeanWithAlienSettings> beanReader = new BeanReaderImpl<BeanWithAlienSettings>(BeanWithAlienSettings.class);
-        List<BeanWithAlienSettings> beans = beanReader.read(reader);
+        BeanReaderImpl<BeanWithAlienSettings> beanReader =
+                new BeanReaderImpl<BeanWithAlienSettings>(reader, BeanWithAlienSettings.class);
+        List<BeanWithAlienSettings> beans = beanReader.read();
         assertEquals(3, beans.size());
         BeanWithAlienSettings bean = beans.get(0);
         assertEquals("'row' 1, cell 1", bean.getGamma());
@@ -115,8 +118,9 @@ public class BeanReaderTest {
             "text;year;number;date;year and month\n"+
             "\"a bit of text\";1984;42.42;1972-01-13;2013-04\n"
         );
-        BeanReaderImpl<BeanWithVariousTypes> beanReader = new BeanReaderImpl<BeanWithVariousTypes>(BeanWithVariousTypes.class);
-        List<BeanWithVariousTypes> beans = beanReader.read(reader);
+        BeanReaderImpl<BeanWithVariousTypes> beanReader =
+                new BeanReaderImpl<BeanWithVariousTypes>(reader, BeanWithVariousTypes.class);
+        List<BeanWithVariousTypes> beans = beanReader.read();
         assertEquals(1, beans.size());
         BeanWithVariousTypes bean = beans.get(0);
         assertEquals("a bit of text", bean.getText());
@@ -133,8 +137,9 @@ public class BeanReaderTest {
         Reader reader = new StringReader(
             "\"a bit of text\";1984;42.42;1972-01-13;2013-04\n"
         );
-        BeanReaderImpl<BeanWithoutHeader> beanReader = new BeanReaderImpl<BeanWithoutHeader>(BeanWithoutHeader.class);
-        List<BeanWithoutHeader> beans = beanReader.read(reader);
+        BeanReaderImpl<BeanWithoutHeader> beanReader =
+                new BeanReaderImpl<BeanWithoutHeader>(reader, BeanWithoutHeader.class);
+        List<BeanWithoutHeader> beans = beanReader.read();
         assertEquals(1, beans.size());
     }
     
@@ -144,8 +149,8 @@ public class BeanReaderTest {
             "street;city;postal code;ignore this\n"+
             "\"Some street\";\"Some city\";\"Some postal code\";\"Some ignoring\""
         );
-        BeanReaderImpl<BeanWithNameMatching> beanReader = new BeanReaderImpl<BeanWithNameMatching>(BeanWithNameMatching.class);
-        List<BeanWithNameMatching> beans = beanReader.read(reader);
+        BeanReaderImpl<BeanWithNameMatching> beanReader = new BeanReaderImpl<BeanWithNameMatching>(reader, BeanWithNameMatching.class);
+        List<BeanWithNameMatching> beans = beanReader.read();
         assertEquals(1, beans.size());
         BeanWithNameMatching bean = beans.get(0);
         assertEquals("Some street", bean.getLine1());
@@ -158,8 +163,8 @@ public class BeanReaderTest {
         Reader reader = new StringReader(
             "\"line-1\";\"line0\";\"line1\";\"line2\";\"line3\""
         );
-        BeanReaderImpl<BeanWithCustomIndexes> beanReader = new BeanReaderImpl<BeanWithCustomIndexes>(BeanWithCustomIndexes.class);
-        BeanWithCustomIndexes bean = beanReader.readLine(reader);
+        BeanReaderImpl<BeanWithCustomIndexes> beanReader = new BeanReaderImpl<BeanWithCustomIndexes>(reader, BeanWithCustomIndexes.class);
+        BeanWithCustomIndexes bean = beanReader.readLine();
         assertEquals("line0", bean.getLine0());
         assertEquals("line1", bean.getLine1());
         assertEquals("line2", bean.getLine2());
@@ -171,8 +176,8 @@ public class BeanReaderTest {
         Reader reader = new StringReader(
             "14;28;42"
         );
-        BeanReaderImpl<BeanLotsOfIgnores> beanReader = new BeanReaderImpl<BeanLotsOfIgnores>(BeanLotsOfIgnores.class);
-        BeanLotsOfIgnores bean = beanReader.readLine(reader);
+        BeanReaderImpl<BeanLotsOfIgnores> beanReader = new BeanReaderImpl<BeanLotsOfIgnores>(reader, BeanLotsOfIgnores.class);
+        BeanLotsOfIgnores bean = beanReader.readLine();
         assertEquals((Integer)14, bean.getTakeThis1());
         assertEquals((Integer)28, bean.getPickThis1());
         assertEquals((Integer)42, bean.getChooseThis1());
@@ -185,8 +190,8 @@ public class BeanReaderTest {
         Reader reader = new StringReader(
             "\"some text\""
         );
-        BeanReaderImpl<BeanWithConverter> beanReader = new BeanReaderImpl<BeanWithConverter>(BeanWithConverter.class);
-        BeanWithConverter bean = beanReader.readLine(reader);
+        BeanReaderImpl<BeanWithConverter> beanReader = new BeanReaderImpl<BeanWithConverter>(reader, BeanWithConverter.class);
+        BeanWithConverter bean = beanReader.readLine();
         assertEquals("some text", bean.getBean().getName());
     }
 
@@ -195,8 +200,8 @@ public class BeanReaderTest {
         Reader reader = new StringReader(
             "\"alpha\";\"beta\";\"gamma\"a\n"
         );
-        BeanReaderImpl<BeanSimple> beanReader = new BeanReaderImpl<BeanSimple>(BeanSimple.class);
-        beanReader.read(reader);
+        BeanReaderImpl<BeanSimple> beanReader = new BeanReaderImpl<BeanSimple>(reader, BeanSimple.class);
+        beanReader.read();
     }
 
     @Test(expected = CsvException.class)
@@ -205,8 +210,8 @@ public class BeanReaderTest {
             "text;year;number;date;year and month\n"+
             "\"a bit of text\";UNEXPECTED TEXT!!!;42.42;1972-01-13;2013-04\n"
         );
-        BeanReaderImpl<BeanWithVariousTypes> beanReader = new BeanReaderImpl<BeanWithVariousTypes>(BeanWithVariousTypes.class);
-        beanReader.read(reader);
+        BeanReaderImpl<BeanWithVariousTypes> beanReader = new BeanReaderImpl<BeanWithVariousTypes>(reader, BeanWithVariousTypes.class);
+        beanReader.read();
     }
 
     @Test(expected = CsvException.class)
@@ -214,8 +219,8 @@ public class BeanReaderTest {
         Reader reader = new StringReader(
             "\"can I convert this to a simple bean?\""
         );
-        BeanReaderImpl<BeanWithNonStandardObject> beanReader = new BeanReaderImpl<BeanWithNonStandardObject>(BeanWithNonStandardObject.class);
-        beanReader.read(reader);
+        BeanReaderImpl<BeanWithNonStandardObject> beanReader = new BeanReaderImpl<BeanWithNonStandardObject>(reader, BeanWithNonStandardObject.class);
+        beanReader.read();
     }
 
     @Test(expected = CsvException.class)
@@ -223,8 +228,8 @@ public class BeanReaderTest {
         Reader reader = new StringReader(
             "\"can I convert this to a simple bean?\""
         );
-        BeanReaderImpl<BeanWithoutNoArgPublicConstructor> beanReader = new BeanReaderImpl<BeanWithoutNoArgPublicConstructor>(BeanWithoutNoArgPublicConstructor.class);
-        beanReader.read(reader);
+        BeanReaderImpl<BeanWithoutNoArgPublicConstructor> beanReader = new BeanReaderImpl<BeanWithoutNoArgPublicConstructor>(reader, BeanWithoutNoArgPublicConstructor.class);
+        beanReader.read();
     }
 
 }

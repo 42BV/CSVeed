@@ -36,11 +36,14 @@ public class LineReaderImpl implements LineReader {
 
     private Header header;
 
-    public LineReaderImpl() {
-        this(new LineReaderInstructionsImpl());
+    private Reader reader;
+
+    public LineReaderImpl(Reader reader) {
+        this(reader, new LineReaderInstructionsImpl());
     }
 
-    public LineReaderImpl(LineReaderInstructions instructionsInterface) {
+    public LineReaderImpl(Reader reader, LineReaderInstructions instructionsInterface) {
+        this.reader = reader;
         init((LineReaderInstructionsImpl) instructionsInterface);
     }
 
@@ -59,10 +62,10 @@ public class LineReaderImpl implements LineReader {
         }
     }
 
-    public List<Row> read(Reader reader) {
+    public List<Row> read() {
         List<Row> allRows = new ArrayList<Row>();
         while (!isFinished()) {
-            Row row = readLine(reader);
+            Row row = readLine();
             if (row != null && row.size() > 0) {
                 allRows.add(row);
             }
@@ -70,15 +73,15 @@ public class LineReaderImpl implements LineReader {
         return allRows;
     }
 
-    public Row readLine(Reader reader) {
-        Line unmappedLine = readBareLine(reader);
+    public Row readLine() {
+        Line unmappedLine = readBareLine();
         if (unmappedLine == null) {
             return null;
         }
         checkNumberOfColumns(unmappedLine);
         if (isHeaderLine()) {
             header = new Header(unmappedLine);
-            unmappedLine = readBareLine(reader);
+            unmappedLine = readBareLine();
         }
         return new RowImpl(unmappedLine, header);
     }
@@ -106,12 +109,12 @@ public class LineReaderImpl implements LineReader {
         return this.currentLine;
     }
 
-    protected Line readBareLine(Reader reader) {
+    protected Line readBareLine() {
         LineWithInfo line = new LineWithInfo();
         this.currentLine++;
 
         if (isBeforeStartLine()) {
-            skipToStartLine(reader);
+            skipToStartLine();
         }
 
         while (!stateMachine.isLineFinished()) {
@@ -145,7 +148,7 @@ public class LineReaderImpl implements LineReader {
         return getCurrentLine() < this.startLine;
     }
 
-    private void skipToStartLine(Reader reader) {
+    private void skipToStartLine() {
         try {
             int symbol = reader.read();
             while (isBeforeStartLine() && symbol != -1) {

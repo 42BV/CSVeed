@@ -1,6 +1,5 @@
 package nl.tweeenveertig.csveed.api;
 
-import java.io.Reader;
 import java.util.List;
 
 /**
@@ -11,17 +10,15 @@ public interface LineReader {
 
     /**
     * Reads all rows from the file and returns them as a List. After this, the LineReader will be finished
-    * @param reader Reader from which the rows are read
     * @return all Rows read from the Reader
     */
-    public List<Row> read(Reader reader);
+    public List<Row> read();
 
     /**
     * Reads a single row from the file and returns this. The LineReader will keep track of its state.
-    * @param reader Reader from which the row is read
     * @return Row read from the Reader
     */
-    public Row readLine(Reader reader);
+    public Row readLine();
 
     /**
     * Returns the line from which the row was read. Note that a line is seen as a legitimate CSV row, not

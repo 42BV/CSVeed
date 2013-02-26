@@ -23,17 +23,15 @@ public interface BeanReader<T> {
 
     /**
     * Reads all rows from the file and return these as beans.
-    * @param reader Reader from which the beans are read
     * @return all beans read from the Reader
     */
-    public List<T> read(Reader reader);
+    public List<T> read();
 
     /**
     * Reads a single row and returns this as a bean. The LineReader will keep track of its state.
-    * @param reader Reader from which the bean is read
     * @return Bean read from the Reader
     */
-    public T readLine(Reader reader);
+    public T readLine();
 
     /**
     * Returns the line from which the bean was read. Note that a line is seen as a legitimate CSV row, not

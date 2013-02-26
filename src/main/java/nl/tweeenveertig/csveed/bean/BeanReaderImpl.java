@@ -23,22 +23,25 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private AbstractMapper<T, Object> mapper;
 
-    public BeanReaderImpl(Class<T> beanClass) {
-        this(new BeanParser<T>().getBeanInstructions(beanClass));
+    private Reader reader;
+
+    public BeanReaderImpl(Reader reader, Class<T> beanClass) {
+        this(reader, new BeanParser<T>().getBeanInstructions(beanClass));
     }
 
-    public BeanReaderImpl(BeanReaderInstructions<T> beanReaderInstructions) {
+    public BeanReaderImpl(Reader reader, BeanReaderInstructions<T> beanReaderInstructions) {
+        this.reader = reader;
         this.beanReaderInstructions = (BeanReaderInstructionsImpl<T>)beanReaderInstructions;
-        this.lineReader = new LineReaderImpl(this.beanReaderInstructions.getLineReaderInstructions());
+        this.lineReader = new LineReaderImpl(reader, this.beanReaderInstructions.getLineReaderInstructions());
         this.mapper = this.beanReaderInstructions.createMappingStrategy();
         mapper.setBeanReaderInstructions(this.beanReaderInstructions);
         LOG.info("- CSV config / mapping strategy: "+ this.beanReaderInstructions.getMappingStrategy());
     }
 
-    public List<T> read(Reader reader) {
+    public List<T> read() {
         List<T> beans = new ArrayList<T>();
         while (!isFinished()) {
-            T bean = readLine(reader);
+            T bean = readLine();
             if (bean != null) {
                 beans.add(bean);
             }
@@ -46,8 +49,8 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return beans;
     }
 
-    public T readLine(Reader reader) {
-        Row unmappedRow = lineReader.readLine(reader);
+    public T readLine() {
+        Row unmappedRow = lineReader.readLine();
         if (unmappedRow == null) {
             return null;
         }
