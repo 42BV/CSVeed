@@ -28,9 +28,15 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     public BeanReaderImpl(Reader reader, BeanReaderInstructions<T> beanReaderInstructions) {
         this.beanReaderInstructions = (BeanReaderInstructionsImpl<T>)beanReaderInstructions;
         this.lineReader = new LineReaderImpl(reader, this.beanReaderInstructions.getLineReaderInstructions());
-        this.mapper = this.beanReaderInstructions.createMappingStrategy();
-        mapper.setBeanReaderInstructions(this.beanReaderInstructions);
-        LOG.info("- CSV config / mapping strategy: "+ this.beanReaderInstructions.getMappingStrategy());
+    }
+
+    public AbstractMapper<T, Object> getMapper() {
+        if (this.mapper == null) {
+            this.mapper = this.beanReaderInstructions.createMappingStrategy();
+            mapper.setBeanReaderInstructions(this.beanReaderInstructions);
+            LOG.info("- CSV config / mapping strategy: "+ this.beanReaderInstructions.getMappingStrategy());
+        }
+        return mapper;
     }
 
     public List<T> readBeans() {
@@ -49,8 +55,8 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         if (unmappedRow == null) {
             return null;
         }
-        mapper.verifyHeader(unmappedRow);
-        return mapper.convert(instantiateBean(), unmappedRow, getCurrentLine());
+        getMapper().verifyHeader(unmappedRow);
+        return getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine());
     }
 
     public int getCurrentLine() {

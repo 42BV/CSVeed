@@ -132,6 +132,16 @@ public interface CsvReader<T> {
     CsvReader<T> setMapper(Class<? extends AbstractMapper> mapper);
 
     /**
+    * Determines what dateformat to apply to the cell value before storing it as a date. This method is called
+    * whenever {@link nl.tweeenveertig.csveed.annotations.CsvDate} is used. The default for date format is
+    * dd-MM-yyyy.
+    * @param propertyName the name of the property to write the date to
+    * @param dateFormat the date format to apply for parsing the date value
+    * @return convenience for chaining
+    */
+    CsvReader<T> setDate(String propertyName, String dateFormat);
+
+    /**
     * Determines if the field is required. If so, the cell may not be empty and a
     * {@link nl.tweeenveertig.csveed.report.CsvException} will be thrown if this occurs. This method is called
     * whenever {@link nl.tweeenveertig.csveed.annotations.CsvCell#required()} is used. The default for a property

@@ -68,8 +68,7 @@ public class BeanParser<T> {
     }
 
     private void parseCsvDate(String propertyName, CsvDate csvDate) {
-        DateFormat dateFormat = new SimpleDateFormat(csvDate.format());
-        this.beanReaderInstructions.setConverter(propertyName, new CustomDateEditor(dateFormat, true));
+        this.beanReaderInstructions.setDate(propertyName, csvDate.format());
     }
 
     private void parseCsvConverter(String propertyName, CsvConverter csvConverter) {

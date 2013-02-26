@@ -94,6 +94,12 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
     }
 
     @Override
+    public CsvReader<T> setDate(String propertyName, String dateFormat) {
+        this.beanReaderInstructions.setDate(propertyName, dateFormat);
+        return this;
+    }
+
+    @Override
     public CsvReader<T> setRequired(String propertyName, boolean required) {
         this.beanReaderInstructions.setRequired(propertyName, required);
         return this;

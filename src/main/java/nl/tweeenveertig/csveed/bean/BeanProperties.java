@@ -3,9 +3,12 @@ package nl.tweeenveertig.csveed.bean;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 import java.beans.*;
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class BeanProperties implements Iterable<BeanProperty> {
@@ -66,28 +69,44 @@ public class BeanProperties implements Iterable<BeanProperty> {
         get(propertyName).setRequired(required);
     }
 
+    public void setDate(String propertyName, String formatText) {
+        DateFormat dateFormat = new SimpleDateFormat(formatText);
+        setConverter(propertyName, new CustomDateEditor(dateFormat, true));
+    }
+
     public void setConverter(String propertyName, PropertyEditor converter) {
         get(propertyName).setConverter(converter);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    protected void removeFromColumnIndex(BeanProperty property) {
+        while (indexToProperty.values().remove(property));
+    }
+
+    protected void removeFromColumnName(BeanProperty property) {
+        while (nameToProperty.values().remove(property));
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     public void ignoreProperty(String propertyName) {
         BeanProperty property = get(propertyName);
         properties.remove(property);
-        while (indexToProperty.values().remove(property));
-        while (nameToProperty.values().remove(property));
+        removeFromColumnIndex(property);
+        removeFromColumnName(property);
     }
 
     public void mapIndexToProperty(int columnIndex, String propertyName) {
         BeanProperty property = get(propertyName);
+        removeFromColumnIndex(property);
         property.setColumnIndex(columnIndex);
-        indexToProperty.put(columnIndex, get(propertyName));
+        indexToProperty.put(columnIndex, property);
     }
 
     public void mapNameToProperty(String columnName, String propertyName) {
         BeanProperty property = get(propertyName);
+        removeFromColumnName(property);
         property.setColumnName(columnName);
-        nameToProperty.put(columnName, get(propertyName));
+        nameToProperty.put(columnName, property);
     }
 
     protected BeanProperty get(String propertyName) {

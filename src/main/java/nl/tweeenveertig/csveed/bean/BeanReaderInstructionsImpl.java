@@ -72,6 +72,11 @@ public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> 
         return this;
     }
 
+    public BeanReaderInstructions<T> setDate(String propertyName, String dateFormat) {
+        this.getProperties().setDate(propertyName, dateFormat);
+        return this;
+    }
+
     public BeanReaderInstructions<T> setRequired(String propertyName, boolean required) {
         this.getProperties().setRequired(propertyName, required);
         return this;
