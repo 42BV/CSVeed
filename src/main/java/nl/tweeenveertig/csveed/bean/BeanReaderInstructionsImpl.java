@@ -2,102 +2,89 @@ package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.line.LineReaderInstructions;
 import nl.tweeenveertig.csveed.line.LineReaderInstructionsImpl;
-import nl.tweeenveertig.csveed.report.CsvException;
 
 import java.beans.PropertyEditor;
 
-public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> {
+public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
 
     private LineReaderInstructions lineReaderInstructions = new LineReaderInstructionsImpl();
 
     private BeanProperties properties;
 
-    private Class<T> beanClass;
-
     private Class<? extends AbstractMapper> mappingStrategy = ColumnIndexMapper.class;
 
-    public BeanReaderInstructionsImpl(Class<T> beanClass) {
-        this.beanClass = beanClass;
+    private Class beanClass;
+
+    public BeanReaderInstructionsImpl(Class beanClass) {
         this.properties = new BeanProperties(beanClass);
-    }
-
-    public Class<T> getBeanClass() {
-        return this.beanClass;
-    }
-
-    public T newInstance() {
-        try {
-            return this.beanClass.newInstance();
-        } catch (Exception err) {
-            throw new RuntimeException(err);
-        }
+        this.beanClass = beanClass;
     }
 
     public LineReaderInstructions getLineReaderInstructions() {
         return this.lineReaderInstructions;
     }
 
-    public BeanReaderInstructions<T> setUseHeader(boolean useHeader) {
+    public BeanReaderInstructions setUseHeader(boolean useHeader) {
         this.lineReaderInstructions.setUseHeader(useHeader);
         return this;
     }
 
-    public BeanReaderInstructions<T> setStartRow(int startRow) {
+    public BeanReaderInstructions setStartRow(int startRow) {
         this.lineReaderInstructions.setStartRow(startRow);
         return this;
     }
 
-    public BeanReaderInstructions<T> setEscape(char symbol) {
+    public BeanReaderInstructions setEscape(char symbol) {
         this.lineReaderInstructions.setEscape(symbol);
         return this;
     }
 
-    public BeanReaderInstructions<T> setQuote(char symbol) {
+    public BeanReaderInstructions setQuote(char symbol) {
         this.lineReaderInstructions.setQuote(symbol);
         return this;
     }
 
-    public BeanReaderInstructions<T> setSeparator(char symbol) {
+    public BeanReaderInstructions setSeparator(char symbol) {
         this.lineReaderInstructions.setSeparator(symbol);
         return this;
     }
 
-    public BeanReaderInstructions<T> setEndOfLine(char[] symbols) {
+    public BeanReaderInstructions setEndOfLine(char[] symbols) {
         this.lineReaderInstructions.setEndOfLine(symbols);
         return this;
     }
 
-    public BeanReaderInstructions<T> setMapper(Class<? extends AbstractMapper> mapper) {
+    public BeanReaderInstructions setMapper(Class<? extends AbstractMapper> mapper) {
         this.mappingStrategy = mapper;
         return this;
     }
 
-    public BeanReaderInstructions<T> setDate(String propertyName, String dateFormat) {
+    public BeanReaderInstructions setDate(String propertyName, String dateFormat) {
         this.getProperties().setDate(propertyName, dateFormat);
         return this;
     }
 
-    public BeanReaderInstructions<T> setRequired(String propertyName, boolean required) {
+    public BeanReaderInstructions setRequired(String propertyName, boolean required) {
         this.getProperties().setRequired(propertyName, required);
         return this;
     }
 
-    public BeanReaderInstructions<T> setConverter(String propertyName, PropertyEditor converter) {
+    public BeanReaderInstructions setConverter(String propertyName, PropertyEditor converter) {
         this.getProperties().setConverter(propertyName, converter);
         return this;
     }
 
-    public BeanReaderInstructions<T> ignoreProperty(String propertyName) {
+    public BeanReaderInstructions ignoreProperty(String propertyName) {
         this.getProperties().ignoreProperty(propertyName);
         return this;
     }
 
-    public BeanReaderInstructions<T> mapColumnIndexToProperty(int columnIndex, String propertyName) {
+    public BeanReaderInstructions mapColumnIndexToProperty(int columnIndex, String propertyName) {
         this.getProperties().mapIndexToProperty(columnIndex, propertyName);
         return this;
     }
 
-    public BeanReaderInstructions<T> mapColumnNameToProperty(String columnName, String propertyName) {
+    public BeanReaderInstructions mapColumnNameToProperty(String columnName, String propertyName) {
         this.getProperties().mapNameToProperty(columnName, propertyName);
         return this;
     }
@@ -110,13 +97,8 @@ public class BeanReaderInstructionsImpl<T> implements BeanReaderInstructions<T> 
         return this.properties;
     }
 
-    @SuppressWarnings("unchecked")
-    public AbstractMapper<T, Object> createMappingStrategy() {
-        try {
-            return this.mappingStrategy.newInstance();
-        } catch (Exception err) {
-            throw new CsvException("Unable to instantiate the mapping strategy", err);
-        }
+    public Class getBeanClass() {
+        return this.beanClass;
     }
 
 }

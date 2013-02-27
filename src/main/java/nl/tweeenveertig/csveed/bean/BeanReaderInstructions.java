@@ -5,10 +5,9 @@ import java.beans.PropertyEditor;
 /**
 * These instructions are used to power the {@link BeanReader}. Note that the instructions are also used
 * internally if annotations are used.
-* @param <T> bean to use for the conversion process
 * @author Robert Bor
 */
-public interface BeanReaderInstructions<T> {
+public interface BeanReaderInstructions {
 
     /**
     * Makes sure that the first readable line is interpreted as the header line. That line will not be read
@@ -18,7 +17,7 @@ public interface BeanReaderInstructions<T> {
     * @param useHeader true if the header is interpreted and used
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setUseHeader(boolean useHeader);
+    BeanReaderInstructions setUseHeader(boolean useHeader);
 
     /**
     * Sets the start row of the CSV file. If {@link #setUseHeader(boolean)} == true, this will be the header
@@ -28,7 +27,7 @@ public interface BeanReaderInstructions<T> {
     * @param startRow the first row to start reading, including the header row
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setStartRow(int startRow);
+    BeanReaderInstructions setStartRow(int startRow);
 
     /**
     * Sets the character that will be interpreted as an escape symbol while within a quoted field. This
@@ -38,7 +37,7 @@ public interface BeanReaderInstructions<T> {
     * @param symbol the symbol to use for escaping characters within a quoted field
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setEscape(char symbol);
+    BeanReaderInstructions setEscape(char symbol);
 
     /**
     * Sets the character that will be interpreted as a quote symbol, signifying either the start or the
@@ -48,7 +47,7 @@ public interface BeanReaderInstructions<T> {
     * @param symbol the symbol to use for indicating start/end of a quoted field
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setQuote(char symbol);
+    BeanReaderInstructions setQuote(char symbol);
 
     /**
     * Sets the character that will be interpreted as a separator between cells. This method is called whenever
@@ -57,7 +56,7 @@ public interface BeanReaderInstructions<T> {
     * @param symbol the symbol to use as a separator between cells
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setSeparator(char symbol);
+    BeanReaderInstructions setSeparator(char symbol);
 
     /**
     * Sets the characters (plural) that will be interpreted as end-of-line markers (unless within a quoted
@@ -67,7 +66,7 @@ public interface BeanReaderInstructions<T> {
     * @param symbols the symbol to interpret as end-of-line markers (unless within a quoted field)
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setEndOfLine(char[] symbols);
+    BeanReaderInstructions setEndOfLine(char[] symbols);
 
     /**
     * Determines which mapping strategy is to be employed for mapping cells to bean properties. This
@@ -79,7 +78,7 @@ public interface BeanReaderInstructions<T> {
     * @param mapper the mapping strategy to employ for mapping cells to bean properties
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setMapper(Class<? extends AbstractMapper> mapper);
+    BeanReaderInstructions setMapper(Class<? extends AbstractMapper> mapper);
 
     /**
     * Determines what dateformat to apply to the cell value before storing it as a date. This method is called
@@ -89,7 +88,7 @@ public interface BeanReaderInstructions<T> {
     * @param dateFormat the date format to apply for parsing the date value
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setDate(String propertyName, String dateFormat);
+    BeanReaderInstructions setDate(String propertyName, String dateFormat);
 
     /**
     * Determines if the field is required. If so, the cell may not be empty and a
@@ -100,7 +99,7 @@ public interface BeanReaderInstructions<T> {
     * @param required whether the cell must be not-null
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setRequired(String propertyName, boolean required);
+    BeanReaderInstructions setRequired(String propertyName, boolean required);
 
     /**
     * Sets a custom {@link PropertyEditor} for the property. This PropertyEditor is called to convert the
@@ -112,7 +111,7 @@ public interface BeanReaderInstructions<T> {
     * @param converter PropertyEditor to apply to the property
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> setConverter(String propertyName, PropertyEditor converter);
+    BeanReaderInstructions setConverter(String propertyName, PropertyEditor converter);
 
     /**
     * Sets a field to be ignored for purposes of mapping. This method is called whenever
@@ -121,7 +120,7 @@ public interface BeanReaderInstructions<T> {
     * @param propertyName property which must be ignored for mapping
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> ignoreProperty(String propertyName);
+    BeanReaderInstructions ignoreProperty(String propertyName);
 
     /**
     * Maps a column in the CSV to a specific property. This method is called whenever
@@ -130,7 +129,7 @@ public interface BeanReaderInstructions<T> {
     * @param propertyName property to which the index-based mapping must be applied
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> mapColumnIndexToProperty(int columnIndex, String propertyName);
+    BeanReaderInstructions mapColumnIndexToProperty(int columnIndex, String propertyName);
 
     /**
     * Maps a column name (which is found in the header) to a specific property. Note that to use this, headers
@@ -141,6 +140,8 @@ public interface BeanReaderInstructions<T> {
     * @param propertyName property to which the name-based mapping must be applied
     * @return convenience for chaining
     */
-    BeanReaderInstructions<T> mapColumnNameToProperty(String columnName, String propertyName);
+    BeanReaderInstructions mapColumnNameToProperty(String columnName, String propertyName);
+
+    Class getBeanClass();
 
 }

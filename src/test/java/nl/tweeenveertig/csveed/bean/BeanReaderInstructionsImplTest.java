@@ -9,7 +9,7 @@ public class BeanReaderInstructionsImplTest {
 
     @Test
     public void propertyNameIsNull() {
-        BeanReaderInstructionsImpl<BeanSimple> instructions = new BeanReaderInstructionsImpl<BeanSimple>(BeanSimple.class);
+        BeanReaderInstructionsImpl instructions = new BeanReaderInstructionsImpl(BeanSimple.class);
         assertNull(instructions.getProperties().fromName("definitelyNotHere"));
     }
 

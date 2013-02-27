@@ -8,11 +8,11 @@ import org.springframework.beans.BeanWrapperImpl;
 
 import java.util.Set;
 
-public abstract class AbstractMapper<T, K extends Object> {
+public abstract class AbstractMapper<T, K> {
 
     public static final Logger LOG = LoggerFactory.getLogger(AbstractMapper.class);
 
-    protected BeanReaderInstructionsImpl<T> beanReaderInstructions;
+    protected BeanReaderInstructionsImpl beanReaderInstructions;
 
     private boolean verified = false;
 
@@ -64,7 +64,7 @@ public abstract class AbstractMapper<T, K extends Object> {
         return bean;
     }
 
-    public void setBeanReaderInstructions(BeanReaderInstructionsImpl<T> beanReaderInstructions) {
+    public void setBeanReaderInstructions(BeanReaderInstructionsImpl beanReaderInstructions) {
         this.beanReaderInstructions = beanReaderInstructions;
     }
 

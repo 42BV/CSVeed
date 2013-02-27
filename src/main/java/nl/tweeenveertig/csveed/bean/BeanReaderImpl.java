@@ -17,22 +17,22 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private LineReader lineReader;
 
-    private BeanReaderInstructionsImpl<T> beanReaderInstructions;
+    private BeanReaderInstructionsImpl beanReaderInstructions;
 
     private AbstractMapper<T, Object> mapper;
 
     public BeanReaderImpl(Reader reader, Class<T> beanClass) {
-        this(reader, new BeanParser<T>().getBeanInstructions(beanClass));
+        this(reader, new BeanParser().getBeanInstructions(beanClass));
     }
 
-    public BeanReaderImpl(Reader reader, BeanReaderInstructions<T> beanReaderInstructions) {
-        this.beanReaderInstructions = (BeanReaderInstructionsImpl<T>)beanReaderInstructions;
+    public BeanReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
+        this.beanReaderInstructions = (BeanReaderInstructionsImpl)beanReaderInstructions;
         this.lineReader = new LineReaderImpl(reader, this.beanReaderInstructions.getLineReaderInstructions());
     }
 
     public AbstractMapper<T, Object> getMapper() {
         if (this.mapper == null) {
-            this.mapper = this.beanReaderInstructions.createMappingStrategy();
+            this.mapper = this.createMappingStrategy();
             mapper.setBeanReaderInstructions(this.beanReaderInstructions);
             LOG.info("- CSV config / mapping strategy: "+ this.beanReaderInstructions.getMappingStrategy());
         }
@@ -74,13 +74,27 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private T instantiateBean() {
         try {
-            return this.beanReaderInstructions.newInstance();
+            return this.getBeanClass().newInstance();
         } catch (Exception err) {
             String errorMessage =
-                    "Unable to instantiate the bean class "+this.beanReaderInstructions.getBeanClass().getName()+
+                    "Unable to instantiate the bean class "+this.getBeanClass().getName()+
                     ". Does it have a no-arg public constructor?";
             LOG.error(errorMessage);
             throw new CsvException(errorMessage, err);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public Class<T> getBeanClass() {
+        return this.beanReaderInstructions.getBeanClass();
+    }
+
+    @SuppressWarnings("unchecked")
+    public AbstractMapper<T, Object> createMappingStrategy() {
+        try {
+            return this.beanReaderInstructions.getMappingStrategy().newInstance();
+        } catch (Exception err) {
+            throw new CsvException("Unable to instantiate the mapping strategy", err);
         }
     }
 

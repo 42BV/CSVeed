@@ -10,13 +10,13 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
 
     private BeanReader<T> beanReader;
 
-    private BeanReaderInstructions<T> beanReaderInstructions;
+    private BeanReaderInstructions beanReaderInstructions;
 
     public CsvReaderImpl(Reader reader, Class<T> beanClass) {
-        this(reader, new BeanParser<T>().getBeanInstructions(beanClass));
+        this(reader, new BeanParser().getBeanInstructions(beanClass));
     }
 
-    public CsvReaderImpl(Reader reader, BeanReaderInstructions<T> beanReaderInstructions) {
+    public CsvReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
         this.beanReaderInstructions = beanReaderInstructions;
         this.beanReader = new BeanReaderImpl<T>(reader, beanReaderInstructions);
     }

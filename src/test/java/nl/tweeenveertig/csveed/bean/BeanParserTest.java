@@ -9,10 +9,8 @@ public class BeanParserTest {
 
     @Test
     public void noGettersAndSetters() {
-        BeanParser<BeanWithoutGettersAndSetters> beanParser =
-                new BeanParser<BeanWithoutGettersAndSetters>();
-        BeanReaderInstructions<BeanWithoutGettersAndSetters> instructions =
-                beanParser.getBeanInstructions(BeanWithoutGettersAndSetters.class);
+        BeanParser beanParser = new BeanParser();
+        BeanReaderInstructions instructions = beanParser.getBeanInstructions(BeanWithoutGettersAndSetters.class);
         assertNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName("a"));
     }
 }

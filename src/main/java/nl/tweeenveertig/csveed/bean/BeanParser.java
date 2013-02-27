@@ -8,15 +8,15 @@ import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class BeanParser<T> {
+public class BeanParser {
 
-    private BeanReaderInstructions<T> beanReaderInstructions;
+    private BeanReaderInstructions beanReaderInstructions;
 
     private int columnIndex = 0;
 
-    public BeanReaderInstructions<T> getBeanInstructions(Class<T> beanClass) {
+    public BeanReaderInstructions getBeanInstructions(Class beanClass) {
 
-        this.beanReaderInstructions = new BeanReaderInstructionsImpl<T>(beanClass);
+        this.beanReaderInstructions = new BeanReaderInstructionsImpl(beanClass);
 
         Annotation[] annotations = beanClass.getAnnotations();
         for (Annotation annotation : annotations) {
@@ -25,7 +25,7 @@ public class BeanParser<T> {
             }
         }
 
-        for (BeanProperty beanProperty : ((BeanReaderInstructionsImpl<T>)beanReaderInstructions).getProperties()) {
+        for (BeanProperty beanProperty : ((BeanReaderInstructionsImpl)beanReaderInstructions).getProperties()) {
             checkForAnnotations(beanProperty);
         }
 
