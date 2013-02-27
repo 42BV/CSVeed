@@ -15,6 +15,21 @@ import static junit.framework.Assert.assertEquals;
 public class LineReaderImplTest {
 
     @Test
+    public void emptyLines() {
+        Reader reader = new StringReader(
+            "\n"+
+            "\n"+
+            "\n"+
+            "alpha;beta;gamma\n"+
+            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
+            "\n"+
+            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
+        );
+        LineReaderImpl lineReader = new LineReaderImpl(reader);
+        assertEquals(2, lineReader.readLines().size());
+    }
+
+    @Test
     public void commentLine() {
         Reader reader = new StringReader(
             "# lots of text\n"+
