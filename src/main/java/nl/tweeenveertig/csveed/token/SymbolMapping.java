@@ -19,6 +19,8 @@ public class SymbolMapping {
 
     private Character quoteCharacter;
 
+    private boolean settingsLogged = false;
+
     public SymbolMapping() {
         initDefaultMapping();
     }
@@ -46,10 +48,14 @@ public class SymbolMapping {
     }
 
     public void logSettings() {
+        if (settingsLogged) {
+            return;
+        }
         for (EncounteredSymbol symbol : symbolToChars.keySet()) {
             char[] characters = symbolToChars.get(symbol);
             LOG.info("- CSV config / Characters for "+symbol+" "+charactersToString(characters));
         }
+        settingsLogged = true;
     }
 
     private String charactersToString(char[] characters) {

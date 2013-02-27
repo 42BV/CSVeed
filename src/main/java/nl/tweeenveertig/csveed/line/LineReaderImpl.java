@@ -44,9 +44,7 @@ public class LineReaderImpl implements LineReader {
 
     private void init(LineReaderInstructionsImpl instructions) {
         this.stateMachine.setSymbolMapping(instructions.getSymbolMapping());
-        this.stateMachine.getSymbolMapping().logSettings();
         this.lineReaderInstructions = instructions;
-        instructions.logSettings();
     }
 
     public List<Row> readLines() {
@@ -108,7 +106,13 @@ public class LineReaderImpl implements LineReader {
         return this.currentLine;
     }
 
+    protected void logSettings() {
+        lineReaderInstructions.logSettings();
+        this.stateMachine.getSymbolMapping().logSettings();
+    }
+
     protected Line readBareLine() {
+        logSettings();
         LineWithInfo line = new LineWithInfo();
         this.currentLine++;
 

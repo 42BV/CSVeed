@@ -15,9 +15,15 @@ public class LineReaderInstructionsImpl implements LineReaderInstructions {
 
     private int startRow = 0;
 
+    private boolean settingsLogged = false;
+
     public void logSettings() {
+        if (settingsLogged) {
+            return;
+        }
         LOG.info("- CSV config / start line: "+getStartRow());
         LOG.info("- CSV config / has header line? "+(isUseHeader()?"yes":"no"));
+        settingsLogged = true;
     }
 
     public SymbolMapping getSymbolMapping() {

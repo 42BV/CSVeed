@@ -35,7 +35,6 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         if (this.mapper == null) {
             this.mapper = this.createMappingStrategy();
             mapper.setBeanReaderInstructions(this.beanReaderInstructions);
-            LOG.info("- CSV config / mapping strategy: "+ this.beanReaderInstructions.getMappingStrategy());
         }
         return mapper;
     }
@@ -52,12 +51,17 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     }
 
     public T readBean() {
+        logSettings();
         Row unmappedRow = lineReader.readLine();
         if (unmappedRow == null) {
             return null;
         }
         getMapper().verifyHeader(unmappedRow);
         return getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine());
+    }
+
+    protected void logSettings() {
+        this.beanReaderInstructions.logSettings();
     }
 
     @Override

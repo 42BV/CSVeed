@@ -2,10 +2,14 @@ package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.line.LineReaderInstructions;
 import nl.tweeenveertig.csveed.line.LineReaderInstructionsImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyEditor;
 
 public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
+
+    public static final Logger LOG = LoggerFactory.getLogger(BeanReaderInstructionsImpl.class);
 
     private LineReaderInstructions lineReaderInstructions = new LineReaderInstructionsImpl();
 
@@ -15,9 +19,19 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
 
     private Class beanClass;
 
+    private boolean settingsLogged = false;
+
     public BeanReaderInstructionsImpl(Class beanClass) {
         this.properties = new BeanProperties(beanClass);
         this.beanClass = beanClass;
+    }
+
+    public void logSettings() {
+        if (settingsLogged) {
+            return;
+        }
+        LOG.info("- CSV config / mapping strategy: "+ this.getMappingStrategy());
+        settingsLogged = true;
     }
 
     public LineReaderInstructions getLineReaderInstructions() {
