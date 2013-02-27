@@ -41,6 +41,12 @@ public @interface CsvFile {
     char[] endOfLine() default { '\r', '\n' };
 
     /**
+    * All lines starting with this symbol (must be at the first encountered position) will be considered
+    * comments, which are ignored by the parser
+    */
+    char comment() default '#';
+
+    /**
     * States whether the first line will be used as a structure line. If this is not the case, the mapping
     * will be done based on column indexes.
     * @return whether to use the first line as a structure or not

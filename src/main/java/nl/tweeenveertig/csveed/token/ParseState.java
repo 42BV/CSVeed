@@ -1,6 +1,8 @@
 package nl.tweeenveertig.csveed.token;
 
 public enum ParseState {
+    COMMENT_LINE                   (false, false, false, false),
+    COMMENT_LINE_FINISHED          (false, true,  false, false),
     START_OF_LINE                  (false, false, false, false),
     OUTSIDE_BEFORE_FIELD           (false, false, false, false),
     OUTSIDE_AFTER_FIELD            (false, false, false, false),

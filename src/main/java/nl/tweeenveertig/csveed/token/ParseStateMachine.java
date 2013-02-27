@@ -33,6 +33,7 @@ public class ParseStateMachine {
     }
 
     public String offerSymbol(int symbolCharacter) throws ParseException {
+
         if (tokenState.isStart()) {
             tokenState = tokenState.next();
         }
@@ -80,12 +81,16 @@ public class ParseStateMachine {
         return state == FINISHED;
     }
 
+    public boolean ignoreLine() {
+        return state == COMMENT_LINE_FINISHED || isEmptyLine();
+    }
+
     public boolean isEmptyLine() {
         return charactersRead == 0;
     }
 
     public void newLine() {
-        if (state != FINISHED) {
+        if (!isFinished()) {
             state = START_OF_LINE;
         }
         charactersRead = 0;
@@ -94,7 +99,18 @@ public class ParseStateMachine {
     protected ParseState determineState(int symbolCharacter, EncounteredSymbol symbol) throws ParseException {
 
         switch (state) {
+            case COMMENT_LINE:
+                switch(symbol) {
+                    case EOL_SYMBOL:
+                        return COMMENT_LINE_FINISHED;
+                    default:
+                        return COMMENT_LINE;
+                }
             case START_OF_LINE:
+                switch(symbol) {
+                    case COMMENT_SYMBOL:
+                        return COMMENT_LINE;
+                } // Fallthrough intentional
             case SEPARATOR:
                 switch(symbol) {
                     case SPACE_SYMBOL:

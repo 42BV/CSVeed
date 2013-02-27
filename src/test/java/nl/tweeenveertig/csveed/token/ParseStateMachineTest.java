@@ -7,6 +7,17 @@ import static junit.framework.Assert.*;
 public class ParseStateMachineTest {
 
     @Test
+    public void commentLine() throws ParseException {
+        ParseStateMachine machine = new ParseStateMachine();
+        assertNull(machine.offerSymbol('#'));
+        assertNull(machine.offerSymbol('-'));
+        assertNull(machine.offerSymbol('#'));
+        assertNull(machine.offerSymbol('\n'));
+        machine.newLine();
+        assertEquals("", machine.offerSymbol(';'));
+    }
+
+    @Test
     public void simpleTest() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         assertNull(machine.offerSymbol('"'));

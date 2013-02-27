@@ -113,37 +113,41 @@ public class LineReaderImpl implements LineReader {
 
     protected Line readBareLine() {
         logSettings();
-        LineWithInfo line = new LineWithInfo();
         this.currentLine++;
 
         if (isBeforeStartLine()) {
             skipToStartLine();
         }
 
-        while (!stateMachine.isLineFinished()) {
-            final String token;
-            final int symbol;
-            try {
-                symbol = reader.read();
-            } catch (IOException err) {
-                throw new RuntimeException(err);
+        LineWithInfo line = null;
+        while (line == null && !stateMachine.isFinished()) {
+            line = new LineWithInfo();
+            while (!stateMachine.isLineFinished()) {
+                final String token;
+                final int symbol;
+                try {
+                    symbol = reader.read();
+                } catch (IOException err) {
+                    throw new RuntimeException(err);
+                }
+                try {
+                    token = stateMachine.offerSymbol(symbol);
+                } catch (ParseException e) {
+                    LOG.error(e.getMessage());
+                    throw new CsvException(e.getMessage(), e, line.reportOnEndOfLine(), getCurrentLine());
+                }
+                if (stateMachine.isTokenStart()) {
+                    line.markStartOfColumn();
+                }
+                if (token != null) {
+                    line.addCell(token);
+                }
+                line.addCharacter(symbol);
             }
-            try {
-                token = stateMachine.offerSymbol(symbol);
-            } catch (ParseException e) {
-                LOG.error(e.getMessage());
-                throw new CsvException(e.getMessage(), e, line.reportOnEndOfLine(), getCurrentLine());
-            }
-            if (stateMachine.isTokenStart()) {
-                line.markStartOfColumn();
-            }
-            if (token != null) {
-                line.addCell(token);
-            }
-            line.addCharacter(symbol);
+    //        line = stateMachine.isEmptyLine() ? null : line;
+            line = stateMachine.ignoreLine() ? null : line;
+            stateMachine.newLine();
         }
-        line = stateMachine.isEmptyLine() ? null : line;
-        stateMachine.newLine();
         return line;
     }
 

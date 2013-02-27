@@ -7,7 +7,8 @@ public enum EncounteredSymbol {
     ESCAPE_SYMBOL(true),
     EOL_SYMBOL,
     OTHER_SYMBOL,
-    END_OF_FILE_SYMBOL;
+    END_OF_FILE_SYMBOL,
+    COMMENT_SYMBOL;
 
     private boolean checkForSimilarEscapeAndQuote = false;
 
