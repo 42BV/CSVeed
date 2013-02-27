@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.ColumnNameMapper;
+import nl.tweeenveertig.csveed.test.model.BeanSimple;
 import nl.tweeenveertig.csveed.test.model.BeanVariousNotAnnotated;
 import nl.tweeenveertig.csveed.test.propertyeditors.BeanSimplePropertyEditor;
 import org.junit.Test;
@@ -88,5 +89,19 @@ public class CsvReaderTest {
         assertEquals(7, csvReader.getCurrentLine());
     }
 
+    @Test
+    public void commentLinesNotSkipped() {
+        Reader reader = new StringReader(
+            "Issue ID;Submitter\n"+
+            "#1;Bill\n"+
+            "#2;Mary\n"+
+            "#3;Jane\n"+
+            "#4;Will"
+        );
+        CsvReader<BeanSimple> csvReader = new CsvReaderImpl<BeanSimple>(reader, BeanSimple.class)
+                .skipCommentLines(false);
+        List<Row> rows = csvReader.readLines();
+        assertEquals(4, rows.size());
+    }
 
 }

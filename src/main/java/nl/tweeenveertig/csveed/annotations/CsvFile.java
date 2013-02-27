@@ -61,6 +61,21 @@ public @interface CsvFile {
     int startRow() default 0;
 
     /**
+    * Ascertains that empty lines are skipped. If this value is false, empty lines will be parsed as single
+    * column rows. Default values is true.
+    * @return whether empty files must be skipped
+    */
+    boolean skipEmptyLines() default true;
+
+    /**
+    * Ascertains that comment lines are skipped. If this value is false, the comment marker is ignored.
+    * Normally, this method should not be needed. Use only if you want to have 100% certainty that lines
+    * identified as comment lines are never skipped. Default value is true.
+    * @return whether comment lines (marked with a comment marker on the first position) must be skipped
+    */
+    boolean skipCommentLines() default true;
+
+    /**
     * Determines the strategy to employ for mapping between CSV and Bean. The default will be to map on the
     * basis of the column index
     * @return the mapping strategy

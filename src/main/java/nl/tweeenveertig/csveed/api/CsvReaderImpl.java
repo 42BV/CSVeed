@@ -100,6 +100,18 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
     }
 
     @Override
+    public CsvReader<T> skipEmptyLines(boolean skip) {
+        this.beanReaderInstructions.skipEmptyLines(skip);
+        return this;
+    }
+
+    @Override
+    public CsvReader<T> skipCommentLines(boolean skip) {
+        this.beanReaderInstructions.skipCommentLines(skip);
+        return this;
+    }
+
+    @Override
     public CsvReader<T> setMapper(Class<? extends AbstractMapper> mapper) {
         this.beanReaderInstructions.setMapper(mapper);
         return this;

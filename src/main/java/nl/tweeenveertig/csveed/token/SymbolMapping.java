@@ -23,6 +23,8 @@ public class SymbolMapping {
 
     private int startLine = 0;
 
+    private boolean skipCommentLines = true;
+
     public SymbolMapping() {
         initDefaultMapping();
     }
@@ -113,5 +115,13 @@ public class SymbolMapping {
 
     public void setStartLine(int startLine) {
         this.startLine = startLine;
+    }
+
+    public boolean isSkipCommentLines() {
+        return skipCommentLines;
+    }
+
+    public void setSkipCommentLines(boolean skipCommentLines) {
+        this.skipCommentLines = skipCommentLines;
     }
 }

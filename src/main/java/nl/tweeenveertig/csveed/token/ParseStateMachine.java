@@ -133,7 +133,9 @@ public class ParseStateMachine {
             case START_OF_LINE:
                 switch(symbol) {
                     case COMMENT_SYMBOL:
-                        return COMMENT_LINE;
+                        if (symbolMapping.isSkipCommentLines()) {
+                            return COMMENT_LINE;
+                        }
                 } // Fallthrough intentional
             case SEPARATOR:
                 switch(symbol) {

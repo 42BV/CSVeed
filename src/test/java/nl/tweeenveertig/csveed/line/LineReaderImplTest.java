@@ -30,6 +30,22 @@ public class LineReaderImplTest {
     }
 
     @Test
+    public void doNotSkipEmptyLines() {
+        Reader reader = new StringReader(
+            "alpha\n"+
+            "\n"+
+            "word\n"+
+            "\n"+
+            "\n"
+        );
+        LineReaderImpl lineReader = new LineReaderImpl(reader,
+                new LineReaderInstructionsImpl()
+                .skipEmptyLines(false)
+        );
+        assertEquals(5, lineReader.readLines().size());
+    }
+
+    @Test
     public void commentLine() {
         Reader reader = new StringReader(
             "# lots of text\n"+

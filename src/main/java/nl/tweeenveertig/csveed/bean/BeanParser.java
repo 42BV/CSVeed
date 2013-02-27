@@ -63,7 +63,9 @@ public class BeanParser {
             .setEndOfLine(csvFile.endOfLine())
             .setMapper(csvFile.mappingStrategy())
             .setStartRow(csvFile.startRow())
-            .setUseHeader(csvFile.useHeader());
+            .setUseHeader(csvFile.useHeader())
+            .skipEmptyLines(csvFile.skipEmptyLines())
+            .skipCommentLines(csvFile.skipCommentLines());
 
     }
 

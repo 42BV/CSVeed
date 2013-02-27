@@ -136,6 +136,25 @@ public interface CsvReader<T> {
     CsvReader<T> setEndOfLine(char[] symbols);
 
     /**
+    * Determines whether empty lines must be skipped or treated as single-column rows. This method is called
+    * whenever {@link nl.tweeenveertig.csveed.annotations.CsvFile#skipEmptyLines()} is used. The default
+    * value for this setting is to skip the empty lines.
+    * @param skip true to skip empty lines, false to treat as single-column rows
+    * @return convenience for chaining
+    */
+    CsvReader<T> skipEmptyLines(boolean skip);
+
+    /**
+    * Determines whether comment lines must be skipped. This method is called whenever
+    * {@link nl.tweeenveertig.csveed.annotations.CsvFile#skipCommentLines()}  is used. The default
+    * value for this setting is to skip comment lines. This method exists to guarantee that lines are
+    * not accidentally treated as comment lines.
+    * @param skip true to skip comment lines, identified as starting with a comment marker
+    * @return convenience for chaining
+    */
+    CsvReader<T> skipCommentLines(boolean skip);
+
+    /**
     * Determines which mapping strategy is to be employed for mapping cells to bean properties. This
     * method is called whenever {@link nl.tweeenveertig.csveed.annotations.CsvFile#mappingStrategy()} is
     * used. The default mapping strategy is {@link nl.tweeenveertig.csveed.bean.ColumnIndexMapper}, which

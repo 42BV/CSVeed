@@ -137,8 +137,7 @@ public class LineReaderImpl implements LineReader {
                     break;
                 }
             }
-            line = stateMachine.ignoreLine() ? null : line;
-            System.out.println(line);
+            line = stateMachine.ignoreLine() && lineReaderInstructions.isSkipEmptyLines() ? null : line;
         }
         return line;
     }

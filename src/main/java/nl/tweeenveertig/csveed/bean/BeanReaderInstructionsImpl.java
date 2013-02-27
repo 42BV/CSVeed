@@ -81,6 +81,18 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
     }
 
     @Override
+    public BeanReaderInstructions skipEmptyLines(boolean skip) {
+        this.lineReaderInstructions.skipEmptyLines(skip);
+        return this;
+    }
+
+    @Override
+    public BeanReaderInstructions skipCommentLines(boolean skip) {
+        this.lineReaderInstructions.skipCommentLines(skip);
+        return this;
+    }
+
+    @Override
     public BeanReaderInstructions setMapper(Class<? extends AbstractMapper> mapper) {
         this.mappingStrategy = mapper;
         return this;
