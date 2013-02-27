@@ -2,14 +2,23 @@ package nl.tweeenveertig.csveed.line;
 
 import nl.tweeenveertig.csveed.token.EncounteredSymbol;
 import nl.tweeenveertig.csveed.token.SymbolMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LineReaderInstructionsImpl implements LineReaderInstructions {
+
+    public static final Logger LOG = LoggerFactory.getLogger(LineReaderInstructionsImpl.class);
 
     private SymbolMapping symbolMapping = new SymbolMapping();
 
     private boolean useHeader = true;
 
     private int startRow = 0;
+
+    public void logSettings() {
+        LOG.info("- CSV config / start line: "+getStartRow());
+        LOG.info("- CSV config / has header line? "+(isUseHeader()?"yes":"no"));
+    }
 
     public SymbolMapping getSymbolMapping() {
         return symbolMapping;

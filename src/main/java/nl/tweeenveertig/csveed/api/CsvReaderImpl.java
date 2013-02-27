@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.*;
+import nl.tweeenveertig.csveed.line.Header;
 
 import java.beans.PropertyEditor;
 import java.io.Reader;
@@ -39,6 +40,11 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
     @Override
     public Row readLine() {
         return this.beanReader.getLineReader().readLine();
+    }
+
+    @Override
+    public Header readHeader() {
+        return this.beanReader.readHeader();
     }
 
     @Override

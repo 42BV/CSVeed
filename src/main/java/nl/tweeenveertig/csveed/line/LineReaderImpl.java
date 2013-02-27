@@ -23,11 +23,9 @@ public class LineReaderImpl implements LineReader {
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
+    private LineReaderInstructionsImpl lineReaderInstructions;
+
     private int currentLine = -1; // Haven't started yet
-
-    private int startLine = 0;
-
-    private int headerLine = 0;
 
     private int numberOfColumns = -1;
 
@@ -47,16 +45,8 @@ public class LineReaderImpl implements LineReader {
     private void init(LineReaderInstructionsImpl instructions) {
         this.stateMachine.setSymbolMapping(instructions.getSymbolMapping());
         this.stateMachine.getSymbolMapping().logSettings();
-        this.startLine = instructions.getStartRow();
-        LOG.info("- CSV config / start line: "+instructions.getStartRow());
-
-        if (instructions.isUseHeader()) {
-            this.headerLine = instructions.getStartRow();
-            LOG.info("- CSV config / has header line? yes");
-        } else {
-            this.headerLine = -1;
-            LOG.info("- CSV config / has header line? no");
-        }
+        this.lineReaderInstructions = instructions;
+        instructions.logSettings();
     }
 
     public List<Row> readLines() {
@@ -71,16 +61,28 @@ public class LineReaderImpl implements LineReader {
     }
 
     public Row readLine() {
+        getHeader();
         Line unmappedLine = readBareLine();
         if (unmappedLine == null) {
             return null;
         }
         checkNumberOfColumns(unmappedLine);
-        if (isHeaderLine()) {
-            header = new Header(unmappedLine);
-            unmappedLine = readBareLine();
+        return new RowImpl(unmappedLine, getHeader());
+    }
+
+    protected Header getHeader() {
+        return header == null && lineReaderInstructions.isUseHeader() ? readHeader() : header;
+    }
+
+    public Header readHeader() {
+        if (header != null) {
+            return header;
         }
-        return new RowImpl(unmappedLine, header);
+        Line unmappedLine = readBareLine();
+        if (unmappedLine == null) {
+            return null;
+        }
+        return header = new Header(unmappedLine);
     }
 
     private void checkNumberOfColumns(Line unmappedLine) {
@@ -142,7 +144,7 @@ public class LineReaderImpl implements LineReader {
     }
 
     private boolean isBeforeStartLine() {
-        return getCurrentLine() < this.startLine;
+        return getCurrentLine() < this.lineReaderInstructions.getStartRow();
     }
 
     private void skipToStartLine() {
@@ -160,10 +162,6 @@ public class LineReaderImpl implements LineReader {
         } catch (IOException err) {
             throw new RuntimeException(err);
         }
-    }
-
-    private boolean isHeaderLine() {
-        return getCurrentLine() == this.headerLine;
     }
 
 }

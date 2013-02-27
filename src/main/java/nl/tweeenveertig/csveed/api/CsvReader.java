@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.AbstractMapper;
+import nl.tweeenveertig.csveed.line.Header;
 
 import java.beans.PropertyEditor;
 import java.util.List;
@@ -46,6 +47,12 @@ public interface CsvReader<T> {
     * @return Row read from the Reader
     */
     public Row readLine();
+
+    /**
+    * Returns the header of the CSV file. Only possibly returns a value when useHeader==true
+    * @return header or null if the useHeader==false
+    */
+    public Header readHeader();
 
     /**
     * Returns the line from which the row was read. Note that a line is seen as a legitimate CSV row, not

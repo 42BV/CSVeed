@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.bean;
 
+import nl.tweeenveertig.csveed.line.Header;
 import nl.tweeenveertig.csveed.line.LineReader;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.line.LineReaderImpl;
@@ -57,6 +58,11 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         }
         getMapper().verifyHeader(unmappedRow);
         return getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine());
+    }
+
+    @Override
+    public Header readHeader() {
+        return lineReader.readHeader();
     }
 
     public int getCurrentLine() {
