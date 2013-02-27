@@ -88,6 +88,12 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
     }
 
     @Override
+    public CsvReader<T> setComment(char symbol) {
+        this.beanReaderInstructions.setComment(symbol);
+        return this;
+    }
+
+    @Override
     public CsvReader<T> setEndOfLine(char[] symbols) {
         this.beanReaderInstructions.setEndOfLine(symbols);
         return this;

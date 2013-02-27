@@ -63,6 +63,12 @@ public class LineReaderInstructionsImpl implements LineReaderInstructions {
         return this;
     }
 
+    @Override
+    public LineReaderInstructions setComment(char symbol) {
+        this.symbolMapping.addMapping(EncounteredSymbol.COMMENT_SYMBOL, symbol);
+        return this;
+    }
+
     public LineReaderInstructions setEndOfLine(char[] symbols) {
         this.symbolMapping.addMapping(EncounteredSymbol.EOL_SYMBOL, symbols);
         return this;

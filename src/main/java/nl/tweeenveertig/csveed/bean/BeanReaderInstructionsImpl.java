@@ -30,7 +30,7 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
         if (settingsLogged) {
             return;
         }
-        LOG.info("- CSV config / mapping strategy: "+ this.getMappingStrategy());
+        LOG.info("- CSV config / mapping strategy: " + this.getMappingStrategy());
         settingsLogged = true;
     }
 
@@ -38,66 +38,85 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
         return this.lineReaderInstructions;
     }
 
+    @Override
     public BeanReaderInstructions setUseHeader(boolean useHeader) {
         this.lineReaderInstructions.setUseHeader(useHeader);
         return this;
     }
 
+    @Override
     public BeanReaderInstructions setStartRow(int startRow) {
         this.lineReaderInstructions.setStartRow(startRow);
         return this;
     }
 
+    @Override
     public BeanReaderInstructions setEscape(char symbol) {
         this.lineReaderInstructions.setEscape(symbol);
         return this;
     }
 
+    @Override
     public BeanReaderInstructions setQuote(char symbol) {
         this.lineReaderInstructions.setQuote(symbol);
         return this;
     }
 
+    @Override
     public BeanReaderInstructions setSeparator(char symbol) {
         this.lineReaderInstructions.setSeparator(symbol);
         return this;
     }
 
+    @Override
+    public BeanReaderInstructions setComment(char symbol) {
+        this.lineReaderInstructions.setComment(symbol);
+        return this;
+    }
+
+    @Override
     public BeanReaderInstructions setEndOfLine(char[] symbols) {
         this.lineReaderInstructions.setEndOfLine(symbols);
         return this;
     }
 
+    @Override
     public BeanReaderInstructions setMapper(Class<? extends AbstractMapper> mapper) {
         this.mappingStrategy = mapper;
         return this;
     }
 
+    @Override
     public BeanReaderInstructions setDate(String propertyName, String dateFormat) {
         this.getProperties().setDate(propertyName, dateFormat);
         return this;
     }
 
+    @Override
     public BeanReaderInstructions setRequired(String propertyName, boolean required) {
         this.getProperties().setRequired(propertyName, required);
         return this;
     }
 
+    @Override
     public BeanReaderInstructions setConverter(String propertyName, PropertyEditor converter) {
         this.getProperties().setConverter(propertyName, converter);
         return this;
     }
 
+    @Override
     public BeanReaderInstructions ignoreProperty(String propertyName) {
         this.getProperties().ignoreProperty(propertyName);
         return this;
     }
 
+    @Override
     public BeanReaderInstructions mapColumnIndexToProperty(int columnIndex, String propertyName) {
         this.getProperties().mapIndexToProperty(columnIndex, propertyName);
         return this;
     }
 
+    @Override
     public BeanReaderInstructions mapColumnNameToProperty(String columnName, String propertyName) {
         this.getProperties().mapNameToProperty(columnName, propertyName);
         return this;

@@ -59,6 +59,15 @@ public interface BeanReaderInstructions {
     BeanReaderInstructions setSeparator(char symbol);
 
     /**
+    * Sets the character that will be interpreted as a comment field on the first position of a row.
+    * This method is called whenever {@link nl.tweeenveertig.csveed.annotations.CsvFile#comment()} is used.
+    * The default value for this setting is a hashtag (#).
+    * @param symbol the symbol to use as the 0-position comment marker
+    * @return convenience for chaining
+    */
+    BeanReaderInstructions setComment(char symbol);
+
+    /**
     * Sets the characters (plural) that will be interpreted as end-of-line markers (unless within a quoted
     * field). This method is called whenever {@link nl.tweeenveertig.csveed.annotations.CsvFile#endOfLine()}
     * is used. The default values for this setting are \r and \n.  This call is a facade for

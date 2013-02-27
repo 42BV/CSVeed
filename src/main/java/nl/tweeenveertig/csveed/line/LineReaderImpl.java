@@ -103,7 +103,7 @@ public class LineReaderImpl implements LineReader {
     }
 
     public int getCurrentLine() {
-        return this.currentLine;
+        return this.currentLine == -1 ? 0 : this.currentLine;
     }
 
     protected void logSettings() {
@@ -113,7 +113,6 @@ public class LineReaderImpl implements LineReader {
 
     protected Line readBareLine() {
         logSettings();
-        this.currentLine++;
 
         if (isBeforeStartLine()) {
             skipToStartLine();
@@ -121,6 +120,7 @@ public class LineReaderImpl implements LineReader {
 
         LineWithInfo line = null;
         while (line == null && !stateMachine.isFinished()) {
+            this.currentLine++;
             line = new LineWithInfo();
             while (!stateMachine.isLineFinished()) {
                 final String token;
@@ -144,7 +144,6 @@ public class LineReaderImpl implements LineReader {
                 }
                 line.addCharacter(symbol);
             }
-    //        line = stateMachine.isEmptyLine() ? null : line;
             line = stateMachine.ignoreLine() ? null : line;
             stateMachine.newLine();
         }
@@ -157,11 +156,13 @@ public class LineReaderImpl implements LineReader {
 
     private void skipToStartLine() {
         try {
+            this.currentLine++;
             int symbol = reader.read();
             while (isBeforeStartLine() && symbol != -1) {
                 if (stateMachine.isEol(symbol)) {
                     this.currentLine++;
                     if (!isBeforeStartLine()) {
+                        this.currentLine--;
                         break;
                     }
                 }
