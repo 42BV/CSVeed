@@ -13,15 +13,12 @@ public class LineReaderInstructionsImpl implements LineReaderInstructions {
 
     private boolean useHeader = true;
 
-    private int startRow = 0;
-
     private boolean settingsLogged = false;
 
     public void logSettings() {
         if (settingsLogged) {
             return;
         }
-        LOG.info("- CSV config / start line: "+getStartRow());
         LOG.info("- CSV config / has header line? "+(isUseHeader()?"yes":"no"));
         settingsLogged = true;
     }
@@ -39,12 +36,8 @@ public class LineReaderInstructionsImpl implements LineReaderInstructions {
         return this;
     }
 
-    public int getStartRow() {
-        return startRow;
-    }
-
     public LineReaderInstructions setStartRow(int startRow) {
-        this.startRow = startRow;
+        this.symbolMapping.setStartLine(startRow);
         return this;
     }
 

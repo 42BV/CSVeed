@@ -21,6 +21,8 @@ public class SymbolMapping {
 
     private boolean settingsLogged = false;
 
+    private int startLine = 0;
+
     public SymbolMapping() {
         initDefaultMapping();
     }
@@ -52,6 +54,7 @@ public class SymbolMapping {
         if (settingsLogged) {
             return;
         }
+        LOG.info("- CSV config / start line: "+startLine);
         for (EncounteredSymbol symbol : symbolToChars.keySet()) {
             char[] characters = symbolToChars.get(symbol);
             LOG.info("- CSV config / Characters for "+symbol+" "+charactersToString(characters));
@@ -104,4 +107,11 @@ public class SymbolMapping {
         }
     }
 
+    public int getStartLine() {
+        return startLine;
+    }
+
+    public void setStartLine(int startLine) {
+        this.startLine = startLine;
+    }
 }

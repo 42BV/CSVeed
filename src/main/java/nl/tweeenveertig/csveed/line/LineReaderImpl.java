@@ -25,8 +25,6 @@ public class LineReaderImpl implements LineReader {
 
     private LineReaderInstructionsImpl lineReaderInstructions;
 
-    private int currentLine = -1; // Haven't started yet
-
     private int numberOfColumns = -1;
 
     private Header header;
@@ -39,12 +37,8 @@ public class LineReaderImpl implements LineReader {
 
     public LineReaderImpl(Reader reader, LineReaderInstructions instructionsInterface) {
         this.reader = reader;
-        init((LineReaderInstructionsImpl) instructionsInterface);
-    }
-
-    private void init(LineReaderInstructionsImpl instructions) {
-        this.stateMachine.setSymbolMapping(instructions.getSymbolMapping());
-        this.lineReaderInstructions = instructions;
+        this.lineReaderInstructions = (LineReaderInstructionsImpl) instructionsInterface;
+        stateMachine.setSymbolMapping(lineReaderInstructions.getSymbolMapping());
     }
 
     public List<Row> readLines() {
@@ -66,6 +60,11 @@ public class LineReaderImpl implements LineReader {
         }
         checkNumberOfColumns(unmappedLine);
         return new RowImpl(unmappedLine, getHeader());
+    }
+
+    @Override
+    public int getCurrentLine() {
+        return this.stateMachine.getCurrentLine();
     }
 
     protected Header getHeader() {
@@ -102,10 +101,6 @@ public class LineReaderImpl implements LineReader {
         return stateMachine.isFinished();
     }
 
-    public int getCurrentLine() {
-        return this.currentLine == -1 ? 0 : this.currentLine;
-    }
-
     protected void logSettings() {
         lineReaderInstructions.logSettings();
         this.stateMachine.getSymbolMapping().logSettings();
@@ -114,15 +109,10 @@ public class LineReaderImpl implements LineReader {
     protected Line readBareLine() {
         logSettings();
 
-        if (isBeforeStartLine()) {
-            skipToStartLine();
-        }
-
         LineWithInfo line = null;
         while (line == null && !stateMachine.isFinished()) {
-            this.currentLine++;
             line = new LineWithInfo();
-            while (!stateMachine.isLineFinished()) {
+            while (!stateMachine.isFinished()) {
                 final String token;
                 final int symbol;
                 try {
@@ -143,34 +133,14 @@ public class LineReaderImpl implements LineReader {
                     line.addCell(token);
                 }
                 line.addCharacter(symbol);
+                if (stateMachine.isLineFinished()) {
+                    break;
+                }
             }
             line = stateMachine.ignoreLine() ? null : line;
-            stateMachine.newLine();
+            System.out.println(line);
         }
         return line;
-    }
-
-    private boolean isBeforeStartLine() {
-        return getCurrentLine() < this.lineReaderInstructions.getStartRow();
-    }
-
-    private void skipToStartLine() {
-        try {
-            this.currentLine++;
-            int symbol = reader.read();
-            while (isBeforeStartLine() && symbol != -1) {
-                if (stateMachine.isEol(symbol)) {
-                    this.currentLine++;
-                    if (!isBeforeStartLine()) {
-                        this.currentLine--;
-                        break;
-                    }
-                }
-                symbol = reader.read();
-            }
-        } catch (IOException err) {
-            throw new RuntimeException(err);
-        }
     }
 
 }

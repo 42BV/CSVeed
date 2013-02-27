@@ -3,7 +3,6 @@ package nl.tweeenveertig.csveed.token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static nl.tweeenveertig.csveed.token.EncounteredSymbol.EOL_SYMBOL;
 import static nl.tweeenveertig.csveed.token.ParseState.*;
 
 /**
@@ -28,17 +27,36 @@ public class ParseStateMachine {
 
     private boolean trim = true;
 
-    public boolean isEol(int symbolCharacter) {
-        return symbolMapping.find(symbolCharacter, OUTSIDE_BEFORE_FIELD) == EOL_SYMBOL;
+    private int currentLine = 0;
+
+    private int newLine = 0;
+
+    public int getCurrentLine() {
+        return this.currentLine;
     }
 
     public String offerSymbol(int symbolCharacter) throws ParseException {
+
+        EncounteredSymbol symbol = symbolMapping.find(symbolCharacter, state);
+
+        if (isFinished()) {
+            throw new ParseException(state, symbolCharacter, symbol);
+        }
+
+        if (currentLine != newLine) {
+            state = START_OF_LINE;
+            charactersRead = 0;
+            currentLine = newLine;
+        }
+
+        if (currentLine < symbolMapping.getStartLine()) {
+            state = SKIP_LINE;
+        }
 
         if (tokenState.isStart()) {
             tokenState = tokenState.next();
         }
 
-        EncounteredSymbol symbol = symbolMapping.find(symbolCharacter, state);
         ParseState newState = determineState(symbolCharacter, symbol);
         LOG.debug((char)symbolCharacter+" ("+symbol+"): "+state+" => "+newState);
 
@@ -60,7 +78,9 @@ public class ParseStateMachine {
             tokenState = tokenState.next();
         }
 
-        if (!newState.isLineFinished()) {
+        if (newState.isLineFinished()) {
+            newLine++;
+        } else {
             charactersRead++;
         }
 
@@ -82,27 +102,31 @@ public class ParseStateMachine {
     }
 
     public boolean ignoreLine() {
-        return state == COMMENT_LINE_FINISHED || isEmptyLine();
+        return state.isIgnore() || isEmptyLine();
     }
 
     public boolean isEmptyLine() {
         return charactersRead == 0;
     }
 
-    public void newLine() {
-        if (!isFinished()) {
-            state = START_OF_LINE;
-        }
-        charactersRead = 0;
-    }
-
     protected ParseState determineState(int symbolCharacter, EncounteredSymbol symbol) throws ParseException {
 
         switch (state) {
+            case SKIP_LINE:
+                switch(symbol) {
+                    case EOL_SYMBOL:
+                        return SKIP_LINE_FINISHED;
+                    case END_OF_FILE_SYMBOL:
+                        return FINISHED;
+                    default:
+                        return SKIP_LINE;
+                }
             case COMMENT_LINE:
                 switch(symbol) {
                     case EOL_SYMBOL:
                         return COMMENT_LINE_FINISHED;
+                    case END_OF_FILE_SYMBOL:
+                        return FINISHED;
                     default:
                         return COMMENT_LINE;
                 }

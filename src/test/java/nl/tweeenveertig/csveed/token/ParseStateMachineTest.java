@@ -13,7 +13,6 @@ public class ParseStateMachineTest {
         assertNull(machine.offerSymbol('-'));
         assertNull(machine.offerSymbol('#'));
         assertNull(machine.offerSymbol('\n'));
-        machine.newLine();
         assertEquals("", machine.offerSymbol(';'));
     }
 
