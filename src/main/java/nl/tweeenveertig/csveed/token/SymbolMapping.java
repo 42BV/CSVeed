@@ -56,6 +56,7 @@ public class SymbolMapping {
         if (settingsLogged) {
             return;
         }
+        LOG.info("- CSV config / skip comment lines? "+(isSkipCommentLines()?"yes":"no"));
         LOG.info("- CSV config / start line: "+startLine);
         for (EncounteredSymbol symbol : symbolToChars.keySet()) {
             char[] characters = symbolToChars.get(symbol);

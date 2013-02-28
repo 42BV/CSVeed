@@ -21,6 +21,7 @@ public class LineReaderInstructionsImpl implements LineReaderInstructions {
         if (settingsLogged) {
             return;
         }
+        LOG.info("- CSV config / skip empty lines? "+(isSkipEmptyLines()?"yes":"no"));
         LOG.info("- CSV config / has header line? "+(isUseHeader()?"yes":"no"));
         settingsLogged = true;
     }
