@@ -42,6 +42,15 @@ public abstract class AbstractMapper<T, K> {
                 indexColumn++;
                 continue;
             }
+            if (beanProperty.isRequired() && (cell == null || cell.equals(""))) {
+                String errorMessage = "Bean property \""+beanProperty.getPropertyName()+
+                        "\" is required and may not be empty or null";
+                LOG.error(errorMessage);
+                for (String line : row.reportOnColumn(indexColumn).getPrintableLines()) {
+                    LOG.error(lineNumber+": "+line);
+                }
+                throw new CsvException(errorMessage, null, row.reportOnColumn(indexColumn), lineNumber);
+            }
             if (beanProperty.getConverter() != null) {
                 beanWrapper.registerCustomEditor(
                         beanProperty.getPropertyDescriptor().getPropertyType(),

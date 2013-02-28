@@ -1,8 +1,10 @@
 package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.ColumnNameMapper;
+import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.test.model.BeanSimple;
 import nl.tweeenveertig.csveed.test.model.BeanVariousNotAnnotated;
+import nl.tweeenveertig.csveed.test.model.BeanWithMultipleStrings;
 import nl.tweeenveertig.csveed.test.propertyeditors.BeanSimplePropertyEditor;
 import org.junit.Test;
 
@@ -68,6 +70,21 @@ public class CsvReaderTest {
 
         assertNotNull(csvReader.readHeader());
         assertNotNull(csvReader.readHeader());
+    }
+
+    @Test(expected = CsvException.class)
+    public void requiredField() {
+        Reader reader = new StringReader(
+                "alpha;beta;gamma\n"+
+                "\"l1c1\";\"l1c2\";\"l1c3\"\n"+
+                "\"l2c1\";\"l2c2\";\"l2c3\"\n"+
+                "\"l3c1\";\"l3c2\";"
+        );
+        CsvReader<BeanWithMultipleStrings> csvReader =
+                new CsvReaderImpl<BeanWithMultipleStrings>(reader, BeanWithMultipleStrings.class)
+                .setMapper(ColumnNameMapper.class)
+                .setRequired("gamma", true);
+        csvReader.readBeans();
     }
 
     @Test
