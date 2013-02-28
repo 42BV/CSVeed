@@ -1,12 +1,9 @@
 package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.annotations.*;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 public class BeanParser {
 
@@ -82,9 +79,9 @@ public class BeanParser {
     }
 
     private String parseCsvCell(String propertyName, CsvCell csvCell) {
-        String columnName = (csvCell.name() == null || csvCell.name().equals("")) ? propertyName : csvCell.name();
+        String columnName = (csvCell.columnName() == null || csvCell.columnName().equals("")) ? propertyName : csvCell.columnName();
         this.beanReaderInstructions.setRequired(propertyName, csvCell.required());
-        columnIndex = csvCell.indexColumn() != -1 ? csvCell.indexColumn() : columnIndex;
+        columnIndex = csvCell.columnIndex() != -1 ? csvCell.columnIndex() : columnIndex;
         return columnName;
     }
 

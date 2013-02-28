@@ -16,24 +16,24 @@ import java.lang.annotation.Target;
 public @interface CsvCell {
 
     /**
-    * By default the name is inferred from the structure name. However, if CsvFile.useHeaders == false, or the
-    * naming is not what you want in the BeanInstructions, you can override the name to map to using this value.
-    * @return the name in the CSV file to map to
+    * This value will only be used if CsvFile.useHeaders == false. If this value is not set, the index will be
+    * automatically determined on the basis of the order of the fields within the class. If this value is set,
+    * the column at the index position will be used for mapping to this field.
+    * @return the index column to use for the mapping
     */
-    String name() default "";
+    int columnIndex() default -1;
+
+    /**
+    * By default the column name is inferred from the property name. However, if CsvFile.useHeaders == false, or the
+    * naming is not what you want in the BeanInstructions, you can override the column name to map to using this value.
+    * @return the column name in the CSV file header to use for mapping
+    */
+    String columnName() default "";
 
     /**
     * If required is set, the parse process will generate an error if the value is null after deserialization
     * @return whether the field must be not null
     */
     boolean required() default false;
-
-    /**
-    * This value will only be used if CsvFile.useHeaders == false. If this value is not set, the index will be
-    * automatically determined on the basis of the order of the fields within the class. If this value is set,
-    * the column at the index position will be used for mapping to this field.
-    * @return the index column to use for the mapping
-    */
-    int indexColumn() default -1;
 
 }

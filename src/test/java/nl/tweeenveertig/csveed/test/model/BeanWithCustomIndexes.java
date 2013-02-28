@@ -6,16 +6,16 @@ import nl.tweeenveertig.csveed.annotations.CsvFile;
 @CsvFile(useHeader = false)
 public class BeanWithCustomIndexes {
 
-    @CsvCell(indexColumn = 4)
+    @CsvCell(columnIndex = 4)
     private String line3;
 
-    @CsvCell(indexColumn = 1)
+    @CsvCell(columnIndex = 1)
     private String line0;
 
-    @CsvCell(indexColumn = 2)
+    @CsvCell(columnIndex = 2)
     private String line1;
 
-    @CsvCell(indexColumn = 3)
+    @CsvCell(columnIndex = 3)
     private String line2;
 
     public String getLine3() {

@@ -7,13 +7,13 @@ import nl.tweeenveertig.csveed.bean.ColumnNameMapper;
 @CsvFile(mappingStrategy = ColumnNameMapper.class)
 public class BeanWithNameMatching {
 
-    @CsvCell(name = "postal code")
+    @CsvCell(columnName = "postal code")
     public String line3;
 
-    @CsvCell(name = "street")
+    @CsvCell(columnName = "street")
     public String line1;
 
-    @CsvCell(name = "city")
+    @CsvCell(columnName = "city")
     public String line2;
 
     public String getLine1() {
