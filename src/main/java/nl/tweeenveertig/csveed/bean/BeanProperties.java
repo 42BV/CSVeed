@@ -72,6 +72,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
 
     public void setDate(String propertyName, String formatText) {
         DateFormat dateFormat = new SimpleDateFormat(formatText);
+        get(propertyName).setCustomDateFormat(formatText);
         setConverter(propertyName, new CustomDateEditor(dateFormat, true));
     }
 

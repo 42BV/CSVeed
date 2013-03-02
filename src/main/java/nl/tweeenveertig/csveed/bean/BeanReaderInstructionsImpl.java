@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyEditor;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
 
@@ -31,7 +33,38 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
             return;
         }
         LOG.info("- CSV config / mapping strategy: " + this.getMappingStrategy());
+        for (BeanProperty property : properties) {
+            LOG.info(getPropertyLogLine(property));
+        }
         settingsLogged = true;
+    }
+
+    protected String getPropertyLogLine(BeanProperty property) {
+        List<String> lineParts = new ArrayList<String>();
+        lineParts.add("- CSV config");
+        if (mappingStrategy.equals(ColumnIndexMapper.class)) {
+            lineParts.add("Column index "+property.getColumnIndex()+" -> property ["+property.getPropertyName()+"]");
+        } else if (mappingStrategy.equals(ColumnNameMapper.class)) {
+            lineParts.add("Column name ["+property.getColumnName()+"] -> property ["+property.getPropertyName()+"]");
+        }
+        lineParts.add("Required: "+(property.isRequired()?"yes":"no"));
+        if (property.getCustomDateFormat() != null) {
+            lineParts.add("Date format: "+property.getCustomDateFormat());
+        }
+        if (property.getConverter() != null) {
+            lineParts.add("Converter: "+property.getConverter().getClass().getSimpleName());
+        }
+
+        StringBuilder logLine = new StringBuilder();
+        boolean first = true;
+        for (String linePart : lineParts) {
+            if (!first) {
+                logLine.append(" | ");
+            }
+            logLine.append(linePart);
+            first = false;
+        }
+        return logLine.toString();
     }
 
     public RowReaderInstructions getRowReaderInstructions() {

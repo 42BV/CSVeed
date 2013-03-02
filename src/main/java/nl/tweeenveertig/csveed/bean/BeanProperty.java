@@ -18,6 +18,8 @@ public class BeanProperty {
 
     private boolean required = false;
 
+    private String customDateFormat;
+
     public PropertyDescriptor getPropertyDescriptor() {
         return propertyDescriptor;
     }
@@ -84,4 +86,11 @@ public class BeanProperty {
         return getPropertyName().equals(other.getPropertyName());
     }
 
+    public String getCustomDateFormat() {
+        return customDateFormat;
+    }
+
+    public void setCustomDateFormat(String customDateFormat) {
+        this.customDateFormat = customDateFormat;
+    }
 }
