@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.line;
+package nl.tweeenveertig.csveed.row;
 
 /**
 * These instructions are used to power the {@link RowReader}. Note that the instructions are also used

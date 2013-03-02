@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.bean;
 
-import nl.tweeenveertig.csveed.line.Header;
-import nl.tweeenveertig.csveed.line.RowReader;
+import nl.tweeenveertig.csveed.row.Header;
+import nl.tweeenveertig.csveed.row.RowReader;
 
 import java.util.List;
 

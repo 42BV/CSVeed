@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.bean;
 
-import nl.tweeenveertig.csveed.line.LineReaderInstructions;
-import nl.tweeenveertig.csveed.line.LineReaderInstructionsImpl;
+import nl.tweeenveertig.csveed.row.LineReaderInstructions;
+import nl.tweeenveertig.csveed.row.LineReaderInstructionsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

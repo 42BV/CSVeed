@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.line;
+package nl.tweeenveertig.csveed.row;
 
 import nl.tweeenveertig.csveed.token.EncounteredSymbol;
 import nl.tweeenveertig.csveed.token.SymbolMapping;

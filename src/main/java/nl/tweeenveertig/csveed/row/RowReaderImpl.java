@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.line;
+package nl.tweeenveertig.csveed.row;
 
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* Builds up a List of cells (String) per read line. Note that this class is stateful, so it
-* can support a per-line parse approach as well.
+* Builds up a List of cells (String) per read row. Note that this class is stateful, so it
+* can support a per-row parse approach as well.
 * @author Robert Bor
 */
 public class RowReaderImpl implements RowReader {

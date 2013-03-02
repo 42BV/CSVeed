@@ -1,8 +1,8 @@
 package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.*;
-import nl.tweeenveertig.csveed.line.Header;
-import nl.tweeenveertig.csveed.line.RowReaderImpl;
+import nl.tweeenveertig.csveed.row.Header;
+import nl.tweeenveertig.csveed.row.RowReaderImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package nl.tweeenveertig.csveed.line;
+package nl.tweeenveertig.csveed.row;
 
 public class CellPositionInRow {
 
