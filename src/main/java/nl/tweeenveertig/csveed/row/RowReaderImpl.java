@@ -25,7 +25,7 @@ public class RowReaderImpl implements RowReader {
 
     private RowReaderInstructionsImpl lineReaderInstructions;
 
-    private int numberOfColumns = -1;
+    private int maxNumberOfColumns = -1;
 
     private HeaderImpl header;
 
@@ -83,11 +83,11 @@ public class RowReaderImpl implements RowReader {
     }
 
     private void checkNumberOfColumns(Line unmappedLine) {
-        if (numberOfColumns == -1) {
-            numberOfColumns = unmappedLine.size();
+        if (maxNumberOfColumns == -1) {
+            maxNumberOfColumns = unmappedLine.size();
         } else {
-            if (unmappedLine.size() != numberOfColumns) {
-                String message = "The expected number of columns is "+numberOfColumns+", whereas it is supposed to be "+unmappedLine.size();
+            if (unmappedLine.size() != maxNumberOfColumns) {
+                String message = "The expected number of columns is "+ maxNumberOfColumns +", whereas it is supposed to be "+unmappedLine.size();
                 LOG.error(message);
                 for (String line : unmappedLine.reportOnEndOfLine().getPrintableLines()) {
                     LOG.error(getCurrentLine()+": "+line);

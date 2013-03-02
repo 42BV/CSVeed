@@ -27,12 +27,18 @@ public class ParseStateMachine {
 
     private boolean trim = true;
 
+    private int currentColumn = 0;
+
     private int currentLine = 0;
 
     private int newLine = 0;
 
     public int getCurrentLine() {
         return this.currentLine;
+    }
+
+    public int getCurrentColumn() {
+        return this.currentColumn;
     }
 
     public String offerSymbol(int symbolCharacter) throws ParseException {
@@ -46,6 +52,7 @@ public class ParseStateMachine {
         if (currentLine != newLine) {
             state = START_OF_LINE;
             charactersRead = 0;
+            currentColumn = 0;
             currentLine = newLine;
         }
 
@@ -76,6 +83,7 @@ public class ParseStateMachine {
             }
             token = new StringBuilder();
             tokenState = tokenState.next();
+            currentColumn++;
         }
 
         if (newState.isLineFinished()) {

@@ -7,6 +7,16 @@ import static junit.framework.Assert.*;
 public class ParseStateMachineTest {
 
     @Test
+    public void columns() throws ParseException {
+        ParseStateMachine machine = new ParseStateMachine();
+        assertEquals(0, machine.getCurrentColumn());
+        machine.offerSymbol(';');
+        assertEquals(1, machine.getCurrentColumn());
+        machine.offerSymbol(';');
+        assertEquals(2, machine.getCurrentColumn());
+    }
+
+    @Test
     public void commentLine() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         assertNull(machine.offerSymbol('#'));
