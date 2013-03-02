@@ -37,8 +37,8 @@ public class RowImpl implements Row {
     }
 
     @Override
-    public String getColumnName(int index) {
-        return getHeader().getName(index);
+    public String getColumnName(int columnIndex) {
+        return getHeader().getName(columnIndex);
     }
 
     @Override
@@ -50,8 +50,8 @@ public class RowImpl implements Row {
         return line.size();
     }
 
-    public String get(int index) {
-        return line.get(index);
+    public String get(int columnIndex) {
+        return line.get(columnIndex);
     }
 
     public Iterator<String> iterator() {
