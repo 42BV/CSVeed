@@ -1,6 +1,6 @@
 package nl.tweeenveertig.csveed.bean;
 
-import nl.tweeenveertig.csveed.row.Header;
+import nl.tweeenveertig.csveed.row.HeaderImpl;
 import nl.tweeenveertig.csveed.row.RowReader;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.row.RowReaderImpl;
@@ -65,7 +65,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     }
 
     @Override
-    public Header readHeader() {
+    public HeaderImpl readHeader() {
         return rowReader.readHeader();
     }
 

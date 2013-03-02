@@ -39,6 +39,6 @@ public interface RowReader {
     * Returns the header of the CSV file. Only possibly returns a value when useHeader==true
     * @return header or null if the useHeader==false
     */
-    public Header readHeader();
+    public HeaderImpl readHeader();
 
 }

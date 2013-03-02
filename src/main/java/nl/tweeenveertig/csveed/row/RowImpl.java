@@ -1,5 +1,6 @@
 package nl.tweeenveertig.csveed.row;
 
+import nl.tweeenveertig.csveed.api.Header;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.report.RowReport;
@@ -12,7 +13,7 @@ public class RowImpl implements Row {
 
     private Header header;
 
-    public RowImpl(Line line, Header header) {
+    public RowImpl(Line line, HeaderImpl header) {
         this.line = line;
         this.header = header;
     }

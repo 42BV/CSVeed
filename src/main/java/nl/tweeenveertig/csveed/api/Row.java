@@ -1,6 +1,5 @@
 package nl.tweeenveertig.csveed.api;
 
-import nl.tweeenveertig.csveed.row.Header;
 import nl.tweeenveertig.csveed.report.RowReport;
 
 /**

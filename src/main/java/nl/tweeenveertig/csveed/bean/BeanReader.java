@@ -1,6 +1,6 @@
 package nl.tweeenveertig.csveed.bean;
 
-import nl.tweeenveertig.csveed.row.Header;
+import nl.tweeenveertig.csveed.row.HeaderImpl;
 import nl.tweeenveertig.csveed.row.RowReader;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public interface BeanReader<T> {
     * Returns the header of the CSV file. Only possibly returns a value when useHeader==true
     * @return header or null if the useHeader==false
     */
-    public Header readHeader();
+    public HeaderImpl readHeader();
 
     /**
     * Returns the line from which the bean was read. Note that a line is seen as a legitimate CSV row, not

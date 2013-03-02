@@ -58,7 +58,7 @@ public class RowReaderTest {
         );
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         assertEquals(2, lineReader.readRows().size());
-        Header header = lineReader.getHeader();
+        HeaderImpl header = lineReader.getHeader();
         assertEquals("alpha", header.getName(0));
     }
 

@@ -27,7 +27,7 @@ public class RowReaderImpl implements RowReader {
 
     private int numberOfColumns = -1;
 
-    private Header header;
+    private HeaderImpl header;
 
     private Reader reader;
 
@@ -67,11 +67,11 @@ public class RowReaderImpl implements RowReader {
         return this.stateMachine.getCurrentLine();
     }
 
-    protected Header getHeader() {
+    protected HeaderImpl getHeader() {
         return header == null && lineReaderInstructions.isUseHeader() ? readHeader() : header;
     }
 
-    public Header readHeader() {
+    public HeaderImpl readHeader() {
         if (header != null) {
             return header;
         }
@@ -79,7 +79,7 @@ public class RowReaderImpl implements RowReader {
         if (unmappedLine == null) {
             return null;
         }
-        return header = new Header(unmappedLine);
+        return header = new HeaderImpl(unmappedLine);
     }
 
     private void checkNumberOfColumns(Line unmappedLine) {

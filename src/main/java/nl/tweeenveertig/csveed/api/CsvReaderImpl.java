@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.*;
-import nl.tweeenveertig.csveed.row.Header;
+import nl.tweeenveertig.csveed.row.HeaderImpl;
 import nl.tweeenveertig.csveed.row.RowReaderImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
@@ -53,7 +53,7 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
     }
 
     @Override
-    public Header readHeader() {
+    public HeaderImpl readHeader() {
         return getLineReader().readHeader();
     }
 
