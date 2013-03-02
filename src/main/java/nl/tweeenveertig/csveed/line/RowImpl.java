@@ -17,6 +17,7 @@ public class RowImpl implements Row {
         this.header = header;
     }
 
+    @Override
     public Header getHeader() {
         if (this.header == null) {
             throw new CsvException("No header has been found for this file. Set @CsvFile#useHeaders to read the header");
@@ -24,14 +25,17 @@ public class RowImpl implements Row {
         return this.header;
     }
 
+    @Override
     public RowReport reportOnEndOfLine() {
         return line.reportOnEndOfLine();
     }
 
+    @Override
     public RowReport reportOnColumn(int columnIndex) {
         return line.reportOnColumn(columnIndex);
     }
 
+    @Override
     public String get(String columnName) {
         return line.get(header.getIndex(columnName));
     }
@@ -46,14 +50,20 @@ public class RowImpl implements Row {
         return header != null;
     }
 
+    @Override
     public int size() {
         return line.size();
     }
 
+    @Override
     public String get(int columnIndex) {
         return line.get(columnIndex);
     }
 
+    /**
+    * Returns an iterator over the individual cells of a Row
+    * @return iterator over the cells in String format
+    */
     public Iterator<String> iterator() {
         return line.iterator();
     }
