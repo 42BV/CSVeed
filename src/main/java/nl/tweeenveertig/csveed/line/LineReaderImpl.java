@@ -142,4 +142,8 @@ public class LineReaderImpl implements LineReader {
         return line;
     }
 
+    public LineReaderInstructions getLineReaderInstructions() {
+        return this.lineReaderInstructions;
+    }
+
 }

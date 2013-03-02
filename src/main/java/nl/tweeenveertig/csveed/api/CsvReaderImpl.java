@@ -2,6 +2,10 @@ package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.*;
 import nl.tweeenveertig.csveed.line.Header;
+import nl.tweeenveertig.csveed.line.LineReaderImpl;
+import nl.tweeenveertig.csveed.report.CsvException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyEditor;
 import java.io.Reader;
@@ -9,148 +13,167 @@ import java.util.List;
 
 public class CsvReaderImpl<T> implements CsvReader<T> {
 
-    private BeanReader<T> beanReader;
+    public static final Logger LOG = LoggerFactory.getLogger(CsvReaderImpl.class);
 
-    private BeanReaderInstructions beanReaderInstructions;
+    private BeanReaderImpl<T> beanReader;
 
+    private LineReaderImpl lineReader;
+
+    public CsvReaderImpl(Reader reader) {
+        this.lineReader = new LineReaderImpl(reader);
+    }
+    
     public CsvReaderImpl(Reader reader, Class<T> beanClass) {
         this(reader, new BeanParser().getBeanInstructions(beanClass));
     }
 
     public CsvReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
-        this.beanReaderInstructions = beanReaderInstructions;
         this.beanReader = new BeanReaderImpl<T>(reader, beanReaderInstructions);
+        this.lineReader = (LineReaderImpl)getBeanReader().getLineReader();
     }
 
     @Override
     public List<T> readBeans() {
-        return this.beanReader.readBeans();
+        return getBeanReader().readBeans();
     }
 
     @Override
     public T readBean() {
-        return this.beanReader.readBean();
+        return getBeanReader().readBean();
     }
 
     @Override
     public List<Row> readLines() {
-        return this.beanReader.getLineReader().readLines();
+        return getLineReader().readLines();
     }
 
     @Override
     public Row readLine() {
-        return this.beanReader.getLineReader().readLine();
+        return getLineReader().readLine();
     }
 
     @Override
     public Header readHeader() {
-        return this.beanReader.readHeader();
+        return getLineReader().readHeader();
     }
 
     @Override
     public int getCurrentLine() {
-        return this.beanReader.getCurrentLine();
+        return getLineReader().getCurrentLine();
     }
 
     @Override
     public boolean isFinished() {
-        return this.beanReader.isFinished();
+        return getLineReader().isFinished();
     }
 
     @Override
     public CsvReader<T> setUseHeader(boolean useHeader) {
-        this.beanReaderInstructions.setUseHeader(useHeader);
+        getLineReader().getLineReaderInstructions().setUseHeader(useHeader);
         return this;
     }
 
     @Override
     public CsvReader<T> setStartRow(int startRow) {
-        this.beanReaderInstructions.setStartRow(startRow);
+        getLineReader().getLineReaderInstructions().setStartRow(startRow);
         return this;
     }
 
     @Override
     public CsvReader<T> setEscape(char symbol) {
-        this.beanReaderInstructions.setEscape(symbol);
+        getLineReader().getLineReaderInstructions().setEscape(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setQuote(char symbol) {
-        this.beanReaderInstructions.setQuote(symbol);
+        getLineReader().getLineReaderInstructions().setQuote(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setSeparator(char symbol) {
-        this.beanReaderInstructions.setSeparator(symbol);
+        getLineReader().getLineReaderInstructions().setSeparator(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setComment(char symbol) {
-        this.beanReaderInstructions.setComment(symbol);
+        getLineReader().getLineReaderInstructions().setComment(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setEndOfLine(char[] symbols) {
-        this.beanReaderInstructions.setEndOfLine(symbols);
+        getLineReader().getLineReaderInstructions().setEndOfLine(symbols);
         return this;
     }
 
     @Override
     public CsvReader<T> skipEmptyLines(boolean skip) {
-        this.beanReaderInstructions.skipEmptyLines(skip);
+        getLineReader().getLineReaderInstructions().skipEmptyLines(skip);
         return this;
     }
 
     @Override
     public CsvReader<T> skipCommentLines(boolean skip) {
-        this.beanReaderInstructions.skipCommentLines(skip);
+        getLineReader().getLineReaderInstructions().skipCommentLines(skip);
         return this;
     }
 
     @Override
     public CsvReader<T> setMapper(Class<? extends AbstractMapper> mapper) {
-        this.beanReaderInstructions.setMapper(mapper);
+        getBeanReader().getBeanReaderInstructions().setMapper(mapper);
         return this;
     }
 
     @Override
     public CsvReader<T> setDate(String propertyName, String dateFormat) {
-        this.beanReaderInstructions.setDate(propertyName, dateFormat);
+        getBeanReader().getBeanReaderInstructions().setDate(propertyName, dateFormat);
         return this;
     }
 
     @Override
     public CsvReader<T> setRequired(String propertyName, boolean required) {
-        this.beanReaderInstructions.setRequired(propertyName, required);
+        getBeanReader().getBeanReaderInstructions().setRequired(propertyName, required);
         return this;
     }
 
     @Override
     public CsvReader<T> setConverter(String propertyName, PropertyEditor converter) {
-        this.beanReaderInstructions.setConverter(propertyName, converter);
+        getBeanReader().getBeanReaderInstructions().setConverter(propertyName, converter);
         return this;
     }
 
     @Override
     public CsvReader<T> ignoreProperty(String propertyName) {
-        this.beanReaderInstructions.ignoreProperty(propertyName);
+        getBeanReader().getBeanReaderInstructions().ignoreProperty(propertyName);
         return this;
     }
 
     @Override
     public CsvReader<T> mapColumnIndexToProperty(int columnIndex, String propertyName) {
-        this.beanReaderInstructions.mapColumnIndexToProperty(columnIndex, propertyName);
+        getBeanReader().getBeanReaderInstructions().mapColumnIndexToProperty(columnIndex, propertyName);
         return this;
     }
 
     @Override
     public CsvReader<T> mapColumnNameToProperty(String columnName, String propertyName) {
-        this.beanReaderInstructions.mapColumnNameToProperty(columnName, propertyName);
+        getBeanReader().getBeanReaderInstructions().mapColumnNameToProperty(columnName, propertyName);
         return this;
+    }
+    
+    private BeanReaderImpl<T> getBeanReader() {
+        if (this.beanReader == null) {
+            String msg = "BeanReader has not been initialized. Make sure to pass BeanReaderInstructions or the bean class to CsvReader.";
+            LOG.error(msg);
+            throw new CsvException(msg);
+        }
+        return this.beanReader;
+    }
+
+    private LineReaderImpl getLineReader() {
+        return this.lineReader;
     }
 
 }

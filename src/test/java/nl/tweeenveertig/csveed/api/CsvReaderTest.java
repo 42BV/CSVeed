@@ -17,7 +17,15 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 public class CsvReaderTest {
-    
+
+
+    @Test(expected = CsvException.class)
+    public void callBeanMethodOnNonBeanReaderFacade() {
+        Reader reader = new StringReader("");
+        CsvReader csvReader = new CsvReaderImpl(reader);
+        csvReader.readBean();
+    }
+
     @Test
     public void readLines() {
         Reader reader = new StringReader(

@@ -108,4 +108,8 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         }
     }
 
+    public BeanReaderInstructions getBeanReaderInstructions() {
+        return this.beanReaderInstructions;
+    }
+
 }
