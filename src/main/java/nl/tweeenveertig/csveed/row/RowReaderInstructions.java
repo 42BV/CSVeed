@@ -5,7 +5,7 @@ package nl.tweeenveertig.csveed.row;
 * internally if annotations are used.
 * @author Robert Bor
 */
-public interface LineReaderInstructions {
+public interface RowReaderInstructions {
 
     /**
     * Makes sure that the first readable line is interpreted as the header line. That line will not be read
@@ -14,7 +14,7 @@ public interface LineReaderInstructions {
     * @param useHeader true if the header is interpreted and used
     * @return convenience for chaining
     */
-    public LineReaderInstructions setUseHeader(boolean useHeader);
+    public RowReaderInstructions setUseHeader(boolean useHeader);
 
     /**
     * Sets the start row of the CSV file. If {@link #setUseHeader(boolean)} == true, this will be the header
@@ -24,7 +24,7 @@ public interface LineReaderInstructions {
     * @param startRow the first row to start reading, including the header row
     * @return convenience for chaining
     */
-    public LineReaderInstructions setStartRow(int startRow);
+    public RowReaderInstructions setStartRow(int startRow);
 
     /**
     * Sets the character that will be interpreted as an escape symbol while within a quoted field. This
@@ -33,7 +33,7 @@ public interface LineReaderInstructions {
     * @param symbol the symbol to use for escaping characters within a quoted field
     * @return convenience for chaining
     */
-    public LineReaderInstructions setEscape(char symbol);
+    public RowReaderInstructions setEscape(char symbol);
 
     /**
     * Sets the character that will be interpreted as a quote symbol, signifying either the start or the
@@ -42,7 +42,7 @@ public interface LineReaderInstructions {
     * @param symbol the symbol to use for indicating start/end of a quoted field
     * @return convenience for chaining
     */
-    public LineReaderInstructions setQuote(char symbol);
+    public RowReaderInstructions setQuote(char symbol);
 
     /**
     * Sets the character that will be interpreted as a separator between cells. This method is called whenever
@@ -51,7 +51,7 @@ public interface LineReaderInstructions {
     * @param symbol the symbol to use as a separator between cells
     * @return convenience for chaining
     */
-    public LineReaderInstructions setSeparator(char symbol);
+    public RowReaderInstructions setSeparator(char symbol);
 
     /**
     * Sets the character that will be interpreted as a comment field on the first position of a row.
@@ -60,7 +60,7 @@ public interface LineReaderInstructions {
     * @param symbol the symbol to use as the 0-position comment marker
     * @return convenience for chaining
     */
-    public LineReaderInstructions setComment(char symbol);
+    public RowReaderInstructions setComment(char symbol);
 
     /**
     * Sets the characters (plural) that will be interpreted as end-of-line markers (unless within a quoted
@@ -69,7 +69,7 @@ public interface LineReaderInstructions {
     * @param symbols the symbol to interpret as end-of-line markers (unless within a quoted field)
     * @return convenience for chaining
     */
-    public LineReaderInstructions setEndOfLine(char[] symbols);
+    public RowReaderInstructions setEndOfLine(char[] symbols);
 
     /**
     * Determines whether empty lines must be skipped or treated as single-column rows. This method is called
@@ -78,7 +78,7 @@ public interface LineReaderInstructions {
     * @param skip true to skip empty lines, false to treat as single-column rows
     * @return convenience for chaining
     */
-    LineReaderInstructions skipEmptyLines(boolean skip);
+    RowReaderInstructions skipEmptyLines(boolean skip);
 
     /**
     * Determines whether comment lines must be skipped. This method is called whenever
@@ -88,6 +88,6 @@ public interface LineReaderInstructions {
     * @param skip true to skip comment lines, identified as starting with a comment marker
     * @return convenience for chaining
     */
-    LineReaderInstructions skipCommentLines(boolean skip);
+    RowReaderInstructions skipCommentLines(boolean skip);
 
 }

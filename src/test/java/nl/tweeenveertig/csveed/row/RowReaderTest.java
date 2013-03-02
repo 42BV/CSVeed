@@ -39,7 +39,7 @@ public class RowReaderTest {
             "\n"
         );
         RowReaderImpl lineReader = new RowReaderImpl(reader,
-                new LineReaderInstructionsImpl()
+                new RowReaderInstructionsImpl()
                 .skipEmptyLines(false)
         );
         assertEquals(5, lineReader.readRows().size());
@@ -98,7 +98,7 @@ public class RowReaderTest {
         );
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
-            new LineReaderInstructionsImpl()
+            new RowReaderInstructionsImpl()
                 .setStartRow(3)
                 .setUseHeader(true)
         );
@@ -126,7 +126,7 @@ public class RowReaderTest {
         Reader reader = new StringReader("\"\"\"very literal\"\"\";\"a\"\"b\"\"c\"\n\"abc\";\"first this, \"\"then that\"\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
-            new LineReaderInstructionsImpl()
+            new RowReaderInstructionsImpl()
                 .setUseHeader(false)
         );
         checkEscapedStrings(lineReader.readRows());
@@ -137,7 +137,7 @@ public class RowReaderTest {
         Reader reader = new StringReader("\"\\\"very literal\\\"\";\"a\\\"b\\\"c\"\n\"abc\";\"first this, \\\"then that\\\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
-            new LineReaderInstructionsImpl()
+            new RowReaderInstructionsImpl()
                 .setUseHeader(false)
                 .setEscape('\\')
         );
@@ -158,7 +158,7 @@ public class RowReaderTest {
         Reader reader = new StringReader(";;;\n;;;\n;;;\n");
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
-            new LineReaderInstructionsImpl()
+            new RowReaderInstructionsImpl()
                 .setUseHeader(false)
         );
         List<Row> allLines = lineReader.readRows();

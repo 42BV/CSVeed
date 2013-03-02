@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.bean;
 
-import nl.tweeenveertig.csveed.row.LineReaderInstructions;
-import nl.tweeenveertig.csveed.row.LineReaderInstructionsImpl;
+import nl.tweeenveertig.csveed.row.RowReaderInstructions;
+import nl.tweeenveertig.csveed.row.RowReaderInstructionsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,7 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
 
     public static final Logger LOG = LoggerFactory.getLogger(BeanReaderInstructionsImpl.class);
 
-    private LineReaderInstructions lineReaderInstructions = new LineReaderInstructionsImpl();
+    private RowReaderInstructions rowReaderInstructions = new RowReaderInstructionsImpl();
 
     private BeanProperties properties;
 
@@ -34,61 +34,61 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
         settingsLogged = true;
     }
 
-    public LineReaderInstructions getLineReaderInstructions() {
-        return this.lineReaderInstructions;
+    public RowReaderInstructions getRowReaderInstructions() {
+        return this.rowReaderInstructions;
     }
 
     @Override
     public BeanReaderInstructions setUseHeader(boolean useHeader) {
-        this.lineReaderInstructions.setUseHeader(useHeader);
+        this.rowReaderInstructions.setUseHeader(useHeader);
         return this;
     }
 
     @Override
     public BeanReaderInstructions setStartRow(int startRow) {
-        this.lineReaderInstructions.setStartRow(startRow);
+        this.rowReaderInstructions.setStartRow(startRow);
         return this;
     }
 
     @Override
     public BeanReaderInstructions setEscape(char symbol) {
-        this.lineReaderInstructions.setEscape(symbol);
+        this.rowReaderInstructions.setEscape(symbol);
         return this;
     }
 
     @Override
     public BeanReaderInstructions setQuote(char symbol) {
-        this.lineReaderInstructions.setQuote(symbol);
+        this.rowReaderInstructions.setQuote(symbol);
         return this;
     }
 
     @Override
     public BeanReaderInstructions setSeparator(char symbol) {
-        this.lineReaderInstructions.setSeparator(symbol);
+        this.rowReaderInstructions.setSeparator(symbol);
         return this;
     }
 
     @Override
     public BeanReaderInstructions setComment(char symbol) {
-        this.lineReaderInstructions.setComment(symbol);
+        this.rowReaderInstructions.setComment(symbol);
         return this;
     }
 
     @Override
     public BeanReaderInstructions setEndOfLine(char[] symbols) {
-        this.lineReaderInstructions.setEndOfLine(symbols);
+        this.rowReaderInstructions.setEndOfLine(symbols);
         return this;
     }
 
     @Override
     public BeanReaderInstructions skipEmptyLines(boolean skip) {
-        this.lineReaderInstructions.skipEmptyLines(skip);
+        this.rowReaderInstructions.skipEmptyLines(skip);
         return this;
     }
 
     @Override
     public BeanReaderInstructions skipCommentLines(boolean skip) {
-        this.lineReaderInstructions.skipCommentLines(skip);
+        this.rowReaderInstructions.skipCommentLines(skip);
         return this;
     }
 

@@ -23,7 +23,7 @@ public class RowReaderImpl implements RowReader {
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
-    private LineReaderInstructionsImpl lineReaderInstructions;
+    private RowReaderInstructionsImpl lineReaderInstructions;
 
     private int numberOfColumns = -1;
 
@@ -32,12 +32,12 @@ public class RowReaderImpl implements RowReader {
     private Reader reader;
 
     public RowReaderImpl(Reader reader) {
-        this(reader, new LineReaderInstructionsImpl());
+        this(reader, new RowReaderInstructionsImpl());
     }
 
-    public RowReaderImpl(Reader reader, LineReaderInstructions instructionsInterface) {
+    public RowReaderImpl(Reader reader, RowReaderInstructions instructionsInterface) {
         this.reader = reader;
-        this.lineReaderInstructions = (LineReaderInstructionsImpl) instructionsInterface;
+        this.lineReaderInstructions = (RowReaderInstructionsImpl) instructionsInterface;
         stateMachine.setSymbolMapping(lineReaderInstructions.getSymbolMapping());
     }
 
@@ -142,7 +142,7 @@ public class RowReaderImpl implements RowReader {
         return line;
     }
 
-    public LineReaderInstructions getLineReaderInstructions() {
+    public RowReaderInstructions getLineReaderInstructions() {
         return this.lineReaderInstructions;
     }
 

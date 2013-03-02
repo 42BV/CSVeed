@@ -5,9 +5,9 @@ import nl.tweeenveertig.csveed.token.SymbolMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LineReaderInstructionsImpl implements LineReaderInstructions {
+public class RowReaderInstructionsImpl implements RowReaderInstructions {
 
-    public static final Logger LOG = LoggerFactory.getLogger(LineReaderInstructionsImpl.class);
+    public static final Logger LOG = LoggerFactory.getLogger(RowReaderInstructionsImpl.class);
 
     private SymbolMapping symbolMapping = new SymbolMapping();
 
@@ -39,55 +39,55 @@ public class LineReaderInstructionsImpl implements LineReaderInstructions {
     }
 
     @Override
-    public LineReaderInstructions setUseHeader(boolean useHeader) {
+    public RowReaderInstructions setUseHeader(boolean useHeader) {
         this.useHeader = useHeader;
         return this;
     }
 
     @Override
-    public LineReaderInstructions setStartRow(int startRow) {
+    public RowReaderInstructions setStartRow(int startRow) {
         this.symbolMapping.setStartLine(startRow);
         return this;
     }
 
     @Override
-    public LineReaderInstructions setEscape(char symbol) {
+    public RowReaderInstructions setEscape(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, symbol);
         return this;
     }
 
     @Override
-    public LineReaderInstructions setQuote(char symbol) {
+    public RowReaderInstructions setQuote(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, symbol);
         return this;
     }
 
     @Override
-    public LineReaderInstructions setSeparator(char symbol) {
+    public RowReaderInstructions setSeparator(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, symbol);
         return this;
     }
 
     @Override
-    public LineReaderInstructions setComment(char symbol) {
+    public RowReaderInstructions setComment(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.COMMENT_SYMBOL, symbol);
         return this;
     }
 
     @Override
-    public LineReaderInstructions setEndOfLine(char[] symbols) {
+    public RowReaderInstructions setEndOfLine(char[] symbols) {
         this.symbolMapping.addMapping(EncounteredSymbol.EOL_SYMBOL, symbols);
         return this;
     }
 
     @Override
-    public LineReaderInstructions skipEmptyLines(boolean skip) {
+    public RowReaderInstructions skipEmptyLines(boolean skip) {
         this.skipEmptyLines = skip;
         return this;
     }
 
     @Override
-    public LineReaderInstructions skipCommentLines(boolean skip) {
+    public RowReaderInstructions skipCommentLines(boolean skip) {
         this.symbolMapping.setSkipCommentLines(skip);
         return this;
     }

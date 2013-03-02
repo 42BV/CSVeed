@@ -28,7 +28,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     public BeanReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
         this.beanReaderInstructions = (BeanReaderInstructionsImpl)beanReaderInstructions;
-        this.rowReader = new RowReaderImpl(reader, this.beanReaderInstructions.getLineReaderInstructions());
+        this.rowReader = new RowReaderImpl(reader, this.beanReaderInstructions.getRowReaderInstructions());
     }
 
     public AbstractMapper<T, Object> getMapper() {
