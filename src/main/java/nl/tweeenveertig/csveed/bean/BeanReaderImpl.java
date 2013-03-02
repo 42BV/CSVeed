@@ -1,9 +1,9 @@
 package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.line.Header;
-import nl.tweeenveertig.csveed.line.LineReader;
+import nl.tweeenveertig.csveed.line.RowReader;
 import nl.tweeenveertig.csveed.api.Row;
-import nl.tweeenveertig.csveed.line.LineReaderImpl;
+import nl.tweeenveertig.csveed.line.RowReaderImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     public static final Logger LOG = LoggerFactory.getLogger(BeanReaderImpl.class);
 
-    private LineReader lineReader;
+    private RowReader rowReader;
 
     private BeanReaderInstructionsImpl beanReaderInstructions;
 
@@ -28,7 +28,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     public BeanReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
         this.beanReaderInstructions = (BeanReaderInstructionsImpl)beanReaderInstructions;
-        this.lineReader = new LineReaderImpl(reader, this.beanReaderInstructions.getLineReaderInstructions());
+        this.rowReader = new RowReaderImpl(reader, this.beanReaderInstructions.getLineReaderInstructions());
     }
 
     public AbstractMapper<T, Object> getMapper() {
@@ -52,7 +52,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     public T readBean() {
         logSettings();
-        Row unmappedRow = lineReader.readLine();
+        Row unmappedRow = rowReader.readRow();
         if (unmappedRow == null) {
             return null;
         }
@@ -66,20 +66,20 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     @Override
     public Header readHeader() {
-        return lineReader.readHeader();
+        return rowReader.readHeader();
     }
 
     public int getCurrentLine() {
-        return this.lineReader.getCurrentLine();
+        return this.rowReader.getCurrentLine();
     }
 
     public boolean isFinished() {
-        return lineReader.isFinished();
+        return rowReader.isFinished();
     }
 
     @Override
-    public LineReader getLineReader() {
-        return this.lineReader;
+    public RowReader getRowReader() {
+        return this.rowReader;
     }
 
     private T instantiateBean() {

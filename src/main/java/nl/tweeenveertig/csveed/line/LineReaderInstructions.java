@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.line;
 
 /**
-* These instructions are used to power the {@link LineReader}. Note that the instructions are also used
+* These instructions are used to power the {@link RowReader}. Note that the instructions are also used
 * internally if annotations are used.
 * @author Robert Bor
 */

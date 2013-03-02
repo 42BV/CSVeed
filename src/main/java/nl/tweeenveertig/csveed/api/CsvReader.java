@@ -31,22 +31,22 @@ public interface CsvReader<T> {
     public List<T> readBeans();
 
     /**
-    * Reads a single row and returns this as a bean. The LineReader will keep track of its state.
+    * Reads a single row and returns this as a bean. The RowReader will keep track of its state.
     * @return Bean read from the Reader
     */
     public T readBean();
 
     /**
-    * Reads all rows from the file and returns them as a List. After this, the LineReader will be finished
+    * Reads all rows from the file and returns them as a List. After this, the RowReader will be finished
     * @return all Rows read from the Reader
     */
-    public List<Row> readLines();
+    public List<Row> readRows();
 
     /**
-    * Reads a single row from the file and returns this. The LineReader will keep track of its state.
+    * Reads a single row from the file and returns this. The RowReader will keep track of its state.
     * @return Row read from the Reader
     */
-    public Row readLine();
+    public Row readRow();
 
     /**
     * Returns the header of the CSV file. Only possibly returns a value when useHeader==true

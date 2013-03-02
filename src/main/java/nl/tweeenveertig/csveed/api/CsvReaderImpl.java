@@ -2,7 +2,7 @@ package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.*;
 import nl.tweeenveertig.csveed.line.Header;
-import nl.tweeenveertig.csveed.line.LineReaderImpl;
+import nl.tweeenveertig.csveed.line.RowReaderImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +17,10 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
 
     private BeanReaderImpl<T> beanReader;
 
-    private LineReaderImpl lineReader;
+    private RowReaderImpl lineReader;
 
     public CsvReaderImpl(Reader reader) {
-        this.lineReader = new LineReaderImpl(reader);
+        this.lineReader = new RowReaderImpl(reader);
     }
     
     public CsvReaderImpl(Reader reader, Class<T> beanClass) {
@@ -29,7 +29,7 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
 
     public CsvReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
         this.beanReader = new BeanReaderImpl<T>(reader, beanReaderInstructions);
-        this.lineReader = (LineReaderImpl)getBeanReader().getLineReader();
+        this.lineReader = (RowReaderImpl)getBeanReader().getRowReader();
     }
 
     @Override
@@ -43,13 +43,13 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
     }
 
     @Override
-    public List<Row> readLines() {
-        return getLineReader().readLines();
+    public List<Row> readRows() {
+        return getLineReader().readRows();
     }
 
     @Override
-    public Row readLine() {
-        return getLineReader().readLine();
+    public Row readRow() {
+        return getLineReader().readRow();
     }
 
     @Override
@@ -172,7 +172,7 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
         return this.beanReader;
     }
 
-    private LineReaderImpl getLineReader() {
+    private RowReaderImpl getLineReader() {
         return this.lineReader;
     }
 

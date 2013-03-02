@@ -19,7 +19,7 @@ public class RowImpl implements Row {
 
     public Header getHeader() {
         if (this.header == null) {
-            throw new CsvException("No header has been found for this file");
+            throw new CsvException("No header has been found for this file. Set @CsvFile#useHeaders to read the header");
         }
         return this.header;
     }

@@ -12,7 +12,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
-public class LineReaderImplTest {
+public class RowReaderTest {
 
     @Test
     public void emptyLines() {
@@ -25,8 +25,8 @@ public class LineReaderImplTest {
             "\n"+
             "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
         );
-        LineReaderImpl lineReader = new LineReaderImpl(reader);
-        assertEquals(2, lineReader.readLines().size());
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
+        assertEquals(2, lineReader.readRows().size());
     }
 
     @Test
@@ -38,11 +38,11 @@ public class LineReaderImplTest {
             "\n"+
             "\n"
         );
-        LineReaderImpl lineReader = new LineReaderImpl(reader,
+        RowReaderImpl lineReader = new RowReaderImpl(reader,
                 new LineReaderInstructionsImpl()
                 .skipEmptyLines(false)
         );
-        assertEquals(5, lineReader.readLines().size());
+        assertEquals(5, lineReader.readRows().size());
     }
 
     @Test
@@ -56,8 +56,8 @@ public class LineReaderImplTest {
             "# this line must be ignored!\n"+
             "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
         );
-        LineReaderImpl lineReader = new LineReaderImpl(reader);
-        assertEquals(2, lineReader.readLines().size());
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
+        assertEquals(2, lineReader.readRows().size());
         Header header = lineReader.getHeader();
         assertEquals("alpha", header.getName(0));
     }
@@ -69,8 +69,8 @@ public class LineReaderImplTest {
             "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"+
             "\"row 3, cell 1\";\"row 3, cell 2\""
         );
-        LineReaderImpl lineReader = new LineReaderImpl(reader);
-        lineReader.readLines();
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
+        lineReader.readRows();
     }
 
     @Test
@@ -81,8 +81,8 @@ public class LineReaderImplTest {
                 "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"+
                 "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\""
         );
-        LineReaderImpl lineReader = new LineReaderImpl(reader);
-        List<Row> rows = lineReader.readLines();
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
+        List<Row> rows = lineReader.readRows();
         assertEquals(3, rows.size());
     }
 
@@ -96,20 +96,20 @@ public class LineReaderImplTest {
                 "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
                 "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"
         );
-        LineReaderImpl lineReader = new LineReaderImpl(
+        RowReaderImpl lineReader = new RowReaderImpl(
             reader,
             new LineReaderInstructionsImpl()
                 .setStartRow(3)
                 .setUseHeader(true)
         );
-        List<Row> rows = lineReader.readLines();
+        List<Row> rows = lineReader.readRows();
         assertEquals(2, rows.size());
     }
 
     @Test
     public void roughRide() throws IOException {
         Reader reader = new StringReader("\"alpha\";\"\";;\"beta\";gamma;\"een \"\"echte\"\" test\";\"1\n2\n3\n\"\"regels\"\"\"");
-        LineReaderImpl lineReader = new LineReaderImpl(reader);
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line cells = lineReader.readBareLine();
         assertEquals(7, cells.size());
         assertEquals("alpha", cells.get(0));
@@ -124,24 +124,24 @@ public class LineReaderImplTest {
     @Test
     public void doubleQuotesAsEscape() throws IOException {
         Reader reader = new StringReader("\"\"\"very literal\"\"\";\"a\"\"b\"\"c\"\n\"abc\";\"first this, \"\"then that\"\"\"");
-        LineReaderImpl lineReader = new LineReaderImpl(
+        RowReaderImpl lineReader = new RowReaderImpl(
             reader,
             new LineReaderInstructionsImpl()
                 .setUseHeader(false)
         );
-        checkEscapedStrings(lineReader.readLines());
+        checkEscapedStrings(lineReader.readRows());
     }
 
     @Test
     public void backSlashesAsEscape() throws IOException {
         Reader reader = new StringReader("\"\\\"very literal\\\"\";\"a\\\"b\\\"c\"\n\"abc\";\"first this, \\\"then that\\\"\"");
-        LineReaderImpl lineReader = new LineReaderImpl(
+        RowReaderImpl lineReader = new RowReaderImpl(
             reader,
             new LineReaderInstructionsImpl()
                 .setUseHeader(false)
                 .setEscape('\\')
         );
-        checkEscapedStrings(lineReader.readLines());
+        checkEscapedStrings(lineReader.readRows());
     }
 
     private void checkEscapedStrings(List<Row> lines) {
@@ -156,19 +156,19 @@ public class LineReaderImplTest {
     @Test
     public void readAllLines() throws IOException {
         Reader reader = new StringReader(";;;\n;;;\n;;;\n");
-        LineReaderImpl lineReader = new LineReaderImpl(
+        RowReaderImpl lineReader = new RowReaderImpl(
             reader,
             new LineReaderInstructionsImpl()
                 .setUseHeader(false)
         );
-        List<Row> allLines = lineReader.readLines();
+        List<Row> allLines = lineReader.readRows();
         assertEquals(3, allLines.size());
     }
 
     @Test
     public void allNumbers() throws IOException {
         Reader reader = new StringReader("17.51;23.19;-100.23;");
-        LineReaderImpl lineReader = new LineReaderImpl(reader);
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
         assertEquals(4, row.size());
         assertEquals("17.51", row.get(0));
@@ -180,7 +180,7 @@ public class LineReaderImplTest {
     @Test
     public void spacesBeforeAndAfter() {
         Reader reader = new StringReader("    \"alpha\"  ; \"beta\"   ; \"gamma\" ");
-        LineReaderImpl lineReader = new LineReaderImpl(reader);
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
         assertEquals(3, row.size());
         assertEquals("alpha", row.get(0));
@@ -191,7 +191,7 @@ public class LineReaderImplTest {
     @Test
     public void spaceWithoutQuotesFields() {
         Reader reader = new StringReader("    alpha one  ; beta   ; gamma ");
-        LineReaderImpl lineReader = new LineReaderImpl(reader);
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
         assertEquals(3, row.size());
         assertEquals("alpha one", row.get(0));
@@ -202,7 +202,7 @@ public class LineReaderImplTest {
     @Test
     public void reportSimple() {
         Reader reader = new StringReader("17.51;23.19;-100.23");
-        LineReaderImpl lineReader = new LineReaderImpl(reader);
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
         RowReport report = row.reportOnColumn(2);
         assertEquals("17.51;23.19;-100.23[EOF]", report.getPrintableLines().get(0));
@@ -212,7 +212,7 @@ public class LineReaderImplTest {
     @Test
     public void reportEscapingAndQuotes() {
         Reader reader = new StringReader("\"alpha\";\"\";;\"b\te\tt\ta\";gamma;\"een \"\"echte\"\" test\";\"1\n2\n3\n\"\"regels\"\"\"");
-        LineReaderImpl lineReader = new LineReaderImpl(reader);
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
         RowReport report = row.reportOnColumn(3);
         assertEquals("\"alpha\";\"\";;\"b\\te\\tt\\ta\";gamma;\"een \"\"echte\"\" test\";\"1\\n2\\n3\\n\"\"regels\"\"\"[EOF]", report.getPrintableLines().get(0));

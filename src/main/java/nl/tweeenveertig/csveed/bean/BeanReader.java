@@ -1,7 +1,7 @@
 package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.line.Header;
-import nl.tweeenveertig.csveed.line.LineReader;
+import nl.tweeenveertig.csveed.line.RowReader;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public interface BeanReader<T> {
     public List<T> readBeans();
 
     /**
-    * Reads a single row and returns this as a bean. The LineReader will keep track of its state.
+    * Reads a single row and returns this as a bean. The RowReader will keep track of its state.
     * @return Bean read from the Reader
     */
     public T readBean();
@@ -58,6 +58,6 @@ public interface BeanReader<T> {
     * Returns the underlying line reader for the bean reader
     * @return the underlying line reader
     */
-    public LineReader getLineReader();
+    public RowReader getRowReader();
 
 }

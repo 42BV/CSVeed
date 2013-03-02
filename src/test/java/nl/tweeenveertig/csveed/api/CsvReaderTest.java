@@ -109,7 +109,7 @@ public class CsvReaderTest {
         CsvReader<BeanVariousNotAnnotated> csvReader =
                 new CsvReaderImpl<BeanVariousNotAnnotated>(reader, BeanVariousNotAnnotated.class)
                 .setStartRow(3);
-        List<Row> rows = csvReader.readLines();
+        List<Row> rows = csvReader.readRows();
         assertEquals(3, rows.size());
         assertEquals(7, csvReader.getCurrentLine());
     }
@@ -125,7 +125,7 @@ public class CsvReaderTest {
         );
         CsvReader<BeanSimple> csvReader = new CsvReaderImpl<BeanSimple>(reader, BeanSimple.class)
                 .skipCommentLines(false);
-        List<Row> rows = csvReader.readLines();
+        List<Row> rows = csvReader.readRows();
         assertEquals(4, rows.size());
     }
 

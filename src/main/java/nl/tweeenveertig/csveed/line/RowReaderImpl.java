@@ -17,9 +17,9 @@ import java.util.List;
 * can support a per-line parse approach as well.
 * @author Robert Bor
 */
-public class LineReaderImpl implements LineReader {
+public class RowReaderImpl implements RowReader {
 
-    public static final Logger LOG = LoggerFactory.getLogger(LineReaderImpl.class);
+    public static final Logger LOG = LoggerFactory.getLogger(RowReaderImpl.class);
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
@@ -31,20 +31,20 @@ public class LineReaderImpl implements LineReader {
 
     private Reader reader;
 
-    public LineReaderImpl(Reader reader) {
+    public RowReaderImpl(Reader reader) {
         this(reader, new LineReaderInstructionsImpl());
     }
 
-    public LineReaderImpl(Reader reader, LineReaderInstructions instructionsInterface) {
+    public RowReaderImpl(Reader reader, LineReaderInstructions instructionsInterface) {
         this.reader = reader;
         this.lineReaderInstructions = (LineReaderInstructionsImpl) instructionsInterface;
         stateMachine.setSymbolMapping(lineReaderInstructions.getSymbolMapping());
     }
 
-    public List<Row> readLines() {
+    public List<Row> readRows() {
         List<Row> allRows = new ArrayList<Row>();
         while (!isFinished()) {
-            Row row = readLine();
+            Row row = readRow();
             if (row != null && row.size() > 0) {
                 allRows.add(row);
             }
@@ -52,7 +52,7 @@ public class LineReaderImpl implements LineReader {
         return allRows;
     }
 
-    public Row readLine() {
+    public Row readRow() {
         getHeader();
         Line unmappedLine = readBareLine();
         if (unmappedLine == null) {
