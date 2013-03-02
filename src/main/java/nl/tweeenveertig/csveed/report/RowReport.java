@@ -67,24 +67,36 @@ public class RowReport {
         boolean placedMarkers = false;
         for (RowPart token : parts) {
             if (token.isHighlight()) {
-                for (int i = 0; i < token.getToken().length(); i++) {
-                    if (i == 0 || i == token.getToken().length() - 1) {
-                        line.append('^');
-                        placedMarkers = true;
-                    } else {
-                        line.append('-');
-                    }
-                }
+                line.append(printUnderscoredPart(token));
+                placedMarkers = true;
             } else {
-                for (int i = 0; i < token.getToken().length(); i++) {
-                    line.append(' ');
-                }
+                line.append(printEmptyPart(token));
             }
         }
         if (!placedMarkers) { // Essentially only at the end-of-line
             line.append('^');
         }
         return line.toString();
+    }
+
+    private String printEmptyPart(RowPart token) {
+        StringBuilder linePart = new StringBuilder();
+        for (int i = 0; i < token.getToken().length(); i++) {
+            linePart.append(' ');
+        }
+        return linePart.toString();
+    }
+
+    private String printUnderscoredPart(RowPart token) {
+        StringBuilder linePart = new StringBuilder();
+        for (int i = 0; i < token.getToken().length(); i++) {
+            if (i == 0 || i == token.getToken().length() - 1) {
+                linePart.append('^');
+            } else {
+                linePart.append('-');
+            }
+        }
+        return linePart.toString();
     }
 
 }
