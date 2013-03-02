@@ -63,8 +63,8 @@ public interface Row extends Iterable<String> {
     * Generates a report on the Row with focus on a particular cell. The report can return lines for web
     * consumption (assisting highlighting) or monospaced font printing with dual lines, the first holding the
     * value of the line, the second showing where the error occurred.
-    * @param columnIndex report on the row with focus on a particular cell
-    * @return
+    * @param columnIndex the index of the column to focus the report on
+    * @return report on the row with focus on a particular cell
     */
     RowReport reportOnColumn(int columnIndex);
 
