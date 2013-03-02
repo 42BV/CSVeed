@@ -3,6 +3,7 @@ package nl.tweeenveertig.csveed.row;
 import nl.tweeenveertig.csveed.api.Header;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
+import nl.tweeenveertig.csveed.report.GeneralError;
 import nl.tweeenveertig.csveed.report.RowReport;
 
 import java.util.Iterator;
@@ -21,7 +22,8 @@ public class RowImpl implements Row {
     @Override
     public Header getHeader() {
         if (this.header == null) {
-            throw new CsvException("No header has been found for this file. Set @CsvFile#useHeaders to read the header");
+            throw new CsvException(new GeneralError(
+                    "No header has been found for this file. Set @CsvFile#useHeaders to read the header"));
         }
         return this.header;
     }

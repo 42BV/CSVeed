@@ -2,10 +2,9 @@ package nl.tweeenveertig.csveed.row;
 
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
+import nl.tweeenveertig.csveed.report.RowError;
 import nl.tweeenveertig.csveed.token.ParseException;
 import nl.tweeenveertig.csveed.token.ParseStateMachine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -18,8 +17,6 @@ import java.util.List;
 * @author Robert Bor
 */
 public class RowReaderImpl implements RowReader {
-
-    public static final Logger LOG = LoggerFactory.getLogger(RowReaderImpl.class);
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
@@ -87,12 +84,10 @@ public class RowReaderImpl implements RowReader {
             maxNumberOfColumns = unmappedLine.size();
         } else {
             if (unmappedLine.size() != maxNumberOfColumns) {
-                String message = "The expected number of columns is "+ maxNumberOfColumns +", whereas it is supposed to be "+unmappedLine.size();
-                LOG.error(message);
-                for (String line : unmappedLine.reportOnEndOfLine().getPrintableLines()) {
-                    LOG.error(getCurrentLine()+": "+line);
-                }
-                throw new CsvException(message, null, unmappedLine.reportOnEndOfLine(), getCurrentLine());
+                throw new CsvException(new RowError(
+                        "The expected number of columns is "+ maxNumberOfColumns +", whereas it is supposed to be "+unmappedLine.size(),
+                        unmappedLine.reportOnEndOfLine(), getCurrentLine()
+                ));
             }
         }
     }
@@ -123,8 +118,7 @@ public class RowReaderImpl implements RowReader {
                 try {
                     token = stateMachine.offerSymbol(symbol);
                 } catch (ParseException e) {
-                    LOG.error(e.getMessage());
-                    throw new CsvException(e.getMessage(), e, line.reportOnEndOfLine(), getCurrentLine());
+                    throw new CsvException(new RowError(e.getMessage(), line.reportOnEndOfLine(), getCurrentLine()));
                 }
                 if (stateMachine.isTokenStart()) {
                     line.markStartOfColumn();

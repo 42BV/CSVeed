@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.*;
+import nl.tweeenveertig.csveed.report.GeneralError;
 import nl.tweeenveertig.csveed.row.HeaderImpl;
 import nl.tweeenveertig.csveed.row.RowReaderImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
@@ -165,9 +166,9 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
     
     private BeanReaderImpl<T> getBeanReader() {
         if (this.beanReader == null) {
-            String msg = "BeanReader has not been initialized. Make sure to pass BeanReaderInstructions or the bean class to CsvReader.";
-            LOG.error(msg);
-            throw new CsvException(msg);
+            throw new CsvException(new GeneralError(
+                    "BeanReader has not been initialized. Make sure to pass BeanReaderInstructions or the bean class to CsvReader."
+            ));
         }
         return this.beanReader;
     }

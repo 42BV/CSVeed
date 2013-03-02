@@ -2,15 +2,12 @@ package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.report.CsvException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import nl.tweeenveertig.csveed.report.RowError;
 import org.springframework.beans.BeanWrapperImpl;
 
 import java.util.Set;
 
 public abstract class AbstractMapper<T, K> {
-
-    public static final Logger LOG = LoggerFactory.getLogger(AbstractMapper.class);
 
     protected BeanReaderInstructionsImpl beanReaderInstructions;
 
@@ -43,13 +40,10 @@ public abstract class AbstractMapper<T, K> {
                 continue;
             }
             if (beanProperty.isRequired() && (cell == null || cell.equals(""))) {
-                String errorMessage = "Bean property \""+beanProperty.getPropertyName()+
-                        "\" is required and may not be empty or null";
-                LOG.error(errorMessage);
-                for (String line : row.reportOnColumn(indexColumn).getPrintableLines()) {
-                    LOG.error(lineNumber+": "+line);
-                }
-                throw new CsvException(errorMessage, null, row.reportOnColumn(indexColumn), lineNumber);
+                throw new CsvException(
+                        new RowError("Bean property \""+beanProperty.getPropertyName()+
+                                "\" is required and may not be empty or null",
+                        row.reportOnColumn(indexColumn), lineNumber));
             }
             if (beanProperty.getConverter() != null) {
                 beanWrapper.registerCustomEditor(
@@ -60,13 +54,9 @@ public abstract class AbstractMapper<T, K> {
             try {
                 beanWrapper.setPropertyValue(beanProperty.getPropertyDescriptor().getName(), cell);
             } catch (Exception err) {
-                LOG.error(err.getMessage());
-                String errorMessage = "Problem converting ["+cell+"] to "+beanProperty.getPropertyDescriptor().getPropertyType().getName();
-                LOG.error(errorMessage);
-                for (String line : row.reportOnColumn(indexColumn).getPrintableLines()) {
-                    LOG.error(lineNumber+": "+line);
-                }
-                throw new CsvException(errorMessage, err, row.reportOnColumn(indexColumn), lineNumber);
+                throw new CsvException(new RowError(
+                        "Problem converting ["+cell+"] to "+beanProperty.getPropertyDescriptor().getPropertyType().getName(),
+                        row.reportOnColumn(indexColumn), lineNumber));
             }
             indexColumn++;
         }

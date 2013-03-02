@@ -1,20 +1,17 @@
 package nl.tweeenveertig.csveed.bean;
 
+import nl.tweeenveertig.csveed.report.GeneralError;
 import nl.tweeenveertig.csveed.row.HeaderImpl;
 import nl.tweeenveertig.csveed.row.RowReader;
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.row.RowReaderImpl;
 import nl.tweeenveertig.csveed.report.CsvException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BeanReaderImpl<T> implements BeanReader<T> {
-
-    public static final Logger LOG = LoggerFactory.getLogger(BeanReaderImpl.class);
 
     private RowReader rowReader;
 
@@ -86,11 +83,10 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         try {
             return this.getBeanClass().newInstance();
         } catch (Exception err) {
-            String errorMessage =
+            throw new CsvException(new GeneralError(
                     "Unable to instantiate the bean class "+this.getBeanClass().getName()+
-                    ". Does it have a no-arg public constructor?";
-            LOG.error(errorMessage);
-            throw new CsvException(errorMessage, err);
+                    ". Does it have a no-arg public constructor?"
+            ));
         }
     }
 
@@ -104,7 +100,9 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         try {
             return this.beanReaderInstructions.getMappingStrategy().newInstance();
         } catch (Exception err) {
-            throw new CsvException("Unable to instantiate the mapping strategy", err);
+            throw new CsvException(new GeneralError(
+                    "Unable to instantiate the mapping strategy"
+            ));
         }
     }
 

@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.report.CsvException;
+import nl.tweeenveertig.csveed.report.GeneralError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -115,9 +116,9 @@ public class BeanProperties implements Iterable<BeanProperty> {
                 return beanProperty;
             }
         }
-        String message = "Property does not exist: "+ beanClass.getName()+"."+propertyName;
-        LOG.error(message);
-        throw new CsvException(message);
+        throw new CsvException(new GeneralError(
+                "Property does not exist: "+ beanClass.getName()+"."+propertyName
+        ));
     }
 
     public BeanProperty fromIndex(int columnIndex) {
