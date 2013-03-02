@@ -32,6 +32,7 @@ public class RowError extends AbstractCsvError {
         return report.tokenize();
     }
 
+    @Override
     public int getLineNumber() {
         return lineNumber;
     }

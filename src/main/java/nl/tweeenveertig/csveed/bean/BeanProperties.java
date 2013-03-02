@@ -104,6 +104,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
     }
 
     public void mapNameToProperty(String columnName, String propertyName) {
+        columnName = columnName.toLowerCase();
         BeanProperty property = get(propertyName);
         removeFromColumnName(property);
         property.setColumnName(columnName);
@@ -126,7 +127,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
     }
 
     public BeanProperty fromName(String columnName) {
-        return nameToProperty.get(columnName);
+        return nameToProperty.get(columnName.toLowerCase());
     }
 
     @SuppressWarnings("unchecked")
