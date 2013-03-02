@@ -48,13 +48,22 @@ public class RowReport {
 
         List<RowPart> parts = tokenize();
 
+        lines.add(createContentLine(parts));
+        lines.add(createFocusLine(parts));
+
+        return lines;
+    }
+
+    private String createContentLine(List<RowPart> parts) {
         StringBuilder line = new StringBuilder();
         for (RowPart token : parts) {
             line.append(token.getToken());
         }
-        lines.add(line.toString());
+        return line.toString();
+    }
 
-        line = new StringBuilder();
+    private String createFocusLine(List<RowPart> parts) {
+        StringBuilder line = new StringBuilder();
         boolean placedMarkers = false;
         for (RowPart token : parts) {
             if (token.isHighlight()) {
@@ -75,8 +84,7 @@ public class RowReport {
         if (!placedMarkers) { // Essentially only at the end-of-line
             line.append('^');
         }
-        lines.add(line.toString());
-
-        return lines;
+        return line.toString();
     }
+
 }
