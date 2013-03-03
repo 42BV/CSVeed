@@ -7,7 +7,7 @@ or Java Beans. In order to use CSVeed in your project, simply add the following 
         <dependency>
             <groupId>nl.tweeenveertig.csveed</groupId>
             <artifactId>csveed</artifactId>
-            <version>0.2.1</version>
+            <version>0.2.2</version>
         </dependency>
 ```
 
