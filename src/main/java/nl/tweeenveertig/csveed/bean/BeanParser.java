@@ -57,13 +57,13 @@ public class BeanParser {
             .setEscape(csvFile.escape())
             .setQuote(csvFile.quote())
             .setSeparator(csvFile.separator())
+            .setComment(csvFile.comment())
             .setEndOfLine(csvFile.endOfLine())
             .setMapper(csvFile.mappingStrategy())
             .setStartRow(csvFile.startRow())
             .setUseHeader(csvFile.useHeader())
             .skipEmptyLines(csvFile.skipEmptyLines())
             .skipCommentLines(csvFile.skipCommentLines());
-
     }
 
     private void parseCsvDate(String propertyName, CsvDate csvDate) {

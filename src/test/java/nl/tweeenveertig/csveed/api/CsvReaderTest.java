@@ -2,6 +2,7 @@ package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.ColumnNameMapper;
 import nl.tweeenveertig.csveed.report.CsvException;
+import nl.tweeenveertig.csveed.test.model.BeanCustomComments;
 import nl.tweeenveertig.csveed.test.model.BeanSimple;
 import nl.tweeenveertig.csveed.test.model.BeanVariousNotAnnotated;
 import nl.tweeenveertig.csveed.test.model.BeanWithMultipleStrings;
@@ -18,6 +19,17 @@ import static junit.framework.Assert.assertTrue;
 
 public class CsvReaderTest {
 
+    @Test
+    public void customComments() {
+        Reader reader = new StringReader(
+                "name\n"+
+                "% ignore me!\n"+
+                "some name\n"
+        );
+        CsvReader<BeanCustomComments> csvReader = new CsvReaderImpl<BeanCustomComments>(reader, BeanCustomComments.class);
+        List<BeanCustomComments> beans = csvReader.readBeans();
+        assertEquals(1, beans.size());
+    }
 
     @Test(expected = CsvException.class)
     public void callBeanMethodOnNonBeanReaderFacade() {
