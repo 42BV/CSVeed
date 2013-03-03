@@ -1,7 +1,8 @@
 CSVeed
 ======
-CSVeed is a Java library for reading Comma Separated Value (CSV) files and exposing those either as Rows
-or Java Beans. In order to use CSVeed in your project, simply add the following dependency:
+CSVeed is a Java library for reading [Comma Separated Value (CSV)](http://tools.ietf.org/html/rfc4180)
+files and exposing those either as Rows or Java Beans. In order to use CSVeed in your project,
+simply add the following dependency:
 
 ```xml
         <dependency>
@@ -64,7 +65,28 @@ CSV text value into a java.util.Date using the date format in the annotation.
         }
 ```
 
-It's that simple.
+It's that simple to get up and running. You could also opt to declare your instructions programmatically:
+
+```java
+        Reader reader = new StringReader(
+                "name;number;date\n"+
+                "\"Alpha\";1900;\"13-07-1922\"\n"+
+                "\"Beta\";1901;\"22-01-1943\"\n"+
+                "\"Gamma\";1902;\"30-09-1978\""
+        );
+        CsvReader<Bean> csvReader = new CsvReaderImpl<Bean>(reader, new BeanReaderInstructionsImpl(Bean.class))
+                .setMapper(ColumnNameMapper.class)
+                .mapColumnNameToProperty("name", "name")
+                .mapColumnNameToProperty("number", "number")
+                .mapColumnNameToProperty("date", "date")
+                .setDate("date", "dd-MM-yyyy");
+        final List<Bean> beans = csvReader.readBeans();
+        for (Bean bean : beans) {
+            System.out.println(bean.getName()+" | "+bean.getNumber()+" | "+bean.getDate());
+        }
+```
+
+Be sure to check out the [WIKI](https://github.com/robert-bor/CSVeed/wiki) for more information on CSVeed.
 
 License
 -------
