@@ -85,7 +85,7 @@ public class RowReaderImpl implements RowReader {
         } else {
             if (unmappedLine.size() != maxNumberOfColumns) {
                 throw new CsvException(new RowError(
-                        "The expected number of columns is "+ maxNumberOfColumns +", whereas it is supposed to be "+unmappedLine.size(),
+                        "The expected number of columns is "+ maxNumberOfColumns +", whereas it was "+unmappedLine.size(),
                         unmappedLine.reportOnEndOfLine(), getCurrentLine()
                 ));
             }
