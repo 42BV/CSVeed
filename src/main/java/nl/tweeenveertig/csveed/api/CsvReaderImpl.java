@@ -18,10 +18,10 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
 
     private BeanReaderImpl<T> beanReader;
 
-    private RowReaderImpl lineReader;
+    private RowReaderImpl rowReader;
 
     public CsvReaderImpl(Reader reader) {
-        this.lineReader = new RowReaderImpl(reader);
+        this.rowReader = new RowReaderImpl(reader);
     }
     
     public CsvReaderImpl(Reader reader, Class<T> beanClass) {
@@ -30,7 +30,7 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
 
     public CsvReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
         this.beanReader = new BeanReaderImpl<T>(reader, beanReaderInstructions);
-        this.lineReader = (RowReaderImpl)getBeanReader().getRowReader();
+        this.rowReader = (RowReaderImpl)getBeanReader().getRowReader();
     }
 
     @Override
@@ -45,80 +45,80 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
 
     @Override
     public List<Row> readRows() {
-        return getLineReader().readRows();
+        return getRowReader().readRows();
     }
 
     @Override
     public Row readRow() {
-        return getLineReader().readRow();
+        return getRowReader().readRow();
     }
 
     @Override
     public HeaderImpl readHeader() {
-        return getLineReader().readHeader();
+        return getRowReader().readHeader();
     }
 
     @Override
     public int getCurrentLine() {
-        return getLineReader().getCurrentLine();
+        return getRowReader().getCurrentLine();
     }
 
     @Override
     public boolean isFinished() {
-        return getLineReader().isFinished();
+        return getRowReader().isFinished();
     }
 
     @Override
     public CsvReader<T> setUseHeader(boolean useHeader) {
-        getLineReader().getLineReaderInstructions().setUseHeader(useHeader);
+        getRowReader().getRowReaderInstructions().setUseHeader(useHeader);
         return this;
     }
 
     @Override
     public CsvReader<T> setStartRow(int startRow) {
-        getLineReader().getLineReaderInstructions().setStartRow(startRow);
+        getRowReader().getRowReaderInstructions().setStartRow(startRow);
         return this;
     }
 
     @Override
     public CsvReader<T> setEscape(char symbol) {
-        getLineReader().getLineReaderInstructions().setEscape(symbol);
+        getRowReader().getRowReaderInstructions().setEscape(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setQuote(char symbol) {
-        getLineReader().getLineReaderInstructions().setQuote(symbol);
+        getRowReader().getRowReaderInstructions().setQuote(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setSeparator(char symbol) {
-        getLineReader().getLineReaderInstructions().setSeparator(symbol);
+        getRowReader().getRowReaderInstructions().setSeparator(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setComment(char symbol) {
-        getLineReader().getLineReaderInstructions().setComment(symbol);
+        getRowReader().getRowReaderInstructions().setComment(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setEndOfLine(char[] symbols) {
-        getLineReader().getLineReaderInstructions().setEndOfLine(symbols);
+        getRowReader().getRowReaderInstructions().setEndOfLine(symbols);
         return this;
     }
 
     @Override
     public CsvReader<T> skipEmptyLines(boolean skip) {
-        getLineReader().getLineReaderInstructions().skipEmptyLines(skip);
+        getRowReader().getRowReaderInstructions().skipEmptyLines(skip);
         return this;
     }
 
     @Override
     public CsvReader<T> skipCommentLines(boolean skip) {
-        getLineReader().getLineReaderInstructions().skipCommentLines(skip);
+        getRowReader().getRowReaderInstructions().skipCommentLines(skip);
         return this;
     }
 
@@ -173,8 +173,8 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
         return this.beanReader;
     }
 
-    private RowReaderImpl getLineReader() {
-        return this.lineReader;
+    private RowReaderImpl getRowReader() {
+        return this.rowReader;
     }
 
 }

@@ -20,7 +20,7 @@ public class RowReaderImpl implements RowReader {
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
-    private RowReaderInstructionsImpl lineReaderInstructions;
+    private RowReaderInstructionsImpl rowReaderInstructions;
 
     private int maxNumberOfColumns = -1;
 
@@ -34,8 +34,8 @@ public class RowReaderImpl implements RowReader {
 
     public RowReaderImpl(Reader reader, RowReaderInstructions instructionsInterface) {
         this.reader = reader;
-        this.lineReaderInstructions = (RowReaderInstructionsImpl) instructionsInterface;
-        stateMachine.setSymbolMapping(lineReaderInstructions.getSymbolMapping());
+        this.rowReaderInstructions = (RowReaderInstructionsImpl) instructionsInterface;
+        stateMachine.setSymbolMapping(rowReaderInstructions.getSymbolMapping());
     }
 
     public List<Row> readRows() {
@@ -65,7 +65,7 @@ public class RowReaderImpl implements RowReader {
     }
 
     protected HeaderImpl getHeader() {
-        return header == null && lineReaderInstructions.isUseHeader() ? readHeader() : header;
+        return header == null && rowReaderInstructions.isUseHeader() ? readHeader() : header;
     }
 
     public HeaderImpl readHeader() {
@@ -97,7 +97,7 @@ public class RowReaderImpl implements RowReader {
     }
 
     protected void logSettings() {
-        lineReaderInstructions.logSettings();
+        rowReaderInstructions.logSettings();
         this.stateMachine.getSymbolMapping().logSettings();
     }
 
@@ -131,13 +131,13 @@ public class RowReaderImpl implements RowReader {
                     break;
                 }
             }
-            line = stateMachine.ignoreLine() && lineReaderInstructions.isSkipEmptyLines() ? null : line;
+            line = stateMachine.ignoreLine() && rowReaderInstructions.isSkipEmptyLines() ? null : line;
         }
         return line;
     }
 
-    public RowReaderInstructions getLineReaderInstructions() {
-        return this.lineReaderInstructions;
+    public RowReaderInstructions getRowReaderInstructions() {
+        return this.rowReaderInstructions;
     }
 
 }

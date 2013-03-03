@@ -46,8 +46,9 @@ No time to waste, so here we go. Let us assume you have a Java Bean you want to 
         }
 ```
 
-Note that the Date property has been annotated with @CsvDate. This allows CSVeed to convert the CSV text value
-into a java.util.Date using the date format in the annotation.
+Note that the Date property has been annotated with @CsvDate, one of the
+[CSVeed annotations](https://github.com/robert-bor/CSVeed/wiki/Annotations). This allows CSVeed to convert the
+CSV text value into a java.util.Date using the date format in the annotation.
 
 ```java
         Reader reader = new StringReader(
