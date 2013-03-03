@@ -20,4 +20,23 @@ public class CsvException extends RuntimeException {
         return this.error;
     }
 
+    @Override
+    public String getMessage() {
+        return this.getError().getMessage();
+    }
+
+    @Override
+    public String getLocalizedMessage() {
+        StringBuilder errorMessage = new StringBuilder();
+        boolean first = true;
+        for (String line : getError().getPrintableLines()) {
+            if (!first) {
+                errorMessage.append(System.getProperty("line.separator"));
+            }
+            errorMessage.append(line);
+            first = false;
+        }
+        return errorMessage.toString();
+    }
+
 }
