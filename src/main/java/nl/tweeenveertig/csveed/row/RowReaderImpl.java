@@ -81,14 +81,13 @@ public class RowReaderImpl implements RowReader {
 
     private void checkNumberOfColumns(Line unmappedLine) {
         if (maxNumberOfColumns == -1) {
-            maxNumberOfColumns = unmappedLine.size();
-        } else {
-            if (unmappedLine.size() != maxNumberOfColumns) {
-                throw new CsvException(new RowError(
-                        "The expected number of columns is "+ maxNumberOfColumns +", whereas it was "+unmappedLine.size(),
-                        unmappedLine.reportOnEndOfLine(), getCurrentLine()
-                ));
-            }
+            maxNumberOfColumns = header == null ? unmappedLine.size() : header.size();
+        }
+        if (unmappedLine.size() != maxNumberOfColumns) {
+            throw new CsvException(new RowError(
+                    "The expected number of columns is "+ maxNumberOfColumns +", whereas it was "+unmappedLine.size(),
+                    unmappedLine.reportOnEndOfLine(), getCurrentLine()
+            ));
         }
     }
 

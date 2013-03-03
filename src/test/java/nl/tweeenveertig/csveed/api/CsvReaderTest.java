@@ -19,6 +19,17 @@ import static junit.framework.Assert.assertTrue;
 
 public class CsvReaderTest {
 
+    @Test(expected = CsvException.class)
+    public void doNotSkipCommentLineMustCauseColumnCheckToFail() {
+        Reader reader = new StringReader(
+                "name;name 2;name 3\n"+
+                "# ignore me!\n"
+        );
+        CsvReader csvReader = new CsvReaderImpl(reader)
+                .skipCommentLines(false);
+        csvReader.readRows();
+    }
+
     @Test
     public void customComments() {
         Reader reader = new StringReader(

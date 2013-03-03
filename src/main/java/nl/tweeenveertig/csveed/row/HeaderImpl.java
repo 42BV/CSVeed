@@ -23,6 +23,10 @@ public class HeaderImpl implements Header {
         }
     }
 
+    public int size() {
+        return header.size();
+    }
+
     public String getName(Integer indexColumn) {
         return this.indexToName.get(indexColumn);
     }
