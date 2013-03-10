@@ -1,5 +1,5 @@
-CSVeed
-======
+Be sure to check the project site at [csveed.org](csveed.org).
+
 CSVeed is a Java library for reading [Comma Separated Value (CSV)](http://tools.ietf.org/html/rfc4180)
 files and exposing those either as Rows or Java Beans. In order to use CSVeed in your project,
 simply add the following dependency:
