@@ -124,7 +124,8 @@
             <li><a href="escape">Delimiter and escape cannot vary</a></li>
             <li><a href="comment-line">No comment lines</a></li>
             <li><a href="start-line">No customary start line</a></li>
-
+            <li><a href="empty-line">No skipping empty lines</a></li>
+            <li><a href="number-of-columns">No rule on the number of columns</a></li>
         </ul>
 
         <h3 id="fixed-symbols">Its symbols are fixed</h3>
@@ -146,9 +147,25 @@
 
         <h3 id="escape">Delimiter and escape cannot vary</h3>
 
+        <p>Admittedly, it happens rarely, if ever, but the double double quote kind of offends the sensitivities of those raised in the world of Unix. Surely, there must be a better way to deal with escaping than this, no?</p>
+
+        <p>At any rate, CSVeed is ready for those brave trailblazers who aim to change the face of CSV.</p>
+
         <h3 id="comment-line">No comment lines</h3>
 
+        <p>Does not happen a lot and if it happens, it is mostly above the header row. Comment lines in CSVeed have a comment symbol at the first position of the record.</p>
+
         <h3 id="start-line">No customary start line</h3>
+
+        <p>A variant on the comment line, though where you have no comment symbol, but instead you know at what line the content starts.</p>
+
+        <h3 id="empty-line">No skipping empty lines</h3>
+
+        <p>A reader must have the flexibility to skip empty lines, since these happen.</p>
+
+        <h3 id="number-of-columns">No rule on the number of columns</h3>
+
+        <p>All the aspects mentioned above can be dealt with in a satisfying way. However, CSV files which contain a varying number of columns per record are a definitive no-go area. CSVeed will reject those records.</p>
 
         </section>
 
