@@ -38,27 +38,33 @@
 
             <ul>
                 <li>
-                    <strong>api</strong>; Facade for bean and row, used to have a single class for interacting the underlying layers</li>
+                    <strong><a href="#api">api</a></strong>; Facade for bean and row, used to have a single class for interacting the underlying layers</li>
                 <li>
-                    <strong>bean</strong>; layer responsible for translating rows to Beans.</li>
+                    <strong><a href="#bean">bean</a></strong>; layer responsible for translating rows to Beans.</li>
                 <li>
-                    <strong>row</strong>; layer responsible for translating tokens to lines and lines to headers and rows.</li>
+                    <strong><a href="#row">row</a></strong>; layer responsible for translating tokens to lines and lines to headers and rows.</li>
                 <li>
-                    <strong>token</strong>; layer responsible for parsing the CSV file one symbol at a time and translating those to tokens and lines. </li>
-            </ul><p>Furthermore, there are two auxiliary packages:</p>
+                    <strong><a href="#token">token</a></strong>; layer responsible for parsing the CSV file one symbol at a time and translating those to tokens and lines. </li>
+            </ul>
+
+            <img src="images/architecture-layers.png" width="300"/>
+
+            <p>Furthermore, there are two auxiliary packages:</p>
 
             <ul>
                 <li>
-                    <strong><a href="annotations.html">annotations</a></strong>; various annotations for instructing the bean, row and token classes.</li>
+                    <strong><a href="#report">report</a></strong>; structure for reporting back errors with references to the original CSV row</li>
                 <li>
-                    <strong>report</strong>; structure for reporting back errors with references to the original CSV row</li>
-            </ul><h2>api</h2>
+                    <strong><a href="#annotations">annotations</a></strong>; various annotations for instructing the bean, row and token classes.</li>
+            </ul>
+
+            <h2 id="api">api</h2>
 
             <p>Design goal: <em>a single Facade for interacting with the underlying layers, intuitive in usage and operation</em></p>
 
             <p>CsvReader joins both BeanReader and LineReader, and their respective instructions classes in a single class. Developers making use of the Facade now only have to deal with one class to drive the process.</p>
 
-            <h2>bean</h2>
+            <h2 id="bean">bean</h2>
 
             <p>Design goal: <em>user-friendly (ie, low-maintenance for user) way of converting CSV rows into Beans</em></p>
 
@@ -71,7 +77,7 @@
                     <strong>column name mapping</strong>; executed by the ColumnNameMapper. Maps found cells to Bean properties by the header name of the column in the CSV file.</li>
             </ul><p>All mappable cells are converted to the Bean property using <a href="http://docs.oracle.com/javase/6/docs/api/java/beans/PropertyEditor.html">PropertyEditors</a>. Custom PropertyEditors can be used as well.</p>
 
-            <h2>row</h2>
+            <h2 id="row">row</h2>
 
             <p>Design goal: <em>collecting headers and rows, while maintaining links to the original line text for later reference</em></p>
 
@@ -84,19 +90,19 @@
                 <li>non-printable characters made printable</li>
             </ul><p>Users can directly read Rows, with their Header and extra information.</p>
 
-            <h2>token</h2>
+            <h2 id="token">token</h2>
 
             <p>Design goal: <em>most versatile and effective way of tokenizing CSV files, without forward reading, one symbol at a time</em></p>
 
             <p>The tokenizer is made on a state machine. The state machine gets one symbol at the time and on the basis of its current state, it can determine its next state. The state machine is capable of saying whether tokens must be returned (ie, a cell has been read), or lines are finished. The states are fixes and cannot be configured. Most meaningful symbols (except SPACE and END-OF-FILE) can be configured. </p>
 
-            <h2>report</h2>
+            <h2 id="report">report</h2>
 
             <p>Design goal: <em>ability to trace back errors on a property to the original cell in the CSV line, even after the conversion process has taken place</em></p>
 
             <p>When an error occurs, the exception can be fed with exact details on the position of the cell in the CSV line, meaning that lines can be printed showing precisely the location of the error.</p>
 
-            <h2>annotations</h2>
+            <h2 id="annotations">annotations</h2>
 
             <p>Design goal: <em>an intuitive way of defining parsing and mapping instructions directly associated with the Bean class and properties</em></p>
 
@@ -107,30 +113,58 @@
             <h1>Design Choices</h1>
 
             <ul>
-                <li>Tokenizer; why build the tokenizer the way you did?</li>
-                <li>v1.0.0; why not make a v1.0.0 immediately?</li>
-                <li>Spring; why use Spring?</li>
-                <li>Writer; why is there not a CsvWriter?</li>
-                <li>Architecture; why have the layering of CSV and not roll all into one layer?</li>
-                <li>Error feedback; what is your thing with error feedback?</li>
-                <li>Facade; why the Facade?</li>
-            </ul><h2>Tokenizer</h2>
+                <li><a href="#tokenizer">Tokenizer</a>; why build the tokenizer the way you did?</li>
+                <li><a href="#v1.0.0">v1.0.0</a>; why not make a v1.0.0 immediately?</li>
+                <li><a href="#spring">Spring</a>; why use Spring?</li>
+                <li><a href="#writer">Writer</a>; why is there not a CsvWriter?</li>
+                <li><a href="#layering">Architecture</a>; why have the layering of CSV and not roll all into one layer?</li>
+                <li><a href="#errors">Error feedback</a>; what is your thing with error feedback?</li>
+                <li><a href="#facade">Facade</a>; why the Facade?</li>
+            </ul>
+            
+            <h2 id="tokenizer">Tokenizer</h2>
 
-            <h2>v1.0.0</h2>
+            <h2 id="v1.0.0">v1.0.0</h2>
 
             <p>I believe a version 1 must have seen some time in the trenches before it can be elevated to that position. That means people must have used it, it must have run stable in production software and in general it must have existed for some time. Software that is immediately released as version 1 is not to be trusted.</p>
 
-            <p>I am aware that this may hamper the attraction of CSVeed, but I think the community and the prestige of the software is better served ...</p>
+            <p>I am aware that this may hamper the attraction of CSVeed, but I think the community and the prestige of the software is better served if the practice of steadfast growth to maturity prevails over a false sense of stability.</p>
 
-            <h2>Spring</h2>
+            <h2 id="spring">Spring</h2>
 
-            <h2>Writer</h2>
+            <p>This was one of the harder decisions to make. Spring gave the project a headstart because it offers great out-of-the-box functionality for converting String objects to Bean properties.</p>
 
-            <h2>Architecture</h2>
+            <p>The functionality of Spring that is used has to do with <a href="http://static.springsource.org/spring/docs/1.2.9/api/org/springframework/beans/BeanWrapperImpl.html">BeanWrapperImpl</a>. One can use this class to wrap around a bean and set/get its properties sending/receiving only String instances. Spring has a number of PropertyEditor classes it supplies, which currently powers its popular Spring MVC web framework.</p>
 
-            <h2>Error feedback</h2>
+            <p>However, the Spring dependency comes with a price. Both Spring Beans and Spring Core are included in the dependency tree. The library is commonly used in web applications, although, it is undesirable for libraries. Therefore, the Spring dependency will in time be replaced with an innate conversion ability.</p>
 
-            <h2>Facade</h2>
+            <h2 id="writer">Writer</h2>
+
+            <p>The focus of CSVeed is first and foremost on reading of the CSV. Writing to CSV is literally an afterthought, since it is much easier to write from a realiable structure (such as a Java Bean) to an unreliable one (CSV).</p>
+
+            <p>CSVeed caters to those people that need to get a grip on their CSV. It is aimed at the group of people that have experienced that reading CSV implies dealing with errors. Writing to CSV is flawless by definition and therefore without challenge.</p>
+
+            <p>In the future, a CsvWriter will be added to CSVeed, but there is no hurry to realize this. Error feedback has a much higher priority.</p>
+
+            <h2 id="layering">Architecture</h2>
+
+            <h2 id="errors">Error feedback</h2>
+
+            <p>Dealing with the reading of CSV is synonymous to dealing with errors. The 'structure' of a CSV file leaves a lot to be desired – there is no file that says what it structure will be like with XML. Users can (and often do) change CSV at will before sending it off to an import job. Anyone having worked with CSV for a prolonged period of time knows that errors are part of the essence of CSV files.</p>
+
+            <p>Errors that happen during the parsing process, in any of the layers, can probably be traced back to an error in the original CSV. Therefore it is of paramount importance that the library reports back on the original error, not just the error that it it generates in a particular layer.</p>
+
+            <img src="images/information-flow.png"/>
+
+            <p>Also, errors that happen after the parsing process has completed, can probably still be traced back to the original CSV file. CSVeed can currently only report back on errors that it encounters itself. In the near future, it will be made so that clients can use the CSVeed context to refer back to the original CSV cell where the error occurred.</p>
+
+            <h2 id="facade">Facade</h2>
+
+            <p>The Facade has been inspired by <a href="comparison.html#javacsv">JavaCSV</a>. This library has just two classes; a writer and a reader. Every bit of logic has been pushed into those two classes. It must be a nightmare to maintain those classes.</p>
+
+            <p>The user, on the other hand, is given a treat; it gets the simplest possible interface to interact with the library. The community has shown itself very enthousiastic over the simplicity of JavaCSV.</p>
+
+            <p>CSVeed takes a different route. The maintenance mess of just two classes has been evaded, while the user still gets a simple interface. The way this is done is by setting up a Facade that shields the underlying complexity.</p>
 
         </section>
 
