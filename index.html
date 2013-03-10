@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>CSVeed by robert-bor</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>CSVeed</h1>
+        <h2>Light-weight, easy-to-use Java-based CSV utility</h2>
+        <a href="https://github.com/robert-bor/CSVeed" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p>CSVeed is a Java library for reading <a href="http://tools.ietf.org/html/rfc4180">Comma Separated Value (CSV)</a>
+files and exposing those either as Rows or Java Beans. In order to use CSVeed in your project,
+simply add the following dependency:</p>
+
+<div class="highlight"><pre>        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>nl.tweeenveertig.csveed<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>csveed<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>0.2.2<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<p>For optimal usage, make sure you have a <a href="http://www.slf4j.org/manual.html">SLF4J</a> configured. If you have no
+previous SLF4J logger configured and you want to get up and running quickly, use this:</p>
+
+<div class="highlight"><pre>        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.slf4j<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>slf4j-simple<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.7.2<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<h2>Getting Started Real Quick</h2>
+
+<p>No time to waste, so here we go. Let us assume you have a Java Bean you want to convert your CSV rows into:</p>
+
+<div class="highlight"><pre>        <span class="kn">import</span> <span class="nn">nl.tweeenveertig.csveed.annotations.CsvDate</span><span class="o">;</span>
+
+        <span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bean</span> <span class="o">{</span>
+            <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+            <span class="kd">private</span> <span class="n">Long</span> <span class="n">number</span><span class="o">;</span>
+            <span class="nd">@CsvDate</span><span class="o">(</span><span class="n">format</span><span class="o">=</span><span class="s">"dd-MM-yyyy"</span><span class="o">)</span>
+            <span class="kd">private</span> <span class="n">Date</span> <span class="n">date</span><span class="o">;</span>
+
+            <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">name</span><span class="o">;</span> <span class="o">}</span>
+            <span class="kd">public</span> <span class="n">Long</span> <span class="nf">getNumber</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">number</span><span class="o">;</span> <span class="o">}</span>
+            <span class="kd">public</span> <span class="n">Date</span> <span class="nf">getDate</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">date</span><span class="o">;</span> <span class="o">}</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span> <span class="o">}</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setNumber</span><span class="o">(</span><span class="n">Long</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">number</span> <span class="o">=</span> <span class="n">number</span><span class="o">;</span> <span class="o">}</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDate</span><span class="o">(</span><span class="n">Date</span> <span class="n">date</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">date</span> <span class="o">=</span> <span class="n">date</span><span class="o">;</span> <span class="o">}</span>
+        <span class="o">}</span>
+</pre></div>
+
+<p>Note that the Date property has been annotated with @CsvDate, one of the
+<a href="https://github.com/robert-bor/CSVeed/wiki/Annotations">CSVeed annotations</a>. This allows CSVeed to convert the
+CSV text value into a java.util.Date using the date format in the annotation.</p>
+
+<div class="highlight"><pre>        <span class="n">Reader</span> <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="o">(</span>
+                <span class="s">"name;number;date\n"</span><span class="o">+</span>
+                <span class="s">"\"Alpha\";1900;\"13-07-1922\"\n"</span><span class="o">+</span>
+                <span class="s">"\"Beta\";1901;\"22-01-1943\"\n"</span><span class="o">+</span>
+                <span class="s">"\"Gamma\";1902;\"30-09-1978\""</span>
+        <span class="o">);</span>
+        <span class="n">CsvReader</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvReaderImpl</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;(</span><span class="n">reader</span><span class="o">,</span> <span class="n">Bean</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;</span> <span class="n">beans</span> <span class="o">=</span> <span class="n">csvReader</span><span class="o">.</span><span class="na">readBeans</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Bean</span> <span class="n">bean</span> <span class="o">:</span> <span class="n">beans</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">bean</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span><span class="s">" | "</span><span class="o">+</span><span class="n">bean</span><span class="o">.</span><span class="na">getNumber</span><span class="o">()+</span><span class="s">" | "</span><span class="o">+</span><span class="n">bean</span><span class="o">.</span><span class="na">getDate</span><span class="o">());</span>
+        <span class="o">}</span>
+</pre></div>
+
+<p>It's that simple to get up and running. You could also opt to declare your instructions programmatically:</p>
+
+<div class="highlight"><pre>        <span class="n">Reader</span> <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="o">(</span>
+                <span class="s">"name;number;date\n"</span><span class="o">+</span>
+                <span class="s">"\"Alpha\";1900;\"13-07-1922\"\n"</span><span class="o">+</span>
+                <span class="s">"\"Beta\";1901;\"22-01-1943\"\n"</span><span class="o">+</span>
+                <span class="s">"\"Gamma\";1902;\"30-09-1978\""</span>
+        <span class="o">);</span>
+        <span class="n">CsvReader</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvReaderImpl</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;(</span><span class="n">reader</span><span class="o">,</span> <span class="k">new</span> <span class="n">BeanReaderInstructionsImpl</span><span class="o">(</span><span class="n">Bean</span><span class="o">.</span><span class="na">class</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">setMapper</span><span class="o">(</span><span class="n">ColumnNameMapper</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">mapColumnNameToProperty</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span> <span class="s">"name"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">mapColumnNameToProperty</span><span class="o">(</span><span class="s">"number"</span><span class="o">,</span> <span class="s">"number"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">mapColumnNameToProperty</span><span class="o">(</span><span class="s">"date"</span><span class="o">,</span> <span class="s">"date"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">setDate</span><span class="o">(</span><span class="s">"date"</span><span class="o">,</span> <span class="s">"dd-MM-yyyy"</span><span class="o">);</span>
+        <span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;</span> <span class="n">beans</span> <span class="o">=</span> <span class="n">csvReader</span><span class="o">.</span><span class="na">readBeans</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Bean</span> <span class="n">bean</span> <span class="o">:</span> <span class="n">beans</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">bean</span><span class="o">.</span><span class="na">getName</span><span class="o">()+</span><span class="s">" | "</span><span class="o">+</span><span class="n">bean</span><span class="o">.</span><span class="na">getNumber</span><span class="o">()+</span><span class="s">" | "</span><span class="o">+</span><span class="n">bean</span><span class="o">.</span><span class="na">getDate</span><span class="o">());</span>
+        <span class="o">}</span>
+</pre></div>
+
+<p>Be sure to check out the <a href="https://github.com/robert-bor/CSVeed/wiki">WIKI</a> for more information on CSVeed.</p>
+
+<h2>License</h2>
+
+<p>Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at</p>
+
+<pre><code>http://www.apache.org/licenses/LICENSE-2.0
+</code></pre>
+
+<p>Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/robert-bor/CSVeed/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/robert-bor/CSVeed/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/robert-bor/CSVeed"></a> is maintained by <a href="https://github.com/robert-bor">robert-bor</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
