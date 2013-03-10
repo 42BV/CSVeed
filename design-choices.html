@@ -44,6 +44,7 @@
                 <li><a href="#facade">Facade</a>; why the Facade?</li>
                 <li><a href="#deep-conversion">Deep conversion</a>; will CSVeed have deep conversion in due time?</li>
                 <li><a href="#split-and-join">Splits and joins</a>; will CSVeed have splits and joins in due time?</li>
+                <li><a href="#dryruns">Dry runs</a>; will CSVeed support dry runs?</li>
             </ul>
             
             <h2 id="tokenizer">Tokenizer</h2>
@@ -123,6 +124,14 @@
             <p>The main challenge with splits and joins is basically to supply a structure where clients can create converters for an array of Strings or BeanProperty instances, so that symbols can either be inserted or removed.</p>
 
             <p>CSVeed currently does not have split and join capabilities, though this is planned for the near future.</p>
+
+            <h2 id="dryruns">Dry runs</h2>
+
+            <p>A dry run is a crucial concept in processing CSV files. CSV files are processed up to the point that enough is known to generate a comprehensive error report, without committing the data to its next stage, such as being persisted to the database.</p>
+
+            <p>The way a dry run must work, is that it returns a list of Bean with their original CSV context and a comprehensive list of errors, so that the client can post-process the beans and add their own errors to the list. The entire list can then be fed back to the owner of the CSV file.</p>
+
+            <p>This functionality is currently not supported by CSVeed, but will be in the near future.</p>
 
         </section>
 
