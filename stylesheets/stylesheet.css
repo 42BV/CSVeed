@@ -319,10 +319,11 @@ p a {
 }
 
 blockquote {
-  font-size: 1.6em;
+  font-size: 14px;
   border-left: 10px solid #e9e9e9;
   margin-bottom: 20px;
   padding: 0 0 0 30px;
+  font-family: monospace;
 }
 
 ul li {
