@@ -41,6 +41,7 @@ hr {
 
 .comparison-matrix {
     width: 150%;
+    margin-bottom: 20px;
 }
 
 .comparison-matrix .property {

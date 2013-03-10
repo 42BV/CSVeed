@@ -104,20 +104,33 @@
 
             <p>Annotations and the declarative model are mirrored, so that everything that can be declared with annotations can also be declared programmatically and vice versa.</p>
 
-            <h1>Design choices</h1>
+            <h1>Design Choices</h1>
 
             <ul>
-                <li>
-                    <strong>different quote/escape symbols</strong>; </li>
-                <li>
-                    <strong>leading/trailing spaces</strong>; </li>
-                <li>
-                    <strong>Spring</strong>; </li>
-                <li>
-                    <strong>CsvWriter</strong>; </li>
-                <li>
-                    <strong>Facade</strong>; </li>
-            </ul>
+                <li>Tokenizer; why build the tokenizer the way you did?</li>
+                <li>v1.0.0; why not make a v1.0.0 immediately?</li>
+                <li>Spring; why use Spring?</li>
+                <li>Writer; why is there not a CsvWriter?</li>
+                <li>Architecture; why have the layering of CSV and not roll all into one layer?</li>
+                <li>Error feedback; what is your thing with error feedback?</li>
+                <li>Facade; why the Facade?</li>
+            </ul><h2>Tokenizer</h2>
+
+            <h2>v1.0.0</h2>
+
+            <p>I believe a version 1 must have seen some time in the trenches before it can be elevated to that position. That means people must have used it, it must have run stable in production software and in general it must have existed for some time. Software that is immediately released as version 1 is not to be trusted.</p>
+
+            <p>I am aware that this may hamper the attraction of CSVeed, but I think the community and the prestige of the software is better served ...</p>
+
+            <h2>Spring</h2>
+
+            <h2>Writer</h2>
+
+            <h2>Architecture</h2>
+
+            <h2>Error feedback</h2>
+
+            <h2>Facade</h2>
 
         </section>
 
