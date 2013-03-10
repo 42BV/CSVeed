@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/csveed.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>CSVeed / Design Choices</title>
+</head>
+
+<body>
+<header>
+    <div class="inner">
+        <h1>CSVeed</h1>
+        <h2>Easy-to-use CSV to Java Bean utility</h2>
+        <img class="csveed-logo" src="images/csveed-logo-white.png">
+        <a href="https://github.com/robert-bor/CSVeed" class="button"><small>View project on</small>GitHub</a>
+    </div>
+</header>
+
+<div id="content-wrapper">
+    <div class="inner clearfix">
+        <section id="main-content">
+
+            <h1>Design Choices</h1>
+
+            <ul>
+                <li><a href="#tokenizer">Tokenizer</a>; why build the tokenizer the way you did?</li>
+                <li><a href="#v1.0.0">v1.0.0</a>; why not make a v1.0.0 immediately?</li>
+                <li><a href="#spring">Spring</a>; why use Spring?</li>
+                <li><a href="#writer">Writer</a>; why is there not a CsvWriter?</li>
+                <li><a href="#layering">Architecture</a>; why have the layering of CSV and not roll all into one layer?</li>
+                <li><a href="#errors">Error feedback</a>; what is your thing with error feedback?</li>
+                <li><a href="#facade">Facade</a>; why the Facade?</li>
+            </ul>
+            
+            <h2 id="tokenizer">Tokenizer</h2>
+
+            <h2 id="v1.0.0">v1.0.0</h2>
+
+            <p>I believe a version 1 must have seen some time in the trenches before it can be elevated to that position. That means people must have used it, it must have run stable in production software and in general it must have existed for some time. Software that is immediately released as version 1 is not to be trusted.</p>
+
+            <p>I am aware that this may hamper the attraction of CSVeed, but I think the community and the prestige of the software is better served if the practice of steadfast growth to maturity prevails over a false sense of stability.</p>
+
+            <h2 id="spring">Spring</h2>
+
+            <p>This was one of the harder decisions to make. Spring gave the project a headstart because it offers great out-of-the-box functionality for converting String objects to Bean properties.</p>
+
+            <p>The functionality of Spring that is used has to do with <a href="http://static.springsource.org/spring/docs/1.2.9/api/org/springframework/beans/BeanWrapperImpl.html">BeanWrapperImpl</a>. One can use this class to wrap around a bean and set/get its properties sending/receiving only String instances. Spring has a number of PropertyEditor classes it supplies, which currently powers its popular Spring MVC web framework.</p>
+
+            <p>However, the Spring dependency comes with a price. Both Spring Beans and Spring Core are included in the dependency tree. The library is commonly used in web applications, although, it is undesirable for libraries. Therefore, the Spring dependency will in time be replaced with an innate conversion ability.</p>
+
+            <h2 id="writer">Writer</h2>
+
+            <p>The focus of CSVeed is first and foremost on reading of the CSV. Writing to CSV is literally an afterthought, since it is much easier to write from a realiable structure (such as a Java Bean) to an unreliable one (CSV).</p>
+
+            <p>CSVeed caters to those people that need to get a grip on their CSV. It is aimed at the group of people that have experienced that reading CSV implies dealing with errors. Writing to CSV is flawless by definition and therefore without challenge.</p>
+
+            <p>In the future, a CsvWriter will be added to CSVeed, but there is no hurry to realize this. Error feedback has a much higher priority.</p>
+
+            <h2 id="layering">Architecture</h2>
+
+            <h2 id="errors">Error feedback</h2>
+
+            <p>Dealing with the reading of CSV is synonymous to dealing with errors. The 'structure' of a CSV file leaves a lot to be desired – there is no file that says what it structure will be like with XML. Users can (and often do) change CSV at will before sending it off to an import job. Anyone having worked with CSV for a prolonged period of time knows that errors are part of the essence of CSV files.</p>
+
+            <p>Errors that happen during the parsing process, in any of the layers, can probably be traced back to an error in the original CSV. Therefore it is of paramount importance that the library reports back on the original error, not just the error that it it generates in a particular layer.</p>
+
+            <img src="images/information-flow.png"/>
+
+            <p>Also, errors that happen after the parsing process has completed, can probably still be traced back to the original CSV file. CSVeed can currently only report back on errors that it encounters itself. In the near future, it will be made so that clients can use the CSVeed context to refer back to the original CSV cell where the error occurred.</p>
+
+            <h2 id="facade">Facade</h2>
+
+            <p>The Facade has been inspired by <a href="comparison.html#javacsv">JavaCSV</a>. This library has just two classes; a writer and a reader. Every bit of logic has been pushed into those two classes. It must be a nightmare to maintain those classes.</p>
+
+            <p>The user, on the other hand, is given a treat; it gets the simplest possible interface to interact with the library. The community has shown itself very enthousiastic over the simplicity of JavaCSV.</p>
+
+            <p>CSVeed takes a different route. The maintenance mess of just two classes has been evaded, while the user still gets a simple interface. The way this is done is by setting up a Facade that shields the underlying complexity.</p>
+
+        </section>
+
+        <aside id="sidebar">
+
+            <p class="site-link"><a href="index.html">Home</a></p>
+            <p class="site-link">Manual</p>
+            <p class="site-link-sub"><a href="annotations.html">Annotations</a></p>
+            <p class="site-link-sub"><a href="api.html">API</a></p>
+            <p class="site-link">Background</p>
+            <p class="site-link-sub"><a href="architecture.html">Architecture</a></p>
+            <p class="site-link-sub"><a href="design-choices.html">Design Choices</a></p>
+            <p class="site-link-sub"><a href="comparison.html">Comparison</a></p>
+            <p class="site-link-sub2"><a href="comparison-matrix.html">Comparison Matrix</a></p>
+
+            <hr>
+
+            <a href="https://github.com/robert-bor/CSVeed/zipball/master" class="button">
+                <small>Download</small>
+                .zip file
+            </a>
+            <a href="https://github.com/robert-bor/CSVeed/tarball/master" class="button">
+                <small>Download</small>
+                .tar.gz file
+            </a>
+
+            <p class="repo-owner"><a href="https://github.com/robert-bor/CSVeed"></a> is maintained by <a href="https://github.com/robert-bor">robert-bor</a>.</p>
+
+            <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+    </div>
+</div>
+
+
+</body>
+</html>
