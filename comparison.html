@@ -40,20 +40,20 @@
 
             <ul>
                 <li>
-                    <strong><a href="http://commons.apache.org/sandbox/csv/">Commons CSV</a></strong>; Apache Commons project</li>
+                    <strong><a href="#commonscsv">Commons CSV</a></strong>; Apache Commons project</li>
                 <li>
-                    <strong><a href="http://flatpack.sourceforge.net/">Flatpack</a></strong>; extensive tool, much more than just CSV</li>
+                    <strong><a href="#flatpack">Flatpack</a></strong>; extensive tool, much more than just CSV</li>
                 <li>
-                    <strong><a href="http://sourceforge.net/projects/javacsv/">JavaCSV</a></strong>; two-class solution</li>
+                    <strong><a href="#javacsv">JavaCSV</a></strong>; two-class solution</li>
                 <li>
-                    <strong><a href="http://opencsv.sourceforge.net/">opencsv</a></strong>; very popular Csv-to-Bean transformer</li>
+                    <strong><a href="#opencsv">opencsv</a></strong>; very popular Csv-to-Bean transformer</li>
                 <li>
-                    <strong><a href="http://supercsv.sourceforge.net/">Super CSV</a></strong>; extensively details Csv-to-Bean transformer </li>
+                    <strong><a href="#supercsv">Super CSV</a></strong>; extensively details Csv-to-Bean transformer </li>
                 <li>
-                    <strong><a href="http://code.google.com/p/jcsv/">jcsv</a></strong>; Csv parser experimenting with annotations</li>
-            </ul><p>I checked out all the documentation and sites I could find on the tooling. After that I downloaded the latest know versions of the libraries and proceeded to run a couple of tests against them. The combination of these two activities gave me a pretty good feeling of the quality of the products. Enough to make a quality appraisal on each of them.</p>
+                    <strong><a href="#jcsv">jcsv</a></strong>; Csv parser experimenting with annotations</li>
+            </ul><p>I checked out all the documentation and sites I could find on the tooling. After that I downloaded the latest know versions of the libraries and proceeded to run a couple of tests against them. The combination of these two activities gave me a pretty good feeling of the quality of the products. Enough to make a quality appraisal on each of them. Check out the <a href="comparison-matrix.html">Comparison Matrix</a> to see the differences.</p>
 
-            <h2><a href="http://commons.apache.org/sandbox/csv/">Commons CSV</a></h2>
+            <h2 id="commonscsv"><a href="http://commons.apache.org/sandbox/csv/">Commons CSV</a></h2>
 
             <p>Apache Commons CSV set out with a noble goal:</p>
 
@@ -65,7 +65,7 @@
 
             <p>Its primary focus is on the tokenizing process at which it excels. There is no support for Bean conversions. The documentation is extremely poor and mostly outdated, although the project is still being maintained.</p>
 
-            <h2><a href="http://flatpack.sourceforge.net/">Flatpack</a></h2>
+            <h2 id="flatpack"><a href="http://flatpack.sourceforge.net/">Flatpack</a></h2>
 
             <p>Flatpack is obviously a lot more than just CSV handling, which a glance at the website shows. Configuring the instructions is a convoluted and disassociated, using old-school XML configuration files. </p>
 
@@ -75,13 +75,13 @@
 
             <p>Though the project has Maven Central entries (albeit without source), it is outdated (last update: 2008) and offers no support for Bean conversion. The documentation of the project is quite good.</p>
 
-            <h2><a href="http://sourceforge.net/projects/javacsv/">JavaCSV</a></h2>
+            <h2 id="javacsv"><a href="http://sourceforge.net/projects/javacsv/">JavaCSV</a></h2>
 
             <p>The first thing that is noteworthy about this library is that it has only two classes; CsvReader and CsvWriter. The ease of its interface is clamored and has been a huge incentive for me to add the Facade layer to CSVeed.</p>
 
             <p>The project has releases in Maven Central, although without source. The process lets you read a line one by one, there seems to be no way to get them all at once. There is no support for bean conversion. Documentation is somewhat poor since the website seems to have been used for another purpose as well.</p>
 
-            <h2><a href="http://opencsv.sourceforge.net/">opencsv</a></h2>
+            <h2 id="opencsv"><a href="http://opencsv.sourceforge.net/">opencsv</a></h2>
 
             <p>Adorable statement in the author's blog:</p>
 
@@ -93,7 +93,7 @@
 
             <p>Very poor in its error feedback, a definitive negative. Also does NOT support all basic Objects out of the box. No support for comment and empty line skipping. Nevertheless, disruptive technology at that time and much needed, given its success.</p>
 
-            <h2><a href="http://supercsv.sourceforge.net/">Super CSV</a></h2>
+            <h2 id="supercsv"><a href="http://supercsv.sourceforge.net/">Super CSV</a></h2>
 
             <p>I really have a soft spot for Super CSV. What the author says and does and the quality of his documentation and code, references to RFC 4180, it all fits. Just have a look at the landing page and see the motivation and the author's background. Super CSV is nothing, if not ambitious. </p>
 
@@ -103,7 +103,7 @@
 
             <p>Personally, I do not find the interface very good. It is irksome and counter-intuitive. The CellProcessor approach is the wrong way to go about in my humble opinion. Error handling is better than opencsv's, but still not the way it should be.</p>
 
-            <h2><a href="http://code.google.com/p/jcsv/">jcsv</a></h2>
+            <h2 id="jcsv"><a href="http://code.google.com/p/jcsv/">jcsv</a></h2>
 
             <p>I mainly adopted this library into my comparison because of its usage of annotations. The project is obviously short-lived and has not been refined much. Interestingly enough it has some nice documentation, including examples and reference to RFC 4180.</p>
 
