@@ -31,6 +31,7 @@ public class BeanWrapperTest {
     @Test
     public void hitAllProperties() throws Exception {
         beanWrapper.setProperty(properties.fromName("charset"), null);
+        beanWrapper.setProperty(properties.fromName("charset"), "");
         beanWrapper.setProperty(properties.fromName("chars"), null);
         beanWrapper.setProperty(properties.fromName("bytes"), null);
         beanWrapper.setProperty(properties.fromName("booleanObject"), "");

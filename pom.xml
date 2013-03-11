@@ -115,6 +115,12 @@
                     <instrumentation>
                         <excludes>
                             <exclude>nl/tweeenveertig/csveed/*.class</exclude>
+                            <exclude>nl/tweeenveertig/csveed/bean/conversion/ConversionUtil.class</exclude> <!-- not testing Spring -->
+                            <exclude>nl/tweeenveertig/csveed/bean/conversion/NumberUtils.class</exclude> <!-- not testing Spring -->
+                            <exclude>nl/tweeenveertig/csveed/bean/conversion/CharacterConverter.class</exclude> <!-- not testing Spring -->
+                            <exclude>nl/tweeenveertig/csveed/bean/conversion/CustomBooleanConverter.class</exclude> <!-- not testing Spring -->
+                            <exclude>nl/tweeenveertig/csveed/bean/conversion/CustomNumberConverter.class</exclude> <!-- not testing Spring -->
+                            <exclude>nl/tweeenveertig/csveed/bean/conversion/PatternConverter.class</exclude> <!-- not testing Spring -->
                         </excludes>
                     </instrumentation>
                     <check />
