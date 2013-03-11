@@ -9,9 +9,9 @@ public class CurrencyConverter implements Converter<Currency> {
         return Currency.getInstance(text);
     }
 
-    @Override
-    public String toString(Currency value) {
-        return (value != null ? value.getCurrencyCode() : "");
-    }
+//    @Override
+//    public String toString(Currency value) {
+//        return (value != null ? value.getCurrencyCode() : "");
+//    }
 
 }

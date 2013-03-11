@@ -19,8 +19,8 @@ public class PatternConverter implements Converter<Pattern> {
         return text != null ? Pattern.compile(text, this.flags) : null;
     }
 
-    @Override
-    public String toString(Pattern value) throws Exception {
-        return value != null ? value.pattern() : "";
-    }
+//    @Override
+//    public String toString(Pattern value) throws Exception {
+//        return value != null ? value.pattern() : "";
+//    }
 }

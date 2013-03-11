@@ -68,35 +68,11 @@ public abstract class NumberUtils {
         }
     }
 
-    /**
-     * Raise an overflow exception for the given number and target class.
-     * @param number the number we tried to convert
-     * @param targetClass the target class we tried to convert to
-     */
     private static void raiseOverflowException(Number number, Class targetClass) {
         throw new IllegalArgumentException("Could not convert number [" + number + "] of type [" +
                 number.getClass().getName() + "] to target class [" + targetClass.getName() + "]: overflow");
     }
 
-    /**
-     * Parse the given text into a number instance of the given target class,
-     * using the corresponding {@code decode} / {@code valueOf} methods.
-     * <p>Trims the input {@code String} before attempting to parse the number.
-     * Supports numbers in hex format (with leading "0x", "0X" or "#") as well.
-     * @param text the text to convert
-     * @param targetClass the target class to parse into
-     * @return the parsed number
-     * @throws IllegalArgumentException if the target class is not supported
-     * (i.e. not a standard Number subclass as included in the JDK)
-     * @see Byte#decode
-     * @see Short#decode
-     * @see Integer#decode
-     * @see Long#decode
-     * @see #decodeBigInteger(String)
-     * @see Float#valueOf
-     * @see Double#valueOf
-     * @see java.math.BigDecimal#BigDecimal(String)
-     */
     @SuppressWarnings("unchecked")
     public static <T extends Number> T parseNumber(String text, Class<T> targetClass) {
         String trimmed = StringUtils.trimAllWhitespace(text);
@@ -131,21 +107,6 @@ public abstract class NumberUtils {
         }
     }
 
-    /**
-     * Parse the given text into a number instance of the given target class,
-     * using the given NumberFormat. Trims the input {@code String}
-     * before attempting to parse the number.
-     * @param text the text to convert
-     * @param targetClass the target class to parse into
-     * @param numberFormat the NumberFormat to use for parsing (if {@code null},
-     * this method falls back to {@code parseNumber(String, Class)})
-     * @return the parsed number
-     * @throws IllegalArgumentException if the target class is not supported
-     * (i.e. not a standard Number subclass as included in the JDK)
-     * @see java.text.NumberFormat#parse
-     * @see #convertNumberToTargetClass
-     * @see #parseNumber(String, Class)
-     */
     public static <T extends Number> T parseNumber(String text, Class<T> targetClass, NumberFormat numberFormat) {
         if (numberFormat != null) {
             DecimalFormat decimalFormat = null;
@@ -175,20 +136,11 @@ public abstract class NumberUtils {
         }
     }
 
-    /**
-     * Determine whether the given value String indicates a hex number, i.e. needs to be
-     * passed into {@code Integer.decode} instead of {@code Integer.valueOf} (etc).
-     */
     private static boolean isHexNumber(String value) {
         int index = (value.startsWith("-") ? 1 : 0);
         return (value.startsWith("0x", index) || value.startsWith("0X", index) || value.startsWith("#", index));
     }
 
-    /**
-     * Decode a {@link java.math.BigInteger} from a {@link String} value.
-     * Supports decimal, hex and octal notation.
-     * @see BigInteger#BigInteger(String, int)
-     */
     private static BigInteger decodeBigInteger(String value) {
         int radix = 10;
         int index = 0;

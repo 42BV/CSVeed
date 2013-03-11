@@ -2,6 +2,7 @@ package nl.tweeenveertig.csveed.bean.conversion;
 
 import nl.tweeenveertig.csveed.bean.BeanParser;
 import nl.tweeenveertig.csveed.bean.BeanProperties;
+import nl.tweeenveertig.csveed.bean.BeanProperty;
 import nl.tweeenveertig.csveed.bean.BeanReaderInstructionsImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,22 @@ public class BeanWrapperTest {
     public void init() {
         bean = new Bean();
         beanWrapper = new BeanWrapper(bean);
+    }
+
+    @Test
+    public void hitAllProperties() throws Exception {
+        beanWrapper.setProperty(properties.fromName("charset"), null);
+        beanWrapper.setProperty(properties.fromName("chars"), null);
+        beanWrapper.setProperty(properties.fromName("bytes"), null);
+        beanWrapper.setProperty(properties.fromName("booleanObject"), "");
+        beanWrapper.setProperty(properties.fromName("byteObject"), "");
+        beanWrapper.setProperty(properties.fromName("shortObject"), "");
+        beanWrapper.setProperty(properties.fromName("intObject"), "");
+        beanWrapper.setProperty(properties.fromName("longObject"), "");
+        beanWrapper.setProperty(properties.fromName("floatObject"), "");
+        beanWrapper.setProperty(properties.fromName("doubleObject"), "");
+        beanWrapper.setProperty(properties.fromName("bigDecimal"), "");
+        beanWrapper.setProperty(properties.fromName("bigInteger"), "");
     }
 
     @Test

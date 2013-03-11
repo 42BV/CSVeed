@@ -60,17 +60,17 @@ public class CustomBooleanConverter implements Converter<Boolean> {
         }
     }
 
-    @Override
-    public String toString(Boolean value) throws Exception {
-        if (Boolean.TRUE.equals(value)) {
-            return (this.trueString != null ? this.trueString : VALUE_TRUE);
-        }
-        else if (Boolean.FALSE.equals(value)) {
-            return (this.falseString != null ? this.falseString : VALUE_FALSE);
-        }
-        else {
-            return "";
-        }
-    }
+//    @Override
+//    public String toString(Boolean value) throws Exception {
+//        if (Boolean.TRUE.equals(value)) {
+//            return (this.trueString != null ? this.trueString : VALUE_TRUE);
+//        }
+//        else if (Boolean.FALSE.equals(value)) {
+//            return (this.falseString != null ? this.falseString : VALUE_FALSE);
+//        }
+//        else {
+//            return "";
+//        }
+//    }
 
 }
