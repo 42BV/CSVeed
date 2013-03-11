@@ -86,6 +86,12 @@ public class BeanProperty {
         return getPropertyName().equals(other.getPropertyName());
     }
 
+    public String getPropertyType() {
+        return
+                getPropertyDescriptor().getPropertyType().getName() +
+                (getCustomDateFormat() == null ? "" : " ["+getCustomDateFormat()+"]");
+    }
+
     public String getCustomDateFormat() {
         return customDateFormat;
     }

@@ -110,6 +110,17 @@ public class BeanReaderTest {
         assertEquals("row 1, cell 3", bean.getAlpha());
     }
 
+    @Test(expected = CsvException.class)
+    public void errorInDate() {
+        Reader reader = new StringReader(
+                "text;year;number;date;year and month\n"+
+                "\"a bit of text\";1984;42.42;1972-13-01;2013-04\n" // Month and day in reverse order
+        );
+        BeanReaderImpl<BeanWithVariousTypes> beanReader =
+                new BeanReaderImpl<BeanWithVariousTypes>(reader, BeanWithVariousTypes.class);
+        beanReader.readBeans();
+    }
+
     @Test
     public void variousDataTypes() {
         Reader reader = new StringReader(
