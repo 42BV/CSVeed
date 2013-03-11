@@ -85,6 +85,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
         while (indexToProperty.values().remove(property));
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     protected void removeFromColumnName(BeanProperty property) {
         while (nameToProperty.values().remove(property));
     }

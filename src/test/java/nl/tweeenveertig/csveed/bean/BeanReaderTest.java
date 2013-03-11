@@ -95,7 +95,7 @@ public class BeanReaderTest {
     @Test
     public void tabSeparated() {
         Reader reader = new StringReader(
-            "alpha;beta;gamma\n"+
+            "alpha\tbeta\tgamma\r"+
             "'\\'row\\' 1, cell 1'\t'row 1, cell 2'\t'row 1, cell 3'\r"+
             "'\\'row\\' 2, cell 1'\t'row 2, cell 2'\t'row 2, cell 3'\r"+
             "'\\'row\\' 3, cell 1'\t'row 3, cell 2'\t'row 3, cell 3'"

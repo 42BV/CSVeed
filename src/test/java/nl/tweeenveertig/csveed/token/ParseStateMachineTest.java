@@ -17,6 +17,20 @@ public class ParseStateMachineTest {
     }
 
     @Test
+    public void windowsCrLf() throws ParseException {
+        ParseStateMachine machine = new ParseStateMachine();
+        machine.offerSymbol(';');
+        machine.offerSymbol(0x0d);
+        machine.offerSymbol(0x0a);
+        machine.offerSymbol(';');
+        assertEquals(1, machine.getCurrentLine());
+        machine.offerSymbol(0x0d);
+        machine.offerSymbol(0x0a);
+        machine.offerSymbol(-1);
+        assertEquals(2, machine.getCurrentLine());
+    }
+
+    @Test
     public void commentLine() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         assertNull(machine.offerSymbol('#'));

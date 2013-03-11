@@ -45,6 +45,10 @@ public class ParseStateMachine {
 
         EncounteredSymbol symbol = symbolMapping.find(symbolCharacter, state);
 
+        if (symbol.isTrash()) {
+            return null;
+        }
+
         if (isFinished()) {
             throw new ParseException(state, symbolCharacter, symbol);
         }

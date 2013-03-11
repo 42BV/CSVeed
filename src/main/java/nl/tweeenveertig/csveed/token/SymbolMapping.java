@@ -25,6 +25,9 @@ public class SymbolMapping {
 
     private boolean skipCommentLines = true;
 
+    private char acceptedEndOfLine = 0; // When multiple EOL characters have been given,
+                                        // only the first one encountered will be accepted.
+
     public SymbolMapping() {
         initDefaultMapping();
     }
@@ -45,7 +48,9 @@ public class SymbolMapping {
         }
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     public void addMapping(EncounteredSymbol symbol, char[] characters) {
+        while (charToSymbol.values().remove(symbol));
         for (Character character : characters) {
             charToSymbol.put(character, symbol);
         }
@@ -102,6 +107,14 @@ public class SymbolMapping {
         EncounteredSymbol symbol = charToSymbol.get((char)character);
         if (symbol == null) {
             return OTHER_SYMBOL;
+        }
+        if (symbol == EOL_SYMBOL) {
+            if (acceptedEndOfLine == 0) {
+                acceptedEndOfLine = (char)character;
+            }
+            if (acceptedEndOfLine != character) {
+                symbol = EOL_SYMBOL_TRASH;
+            }
         }
         if (symbol.isCheckForSimilarEscapeAndQuote() && isSameCharactersForEscapeAndQuote()) {
             return parseState.isUpgradeQuoteToEscape() ? ESCAPE_SYMBOL : QUOTE_SYMBOL;
