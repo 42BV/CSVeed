@@ -29,6 +29,8 @@ public abstract class AbstractMapper<T, K> {
         verified = true;
     }
 
+    public abstract String getColumnIdentifier(BeanProperty beanProperty);
+
     public T convert(T bean, Row row, int lineNumber) {
         BeanWrapperImpl beanWrapper = new BeanWrapperImpl(bean);
 
@@ -54,9 +56,10 @@ public abstract class AbstractMapper<T, K> {
             try {
                 beanWrapper.setPropertyValue(beanProperty.getPropertyDescriptor().getName(), cell);
             } catch (Exception err) {
-                throw new CsvException(new RowError(
-                        "Problem converting ["+cell+"] to "+beanProperty.getPropertyDescriptor().getPropertyType().getName(),
-                        row.reportOnColumn(indexColumn), lineNumber));
+                String message =
+                        "Problem converting cell "+getColumnIdentifier(beanProperty)+" ["+cell+"] to "+
+                        beanProperty.getPropertyDescriptor().getPropertyType().getName()+" "+beanProperty.getPropertyName();
+                throw new CsvException(new RowError(message, row.reportOnColumn(indexColumn), lineNumber));
             }
             indexColumn++;
         }
