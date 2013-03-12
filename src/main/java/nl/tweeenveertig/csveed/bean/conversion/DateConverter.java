@@ -2,11 +2,12 @@ package nl.tweeenveertig.csveed.bean.conversion;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static nl.tweeenveertig.csveed.bean.conversion.ConversionUtil.hasText;
 
-public class DateConverter implements Converter<Date> {
+public class DateConverter extends AbstractConverter<Date> {
 
     private final DateFormat dateFormat;
 
@@ -14,16 +15,14 @@ public class DateConverter implements Converter<Date> {
 
     private final int exactDateLength;
 
-    public DateConverter(DateFormat dateFormat, boolean allowEmpty) {
-        this.dateFormat = dateFormat;
+    private final String formatText;
+
+    public DateConverter(String formatText, boolean allowEmpty) {
+        this.formatText = formatText;
+        this.dateFormat = new SimpleDateFormat(formatText);
+        this.dateFormat.setLenient(false);
         this.allowEmpty = allowEmpty;
         this.exactDateLength = -1;
-    }
-
-    public DateConverter(DateFormat dateFormat, boolean allowEmpty, int exactDateLength) {
-        this.dateFormat = dateFormat;
-        this.allowEmpty = allowEmpty;
-        this.exactDateLength = exactDateLength;
     }
 
     @Override
@@ -43,6 +42,11 @@ public class DateConverter implements Converter<Date> {
                 throw new IllegalArgumentException("Could not parse date: " + ex.getMessage(), ex);
             }
         }
+    }
+
+    @Override
+    public String infoOnType() {
+        return getType(Date.class) + " " + formatText;
     }
 
 //    @Override

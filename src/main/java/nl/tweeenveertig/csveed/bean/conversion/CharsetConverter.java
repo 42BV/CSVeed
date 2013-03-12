@@ -2,7 +2,7 @@ package nl.tweeenveertig.csveed.bean.conversion;
 
 import java.nio.charset.Charset;
 
-public class CharsetConverter implements Converter<Charset> {
+public class CharsetConverter extends AbstractConverter<Charset> {
 
     @Override
     public Charset fromString(String text) throws Exception {
@@ -11,6 +11,11 @@ public class CharsetConverter implements Converter<Charset> {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public String infoOnType() {
+        return getType(Charset.class);
     }
 
 //    @Override

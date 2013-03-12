@@ -2,7 +2,7 @@ package nl.tweeenveertig.csveed.bean.conversion;
 
 import static nl.tweeenveertig.csveed.bean.conversion.ConversionUtil.hasLength;
 
-public class CharacterConverter implements Converter<Character> {
+public class CharacterConverter extends AbstractConverter<Character> {
 
     private static final String UNICODE_PREFIX = "\\u";
 
@@ -32,6 +32,11 @@ public class CharacterConverter implements Converter<Character> {
         } else {
             return new Character(text.charAt(0));
         }
+    }
+
+    @Override
+    public String infoOnType() {
+        return getType(Character.class);
     }
 
 //    @Override

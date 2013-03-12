@@ -2,11 +2,16 @@ package nl.tweeenveertig.csveed.bean.conversion;
 
 import java.util.Currency;
 
-public class CurrencyConverter implements Converter<Currency> {
+public class CurrencyConverter extends AbstractConverter<Currency> {
 
     @Override
     public Currency fromString(String text) {
         return Currency.getInstance(text);
+    }
+
+    @Override
+    public String infoOnType() {
+        return getType(Currency.class);
     }
 
 //    @Override

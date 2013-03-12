@@ -48,11 +48,8 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
             lineParts.add("Column name ["+property.getColumnName()+"] -> property ["+property.getPropertyName()+"]");
         }
         lineParts.add("Required: "+(property.isRequired()?"yes":"no"));
-        if (property.getCustomDateFormat() != null) {
-            lineParts.add("Date format: "+property.getCustomDateFormat());
-        }
         if (property.getConverter() != null) {
-            lineParts.add("Converter: "+property.getConverter().getClass().getSimpleName());
+            lineParts.add("Converter: "+property.getConverter().getClass().getSimpleName()+" for "+property.getPropertyType());
         }
 
         StringBuilder logLine = new StringBuilder();

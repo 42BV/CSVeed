@@ -2,8 +2,7 @@ package nl.tweeenveertig.csveed.bean.conversion;
 
 import static nl.tweeenveertig.csveed.bean.conversion.ConversionUtil.hasLength;
 
-public class CustomBooleanConverter implements Converter<Boolean> {
-
+public class CustomBooleanConverter extends AbstractConverter<Boolean> {
 
     public static final String VALUE_TRUE = "true";
     public static final String VALUE_FALSE = "false";
@@ -58,6 +57,11 @@ public class CustomBooleanConverter implements Converter<Boolean> {
         else {
             throw new IllegalArgumentException("Invalid boolean value [" + text + "]");
         }
+    }
+
+    @Override
+    public String infoOnType() {
+        return getType(Boolean.class);
     }
 
 //    @Override

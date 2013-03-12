@@ -2,7 +2,7 @@ package nl.tweeenveertig.csveed.bean.conversion;
 
 import java.util.regex.Pattern;
 
-public class PatternConverter implements Converter<Pattern> {
+public class PatternConverter extends AbstractConverter<Pattern> {
 
     private final int flags;
 
@@ -17,6 +17,11 @@ public class PatternConverter implements Converter<Pattern> {
     @Override
     public Pattern fromString(String text) throws Exception {
         return text != null ? Pattern.compile(text, this.flags) : null;
+    }
+
+    @Override
+    public String infoOnType() {
+        return getType(Pattern.class);
     }
 
 //    @Override

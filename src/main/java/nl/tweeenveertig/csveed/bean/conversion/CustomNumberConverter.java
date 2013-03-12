@@ -4,7 +4,7 @@ import java.text.NumberFormat;
 
 import static nl.tweeenveertig.csveed.bean.conversion.ConversionUtil.hasText;
 
-public class CustomNumberConverter implements Converter<Number> {
+public class CustomNumberConverter extends AbstractConverter<Number> {
 
     private final Class<? extends Number> numberClass;
 
@@ -38,6 +38,11 @@ public class CustomNumberConverter implements Converter<Number> {
         else {
             return determineValue(NumberUtils.parseNumber(text, this.numberClass));
         }
+    }
+
+    @Override
+    public String infoOnType() {
+        return getType(numberClass);
     }
 
     public Number determineValue(Object value) {

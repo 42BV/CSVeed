@@ -2,6 +2,7 @@ package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.api.Row;
 import nl.tweeenveertig.csveed.bean.conversion.BeanWrapper;
+import nl.tweeenveertig.csveed.bean.conversion.ConversionException;
 import nl.tweeenveertig.csveed.bean.conversion.DefaultConverters;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.report.RowError;
@@ -52,10 +53,10 @@ public abstract class AbstractMapper<T, K> {
             }
             try {
                 beanWrapper.setProperty(beanProperty, cell);
-            } catch (Exception err) {
+            } catch (ConversionException err) {
                 String message =
                         "Problem converting cell "+getColumnIdentifier(beanProperty)+" ["+cell+"] to "+
-                        beanProperty.getPropertyType()+" "+beanProperty.getPropertyName();
+                        beanProperty.getPropertyName() + ": " + err.getTypeDescription();
                 throw new CsvException(new RowError(message, row.reportOnColumn(indexColumn), lineNumber));
             }
             indexColumn++;

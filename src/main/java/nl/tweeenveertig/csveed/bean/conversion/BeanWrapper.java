@@ -15,18 +15,29 @@ public class BeanWrapper {
         this.bean = bean;
     }
 
-    public void setProperty(BeanProperty property, String value) throws Exception {
+    public void setProperty(BeanProperty property, String value) throws ConversionException {
         Method writeMethod = property.getPropertyDescriptor().getWriteMethod();
         Converter converter = getConverter(property);
-        writeMethod.invoke(bean, converter.fromString(value));
+        if (converter == null) {
+            throw new NoConverterFoundException("No Converter found", getPropertyType(property));
+        }
+        try {
+            writeMethod.invoke(bean, converter.fromString(value));
+        } catch (Exception err) {
+            throw new BeanPropertyConversionException("Error converting cell to property", converter.infoOnType(), err);
+        }
     }
 
     protected Converter getConverter(BeanProperty property) {
         if (property.getConverter() != null) {
             return property.getConverter();
         } else {
-            return defaultConverters.getConverter(property.getPropertyDescriptor().getPropertyType());
+            return defaultConverters.getConverter(getPropertyType(property));
         }
+    }
+
+    protected Class getPropertyType(BeanProperty property) {
+        return property.getPropertyDescriptor().getPropertyType();
     }
 
 }

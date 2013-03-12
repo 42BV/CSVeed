@@ -1,10 +1,15 @@
 package nl.tweeenveertig.csveed.bean.conversion;
 
-public class StringConverter implements Converter<String> {
+public class StringConverter extends AbstractConverter<String> {
 
     @Override
     public String fromString(String text) {
         return text;
+    }
+
+    @Override
+    public String infoOnType() {
+        return getType(String.class);
     }
 
 //    @Override
