@@ -2,7 +2,6 @@ package nl.tweeenveertig.csveed.bean.conversion;
 
 import nl.tweeenveertig.csveed.bean.BeanParser;
 import nl.tweeenveertig.csveed.bean.BeanProperties;
-import nl.tweeenveertig.csveed.bean.BeanProperty;
 import nl.tweeenveertig.csveed.bean.BeanReaderInstructionsImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,12 +19,14 @@ public class BeanWrapperTest {
 
     private Bean bean;
 
+    private DefaultConverters defaultConverters = new DefaultConverters();
+
     private BeanWrapper beanWrapper;
 
     @Before
     public void init() {
         bean = new Bean();
-        beanWrapper = new BeanWrapper(bean);
+        beanWrapper = new BeanWrapper(defaultConverters, bean);
     }
 
     @Test
