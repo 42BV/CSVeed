@@ -14,6 +14,16 @@ import static junit.framework.Assert.assertNull;
 
 public class BeanReaderTest {
 
+    @Test(expected = CsvException.class)
+    public void missingConverter() {
+        Reader reader = new StringReader(
+            "alpha\n"+
+            "\"row 1, cell 1\""
+        );
+        BeanReader<BeanWithNonStandardObject> beanReader = new BeanReaderImpl<BeanWithNonStandardObject>(reader, BeanWithNonStandardObject.class);
+        beanReader.readBean();
+    }
+
     @Test (expected = CsvException.class)
     public void illegalColumnIndexMappingTooLow() {
         checkIllegalMapping(

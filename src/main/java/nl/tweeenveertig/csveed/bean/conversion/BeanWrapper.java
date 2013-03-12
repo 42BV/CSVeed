@@ -19,12 +19,12 @@ public class BeanWrapper {
         Method writeMethod = property.getPropertyDescriptor().getWriteMethod();
         Converter converter = getConverter(property);
         if (converter == null) {
-            throw new NoConverterFoundException("No Converter found", getPropertyType(property));
+            throw new NoConverterFoundException("No Converter found for", getPropertyType(property));
         }
         try {
             writeMethod.invoke(bean, converter.fromString(value));
         } catch (Exception err) {
-            throw new BeanPropertyConversionException("Error converting cell to property", converter.infoOnType(), err);
+            throw new BeanPropertyConversionException("Problem converting", converter.infoOnType(), err);
         }
     }
 

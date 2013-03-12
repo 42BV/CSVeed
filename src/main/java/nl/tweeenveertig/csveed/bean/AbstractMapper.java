@@ -55,7 +55,7 @@ public abstract class AbstractMapper<T, K> {
                 beanWrapper.setProperty(beanProperty, cell);
             } catch (ConversionException err) {
                 String message =
-                        "Problem converting cell "+getColumnIdentifier(beanProperty)+" ["+cell+"] to "+
+                        err.getMessage()+" cell "+getColumnIdentifier(beanProperty)+" ["+cell+"] to "+
                         beanProperty.getPropertyName() + ": " + err.getTypeDescription();
                 throw new CsvException(new RowError(message, row.reportOnColumn(indexColumn), lineNumber));
             }
