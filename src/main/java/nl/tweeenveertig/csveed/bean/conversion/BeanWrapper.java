@@ -22,7 +22,11 @@ public class BeanWrapper {
     }
 
     protected Converter getConverter(BeanProperty property) {
-        return defaultConverters.getConverter(property.getPropertyDescriptor().getPropertyType());
+        if (property.getConverter() != null) {
+            return property.getConverter();
+        } else {
+            return defaultConverters.getConverter(property.getPropertyDescriptor().getPropertyType());
+        }
     }
 
 }

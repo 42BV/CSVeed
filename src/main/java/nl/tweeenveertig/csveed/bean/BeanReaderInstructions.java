@@ -1,5 +1,7 @@
 package nl.tweeenveertig.csveed.bean;
 
+import nl.tweeenveertig.csveed.bean.conversion.Converter;
+
 import java.beans.PropertyEditor;
 
 /**
@@ -139,7 +141,7 @@ public interface BeanReaderInstructions {
     * @param converter PropertyEditor to apply to the property
     * @return convenience for chaining
     */
-    BeanReaderInstructions setConverter(String propertyName, PropertyEditor converter);
+    BeanReaderInstructions setConverter(String propertyName, Converter converter);
 
     /**
     * Sets a field to be ignored for purposes of mapping. This method is called whenever

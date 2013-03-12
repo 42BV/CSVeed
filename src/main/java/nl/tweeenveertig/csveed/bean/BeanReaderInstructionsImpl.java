@@ -1,11 +1,11 @@
 package nl.tweeenveertig.csveed.bean;
 
+import nl.tweeenveertig.csveed.bean.conversion.Converter;
 import nl.tweeenveertig.csveed.row.RowReaderInstructions;
 import nl.tweeenveertig.csveed.row.RowReaderInstructionsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.PropertyEditor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,7 +144,7 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
     }
 
     @Override
-    public BeanReaderInstructions setConverter(String propertyName, PropertyEditor converter) {
+    public BeanReaderInstructions setConverter(String propertyName, Converter converter) {
         this.getProperties().setConverter(propertyName, converter);
         return this;
     }

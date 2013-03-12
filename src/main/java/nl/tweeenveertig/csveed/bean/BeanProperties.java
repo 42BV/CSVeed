@@ -1,10 +1,11 @@
 package nl.tweeenveertig.csveed.bean;
 
+import nl.tweeenveertig.csveed.bean.conversion.Converter;
+import nl.tweeenveertig.csveed.bean.conversion.DateConverter;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.report.GeneralError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 
 import java.beans.*;
 import java.lang.reflect.Field;
@@ -74,10 +75,10 @@ public class BeanProperties implements Iterable<BeanProperty> {
         DateFormat dateFormat = new SimpleDateFormat(formatText);
         dateFormat.setLenient(false);
         get(propertyName).setCustomDateFormat(formatText);
-        setConverter(propertyName, new CustomDateEditor(dateFormat, true));
+        setConverter(propertyName, new DateConverter(dateFormat, true));
     }
 
-    public void setConverter(String propertyName, PropertyEditor converter) {
+    public void setConverter(String propertyName, Converter converter) {
         get(propertyName).setConverter(converter);
     }
 

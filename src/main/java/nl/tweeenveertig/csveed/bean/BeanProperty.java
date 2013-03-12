@@ -1,7 +1,8 @@
 package nl.tweeenveertig.csveed.bean;
 
+import nl.tweeenveertig.csveed.bean.conversion.Converter;
+
 import java.beans.PropertyDescriptor;
-import java.beans.PropertyEditor;
 import java.lang.reflect.Field;
 
 public class BeanProperty {
@@ -10,7 +11,7 @@ public class BeanProperty {
 
     private Field field;
 
-    private PropertyEditor converter = null;
+    private Converter converter = null;
 
     private String columnName = null;
 
@@ -28,11 +29,11 @@ public class BeanProperty {
         this.propertyDescriptor = propertyDescriptor;
     }
 
-    public PropertyEditor getConverter() {
+    public Converter getConverter() {
         return converter;
     }
 
-    public void setConverter(PropertyEditor converter) {
+    public void setConverter(Converter converter) {
         this.converter = converter;
     }
 

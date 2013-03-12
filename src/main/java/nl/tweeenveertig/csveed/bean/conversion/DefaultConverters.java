@@ -46,6 +46,7 @@ public class DefaultConverters {
         addConverter(Double.class, new CustomNumberConverter(Double.class, true));
         addConverter(BigDecimal.class, new CustomNumberConverter(BigDecimal.class, true));
         addConverter(BigInteger.class, new CustomNumberConverter(BigInteger.class, true));
+        addConverter(String.class, new StringConverter());
     }
 
     protected void addConverter(Class clazz, Converter converter) {

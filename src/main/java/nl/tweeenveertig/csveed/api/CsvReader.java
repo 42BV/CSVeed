@@ -1,9 +1,9 @@
 package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.AbstractMapper;
+import nl.tweeenveertig.csveed.bean.conversion.Converter;
 import nl.tweeenveertig.csveed.row.HeaderImpl;
 
-import java.beans.PropertyEditor;
 import java.util.List;
 
 /**
@@ -197,7 +197,7 @@ public interface CsvReader<T> {
     * @param converter PropertyEditor to apply to the property
     * @return convenience for chaining
     */
-    CsvReader<T> setConverter(String propertyName, PropertyEditor converter);
+    CsvReader<T> setConverter(String propertyName, Converter converter);
 
     /**
     * Sets a field to be ignored for purposes of mapping. This method is called whenever

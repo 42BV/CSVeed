@@ -63,11 +63,11 @@
         </dependency>
 
         <!-- Used for its excellent set of PropertyEditor classes -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>${spring-beans.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-beans</artifactId>-->
+            <!--<version>${spring-beans.version}</version>-->
+        <!--</dependency>-->
 
         <!-- Logging -->
         <dependency>
@@ -121,6 +121,7 @@
                             <exclude>nl/tweeenveertig/csveed/bean/conversion/CustomBooleanConverter.class</exclude> <!-- not testing Spring -->
                             <exclude>nl/tweeenveertig/csveed/bean/conversion/CustomNumberConverter.class</exclude> <!-- not testing Spring -->
                             <exclude>nl/tweeenveertig/csveed/bean/conversion/PatternConverter.class</exclude> <!-- not testing Spring -->
+                            <exclude>nl/tweeenveertig/csveed/bean/conversion/DateConverter.class</exclude> <!-- not testing Spring -->
                         </excludes>
                     </instrumentation>
                     <check />

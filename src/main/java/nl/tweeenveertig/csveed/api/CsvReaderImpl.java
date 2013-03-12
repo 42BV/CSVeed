@@ -1,6 +1,7 @@
 package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.*;
+import nl.tweeenveertig.csveed.bean.conversion.Converter;
 import nl.tweeenveertig.csveed.report.GeneralError;
 import nl.tweeenveertig.csveed.row.HeaderImpl;
 import nl.tweeenveertig.csveed.row.RowReaderImpl;
@@ -8,7 +9,6 @@ import nl.tweeenveertig.csveed.report.CsvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.PropertyEditor;
 import java.io.Reader;
 import java.util.List;
 
@@ -141,7 +141,7 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
     }
 
     @Override
-    public CsvReader<T> setConverter(String propertyName, PropertyEditor converter) {
+    public CsvReader<T> setConverter(String propertyName, Converter converter) {
         getBeanReader().getBeanReaderInstructions().setConverter(propertyName, converter);
         return this;
     }

@@ -1,12 +1,12 @@
 package nl.tweeenveertig.csveed.bean.conversion;
 
-import org.springframework.util.StringUtils;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+
+import static nl.tweeenveertig.csveed.bean.conversion.ConversionUtil.trimAllWhitespace;
 
 public abstract class NumberUtils {
 
@@ -75,7 +75,7 @@ public abstract class NumberUtils {
 
     @SuppressWarnings("unchecked")
     public static <T extends Number> T parseNumber(String text, Class<T> targetClass) {
-        String trimmed = StringUtils.trimAllWhitespace(text);
+        String trimmed = trimAllWhitespace(text);
 
         if (targetClass.equals(Byte.class)) {
             return (T) (isHexNumber(trimmed) ? Byte.decode(trimmed) : Byte.valueOf(trimmed));
@@ -119,7 +119,7 @@ public abstract class NumberUtils {
                 }
             }
             try {
-                Number number = numberFormat.parse(StringUtils.trimAllWhitespace(text));
+                Number number = numberFormat.parse(trimAllWhitespace(text));
                 return convertNumberToTargetClass(number, targetClass);
             }
             catch (ParseException ex) {

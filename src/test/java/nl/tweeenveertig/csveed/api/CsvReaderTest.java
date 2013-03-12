@@ -2,11 +2,11 @@ package nl.tweeenveertig.csveed.api;
 
 import nl.tweeenveertig.csveed.bean.ColumnNameMapper;
 import nl.tweeenveertig.csveed.report.CsvException;
+import nl.tweeenveertig.csveed.test.converters.BeanSimpleConverter;
 import nl.tweeenveertig.csveed.test.model.BeanCustomComments;
 import nl.tweeenveertig.csveed.test.model.BeanSimple;
 import nl.tweeenveertig.csveed.test.model.BeanVariousNotAnnotated;
 import nl.tweeenveertig.csveed.test.model.BeanWithMultipleStrings;
-import nl.tweeenveertig.csveed.test.propertyeditors.BeanSimplePropertyEditor;
 import org.junit.Test;
 
 import java.io.Reader;
@@ -79,7 +79,7 @@ public class CsvReaderTest {
                 .mapColumnNameToProperty("year and month", "yearMonth")
                 .setDate("yearMonth", "yyyy-MM")
                 .mapColumnNameToProperty("lines", "simple")
-                .setConverter("simple", new BeanSimplePropertyEditor())
+                .setConverter("simple", new BeanSimpleConverter())
                 ;
 
         List<BeanVariousNotAnnotated> beans = csvReader.readBeans();
