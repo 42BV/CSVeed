@@ -1,7 +1,9 @@
 package nl.tweeenveertig.csveed.bean;
 
+import nl.tweeenveertig.csveed.bean.conversion.Bean;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.test.model.*;
+import nl.tweeenveertig.csveed.token.ParseState;
 import org.junit.Test;
 
 import java.io.Reader;
@@ -13,6 +15,16 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 
 public class BeanReaderTest {
+
+    @Test
+    public void convertToEnum() {
+        Reader reader = new StringReader(
+                "parseState\n"+
+                "\"FIRST_CHAR_INSIDE_QUOTED_FIELD\"");
+        BeanReader<BeanWithEnum> beanReader = new BeanReaderImpl<BeanWithEnum>(reader, BeanWithEnum.class);
+        BeanWithEnum bean = beanReader.readBean();
+        assertEquals(ParseState.FIRST_CHAR_INSIDE_QUOTED_FIELD, bean.getParseState());
+    }
 
     @Test(expected = CsvException.class)
     public void missingConverter() {

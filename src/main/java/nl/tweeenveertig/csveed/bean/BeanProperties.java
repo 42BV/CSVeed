@@ -2,6 +2,7 @@ package nl.tweeenveertig.csveed.bean;
 
 import nl.tweeenveertig.csveed.bean.conversion.Converter;
 import nl.tweeenveertig.csveed.bean.conversion.DateConverter;
+import nl.tweeenveertig.csveed.bean.conversion.EnumConverter;
 import nl.tweeenveertig.csveed.report.CsvException;
 import nl.tweeenveertig.csveed.report.GeneralError;
 import org.slf4j.Logger;
@@ -9,8 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.beans.*;
 import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class BeanProperties implements Iterable<BeanProperty> {
@@ -51,10 +50,14 @@ public class BeanProperties implements Iterable<BeanProperty> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void addProperty(PropertyDescriptor propertyDescriptor, Field field) {
         BeanProperty beanProperty = new BeanProperty();
         beanProperty.setPropertyDescriptor(propertyDescriptor);
         beanProperty.setField(field);
+        if (Enum.class.isAssignableFrom(propertyDescriptor.getPropertyType())) {
+            beanProperty.setConverter(new EnumConverter(propertyDescriptor.getPropertyType()));
+        }
         this.properties.add(beanProperty);
     }
 
