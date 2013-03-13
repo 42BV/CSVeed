@@ -51,7 +51,11 @@
                     <strong><a href="#supercsv">Super CSV</a></strong>; extensively details Csv-to-Bean transformer </li>
                 <li>
                     <strong><a href="#jcsv">jcsv</a></strong>; Csv parser experimenting with annotations</li>
-            </ul><p>I checked out all the documentation and sites I could find on the tooling. After that I downloaded the latest know versions of the libraries and proceeded to run a couple of tests against them. The combination of these two activities gave me a pretty good feeling of the quality of the products. Enough to make a quality appraisal on each of them. Check out the <a href="comparison-matrix.html">Comparison Matrix</a> to see the differences.</p>
+                <li>
+                    <strong><a href="#jsefa">JSefa</a>; XML/CSV/FLR reader/writer with annotations</strong></li>
+            </ul>
+
+            <p>I checked out all the documentation and sites I could find on the tooling. After that I downloaded the latest know versions of the libraries and proceeded to run a couple of tests against them. The combination of these two activities gave me a pretty good feeling of the quality of the products. Enough to make a quality appraisal on each of them. Check out the <a href="comparison-matrix.html">Comparison Matrix</a> to see the differences.</p>
 
             <h2 id="commonscsv"><a href="http://commons.apache.org/sandbox/csv/">Commons CSV</a></h2>
 
@@ -108,6 +112,14 @@
             <p>I mainly adopted this library into my comparison because of its usage of annotations. The project is obviously short-lived and has not been refined much. Interestingly enough it has some nice documentation, including examples and reference to RFC 4180.</p>
 
             <p>The error feedback of jcsv is extremely poor and its bean conversion is error-ridden. Immature technology, not suitable for usage.</p>
+
+            <h2 id="jsefa"><a href="http://jsefa.sourceforge.net/">JSefa</a></h2>
+
+            <p>A colleague pointed me to JSefa as a reliable CSV reader. The first thing that caught my eye is that it aims to provide for XML, CSV and FLR. This approach has up and downsides, it is more versatile, but it is also harder to cater to the special requirements of a file structure, be they technical or process-wise.</p>
+
+            <p>Of the above libraries this one cost me the most trouble to get to the intricacies. Documentation on the API is scarce, though a number of useful sample projects have been provided. The library works with the concept of high- and low-level interfaces, high being similar to the bean reader and low the row reader. Its killer feature is that it supports deep conversion.</p>
+
+            <p>What irks me most about this interface is that one must define all properties with annotations, even having to tell it what converter it must use even for Long. This is not very convenient. I find error feedback lacking, although the line and position are reported, you cannot see the cell that went wrong.</p>
 
             <h1>Comparison matrix</h1>
 

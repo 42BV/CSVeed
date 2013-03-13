@@ -38,7 +38,7 @@ hr {
 }
 
 .comparison-matrix {
-    width: 150%;
+    width: 160%;
     margin-bottom: 20px;
 }
 
@@ -50,7 +50,7 @@ hr {
 .comparison-matrix .library {
     text-align: center;
     font-weight: bold;
-    width: 11%;
+    width: 10%;
 }
 
 .comparison-matrix .appraisal {
