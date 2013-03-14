@@ -56,3 +56,8 @@ hr {
 .comparison-matrix .appraisal {
     text-align: center;
 }
+
+.teaser {
+    float: left;
+    margin-right: 20px;
+}
