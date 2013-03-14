@@ -61,3 +61,7 @@ hr {
     float: left;
     margin-right: 20px;
 }
+
+.solved {
+    background:transparent url(../images/solved.png) no-repeat center center;
+}

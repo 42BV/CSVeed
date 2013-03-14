@@ -61,11 +61,15 @@
 
             <h2 id="spring">Spring</h2>
 
-            <p>This was one of the harder decisions to make. Spring gave the project a headstart because it offers great out-of-the-box functionality for converting String objects to Bean properties.</p>
+            <div class="solved">
 
-            <p>The functionality of Spring that is used has to do with <a href="http://static.springsource.org/spring/docs/1.2.9/api/org/springframework/beans/BeanWrapperImpl.html">BeanWrapperImpl</a>. One can use this class to wrap around a bean and set/get its properties sending/receiving only String instances. Spring has a number of PropertyEditor classes it supplies, which currently powers its popular Spring MVC web framework.</p>
+                <p>This was one of the harder decisions to make. Spring gave the project a headstart because it offers great out-of-the-box functionality for converting String objects to Bean properties.</p>
 
-            <p>However, the Spring dependency comes at a price. Both Spring Beans and Spring Core are included in the dependency tree. The library is commonly used in web applications, although, it is undesirable for libraries. Therefore, the Spring dependency will in time be replaced with an innate conversion ability.</p>
+                <p>The functionality of Spring that is used has to do with <a href="http://static.springsource.org/spring/docs/1.2.9/api/org/springframework/beans/BeanWrapperImpl.html">BeanWrapperImpl</a>. One can use this class to wrap around a bean and set/get its properties sending/receiving only String instances. Spring has a number of PropertyEditor classes it supplies, which currently powers its popular Spring MVC web framework.</p>
+
+                <p>However, the Spring dependency comes at a price. Both Spring Beans and Spring Core are included in the dependency tree. The library is commonly used in web applications, although, it is undesirable for libraries. Therefore, the Spring dependency will in time be replaced with an innate conversion ability.</p>
+
+            </div>
 
             <h2 id="writer">Writer</h2>
 
