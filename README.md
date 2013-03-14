@@ -6,7 +6,7 @@ simply add the following dependency:
 
 ```xml
         <dependency>
-            <groupId>nl.tweeenveertig.csveed</groupId>
+            <groupId>org.csveed</groupId>
             <artifactId>csveed</artifactId>
             <version>0.2.2</version>
         </dependency>
@@ -28,7 +28,7 @@ Getting Started Real Quick
 No time to waste, so here we go. Let us assume you have a Java Bean you want to convert your CSV rows into:
 
 ```java
-        import nl.tweeenveertig.csveed.annotations.CsvDate;
+        import org.csveed.annotations.CsvDate;
 
         import java.util.Date;
 
