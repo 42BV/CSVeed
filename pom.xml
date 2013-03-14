@@ -8,7 +8,7 @@
     <name>CSVeed</name>
     <description>Java toolkit for mapping CSV-to-Bean mapping and vice versa</description>
     <inceptionYear>2013</inceptionYear>
-    <url>https://github.com/robert-bor/CSVeed</url>
+    <url>http://csveed.org</url>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
