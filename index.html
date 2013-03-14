@@ -42,7 +42,7 @@
           <p>
               Reading CSV files is an error-prone process, which is why CSVeed is Error Expectation Driven, doing
               its work in the full expectation that things will go wrong. And when things go wrong, CSVeed helps you
-              to pinpoint the exact point of the error and report this back you.
+              to pinpoint the exact point of the error and reports this back you.
           </p>
 
             <p>CSVeed is a Java library for reading <a href="http://tools.ietf.org/html/rfc4180">Comma Separated Value (CSV)</a>
@@ -52,7 +52,7 @@ files and exposing those either as Rows or Java Beans.</p>
           <p>In order to use CSVeed in your project, simply add the following dependency:</p>
 
 <div class="highlight"><pre>        <span class="nt">&lt;dependency&gt;</span>
-            <span class="nt">&lt;groupId&gt;</span>nl.tweeenveertig.csveed<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.csveed<span class="nt">&lt;/groupId&gt;</span>
             <span class="nt">&lt;artifactId&gt;</span>csveed<span class="nt">&lt;/artifactId&gt;</span>
             <span class="nt">&lt;version&gt;</span>0.2.2<span class="nt">&lt;/version&gt;</span>
         <span class="nt">&lt;/dependency&gt;</span>
@@ -72,7 +72,7 @@ previous SLF4J logger configured and you want to get up and running quickly, use
 
 <p>No time to waste, so here we go. Let us assume you have a Java Bean you want to convert your CSV rows into:</p>
 
-<div class="highlight"><pre>        <span class="kn">import</span> <span class="nn">nl.tweeenveertig.csveed.annotations.CsvDate</span><span class="o">;</span>
+<div class="highlight"><pre>        <span class="kn">import</span> <span class="nn">org.csveed.annotations.CsvDate</span><span class="o">;</span>
 
         <span class="kn">import</span> <span class="nn">java.util.Date</span><span class="o">;</span>
 
