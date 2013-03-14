@@ -10,8 +10,8 @@ public class CurrencyConverter extends AbstractConverter<Currency> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(Currency.class);
+    public Class getType() {
+        return Currency.class;
     }
 
 //    @Override

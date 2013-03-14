@@ -10,8 +10,8 @@ public class TimeZoneConverter extends AbstractConverter<TimeZone> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(TimeZone.class);
+    public Class getType() {
+        return TimeZone.class;
     }
 
 //    @Override

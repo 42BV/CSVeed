@@ -8,8 +8,8 @@ public class CharArrayConverter extends AbstractConverter<char[]> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(char[].class);
+    public Class getType() {
+        return char[].class;
     }
 
 //    @Override

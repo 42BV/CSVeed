@@ -14,8 +14,8 @@ public class EnumConverter<T extends Enum> extends AbstractConverter<Enum> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(enumClass);
+    public Class getType() {
+        return enumClass;
     }
 
 //    @Override

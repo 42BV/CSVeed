@@ -60,8 +60,8 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(Boolean.class);
+    public Class getType() {
+        return Boolean.class;
     }
 
 //    @Override

@@ -8,8 +8,8 @@ public class StringConverter extends AbstractConverter<String> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(String.class);
+    public Class getType() {
+        return String.class;
     }
 
 //    @Override

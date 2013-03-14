@@ -14,8 +14,8 @@ public class CharsetConverter extends AbstractConverter<Charset> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(Charset.class);
+    public Class getType() {
+        return Charset.class;
     }
 
 //    @Override

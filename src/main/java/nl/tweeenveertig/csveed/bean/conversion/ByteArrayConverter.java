@@ -8,8 +8,8 @@ public class ByteArrayConverter extends AbstractConverter<byte[]> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(byte[].class);
+    public Class getType() {
+        return byte[].class;
     }
 
 //    @Override

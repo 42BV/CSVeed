@@ -13,8 +13,8 @@ public class BeanSimpleConverter extends AbstractConverter<BeanSimple> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(BeanSimple.class);
+    public Class getType() {
+        return BeanSimple.class;
     }
 
 }

@@ -41,8 +41,8 @@ public class CustomNumberConverter extends AbstractConverter<Number> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(numberClass);
+    public Class getType() {
+        return numberClass;
     }
 
     public Number determineValue(Object value) {

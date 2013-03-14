@@ -45,8 +45,13 @@ public class DateConverter extends AbstractConverter<Date> {
     }
 
     @Override
+    public Class getType() {
+        return Date.class;
+    }
+
+    @Override
     public String infoOnType() {
-        return getType(Date.class) + " " + formatText;
+        return super.infoOnType() + " " + formatText;
     }
 
 //    @Override

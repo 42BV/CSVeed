@@ -20,8 +20,8 @@ public class PatternConverter extends AbstractConverter<Pattern> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(Pattern.class);
+    public Class getType() {
+        return Pattern.class;
     }
 
 //    @Override

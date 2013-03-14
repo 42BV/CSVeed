@@ -35,8 +35,8 @@ public class CharacterConverter extends AbstractConverter<Character> {
     }
 
     @Override
-    public String infoOnType() {
-        return getType(Character.class);
+    public Class getType() {
+        return Character.class;
     }
 
 //    @Override
