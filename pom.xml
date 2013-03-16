@@ -107,8 +107,8 @@
                 <configuration>
                     <instrumentation>
                         <excludes>
-                            <exclude>nl/tweeenveertig/csveed/*.class</exclude>
-                            <exclude>nl/tweeenveertig/csveed/bean/conversion/*.class</exclude> <!-- not testing Spring -->
+                            <exclude>org/csveed/*.class</exclude>
+                            <exclude>org/csveed/bean/conversion/*.class</exclude> <!-- not testing Spring -->
                         </excludes>
                     </instrumentation>
                     <check />
