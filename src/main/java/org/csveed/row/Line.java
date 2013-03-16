@@ -1,7 +1,7 @@
 package org.csveed.row;
 
+import org.csveed.common.Column;
 import org.csveed.report.RowReport;
-import org.csveed.util.ExcelColumn;
 
 public interface Line extends Iterable<String> {
 
@@ -11,6 +11,6 @@ public interface Line extends Iterable<String> {
 
     RowReport reportOnEndOfLine();
 
-    RowReport reportOnColumn(ExcelColumn column);
+    RowReport reportOnColumn(Column column);
 
 }

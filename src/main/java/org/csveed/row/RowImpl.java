@@ -2,10 +2,11 @@ package org.csveed.row;
 
 import org.csveed.api.Header;
 import org.csveed.api.Row;
+import org.csveed.common.Column;
+import org.csveed.common.ColumnIndex;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
-import org.csveed.util.ExcelColumn;
 
 import java.util.Iterator;
 
@@ -36,7 +37,7 @@ public class RowImpl implements Row {
 
     @Override
     public RowReport reportOnColumn(int columnIndex) {
-        return line.reportOnColumn(new ExcelColumn(columnIndex));
+        return line.reportOnColumn(new ColumnIndex(columnIndex));
     }
 
     @Override

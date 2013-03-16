@@ -1,7 +1,8 @@
 package org.csveed.row;
 
+import org.csveed.common.Column;
+import org.csveed.common.ColumnIndex;
 import org.csveed.report.RowReport;
-import org.csveed.util.ExcelColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +16,11 @@ public class LineWithInfo implements Line {
 
     private StringBuilder originalLine = new StringBuilder();
 
-    private Map<ExcelColumn, CellPositionInRow> cellPositions = new HashMap<ExcelColumn, CellPositionInRow>();
+    private Map<Column, CellPositionInRow> cellPositions = new HashMap<Column, CellPositionInRow>();
 
     private int printLength = 0;
 
-    private ExcelColumn currentColumn = new ExcelColumn();
+    private Column currentColumn = new ColumnIndex();
 
     public void addCell(String cell) {
         this.cells.add(cell);
@@ -44,7 +45,7 @@ public class LineWithInfo implements Line {
         currentColumn = currentColumn.nextColumn();
     }
 
-    protected CellPositionInRow getCellPosition(ExcelColumn column) {
+    protected CellPositionInRow getCellPosition(Column column) {
         CellPositionInRow cellPosition = cellPositions.get(column);
         if (cellPosition == null) {
             cellPosition = new CellPositionInRow();
@@ -77,7 +78,7 @@ public class LineWithInfo implements Line {
         return this.cells.get(index);
     }
 
-    public RowReport reportOnColumn(ExcelColumn column) {
+    public RowReport reportOnColumn(Column column) {
         CellPositionInRow cellPosition = cellPositions.get(column);
         if (cellPosition == null) {
             return null;

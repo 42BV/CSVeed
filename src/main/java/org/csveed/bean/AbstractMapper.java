@@ -4,9 +4,10 @@ import org.csveed.api.Row;
 import org.csveed.bean.conversion.BeanWrapper;
 import org.csveed.bean.conversion.ConversionException;
 import org.csveed.bean.conversion.DefaultConverters;
+import org.csveed.common.Column;
+import org.csveed.common.ColumnIndex;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowError;
-import org.csveed.util.ExcelColumn;
 
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public abstract class AbstractMapper<T, K> {
 
     private DefaultConverters defaultConverters = new DefaultConverters();
 
-    public abstract BeanProperty getBeanProperty(Row row, ExcelColumn currentColumn);
+    public abstract BeanProperty getBeanProperty(Row row, Column currentColumn);
 
     protected abstract Set<K> keys();
 
@@ -39,7 +40,7 @@ public abstract class AbstractMapper<T, K> {
     public T convert(T bean, Row row, int lineNumber) {
         BeanWrapper beanWrapper = new BeanWrapper(defaultConverters, bean);
 
-        ExcelColumn currentColumn = new ExcelColumn();
+        Column currentColumn = new ColumnIndex();
         for (String cell : row) {
             BeanProperty beanProperty = getBeanProperty(row, currentColumn);
             if (beanProperty == null) {

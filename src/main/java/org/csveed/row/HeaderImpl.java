@@ -1,26 +1,25 @@
 package org.csveed.row;
 
 import org.csveed.api.Header;
+import org.csveed.common.Column;
+import org.csveed.common.ColumnIndex;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
-import org.csveed.token.ParseStateMachine;
-import org.csveed.util.ExcelColumn;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class HeaderImpl implements Header {
 
     private Line header;
-    private Map<ExcelColumn, String> indexToName = new HashMap<ExcelColumn, String>();
-    private Map<String, ExcelColumn> nameToIndex = new HashMap<String, ExcelColumn>();
+    private Map<Column, String> indexToName = new HashMap<Column, String>();
+    private Map<String, Column> nameToIndex = new HashMap<String, Column>();
 
     public HeaderImpl(Line row) {
         this.header = row;
-        ExcelColumn currentColumn = new ExcelColumn();
+        Column currentColumn = new ColumnIndex();
         for (String headerCell : header) {
             this.indexToName.put(currentColumn, headerCell);
             this.nameToIndex.put(headerCell, currentColumn);
@@ -33,7 +32,7 @@ public class HeaderImpl implements Header {
     }
 
     public String getName(int columnIndex) {
-        ExcelColumn column = new ExcelColumn(columnIndex);
+        Column column = new ColumnIndex(columnIndex);
         String name = this.indexToName.get(column);
         if (name == null) {
             throw new CsvException(new GeneralError("No column name found for index "+column.getColumnIndex()));
@@ -42,7 +41,7 @@ public class HeaderImpl implements Header {
     }
 
     public int getIndex(String columnName) {
-        ExcelColumn column = this.nameToIndex.get(columnName);
+        Column column = this.nameToIndex.get(columnName);
         if (column == null) {
             throw new CsvException(new GeneralError("No column index found for name "+columnName));
         }

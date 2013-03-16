@@ -3,9 +3,10 @@ package org.csveed.bean;
 import org.csveed.bean.conversion.Converter;
 import org.csveed.bean.conversion.DateConverter;
 import org.csveed.bean.conversion.EnumConverter;
+import org.csveed.common.Column;
+import org.csveed.common.ColumnIndex;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
-import org.csveed.util.ExcelColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
 
     private List<BeanProperty> properties = new ArrayList<BeanProperty>();
 
-    private Map<ExcelColumn, BeanProperty> indexToProperty = new HashMap<ExcelColumn, BeanProperty>();
+    private Map<Column, BeanProperty> indexToProperty = new HashMap<Column, BeanProperty>();
     private Map<String, BeanProperty> nameToProperty = new TreeMap<String, BeanProperty>();
 
     private Class beanClass;
@@ -108,7 +109,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
         BeanProperty property = get(propertyName);
         removeFromColumnIndex(property);
         property.setColumnIndex(columnIndex);
-        indexToProperty.put(new ExcelColumn(columnIndex), property);
+        indexToProperty.put(new ColumnIndex(columnIndex), property);
     }
 
     public void mapNameToProperty(String columnName, String propertyName) {
@@ -130,7 +131,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
         ));
     }
 
-    public BeanProperty fromIndex(ExcelColumn column) {
+    public BeanProperty fromIndex(Column column) {
         return indexToProperty.get(column);
     }
 
@@ -144,7 +145,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
         return ((List<BeanProperty>)((ArrayList)this.properties).clone()).iterator();
     }
 
-    public Set<ExcelColumn> columnIndexKeys() {
+    public Set<Column> columnIndexKeys() {
         return this.indexToProperty.keySet();
     }
 

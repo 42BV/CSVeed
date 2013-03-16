@@ -1,16 +1,16 @@
 package org.csveed.bean;
 
 import org.csveed.api.Row;
+import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowError;
-import org.csveed.util.ExcelColumn;
 
 import java.util.Set;
 
 public class ColumnNameMapper<T> extends AbstractMapper<T, String> {
 
     @Override
-    public BeanProperty getBeanProperty(Row row, ExcelColumn column) {
+    public BeanProperty getBeanProperty(Row row, Column column) {
         return getBeanProperty(row.getHeader().getName(column.getColumnIndex()));
     }
 

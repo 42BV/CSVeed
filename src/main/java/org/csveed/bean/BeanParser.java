@@ -1,7 +1,8 @@
 package org.csveed.bean;
 
 import org.csveed.annotations.*;
-import org.csveed.util.ExcelColumn;
+import org.csveed.common.Column;
+import org.csveed.common.ColumnIndex;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -10,7 +11,7 @@ public class BeanParser {
 
     private BeanReaderInstructions beanReaderInstructions;
 
-    private ExcelColumn currentColumn = new ExcelColumn();
+    private Column currentColumn = new ColumnIndex();
 
     public BeanReaderInstructions getBeanInstructions(Class beanClass) {
 
@@ -83,7 +84,7 @@ public class BeanParser {
     private String parseCsvCell(String propertyName, CsvCell csvCell) {
         String columnName = (csvCell.columnName() == null || csvCell.columnName().equals("")) ? propertyName : csvCell.columnName();
         this.beanReaderInstructions.setRequired(propertyName, csvCell.required());
-        currentColumn = csvCell.columnIndex() != -1 ? new ExcelColumn(csvCell.columnIndex()) : currentColumn;
+        currentColumn = csvCell.columnIndex() != -1 ? new ColumnIndex(csvCell.columnIndex()) : currentColumn;
         return columnName;
     }
 

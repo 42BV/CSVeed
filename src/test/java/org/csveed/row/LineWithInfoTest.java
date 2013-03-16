@@ -1,8 +1,9 @@
 package org.csveed.row;
 
+import org.csveed.common.Column;
+import org.csveed.common.ColumnIndex;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowReport;
-import org.csveed.util.ExcelColumn;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -14,16 +15,16 @@ public class LineWithInfoTest {
     public void cellIsNull() {
         LineWithInfo row = new LineWithInfo();
         row.addCell(null);
-        assertEquals(0, row.getCellPosition(new ExcelColumn()).getStart());
-        assertEquals(0, row.getCellPosition(new ExcelColumn()).getEnd());
+        assertEquals(0, row.getCellPosition(new ColumnIndex()).getStart());
+        assertEquals(0, row.getCellPosition(new ColumnIndex()).getEnd());
     }
 
     @Test
     public void cellIsEmpty() {
         LineWithInfo row = new LineWithInfo();
         row.addCell("");
-        assertEquals(0, row.getCellPosition(new ExcelColumn()).getStart());
-        assertEquals(0, row.getCellPosition(new ExcelColumn()).getEnd());
+        assertEquals(0, row.getCellPosition(new ColumnIndex()).getStart());
+        assertEquals(0, row.getCellPosition(new ColumnIndex()).getEnd());
     }
 
     @Test
@@ -36,21 +37,21 @@ public class LineWithInfoTest {
     @Test
     public void nonExistingCell() {
         LineWithInfo row = new LineWithInfo();
-        assertNull(row.reportOnColumn(new ExcelColumn()));
+        assertNull(row.reportOnColumn(new ColumnIndex()));
     }
 
     @Test(expected = CsvException.class)
     public void getReportOnColumnIndex0() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Hello");
-        RowReport report = row.reportOnColumn(new ExcelColumn(0));
+        RowReport report = row.reportOnColumn(new ColumnIndex(0));
     }
 
     @Test
     public void simpleWord() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Hello");
-        RowReport report = row.reportOnColumn(new ExcelColumn());
+        RowReport report = row.reportOnColumn(new ColumnIndex());
         assertEquals("Hello", report.getRow());
         assertEquals(0, report.getStart());
         assertEquals(5, report.getEnd());
@@ -64,7 +65,7 @@ public class LineWithInfoTest {
         row = addString(row, "Beta");
         row.addCharacter(';');
         row = addString(row, "Gamma");
-        RowReport report = row.reportOnColumn(new ExcelColumn(3));
+        RowReport report = row.reportOnColumn(new ColumnIndex(3));
         assertEquals("Alpha;Beta;Gamma", report.getRow());
         assertEquals(11, report.getStart());
         assertEquals(16, report.getEnd());
@@ -78,7 +79,7 @@ public class LineWithInfoTest {
         row = addString(row, "Beta");
         row.addCharacter('\t');
         row = addString(row, "Gamma");
-        RowReport report = row.reportOnColumn(new ExcelColumn(3));
+        RowReport report = row.reportOnColumn(new ColumnIndex(3));
         assertEquals("Alpha\\tBeta\\tGamma", report.getRow());
         assertEquals(13, report.getStart());
         assertEquals(18, report.getEnd());

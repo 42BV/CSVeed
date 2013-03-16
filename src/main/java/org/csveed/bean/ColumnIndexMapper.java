@@ -1,30 +1,30 @@
 package org.csveed.bean;
 
 import org.csveed.api.Row;
+import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
-import org.csveed.util.ExcelColumn;
 
 import java.util.Set;
 
-public class ColumnIndexMapper<T> extends AbstractMapper<T, ExcelColumn> {
+public class ColumnIndexMapper<T> extends AbstractMapper<T, Column> {
 
     @Override
-    public BeanProperty getBeanProperty(Row row, ExcelColumn currentColumn) {
+    public BeanProperty getBeanProperty(Row row, Column currentColumn) {
         return getBeanProperty(currentColumn);
     }
 
     @Override
-    protected Set<ExcelColumn> keys() {
+    protected Set<Column> keys() {
         return beanReaderInstructions.getProperties().columnIndexKeys();
     }
 
-    protected BeanProperty getBeanProperty(ExcelColumn currentColumn) {
+    protected BeanProperty getBeanProperty(Column currentColumn) {
         return beanReaderInstructions.getProperties().fromIndex(currentColumn);
     }
 
     @Override
-    protected void checkKey(Row row, ExcelColumn key) {
+    protected void checkKey(Row row, Column key) {
         if (key.getColumnIndex() > row.size()) {
             throw new CsvException(new GeneralError(
                     "Column with index "+key+" does not exist in file with "+row.size()+" columns. "+
