@@ -66,7 +66,7 @@ public class CsvReaderTest {
                 .setComment('#')
                 .setEndOfLine(new char[]{'\n'})
                 .setSeparator(',')
-                .setStartRow(0)
+                .setStartRow(1)
                 .setUseHeader(true)
                 .setMapper(ColumnNameMapper.class)
                 .ignoreProperty("ignoreMe")
@@ -84,7 +84,7 @@ public class CsvReaderTest {
 
         List<BeanVariousNotAnnotated> beans = csvReader.readBeans();
         assertTrue(csvReader.isFinished());
-        assertEquals(5, csvReader.getCurrentLine());
+        assertEquals(6, csvReader.getCurrentLine());
         assertEquals(3, beans.size());
     }
 
@@ -131,10 +131,10 @@ public class CsvReaderTest {
         );
         CsvReader<BeanVariousNotAnnotated> csvReader =
                 new CsvReaderImpl<BeanVariousNotAnnotated>(reader, BeanVariousNotAnnotated.class)
-                .setStartRow(3);
+                .setStartRow(4);
         List<Row> rows = csvReader.readRows();
         assertEquals(3, rows.size());
-        assertEquals(7, csvReader.getCurrentLine());
+        assertEquals(8, csvReader.getCurrentLine());
     }
 
     @Test

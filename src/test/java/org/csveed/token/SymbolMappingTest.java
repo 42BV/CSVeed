@@ -1,11 +1,18 @@
 package org.csveed.token;
 
+import org.csveed.report.CsvException;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotSame;
 
 public class SymbolMappingTest {
+
+    @Test(expected = CsvException.class)
+    public void setRowAtZero() {
+        SymbolMapping mapping = new SymbolMapping();
+        mapping.setStartLine(0);
+    }
 
     @Test
     public void addMappingMustEmptyDeleteMapping() {

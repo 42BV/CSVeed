@@ -55,10 +55,11 @@ public @interface CsvFile {
 
     /**
     * The point from where the lines must be read, including the structure (if applicable). By default,
-    * this value is 0.
-    * @return the point from where lines must be converted
+    * this value is 1 and includes the header. Note that row counting starts at 1, not at 0, ie CSVeed is
+    * 1-based to be more aligned with the Excel user who receives the error report, not the developer.
+    * @return the point from where lines must be converted, 1-based
     */
-    int startRow() default 0;
+    int startRow() default 1;
 
     /**
     * Ascertains that empty lines are skipped. If this value is false, empty lines will be parsed as single

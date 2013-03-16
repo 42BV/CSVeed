@@ -1,5 +1,8 @@
 package org.csveed.token;
 
+import org.csveed.report.CsvError;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +24,7 @@ public class SymbolMapping {
 
     private boolean settingsLogged = false;
 
-    private int startLine = 0;
+    private int startLine = 1;
 
     private boolean skipCommentLines = true;
 
@@ -128,6 +131,9 @@ public class SymbolMapping {
     }
 
     public void setStartLine(int startLine) {
+        if (startLine == 0) {
+            throw new CsvException(new GeneralError("Row cannot be set at 0. Rows are 1-based"));
+        }
         this.startLine = startLine;
     }
 

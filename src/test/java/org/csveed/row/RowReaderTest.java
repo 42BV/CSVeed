@@ -99,7 +99,7 @@ public class RowReaderTest {
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
             new RowReaderInstructionsImpl()
-                .setStartRow(3)
+                .setStartRow(4)
                 .setUseHeader(true)
         );
         List<Row> rows = lineReader.readRows();

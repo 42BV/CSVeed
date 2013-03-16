@@ -23,11 +23,11 @@ public class ParseStateMachineTest {
         machine.offerSymbol(0x0d);
         machine.offerSymbol(0x0a);
         machine.offerSymbol(';');
-        assertEquals(1, machine.getCurrentLine());
+        assertEquals(2, machine.getCurrentLine());
         machine.offerSymbol(0x0d);
         machine.offerSymbol(0x0a);
         machine.offerSymbol(-1);
-        assertEquals(2, machine.getCurrentLine());
+        assertEquals(3, machine.getCurrentLine());
     }
 
     @Test

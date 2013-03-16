@@ -81,7 +81,7 @@ public interface CsvReader<T> {
     * Sets the start row of the CSV file. If {@link #setUseHeader(boolean)} == true, this will be the header
     * row and the next ones are all content rows. This method is called whenever
     * {@link org.csveed.annotations.CsvFile#startRow()} is used. The default value for this
-    * setting is 0. This call is a facade for {@link org.csveed.row.RowReaderInstructions#setStartRow(int)}.
+    * setting is 1. This call is a facade for {@link org.csveed.row.RowReaderInstructions#setStartRow(int)}.
     * @param startRow the first row to start reading, including the header row
     * @return convenience for chaining
     */

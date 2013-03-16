@@ -29,9 +29,9 @@ public class ParseStateMachine {
 
     private int currentColumn = 0;
 
-    private int currentLine = 0;
+    private int currentLine = 1;
 
-    private int newLine = 0;
+    private int newLine = currentLine;
 
     public int getCurrentLine() {
         return this.currentLine;
