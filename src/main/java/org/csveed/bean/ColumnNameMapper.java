@@ -24,7 +24,9 @@ public class ColumnNameMapper<T> extends AbstractMapper<T, String> {
 
     @Override
     protected void checkKey(Row row, String key) {
-        if (row.getHeader().getIndex(key) == null) {
+        try {
+            row.getHeader().getIndex(key);
+        } catch (CsvException err) {
             throw new CsvException(new RowError(
                     "The header row does not contain column \""+key+"\". Originally mapped to property \""+
                             getBeanProperty(key).getPropertyName()+"\"",

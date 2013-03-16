@@ -5,7 +5,9 @@ import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
 import org.csveed.token.ParseStateMachine;
+import org.csveed.util.ExcelColumn;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,16 +15,16 @@ import java.util.TreeMap;
 public class HeaderImpl implements Header {
 
     private Line header;
-    private Map<Integer, String> indexToName = new TreeMap<Integer, String>();
-    private Map<String, Integer> nameToIndex = new TreeMap<String, Integer>();
+    private Map<ExcelColumn, String> indexToName = new HashMap<ExcelColumn, String>();
+    private Map<String, ExcelColumn> nameToIndex = new HashMap<String, ExcelColumn>();
 
     public HeaderImpl(Line row) {
         this.header = row;
-        int indexColumn = ParseStateMachine.FIRST_COLUMN_INDEX;
+        ExcelColumn currentColumn = new ExcelColumn();
         for (String headerCell : header) {
-            this.indexToName.put(indexColumn, headerCell);
-            this.nameToIndex.put(headerCell, indexColumn);
-            indexColumn++;
+            this.indexToName.put(currentColumn, headerCell);
+            this.nameToIndex.put(headerCell, currentColumn);
+            currentColumn = currentColumn.nextColumn();
         }
     }
 
@@ -30,15 +32,21 @@ public class HeaderImpl implements Header {
         return header.size();
     }
 
-    public String getName(Integer indexColumn) {
-        if (indexColumn == 0) {
-            throw new CsvException(new GeneralError("Column index cannot be set at 0. Column indexes are 1-based"));
+    public String getName(int columnIndex) {
+        ExcelColumn column = new ExcelColumn(columnIndex);
+        String name = this.indexToName.get(column);
+        if (name == null) {
+            throw new CsvException(new GeneralError("No column name found for index "+column.getColumnIndex()));
         }
-        return this.indexToName.get(indexColumn);
+        return name;
     }
 
-    public Integer getIndex(String columnName) {
-        return this.nameToIndex.get(columnName);
+    public int getIndex(String columnName) {
+        ExcelColumn column = this.nameToIndex.get(columnName);
+        if (column == null) {
+            throw new CsvException(new GeneralError("No column index found for name "+columnName));
+        }
+        return column.getColumnIndex();
     }
 
     public Iterator<String> iterator() {

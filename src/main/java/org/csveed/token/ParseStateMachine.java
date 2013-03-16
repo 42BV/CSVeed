@@ -1,5 +1,6 @@
 package org.csveed.token;
 
+import org.csveed.util.ExcelColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ public class ParseStateMachine {
 
     private boolean trim = true;
 
-    private int currentColumn = FIRST_COLUMN_INDEX;
+    private ExcelColumn currentColumn = new ExcelColumn();
 
     private int currentLine = 1;
 
@@ -40,7 +41,7 @@ public class ParseStateMachine {
     }
 
     public int getCurrentColumn() {
-        return this.currentColumn;
+        return this.currentColumn.getColumnIndex();
     }
 
     public String offerSymbol(int symbolCharacter) throws ParseException {
@@ -58,7 +59,7 @@ public class ParseStateMachine {
         if (currentLine != newLine) {
             state = START_OF_LINE;
             charactersRead = 0;
-            currentColumn = FIRST_COLUMN_INDEX;
+            currentColumn = currentColumn.nextLine();
             currentLine = newLine;
         }
 
@@ -89,7 +90,7 @@ public class ParseStateMachine {
             }
             token = new StringBuilder();
             tokenState = tokenState.next();
-            currentColumn++;
+            currentColumn = currentColumn.nextColumn();
         }
 
         if (newState.isLineFinished()) {

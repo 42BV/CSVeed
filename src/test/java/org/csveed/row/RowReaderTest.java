@@ -3,6 +3,7 @@ package org.csveed.row;
 import org.csveed.api.Row;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowReport;
+import org.csveed.util.ExcelColumn;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -214,7 +215,7 @@ public class RowReaderTest {
         Reader reader = new StringReader("17.51;23.19;-100.23");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
-        RowReport report = row.reportOnColumn(3);
+        RowReport report = row.reportOnColumn(new ExcelColumn(3));
         assertEquals("17.51;23.19;-100.23[EOF]", report.getPrintableLines().get(0));
         assertEquals("            ^-----^     ", report.getPrintableLines().get(1));
     }
@@ -224,10 +225,10 @@ public class RowReaderTest {
         Reader reader = new StringReader("\"alpha\";\"\";;\"b\te\tt\ta\";gamma;\"een \"\"echte\"\" test\";\"1\n2\n3\n\"\"regels\"\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
-        RowReport report = row.reportOnColumn(4);
+        RowReport report = row.reportOnColumn(new ExcelColumn(4));
         assertEquals("\"alpha\";\"\";;\"b\\te\\tt\\ta\";gamma;\"een \"\"echte\"\" test\";\"1\\n2\\n3\\n\"\"regels\"\"\"[EOF]", report.getPrintableLines().get(0));
         assertEquals("             ^---------^                                                      ", report.getPrintableLines().get(1));
-        report = row.reportOnColumn(3);
+        report = row.reportOnColumn(new ExcelColumn(3));
         assertEquals("           ^                                                                  ", report.getPrintableLines().get(1));
     }
 

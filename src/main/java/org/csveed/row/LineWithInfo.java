@@ -1,9 +1,7 @@
 package org.csveed.row;
 
-import org.csveed.report.CsvException;
-import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
-import org.csveed.token.ParseStateMachine;
+import org.csveed.util.ExcelColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,11 +15,11 @@ public class LineWithInfo implements Line {
 
     private StringBuilder originalLine = new StringBuilder();
 
-    private Map<Integer, CellPositionInRow> cellPositions = new TreeMap<Integer, CellPositionInRow>();
+    private Map<ExcelColumn, CellPositionInRow> cellPositions = new HashMap<ExcelColumn, CellPositionInRow>();
 
     private int printLength = 0;
 
-    private int currentColumn = ParseStateMachine.FIRST_COLUMN_INDEX;
+    private ExcelColumn currentColumn = new ExcelColumn();
 
     public void addCell(String cell) {
         this.cells.add(cell);
@@ -42,14 +40,15 @@ public class LineWithInfo implements Line {
 
     protected void markEndOfColumn() {
         LOG.debug("End of column: "+printLength);
-        getCellPosition(currentColumn++).setEnd(printLength);
+        getCellPosition(currentColumn).setEnd(printLength);
+        currentColumn = currentColumn.nextColumn();
     }
 
-    protected CellPositionInRow getCellPosition(int columnIndex) {
-        CellPositionInRow cellPosition = cellPositions.get(columnIndex);
+    protected CellPositionInRow getCellPosition(ExcelColumn column) {
+        CellPositionInRow cellPosition = cellPositions.get(column);
         if (cellPosition == null) {
             cellPosition = new CellPositionInRow();
-            cellPositions.put(columnIndex, cellPosition);
+            cellPositions.put(column, cellPosition);
         }
         return cellPosition;
     }
@@ -78,11 +77,8 @@ public class LineWithInfo implements Line {
         return this.cells.get(index);
     }
 
-    public RowReport reportOnColumn(int columnIndex) {
-        if (columnIndex == 0) {
-            throw new CsvException(new GeneralError("Column index cannot be set at 0. Column indexes are 1-based"));
-        }
-        CellPositionInRow cellPosition = cellPositions.get(columnIndex);
+    public RowReport reportOnColumn(ExcelColumn column) {
+        CellPositionInRow cellPosition = cellPositions.get(column);
         if (cellPosition == null) {
             return null;
         }

@@ -19,14 +19,14 @@ public interface Header extends Iterable<String> {
     * @param indexColumn column index to find the name for
     * @return name of the header column
     */
-    public String getName(Integer indexColumn);
+    public String getName(int indexColumn);
 
     /**
     * Gets the index column of the first column with a certain name
     * @param columnName column name to find the index for
     * @return index of the header column
     */
-    public Integer getIndex(String columnName);
+    public int getIndex(String columnName);
 
     /**
     * Generate an error report on the header row
