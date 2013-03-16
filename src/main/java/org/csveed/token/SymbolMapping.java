@@ -1,6 +1,5 @@
 package org.csveed.token;
 
-import org.csveed.report.CsvError;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.slf4j.Logger;

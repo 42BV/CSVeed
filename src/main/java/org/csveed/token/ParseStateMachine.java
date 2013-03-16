@@ -15,6 +15,8 @@ public class ParseStateMachine {
 
     public static final Logger LOG = LoggerFactory.getLogger(ParseStateMachine.class);
 
+    public static final int FIRST_COLUMN_INDEX = 1;
+
     private ParseState state = START_OF_LINE;
 
     private StringBuilder token = new StringBuilder();
@@ -27,7 +29,7 @@ public class ParseStateMachine {
 
     private boolean trim = true;
 
-    private int currentColumn = 0;
+    private int currentColumn = FIRST_COLUMN_INDEX;
 
     private int currentLine = 1;
 
@@ -56,7 +58,7 @@ public class ParseStateMachine {
         if (currentLine != newLine) {
             state = START_OF_LINE;
             charactersRead = 0;
-            currentColumn = 0;
+            currentColumn = FIRST_COLUMN_INDEX;
             currentLine = newLine;
         }
 

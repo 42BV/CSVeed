@@ -1,6 +1,9 @@
 package org.csveed.row;
 
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
+import org.csveed.token.ParseStateMachine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +21,7 @@ public class LineWithInfo implements Line {
 
     private int printLength = 0;
 
-    private int currentColumn = 0;
+    private int currentColumn = ParseStateMachine.FIRST_COLUMN_INDEX;
 
     public void addCell(String cell) {
         this.cells.add(cell);
@@ -76,6 +79,9 @@ public class LineWithInfo implements Line {
     }
 
     public RowReport reportOnColumn(int columnIndex) {
+        if (columnIndex == 0) {
+            throw new CsvException(new GeneralError("Column index cannot be set at 0. Column indexes are 1-based"));
+        }
         CellPositionInRow cellPosition = cellPositions.get(columnIndex);
         if (cellPosition == null) {
             return null;

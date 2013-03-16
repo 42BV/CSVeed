@@ -18,7 +18,8 @@ public @interface CsvCell {
     /**
     * This value will only be used if CsvFile.useHeaders == false. If this value is not set, the index will be
     * automatically determined on the basis of the order of the fields within the class. If this value is set,
-    * the column at the index position will be used for mapping to this field.
+    * the column at the index position will be used for mapping to this field. A 1-based approach is used because
+    * the error report is aimed at the Excel user, not the developer.
     * @return the index column to use for the mapping
     */
     int columnIndex() default -1;

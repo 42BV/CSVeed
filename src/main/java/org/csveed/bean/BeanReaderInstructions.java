@@ -155,7 +155,8 @@ public interface BeanReaderInstructions {
     /**
     * Maps a column in the CSV to a specific property. This method is called whenever
     * {@link org.csveed.annotations.CsvCell#columnIndex()} is used. By default there is NO mapping
-    * when custom instructions are used, so you should roll your own.
+    * when custom instructions are used, so you should roll your own. Note that column indexes are
+    * 1-based, not 0-based
     * @param propertyName property to which the index-based mapping must be applied
     * @return convenience for chaining
     */

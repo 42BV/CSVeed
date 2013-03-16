@@ -101,6 +101,9 @@ public class BeanProperties implements Iterable<BeanProperty> {
     }
 
     public void mapIndexToProperty(int columnIndex, String propertyName) {
+        if (columnIndex == 0) {
+            throw new CsvException(new GeneralError("Column index cannot be set at 0. Column indexes are 1-based"));
+        }
         BeanProperty property = get(propertyName);
         removeFromColumnIndex(property);
         property.setColumnIndex(columnIndex);

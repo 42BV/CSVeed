@@ -1,7 +1,10 @@
 package org.csveed.row;
 
 import org.csveed.api.Header;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
+import org.csveed.token.ParseStateMachine;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -15,7 +18,7 @@ public class HeaderImpl implements Header {
 
     public HeaderImpl(Line row) {
         this.header = row;
-        int indexColumn = 0;
+        int indexColumn = ParseStateMachine.FIRST_COLUMN_INDEX;
         for (String headerCell : header) {
             this.indexToName.put(indexColumn, headerCell);
             this.nameToIndex.put(headerCell, indexColumn);
@@ -28,6 +31,9 @@ public class HeaderImpl implements Header {
     }
 
     public String getName(Integer indexColumn) {
+        if (indexColumn == 0) {
+            throw new CsvException(new GeneralError("Column index cannot be set at 0. Column indexes are 1-based"));
+        }
         return this.indexToName.get(indexColumn);
     }
 

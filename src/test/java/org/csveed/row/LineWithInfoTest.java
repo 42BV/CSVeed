@@ -1,5 +1,6 @@
 package org.csveed.row;
 
+import org.csveed.report.CsvException;
 import org.csveed.report.RowReport;
 import org.junit.Test;
 
@@ -34,14 +35,21 @@ public class LineWithInfoTest {
     @Test
     public void nonExistingCell() {
         LineWithInfo row = new LineWithInfo();
-        assertNull(row.reportOnColumn(0));
+        assertNull(row.reportOnColumn(1));
+    }
+
+    @Test(expected = CsvException.class)
+    public void getReportOnColumnIndex0() {
+        LineWithInfo row = new LineWithInfo();
+        row = addString(row, "Hello");
+        RowReport report = row.reportOnColumn(0);
     }
 
     @Test
     public void simpleWord() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Hello");
-        RowReport report = row.reportOnColumn(0);
+        RowReport report = row.reportOnColumn(1);
         assertEquals("Hello", report.getRow());
         assertEquals(0, report.getStart());
         assertEquals(5, report.getEnd());
@@ -55,7 +63,7 @@ public class LineWithInfoTest {
         row = addString(row, "Beta");
         row.addCharacter(';');
         row = addString(row, "Gamma");
-        RowReport report = row.reportOnColumn(2);
+        RowReport report = row.reportOnColumn(3);
         assertEquals("Alpha;Beta;Gamma", report.getRow());
         assertEquals(11, report.getStart());
         assertEquals(16, report.getEnd());
@@ -69,7 +77,7 @@ public class LineWithInfoTest {
         row = addString(row, "Beta");
         row.addCharacter('\t');
         row = addString(row, "Gamma");
-        RowReport report = row.reportOnColumn(2);
+        RowReport report = row.reportOnColumn(3);
         assertEquals("Alpha\\tBeta\\tGamma", report.getRow());
         assertEquals(13, report.getStart());
         assertEquals(18, report.getEnd());

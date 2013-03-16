@@ -45,6 +45,16 @@ public class RowReaderTest {
         assertEquals(5, lineReader.readRows().size());
     }
 
+    @Test(expected = CsvException.class)
+    public void getColumnIndexAt0() {
+        Reader reader = new StringReader(
+                "alpha;beta;gamma"
+        );
+        RowReaderImpl rowReader = new RowReaderImpl(reader);
+        HeaderImpl header = rowReader.getHeader();
+        assertEquals("alpha", header.getName(0));
+    }
+
     @Test
     public void commentLine() {
         Reader reader = new StringReader(
@@ -56,10 +66,10 @@ public class RowReaderTest {
             "# this line must be ignored!\n"+
             "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
         );
-        RowReaderImpl lineReader = new RowReaderImpl(reader);
-        assertEquals(2, lineReader.readRows().size());
-        HeaderImpl header = lineReader.getHeader();
-        assertEquals("alpha", header.getName(0));
+        RowReaderImpl rowReader = new RowReaderImpl(reader);
+        assertEquals(2, rowReader.readRows().size());
+        HeaderImpl header = rowReader.getHeader();
+        assertEquals("alpha", header.getName(1));
     }
 
     @Test(expected = CsvException.class)
@@ -204,7 +214,7 @@ public class RowReaderTest {
         Reader reader = new StringReader("17.51;23.19;-100.23");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
-        RowReport report = row.reportOnColumn(2);
+        RowReport report = row.reportOnColumn(3);
         assertEquals("17.51;23.19;-100.23[EOF]", report.getPrintableLines().get(0));
         assertEquals("            ^-----^     ", report.getPrintableLines().get(1));
     }
@@ -214,10 +224,10 @@ public class RowReaderTest {
         Reader reader = new StringReader("\"alpha\";\"\";;\"b\te\tt\ta\";gamma;\"een \"\"echte\"\" test\";\"1\n2\n3\n\"\"regels\"\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
-        RowReport report = row.reportOnColumn(3);
+        RowReport report = row.reportOnColumn(4);
         assertEquals("\"alpha\";\"\";;\"b\\te\\tt\\ta\";gamma;\"een \"\"echte\"\" test\";\"1\\n2\\n3\\n\"\"regels\"\"\"[EOF]", report.getPrintableLines().get(0));
         assertEquals("             ^---------^                                                      ", report.getPrintableLines().get(1));
-        report = row.reportOnColumn(2);
+        report = row.reportOnColumn(3);
         assertEquals("           ^                                                                  ", report.getPrintableLines().get(1));
     }
 

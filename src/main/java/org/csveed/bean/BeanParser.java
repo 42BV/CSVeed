@@ -1,6 +1,7 @@
 package org.csveed.bean;
 
 import org.csveed.annotations.*;
+import org.csveed.token.ParseStateMachine;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -9,7 +10,7 @@ public class BeanParser {
 
     private BeanReaderInstructions beanReaderInstructions;
 
-    private int columnIndex = 0;
+    private int columnIndex = ParseStateMachine.FIRST_COLUMN_INDEX;
 
     public BeanReaderInstructions getBeanInstructions(Class beanClass) {
 

@@ -6,6 +6,7 @@ import org.csveed.bean.conversion.ConversionException;
 import org.csveed.bean.conversion.DefaultConverters;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowError;
+import org.csveed.token.ParseStateMachine;
 
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public abstract class AbstractMapper<T, K> {
     public T convert(T bean, Row row, int lineNumber) {
         BeanWrapper beanWrapper = new BeanWrapper(defaultConverters, bean);
 
-        int indexColumn = 0;
+        int indexColumn = ParseStateMachine.FIRST_COLUMN_INDEX;
         for (String cell : row) {
             BeanProperty beanProperty = getBeanProperty(row, indexColumn);
             if (beanProperty == null) {
