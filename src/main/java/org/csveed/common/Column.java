@@ -4,7 +4,7 @@ import org.csveed.api.Header;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 
-public class Column {
+public class Column implements Comparable<Column> {
 
     public static final int FIRST_COLUMN_INDEX = 1;
 
@@ -14,8 +14,10 @@ public class Column {
 
     private Header header;
 
+    private ColumnKey key;
+
     public Column(String columnName) {
-        this.columnName = columnName.toLowerCase();
+        setColumnName(columnName);
     }
 
     public Column() {
@@ -26,7 +28,7 @@ public class Column {
         if (columnIndex <= 0) {
             throw new CsvException(new GeneralError("Column index cannot be set at 0 or lower. Column indexes are 1-based"));
         }
-        this.columnIndex = columnIndex;
+        setColumnIndex(columnIndex);
     }
 
     private String columnIndexToExcelColumn(int columnIndex) {
@@ -36,6 +38,28 @@ public class Column {
             columnIndex /= 26;
         }
         return excelColumn.toString();
+    }
+
+    public Column setHeader(Header header) {
+        this.header = header;
+        if (this.header != null) {
+            setColumnName(header.getName(this.columnIndex));
+        }
+        return this;
+    }
+
+    public void setColumnIndex(int columnIndex) {
+        this.columnIndex = columnIndex;
+        setKey(new ColumnIndexKey(this.columnIndex));
+    }
+
+    public void setColumnName(String columnName) {
+        this.columnName = columnName.toLowerCase();
+        setKey(new ColumnNameKey(this.columnName));
+    }
+
+    public void setKey(ColumnKey key) {
+        this.key = key;
     }
 
     public String getExcelColumn() {
@@ -58,41 +82,26 @@ public class Column {
         return new Column().setHeader(header);
     }
 
-    public Column setHeader(Header header) {
-        this.header = header;
-        if (this.header != null) {
-            this.columnName = header.getName(this.columnIndex);
-        }
-        return this;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Column)) {
             return false;
         }
-        Column column = (Column)obj;
-        if (this.columnName != null) {
-            if (this.columnName.equals(column.columnName)) {
-                return true;
-            }
-        }
-        else if (this.columnIndex != -1) {
-            if (this.columnIndex == column.columnIndex) {
-                return true;
-            }
-        }
-        return false;
+        return this.key.equals(((Column)obj).key);
     }
 
     @Override
     public int hashCode() {
-        return 1;
+        return this.key.hashCode();
     }
 
     @Override
     public String toString() {
-        return "Index: "+this.columnIndex+", Name: "+this.columnName+", Header: "+(header!=null?"true":"false");
+        return this.key.toString();
     }
 
+    @Override
+    public int compareTo(Column column) {
+        return this.key.compareTo(column.key);
+    }
 }
