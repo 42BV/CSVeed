@@ -6,7 +6,7 @@ import org.csveed.bean.conversion.ConversionException;
 import org.csveed.bean.conversion.DefaultConverters;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowError;
-import org.csveed.token.ParseStateMachine;
+import org.csveed.util.ExcelColumn;
 
 import java.util.Set;
 
@@ -18,7 +18,7 @@ public abstract class AbstractMapper<T, K> {
 
     private DefaultConverters defaultConverters = new DefaultConverters();
 
-    public abstract BeanProperty getBeanProperty(Row row, int columnIndex);
+    public abstract BeanProperty getBeanProperty(Row row, ExcelColumn currentColumn);
 
     protected abstract Set<K> keys();
 
@@ -39,18 +39,18 @@ public abstract class AbstractMapper<T, K> {
     public T convert(T bean, Row row, int lineNumber) {
         BeanWrapper beanWrapper = new BeanWrapper(defaultConverters, bean);
 
-        int indexColumn = ParseStateMachine.FIRST_COLUMN_INDEX;
+        ExcelColumn currentColumn = new ExcelColumn();
         for (String cell : row) {
-            BeanProperty beanProperty = getBeanProperty(row, indexColumn);
+            BeanProperty beanProperty = getBeanProperty(row, currentColumn);
             if (beanProperty == null) {
-                indexColumn++;
+                currentColumn = currentColumn.nextColumn();
                 continue;
             }
             if (beanProperty.isRequired() && (cell == null || cell.equals(""))) {
                 throw new CsvException(
                         new RowError("Bean property \""+beanProperty.getPropertyName()+
                                 "\" is required and may not be empty or null",
-                        row.reportOnColumn(indexColumn), lineNumber));
+                        row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
             }
             try {
                 beanWrapper.setProperty(beanProperty, cell);
@@ -58,9 +58,9 @@ public abstract class AbstractMapper<T, K> {
                 String message =
                         err.getMessage()+" cell "+getColumnIdentifier(beanProperty)+" ["+cell+"] to "+
                         beanProperty.getPropertyName() + ": " + err.getTypeDescription();
-                throw new CsvException(new RowError(message, row.reportOnColumn(indexColumn), lineNumber));
+                throw new CsvException(new RowError(message, row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
             }
-            indexColumn++;
+            currentColumn = currentColumn.nextColumn();
         }
         return bean;
     }

@@ -3,29 +3,29 @@ package org.csveed.bean;
 import org.csveed.api.Row;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
-import org.csveed.token.ParseStateMachine;
+import org.csveed.util.ExcelColumn;
 
 import java.util.Set;
 
-public class ColumnIndexMapper<T> extends AbstractMapper<T, Integer> {
+public class ColumnIndexMapper<T> extends AbstractMapper<T, ExcelColumn> {
 
     @Override
-    public BeanProperty getBeanProperty(Row row, int columnIndex) {
-        return getBeanProperty(columnIndex);
+    public BeanProperty getBeanProperty(Row row, ExcelColumn currentColumn) {
+        return getBeanProperty(currentColumn);
     }
 
     @Override
-    protected Set<Integer> keys() {
+    protected Set<ExcelColumn> keys() {
         return beanReaderInstructions.getProperties().columnIndexKeys();
     }
 
-    protected BeanProperty getBeanProperty(int columnIndex) {
-        return beanReaderInstructions.getProperties().fromIndex(columnIndex);
+    protected BeanProperty getBeanProperty(ExcelColumn currentColumn) {
+        return beanReaderInstructions.getProperties().fromIndex(currentColumn);
     }
 
     @Override
-    protected void checkKey(Row row, Integer key) {
-        if (key < ParseStateMachine.FIRST_COLUMN_INDEX || key > row.size()) {
+    protected void checkKey(Row row, ExcelColumn key) {
+        if (key.getColumnIndex() > row.size()) {
             throw new CsvException(new GeneralError(
                     "Column with index "+key+" does not exist in file with "+row.size()+" columns. "+
                     "Originally mapped to property \""+getBeanProperty(key).getPropertyName()+"\""

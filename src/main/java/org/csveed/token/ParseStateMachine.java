@@ -16,8 +16,6 @@ public class ParseStateMachine {
 
     public static final Logger LOG = LoggerFactory.getLogger(ParseStateMachine.class);
 
-    public static final int FIRST_COLUMN_INDEX = 1;
-
     private ParseState state = START_OF_LINE;
 
     private StringBuilder token = new StringBuilder();

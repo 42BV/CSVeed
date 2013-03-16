@@ -20,7 +20,7 @@ public class HeaderTest {
 
     protected LineWithInfo createLine(String cell) {
         LineWithInfo line = new LineWithInfo();
-        line.addCell("alpha");
+        line.addCell(cell);
         return line;
     }
 }

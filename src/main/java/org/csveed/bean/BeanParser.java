@@ -1,7 +1,7 @@
 package org.csveed.bean;
 
 import org.csveed.annotations.*;
-import org.csveed.token.ParseStateMachine;
+import org.csveed.util.ExcelColumn;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -10,7 +10,7 @@ public class BeanParser {
 
     private BeanReaderInstructions beanReaderInstructions;
 
-    private int columnIndex = ParseStateMachine.FIRST_COLUMN_INDEX;
+    private ExcelColumn currentColumn = new ExcelColumn();
 
     public BeanReaderInstructions getBeanInstructions(Class beanClass) {
 
@@ -49,7 +49,8 @@ public class BeanParser {
             }
         }
         this.beanReaderInstructions.mapColumnNameToProperty(columnName, propertyName);
-        this.beanReaderInstructions.mapColumnIndexToProperty(columnIndex++, propertyName);
+        this.beanReaderInstructions.mapColumnIndexToProperty(currentColumn.getColumnIndex(), propertyName);
+        currentColumn = currentColumn.nextColumn();
     }
 
     private void parseCsvFile(CsvFile csvFile) {
@@ -82,7 +83,7 @@ public class BeanParser {
     private String parseCsvCell(String propertyName, CsvCell csvCell) {
         String columnName = (csvCell.columnName() == null || csvCell.columnName().equals("")) ? propertyName : csvCell.columnName();
         this.beanReaderInstructions.setRequired(propertyName, csvCell.required());
-        columnIndex = csvCell.columnIndex() != -1 ? csvCell.columnIndex() : columnIndex;
+        currentColumn = csvCell.columnIndex() != -1 ? new ExcelColumn(csvCell.columnIndex()) : currentColumn;
         return columnName;
     }
 
