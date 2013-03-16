@@ -1,5 +1,6 @@
 package org.csveed.bean;
 
+import org.csveed.common.Column;
 import org.csveed.test.model.BeanLotsOfIgnores;
 import org.csveed.test.model.BeanWithoutGettersAndSetters;
 import org.junit.Test;
@@ -13,15 +14,15 @@ public class BeanParserTest {
     public void noGettersAndSetters() {
         BeanParser beanParser = new BeanParser();
         BeanReaderInstructions instructions = beanParser.getBeanInstructions(BeanWithoutGettersAndSetters.class);
-        assertNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName("a"));
+        assertNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName(new Column("a")));
     }
 
     @Test
     public void caseInsensitivity() {
         BeanParser beanParser = new BeanParser();
         BeanReaderInstructions instructions = beanParser.getBeanInstructions(BeanLotsOfIgnores.class);
-        assertNotNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName("takeThis1"));
-        assertNotNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName("takethis1"));
+        assertNotNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName(new Column("takeThis1")));
+        assertNotNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName(new Column("takethis1")));
     }
 
 }

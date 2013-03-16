@@ -7,26 +7,22 @@ import org.csveed.report.RowError;
 
 import java.util.Set;
 
-public class ColumnNameMapper<T> extends AbstractMapper<T, String> {
+public class ColumnNameMapper<T> extends AbstractMapper<T> {
 
     @Override
-    public BeanProperty getBeanProperty(Row row, Column column) {
-        return getBeanProperty(row.getHeader().getName(column.getColumnIndex()));
-    }
-
-    @Override
-    protected Set<String> keys() {
+    protected Set<Column> keys() {
         return beanReaderInstructions.getProperties().columnNameKeys();
     }
 
-    protected BeanProperty getBeanProperty(String columnName) {
-        return beanReaderInstructions.getProperties().fromName(columnName);
+    @Override
+    public BeanProperty getBeanProperty(Column column) {
+        return beanReaderInstructions.getProperties().fromName(column);
     }
 
     @Override
-    protected void checkKey(Row row, String key) {
+    protected void checkKey(Row row, Column key) {
         try {
-            row.getHeader().getIndex(key);
+            row.getHeader().getIndex(key.getColumnName());
         } catch (CsvException err) {
             throw new CsvException(new RowError(
                     "The header row does not contain column \""+key+"\". Originally mapped to property \""+
@@ -34,6 +30,11 @@ public class ColumnNameMapper<T> extends AbstractMapper<T, String> {
                     row.getHeader().reportOnEndOfLine(), 0
             ));
         }
+    }
+
+    @Override
+    protected Column getColumn(Row row) {
+        return new Column().setHeader(row.getHeader());
     }
 
     @Override

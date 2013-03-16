@@ -2,7 +2,6 @@ package org.csveed.row;
 
 import org.csveed.api.Header;
 import org.csveed.common.Column;
-import org.csveed.common.ColumnIndex;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
@@ -19,7 +18,7 @@ public class HeaderImpl implements Header {
 
     public HeaderImpl(Line row) {
         this.header = row;
-        Column currentColumn = new ColumnIndex();
+        Column currentColumn = new Column();
         for (String headerCell : header) {
             this.indexToName.put(currentColumn, headerCell);
             this.nameToIndex.put(headerCell, currentColumn);
@@ -32,7 +31,7 @@ public class HeaderImpl implements Header {
     }
 
     public String getName(int columnIndex) {
-        Column column = new ColumnIndex(columnIndex);
+        Column column = new Column(columnIndex);
         String name = this.indexToName.get(column);
         if (name == null) {
             throw new CsvException(new GeneralError("No column name found for index "+column.getColumnIndex()));

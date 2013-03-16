@@ -7,19 +7,15 @@ import org.csveed.report.GeneralError;
 
 import java.util.Set;
 
-public class ColumnIndexMapper<T> extends AbstractMapper<T, Column> {
-
-    @Override
-    public BeanProperty getBeanProperty(Row row, Column currentColumn) {
-        return getBeanProperty(currentColumn);
-    }
+public class ColumnIndexMapper<T> extends AbstractMapper<T> {
 
     @Override
     protected Set<Column> keys() {
         return beanReaderInstructions.getProperties().columnIndexKeys();
     }
 
-    protected BeanProperty getBeanProperty(Column currentColumn) {
+    @Override
+    public BeanProperty getBeanProperty(Column currentColumn) {
         return beanReaderInstructions.getProperties().fromIndex(currentColumn);
     }
 
@@ -31,6 +27,11 @@ public class ColumnIndexMapper<T> extends AbstractMapper<T, Column> {
                     "Originally mapped to property \""+getBeanProperty(key).getPropertyName()+"\""
             ));
         };
+    }
+
+    @Override
+    protected Column getColumn(Row row) {
+        return new Column();
     }
 
     @Override

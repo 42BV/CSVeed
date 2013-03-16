@@ -1,7 +1,6 @@
 package org.csveed.token;
 
 import org.csveed.common.Column;
-import org.csveed.common.ColumnIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +28,7 @@ public class ParseStateMachine {
 
     private boolean trim = true;
 
-    private Column currentColumn = new ColumnIndex();
+    private Column currentColumn = new Column();
 
     private int currentLine = 1;
 

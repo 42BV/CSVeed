@@ -1,6 +1,6 @@
 package org.csveed.common;
 
-public class ColumnExcel extends ColumnIndex {
+public class ColumnExcel extends Column {
 
     public ColumnExcel(String columnExcel) {
         super(excelColumnToColumnIndex(columnExcel));

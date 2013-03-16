@@ -17,7 +17,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private BeanReaderInstructionsImpl beanReaderInstructions;
 
-    private AbstractMapper<T, Object> mapper;
+    private AbstractMapper<T> mapper;
 
     public BeanReaderImpl(Reader reader, Class<T> beanClass) {
         this(reader, new BeanParser().getBeanInstructions(beanClass));
@@ -28,7 +28,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         this.rowReader = new RowReaderImpl(reader, this.beanReaderInstructions.getRowReaderInstructions());
     }
 
-    public AbstractMapper<T, Object> getMapper() {
+    public AbstractMapper<T> getMapper() {
         if (this.mapper == null) {
             this.mapper = this.createMappingStrategy();
             mapper.setBeanReaderInstructions(this.beanReaderInstructions);
@@ -96,7 +96,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public AbstractMapper<T, Object> createMappingStrategy() {
+    public AbstractMapper<T> createMappingStrategy() {
         try {
             return this.beanReaderInstructions.getMappingStrategy().newInstance();
         } catch (Exception err) {

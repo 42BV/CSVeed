@@ -5,13 +5,12 @@ import org.csveed.bean.conversion.BeanWrapper;
 import org.csveed.bean.conversion.ConversionException;
 import org.csveed.bean.conversion.DefaultConverters;
 import org.csveed.common.Column;
-import org.csveed.common.ColumnIndex;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowError;
 
 import java.util.Set;
 
-public abstract class AbstractMapper<T, K> {
+public abstract class AbstractMapper<T> {
 
     protected BeanReaderInstructionsImpl beanReaderInstructions;
 
@@ -19,32 +18,35 @@ public abstract class AbstractMapper<T, K> {
 
     private DefaultConverters defaultConverters = new DefaultConverters();
 
-    public abstract BeanProperty getBeanProperty(Row row, Column currentColumn);
+    public abstract BeanProperty getBeanProperty(Column currentColumn);
 
-    protected abstract Set<K> keys();
+    protected abstract Set<Column> keys();
 
-    protected abstract void checkKey(Row row, K key);
+    protected abstract void checkKey(Row row, Column key);
 
     public void verifyHeader(Row row) {
         if (verified) {
             return;
         }
-        for (K key : keys()) {
+        for (Column key : keys()) {
             checkKey(row, key);
         }
         verified = true;
     }
+
+    protected abstract Column getColumn(Row row);
 
     public abstract String getColumnIdentifier(BeanProperty beanProperty);
 
     public T convert(T bean, Row row, int lineNumber) {
         BeanWrapper beanWrapper = new BeanWrapper(defaultConverters, bean);
 
-        Column currentColumn = new ColumnIndex();
+
+        Column currentColumn = null;
         for (String cell : row) {
-            BeanProperty beanProperty = getBeanProperty(row, currentColumn);
+            currentColumn = currentColumn == null ? getColumn(row) : currentColumn.nextColumn();
+            BeanProperty beanProperty = getBeanProperty(currentColumn);
             if (beanProperty == null) {
-                currentColumn = currentColumn.nextColumn();
                 continue;
             }
             if (beanProperty.isRequired() && (cell == null || cell.equals(""))) {
@@ -61,7 +63,6 @@ public abstract class AbstractMapper<T, K> {
                         beanProperty.getPropertyName() + ": " + err.getTypeDescription();
                 throw new CsvException(new RowError(message, row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
             }
-            currentColumn = currentColumn.nextColumn();
         }
         return bean;
     }
