@@ -41,7 +41,6 @@ public abstract class AbstractMapper<T> {
     public T convert(T bean, Row row, int lineNumber) {
         BeanWrapper beanWrapper = new BeanWrapper(defaultConverters, bean);
 
-
         Column currentColumn = null;
         for (String cell : row) {
             currentColumn = currentColumn == null ? getColumn(row) : currentColumn.nextColumn();

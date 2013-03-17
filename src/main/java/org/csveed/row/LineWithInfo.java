@@ -15,7 +15,7 @@ public class LineWithInfo implements Line {
 
     private StringBuilder originalLine = new StringBuilder();
 
-    private Map<Column, CellPositionInRow> cellPositions = new HashMap<Column, CellPositionInRow>();
+    private Map<Column, CellPositionInRow> cellPositions = new TreeMap<Column, CellPositionInRow>();
 
     private int printLength = 0;
 

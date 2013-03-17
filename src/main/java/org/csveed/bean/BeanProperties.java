@@ -19,8 +19,8 @@ public class BeanProperties implements Iterable<BeanProperty> {
 
     private List<BeanProperty> properties = new ArrayList<BeanProperty>();
 
-    private Map<Column, BeanProperty> indexToProperty = new HashMap<Column, BeanProperty>();
-    private Map<Column, BeanProperty> nameToProperty = new HashMap<Column, BeanProperty>();
+    private Map<Column, BeanProperty> indexToProperty = new TreeMap<Column, BeanProperty>();
+    private Map<Column, BeanProperty> nameToProperty = new TreeMap<Column, BeanProperty>();
 
     private Class beanClass;
 

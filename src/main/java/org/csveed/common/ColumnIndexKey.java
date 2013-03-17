@@ -1,6 +1,6 @@
 package org.csveed.common;
 
-public class ColumnIndexKey extends ColumnKey<Integer> {
+public class ColumnIndexKey extends ColumnKey {
 
     private final Integer columnIndex;
 
@@ -9,8 +9,11 @@ public class ColumnIndexKey extends ColumnKey<Integer> {
     }
 
     @Override
-    public int compareTo(Integer columnIndex) {
-        return this.columnIndex.compareTo(columnIndex);
+    public int compareTo(ColumnKey columnKey) {
+        if (!sameKeyType(columnKey)) {
+            return keyTypeCompare(columnKey);
+        }
+        return this.columnIndex.compareTo(((ColumnIndexKey)columnKey).columnIndex);
     }
 
     @Override
@@ -18,7 +21,7 @@ public class ColumnIndexKey extends ColumnKey<Integer> {
         if (!(obj instanceof ColumnIndexKey)) {
             return false;
         }
-        return columnIndex.equals(((ColumnIndexKey)obj).columnIndex);
+        return compareTo((ColumnIndexKey)obj) == 0;
     }
 
     @Override
@@ -31,4 +34,8 @@ public class ColumnIndexKey extends ColumnKey<Integer> {
         return "Column Index: "+columnIndex;
     }
 
+    @Override
+    public Integer getPriority() {
+        return 1;
+    }
 }
