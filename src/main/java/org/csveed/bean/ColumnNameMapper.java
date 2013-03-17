@@ -37,9 +37,4 @@ public class ColumnNameMapper<T> extends AbstractMapper<T> {
         return new Column().setHeader(row.getHeader());
     }
 
-    @Override
-    public String getColumnIdentifier(BeanProperty beanProperty) {
-        return "name \"" + beanProperty.getColumnName() + "\"";
-    }
-
 }

@@ -36,8 +36,6 @@ public abstract class AbstractMapper<T> {
 
     protected abstract Column getColumn(Row row);
 
-    public abstract String getColumnIdentifier(BeanProperty beanProperty);
-
     public T convert(T bean, Row row, int lineNumber) {
         BeanWrapper beanWrapper = new BeanWrapper(defaultConverters, bean);
 
@@ -58,7 +56,7 @@ public abstract class AbstractMapper<T> {
                 beanWrapper.setProperty(beanProperty, cell);
             } catch (ConversionException err) {
                 String message =
-                        err.getMessage()+" cell "+getColumnIdentifier(beanProperty)+" ["+cell+"] to "+
+                        err.getMessage()+" cell"+currentColumn.getColumnText()+" ["+cell+"] to "+
                         beanProperty.getPropertyName() + ": " + err.getTypeDescription();
                 throw new CsvException(new RowError(message, row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
             }

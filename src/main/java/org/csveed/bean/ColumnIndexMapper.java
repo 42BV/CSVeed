@@ -34,9 +34,4 @@ public class ColumnIndexMapper<T> extends AbstractMapper<T> {
         return new Column();
     }
 
-    @Override
-    public String getColumnIdentifier(BeanProperty beanProperty) {
-        return "index "+Integer.toString(beanProperty.getColumnIndex());
-    }
-
 }

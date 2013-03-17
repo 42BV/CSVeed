@@ -82,6 +82,15 @@ public class Column implements Comparable<Column> {
         return new Column().setHeader(header);
     }
 
+    public String getColumnText() {
+
+        return
+                (columnIndex == -1 ? "" : " index "+columnIndex+" ("+getExcelColumn()+")") +
+                (columnName == null ? "" : " name \""+columnName+"\"");
+//         return "name \"" + beanProperty.getColumnName() + "\"";
+//        return "index "+Integer.toString(beanProperty.getColumnIndex());
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Column)) {
