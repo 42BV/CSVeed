@@ -1,7 +1,9 @@
 package org.csveed.bean;
 
 import org.csveed.common.Column;
+import org.csveed.report.CsvException;
 import org.csveed.test.model.BeanLotsOfIgnores;
+import org.csveed.test.model.BeanWithWrongAnnotation;
 import org.csveed.test.model.BeanWithoutGettersAndSetters;
 import org.junit.Test;
 
@@ -23,6 +25,12 @@ public class BeanParserTest {
         BeanReaderInstructions instructions = beanParser.getBeanInstructions(BeanLotsOfIgnores.class);
         assertNotNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName(new Column("takeThis1")));
         assertNotNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName(new Column("takethis1")));
+    }
+
+    @Test(expected = CsvException.class)
+    public void wrongAnnotation() {
+        BeanParser beanParser = new BeanParser();
+        beanParser.getBeanInstructions(BeanWithWrongAnnotation.class);
     }
 
 }

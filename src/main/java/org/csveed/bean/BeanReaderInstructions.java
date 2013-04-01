@@ -3,6 +3,7 @@ package org.csveed.bean;
 import org.csveed.bean.conversion.Converter;
 
 import java.beans.PropertyEditor;
+import java.util.Locale;
 
 /**
 * These instructions are used to power the {@link BeanReader}. Note that the instructions are also used
@@ -119,6 +120,15 @@ public interface BeanReaderInstructions {
     * @return convenience for chaining
     */
     BeanReaderInstructions setDate(String propertyName, String dateFormat);
+
+    /**
+    * Determines what Locale to apply to the cell value before converting it to a number. This method is called
+    * whenever {@link org.csveed.annotations.CsvLocalizedNumber} is used. The default for Locale is the Locale
+    * of the server.
+    * @param propertyName the name of the property to write the data to
+    * @param locale the Locale to apply for converting the number
+    */
+    BeanReaderInstructions setLocalizedNumber(String propertyName, Locale locale);
 
     /**
     * Determines if the field is required. If so, the cell may not be empty and a

@@ -3,13 +3,14 @@ package org.csveed.bean;
 import org.csveed.bean.conversion.Converter;
 import org.csveed.test.converters.BeanSimpleConverter;
 import org.csveed.test.model.BeanSimple;
+import org.csveed.test.model.BeanVariousNotAnnotated;
 import org.junit.Test;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
+import java.math.BigDecimal;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 public class BeanPropertyTest {
 
@@ -28,6 +29,20 @@ public class BeanPropertyTest {
         assertEquals("name", property.getColumnName());
         assertEquals(propertyDescriptor, property.getPropertyDescriptor());
         assertTrue(property.isRequired());
+    }
+
+    @Test
+    public void numberClass() throws IntrospectionException {
+        BeanProperty property = new BeanProperty();
+        property.setPropertyDescriptor(new PropertyDescriptor("number", BeanVariousNotAnnotated.class));
+        assertNotNull(property.getNumberClass());
+    }
+
+    @Test
+    public void notANumberClass() throws IntrospectionException {
+        BeanProperty property = new BeanProperty();
+        property.setPropertyDescriptor(new PropertyDescriptor("name", BeanSimple.class));
+        assertNull(property.getNumberClass());
     }
 
 }

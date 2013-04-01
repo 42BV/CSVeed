@@ -3,19 +3,15 @@ package org.csveed.api;
 import org.csveed.bean.ColumnNameMapper;
 import org.csveed.report.CsvException;
 import org.csveed.test.converters.BeanSimpleConverter;
-import org.csveed.test.model.BeanCustomComments;
-import org.csveed.test.model.BeanSimple;
-import org.csveed.test.model.BeanVariousNotAnnotated;
-import org.csveed.test.model.BeanWithMultipleStrings;
+import org.csveed.test.model.*;
 import org.junit.Test;
 
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
+import java.util.Locale;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 public class CsvReaderTest {
 
@@ -47,6 +43,18 @@ public class CsvReaderTest {
         Reader reader = new StringReader("");
         CsvReader csvReader = new CsvReaderImpl(reader);
         csvReader.readBean();
+    }
+
+    @Test
+    public void customNumberConversion() {
+        Reader reader = new StringReader(
+                "money\n"+
+                "11.398,22"
+        );
+        CsvReader<BeanWithCustomNumber> beanReader = new CsvReaderImpl<BeanWithCustomNumber>(reader, BeanWithCustomNumber.class)
+                .setLocalizedNumber("number", Locale.GERMANY);
+        BeanWithCustomNumber bean = beanReader.readBean();
+        assertEquals(11398.22, bean.getNumber());
     }
 
     @Test

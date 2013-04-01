@@ -5,6 +5,7 @@ import org.csveed.common.Column;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Locale;
 
 public class BeanParser {
 
@@ -43,6 +44,8 @@ public class BeanParser {
                 parseCsvConverter(propertyName, (CsvConverter)annotation);
             } else if (annotation instanceof CsvDate) {
                 parseCsvDate(propertyName, (CsvDate)annotation);
+            } else if (annotation instanceof CsvLocalizedNumber) {
+                parseCsvLocalizedNumber(propertyName, (CsvLocalizedNumber) annotation);
             } else if (annotation instanceof CsvIgnore) {
                 this.beanReaderInstructions.ignoreProperty(propertyName);
                 return;
@@ -51,6 +54,18 @@ public class BeanParser {
         this.beanReaderInstructions.mapColumnNameToProperty(columnName, propertyName);
         this.beanReaderInstructions.mapColumnIndexToProperty(currentColumn.getColumnIndex(), propertyName);
         currentColumn = currentColumn.nextColumn();
+    }
+
+    private void parseCsvLocalizedNumber(String propertyName, CsvLocalizedNumber annotation) {
+        final Locale locale;
+        if (annotation.country().equals("")) {
+            locale = new Locale(annotation.language());
+        } else if (annotation.variant().equals("")) {
+            locale = new Locale(annotation.language(), annotation.country());
+        } else {
+            locale = new Locale(annotation.language(), annotation.country(), annotation.variant());
+        }
+        this.beanReaderInstructions.setLocalizedNumber(propertyName, locale);
     }
 
     private void parseCsvFile(CsvFile csvFile) {

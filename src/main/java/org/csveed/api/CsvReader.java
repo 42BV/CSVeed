@@ -5,6 +5,7 @@ import org.csveed.bean.conversion.Converter;
 import org.csveed.row.HeaderImpl;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
 * <p>
@@ -175,6 +176,15 @@ public interface CsvReader<T> {
     * @return convenience for chaining
     */
     CsvReader<T> setDate(String propertyName, String dateFormat);
+
+    /**
+    * Determines what Locale to apply to the cell value before converting it to a number. This method is called
+    * whenever {@link org.csveed.annotations.CsvLocalizedNumber} is used. The default for Locale is the Locale
+    * of the server.
+    * @param propertyName the name of the property to write the data to
+    * @param locale the Locale to apply for converting the number
+    */
+    CsvReader<T> setLocalizedNumber(String propertyName, Locale locale);
 
     /**
     * Determines if the field is required. If so, the cell may not be empty and a

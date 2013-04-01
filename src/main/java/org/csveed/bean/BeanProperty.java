@@ -19,6 +19,14 @@ public class BeanProperty {
 
     private boolean required = false;
 
+    @SuppressWarnings("unchecked")
+    public Class<? extends Number> getNumberClass() {
+        if (Number.class.isAssignableFrom(propertyDescriptor.getPropertyType())) {
+            return (Class<? extends Number>)propertyDescriptor.getPropertyType();
+        }
+        return null;
+    }
+
     public PropertyDescriptor getPropertyDescriptor() {
         return propertyDescriptor;
     }

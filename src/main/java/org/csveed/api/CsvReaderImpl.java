@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Reader;
 import java.util.List;
+import java.util.Locale;
 
 public class CsvReaderImpl<T> implements CsvReader<T> {
 
@@ -131,6 +132,12 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
     @Override
     public CsvReader<T> setDate(String propertyName, String dateFormat) {
         getBeanReader().getBeanReaderInstructions().setDate(propertyName, dateFormat);
+        return this;
+    }
+
+    @Override
+    public CsvReader<T> setLocalizedNumber(String propertyName, Locale locale) {
+        getBeanReader().getBeanReaderInstructions().setLocalizedNumber(propertyName, locale);
         return this;
     }
 

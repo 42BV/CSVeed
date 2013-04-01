@@ -1,6 +1,7 @@
 package org.csveed.bean;
 
 import org.csveed.bean.conversion.Converter;
+import org.csveed.bean.conversion.CustomNumberConverter;
 import org.csveed.bean.conversion.DateConverter;
 import org.csveed.bean.conversion.EnumConverter;
 import org.csveed.common.Column;
@@ -11,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import java.beans.*;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.*;
 
 public class BeanProperties implements Iterable<BeanProperty> {
@@ -77,6 +80,17 @@ public class BeanProperties implements Iterable<BeanProperty> {
 
     public void setDate(String propertyName, String formatText) {
         setConverter(propertyName, new DateConverter(formatText, true));
+    }
+
+    public void setLocalizedNumber(String propertyName, Locale locale) {
+        Class<? extends Number> numberClass = get(propertyName).getNumberClass();
+        if (numberClass == null) {
+            throw new CsvException(new GeneralError(
+                    "Property "+beanClass.getName()+"."+propertyName+" is not a java.lang.Number"
+            ));
+        }
+        CustomNumberConverter converter = new CustomNumberConverter(numberClass, NumberFormat.getNumberInstance(locale), true);
+        setConverter(propertyName, converter);
     }
 
     public void setConverter(String propertyName, Converter converter) {

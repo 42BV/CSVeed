@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
 
@@ -131,6 +132,12 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
     @Override
     public BeanReaderInstructions setDate(String propertyName, String dateFormat) {
         this.getProperties().setDate(propertyName, dateFormat);
+        return this;
+    }
+
+    @Override
+    public BeanReaderInstructions setLocalizedNumber(String propertyName, Locale locale) {
+        this.getProperties().setLocalizedNumber(propertyName, locale);
         return this;
     }
 

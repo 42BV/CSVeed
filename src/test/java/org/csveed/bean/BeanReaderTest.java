@@ -72,6 +72,17 @@ public class BeanReaderTest {
     }
 
     @Test
+    public void customNumberConversion() {
+        Reader reader = new StringReader(
+            "money\n"+
+            "11.398,22"
+        );
+        BeanReader<BeanWithCustomNumberAnnotated> beanReader = new BeanReaderImpl<BeanWithCustomNumberAnnotated>(reader, BeanWithCustomNumberAnnotated.class);
+        BeanWithCustomNumberAnnotated bean = beanReader.readBean();
+        assertEquals(11398.22, bean.getNumber());
+    }
+
+    @Test
     public void getBeansManualMapping() {
         Reader reader = new StringReader(
             "a;c;b\n"+
