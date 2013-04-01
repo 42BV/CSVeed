@@ -3,10 +3,8 @@ package org.csveed.bean.conversion;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
-import java.util.Currency;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
+import java.text.NumberFormat;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class DefaultConverters {
@@ -32,19 +30,19 @@ public class DefaultConverters {
         addConverter(Character.class, new CharacterConverter(true));
         addConverter(boolean.class, new CustomBooleanConverter(false));
         addConverter(Boolean.class, new CustomBooleanConverter(true));
-        addConverter(byte.class, new CustomNumberConverter(Byte.class, false));
-        addConverter(Byte.class, new CustomNumberConverter(Byte.class, true));
-        addConverter(short.class, new CustomNumberConverter(Short.class, false));
-        addConverter(Short.class, new CustomNumberConverter(Short.class, true));
-        addConverter(int.class, new CustomNumberConverter(Integer.class, false));
-        addConverter(Integer.class, new CustomNumberConverter(Integer.class, true));
-        addConverter(long.class, new CustomNumberConverter(Long.class, false));
-        addConverter(Long.class, new CustomNumberConverter(Long.class, true));
-        addConverter(float.class, new CustomNumberConverter(Float.class, false));
-        addConverter(Float.class, new CustomNumberConverter(Float.class, true));
-        addConverter(double.class, new CustomNumberConverter(Double.class, false));
-        addConverter(Double.class, new CustomNumberConverter(Double.class, true));
-        addConverter(BigDecimal.class, new CustomNumberConverter(BigDecimal.class, true));
+        addConverter(byte.class, new CustomNumberConverter(Byte.class, NumberFormat.getNumberInstance(Locale.US), false));
+        addConverter(Byte.class, new CustomNumberConverter(Byte.class, NumberFormat.getNumberInstance(Locale.US), true));
+        addConverter(short.class, new CustomNumberConverter(Short.class, NumberFormat.getNumberInstance(Locale.US), false));
+        addConverter(Short.class, new CustomNumberConverter(Short.class, NumberFormat.getNumberInstance(Locale.US), true));
+        addConverter(int.class, new CustomNumberConverter(Integer.class, NumberFormat.getNumberInstance(Locale.US), false));
+        addConverter(Integer.class, new CustomNumberConverter(Integer.class, NumberFormat.getNumberInstance(Locale.US), true));
+        addConverter(long.class, new CustomNumberConverter(Long.class, NumberFormat.getNumberInstance(Locale.US), false));
+        addConverter(Long.class, new CustomNumberConverter(Long.class, NumberFormat.getNumberInstance(Locale.US), true));
+        addConverter(float.class, new CustomNumberConverter(Float.class, NumberFormat.getNumberInstance(Locale.US), false));
+        addConverter(Float.class, new CustomNumberConverter(Float.class, NumberFormat.getNumberInstance(Locale.US), true));
+        addConverter(double.class, new CustomNumberConverter(Double.class, NumberFormat.getNumberInstance(Locale.US), false));
+        addConverter(Double.class, new CustomNumberConverter(Double.class, NumberFormat.getNumberInstance(Locale.US), true));
+        addConverter(BigDecimal.class, new CustomNumberConverter(BigDecimal.class, NumberFormat.getNumberInstance(Locale.US), true));
         addConverter(BigInteger.class, new CustomNumberConverter(BigInteger.class, true));
         addConverter(String.class, new StringConverter());
     }
