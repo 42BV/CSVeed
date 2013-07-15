@@ -8,7 +8,7 @@ simply add the following dependency:
         <dependency>
             <groupId>org.csveed</groupId>
             <artifactId>csveed</artifactId>
-            <version>0.3.0</version>
+            <version>0.3.1</version>
         </dependency>
 ```
 
