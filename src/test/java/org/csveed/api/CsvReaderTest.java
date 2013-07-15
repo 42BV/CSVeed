@@ -6,14 +6,28 @@ import org.csveed.test.converters.BeanSimpleConverter;
 import org.csveed.test.model.*;
 import org.junit.Test;
 
-import java.io.Reader;
-import java.io.StringReader;
+import java.io.*;
 import java.util.List;
 import java.util.Locale;
 
 import static junit.framework.Assert.*;
 
 public class CsvReaderTest {
+
+    @Test
+    public void WindowsCRLF0x0d0x0a() throws IOException {
+        char[] file = new char[] {
+            'n', 'a', 'm', 'e', 0x0d, 0x0a,
+            'A', 'l', 'p', 'h', 'a', 0x0d, 0x0a,
+            'B', 'e', 't', 'a', 0x0d, 0x0a,
+            'G', 'a', 'm', 'm', 'a'
+        };
+        String fileText = new String(file);
+        Reader reader = new StringReader(fileText);
+        CsvReader<BeanSimple> csvReader = new CsvReaderImpl<BeanSimple>(reader, BeanSimple.class);
+        final List<BeanSimple> beans = csvReader.readBeans();
+        assertEquals(3, beans.size());
+    }
 
     @Test(expected = CsvException.class)
     public void doNotSkipCommentLineMustCauseColumnCheckToFail() {

@@ -28,6 +28,8 @@ public class ParseStateMachine {
 
     private boolean trim = true;
 
+    private boolean trash = false;
+
     private Column currentColumn = new Column();
 
     private int currentLine = 1;
@@ -42,11 +44,18 @@ public class ParseStateMachine {
         return this.currentColumn.getColumnIndex();
     }
 
+    public boolean isTrash() {
+        return this.trash;
+    }
+
     public String offerSymbol(int symbolCharacter) throws ParseException {
+
+        this.trash = false;
 
         EncounteredSymbol symbol = symbolMapping.find(symbolCharacter, state);
 
         if (symbol.isTrash()) {
+            this.trash = true;
             return null;
         }
 

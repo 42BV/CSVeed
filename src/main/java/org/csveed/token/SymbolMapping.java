@@ -112,6 +112,7 @@ public class SymbolMapping {
         }
         if (symbol == EOL_SYMBOL) {
             if (acceptedEndOfLine == 0) {
+                LOG.info("- Triggering EOL character: "+character);
                 acceptedEndOfLine = (char)character;
             }
             if (acceptedEndOfLine != character) {

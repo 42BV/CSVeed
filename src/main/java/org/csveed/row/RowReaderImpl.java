@@ -119,6 +119,9 @@ public class RowReaderImpl implements RowReader {
                 } catch (ParseException e) {
                     throw new CsvException(new RowError(e.getMessage(), line.reportOnEndOfLine(), getCurrentLine()));
                 }
+                if (stateMachine.isTrash()) {
+                    continue;
+                }
                 if (stateMachine.isTokenStart()) {
                     line.markStartOfColumn();
                 }
