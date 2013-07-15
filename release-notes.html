@@ -15,7 +15,7 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <title>CSVeed / Manual / API</title>
+    <title>CSVeed / Design Choices</title>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -45,7 +45,14 @@
     <div class="inner clearfix">
         <section id="main-content">
 
-            <h1>API</h1>
+            <h1>Release notes</h1>
+
+            <h1>v0.3.1</h1>
+            <ul>
+                <li><b><a href="https://github.com/robert-bor/CSVeed/issues/30">Locale-specific doubles</a></b>; attributes can be annotated for a specific locale, for example @CsvLocalizedNumber(language = "de", country="DE") for Germany, meaning that 29,81 is parsed as a double</li>
+                <li><b><a href="https://github.com/robert-bor/CSVeed/issues/34">1-based logic</a></b>; For users Excel is 1-based, meaning that it will be confusing if an error points to a line, which is not the same line number used in Excel. CSVeed now conforms to the Excel line numbering</li>
+                <li><b><a href="https://github.com/robert-bor/CSVeed/issues/37">Windows carriage return / line feed</a></b>; there was a bug with Windows CRLF (ie, 0D 0A), resulting in files with those sequence to be unreadable. This problem has been fixed.</li>
+            </ul>
 
         </section>
 
