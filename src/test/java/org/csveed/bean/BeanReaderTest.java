@@ -16,6 +16,18 @@ import static junit.framework.Assert.assertNull;
 public class BeanReaderTest {
 
     @Test
+    public void enumMayBeNull() {
+        Reader reader = new StringReader(
+                "name;parseState\n"+
+                "alpha;\"FIRST_CHAR_INSIDE_QUOTED_FIELD\"\n"+
+                "beta;\n");
+        BeanReader<BeanWithEnumAndMore> beanReader = new BeanReaderImpl<BeanWithEnumAndMore>(reader, BeanWithEnumAndMore.class);
+        List<BeanWithEnumAndMore> beans = beanReader.readBeans();
+        assertEquals(2, beans.size());
+        assertEquals(null, beans.get(1).getParseState());
+    }
+
+    @Test
     public void convertToEnum() {
         Reader reader = new StringReader(
                 "parseState\n"+
