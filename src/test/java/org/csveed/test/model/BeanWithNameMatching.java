@@ -13,7 +13,7 @@ public class BeanWithNameMatching {
     @CsvCell(columnName = "street")
     public String line1;
 
-    @CsvCell(columnName = "city")
+    @CsvCell(columnName = "CITY")
     public String line2;
 
     public String getLine1() {
