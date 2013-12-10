@@ -21,7 +21,7 @@ public class HeaderImpl implements Header {
         Column currentColumn = new Column();
         for (String headerCell : header) {
             this.indexToName.put(currentColumn, headerCell);
-            this.nameToIndex.put(headerCell, currentColumn);
+            this.nameToIndex.put(headerCell.toLowerCase(), currentColumn);
             currentColumn = currentColumn.nextColumn();
         }
     }

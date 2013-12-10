@@ -199,7 +199,7 @@ public class BeanReaderTest {
     @Test
     public void nameMatching() {
         Reader reader = new StringReader(
-            "street;city;postal code;ignore this\n"+
+            "street;CITY;postal code;ignore this\n"+
             "\"Some street\";\"Some city\";\"Some postal code\";\"Some ignoring\""
         );
         BeanReaderImpl<BeanWithNameMatching> beanReader = new BeanReaderImpl<BeanWithNameMatching>(reader, BeanWithNameMatching.class);
