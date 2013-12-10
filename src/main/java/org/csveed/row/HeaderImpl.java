@@ -20,8 +20,9 @@ public class HeaderImpl implements Header {
         this.header = row;
         Column currentColumn = new Column();
         for (String headerCell : header) {
-            this.indexToName.put(currentColumn, headerCell);
-            this.nameToIndex.put(headerCell.toLowerCase(), currentColumn);
+            String columnName = headerCell.toLowerCase();
+            this.indexToName.put(currentColumn, columnName);
+            this.nameToIndex.put(columnName, currentColumn);
             currentColumn = currentColumn.nextColumn();
         }
     }
