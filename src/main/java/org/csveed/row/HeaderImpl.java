@@ -20,9 +20,8 @@ public class HeaderImpl implements Header {
         this.header = row;
         Column currentColumn = new Column();
         for (String headerCell : header) {
-            String columnName = headerCell.toLowerCase();
-            this.indexToName.put(currentColumn, columnName);
-            this.nameToIndex.put(columnName, currentColumn);
+            this.indexToName.put(currentColumn, headerCell);
+            this.nameToIndex.put(headerCell.toLowerCase(), currentColumn);
             currentColumn = currentColumn.nextColumn();
         }
     }
@@ -41,7 +40,7 @@ public class HeaderImpl implements Header {
     }
 
     public int getIndex(String columnName) {
-        Column column = this.nameToIndex.get(columnName);
+        Column column = this.nameToIndex.get(columnName.toLowerCase());
         if (column == null) {
             throw new CsvException(new GeneralError("No column index found for name "+columnName));
         }
