@@ -170,7 +170,13 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
         getBeanReader().getBeanReaderInstructions().mapColumnNameToProperty(columnName, propertyName);
         return this;
     }
-    
+
+    @Override
+    public CsvReader<T> setStartIndexDynamicColumns(int startIndex) {
+        getBeanReader().getBeanReaderInstructions().setStartIndexDynamicColumns(startIndex);
+        return this;
+    }
+
     private BeanReaderImpl<T> getBeanReader() {
         if (this.beanReader == null) {
             throw new CsvException(new GeneralError(

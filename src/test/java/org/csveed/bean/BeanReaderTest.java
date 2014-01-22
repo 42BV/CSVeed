@@ -16,6 +16,17 @@ import static junit.framework.Assert.assertNull;
 public class BeanReaderTest {
 
     @Test
+    public void dynamicColumns() {
+        Reader reader = new StringReader(
+                "commodity;language;14-01;14-02;14-03\n"+
+                "corn;NL;1;2;3\n"+
+                "corn;BE;4;5;6\n");
+        BeanReader<BeanCommodity> beanReader = new BeanReaderImpl<BeanCommodity>(reader, BeanCommodity.class);
+        List<BeanCommodity> commodities = beanReader.readBeans();
+        assertEquals(6, commodities.size());
+    }
+
+    @Test
     public void enumMayBeNull() {
         Reader reader = new StringReader(
                 "name;parseState\n"+

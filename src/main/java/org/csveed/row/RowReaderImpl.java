@@ -68,6 +68,10 @@ public class RowReaderImpl implements RowReader {
         return header == null && rowReaderInstructions.isUseHeader() ? readHeader() : header;
     }
 
+    public int getMaxNumberOfColumns() {
+        return this.maxNumberOfColumns;
+    }
+
     public HeaderImpl readHeader() {
         if (header != null) {
             return header;

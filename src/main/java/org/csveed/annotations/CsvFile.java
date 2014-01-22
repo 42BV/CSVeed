@@ -77,6 +77,12 @@ public @interface CsvFile {
     boolean skipCommentLines() default true;
 
     /**
+    * The column where the dynamic headers start. All columns following this column are automatically assumed
+    * to be dynamic also.
+    */
+    int startIndexDynamicColumns() default -1;
+
+    /**
     * Determines the strategy to employ for mapping between CSV and Bean. The default will be to map on the
     * basis of the column index
     * @return the mapping strategy

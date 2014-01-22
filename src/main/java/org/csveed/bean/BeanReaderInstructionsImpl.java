@@ -24,6 +24,8 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
 
     private boolean settingsLogged = false;
 
+    private int startIndexDynamicColumns = -1;
+
     public BeanReaderInstructionsImpl(Class beanClass) {
         this.properties = new BeanProperties(beanClass);
         this.beanClass = beanClass;
@@ -171,12 +173,22 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
         return this;
     }
 
+    @Override
+    public BeanReaderInstructions setStartIndexDynamicColumns(int startIndex) {
+        this.startIndexDynamicColumns = startIndex;
+        return this;
+    }
+
     public Class<? extends AbstractMapper> getMappingStrategy() {
         return this.mappingStrategy;
     }
 
     public BeanProperties getProperties() {
         return this.properties;
+    }
+
+    public int getStartIndexDynamicColumns() {
+        return this.startIndexDynamicColumns;
     }
 
     public Class getBeanClass() {

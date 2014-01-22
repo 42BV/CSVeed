@@ -80,7 +80,8 @@ public class BeanParser {
             .setStartRow(csvFile.startRow())
             .setUseHeader(csvFile.useHeader())
             .skipEmptyLines(csvFile.skipEmptyLines())
-            .skipCommentLines(csvFile.skipCommentLines());
+            .skipCommentLines(csvFile.skipCommentLines())
+            .setStartIndexDynamicColumns(csvFile.startIndexDynamicColumns());
     }
 
     private void parseCsvDate(String propertyName, CsvDate csvDate) {

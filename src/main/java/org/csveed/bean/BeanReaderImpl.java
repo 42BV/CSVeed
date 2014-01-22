@@ -19,6 +19,10 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private AbstractMapper<T> mapper;
 
+    private int currentDynamicColumn;
+
+    private Row unmappedRow;
+
     public BeanReaderImpl(Reader reader, Class<T> beanClass) {
         this(reader, new BeanParser().getBeanInstructions(beanClass));
     }
@@ -26,6 +30,11 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     public BeanReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
         this.beanReaderInstructions = (BeanReaderInstructionsImpl)beanReaderInstructions;
         this.rowReader = new RowReaderImpl(reader, this.beanReaderInstructions.getRowReaderInstructions());
+        this.currentDynamicColumn = getStartIndexDynamicColumns();
+    }
+
+    protected int getStartIndexDynamicColumns() {
+        return beanReaderInstructions.getStartIndexDynamicColumns();
     }
 
     public AbstractMapper<T> getMapper() {
@@ -49,12 +58,19 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     public T readBean() {
         logSettings();
-        Row unmappedRow = rowReader.readRow();
+        if (currentDynamicColumn == ((RowReaderImpl)rowReader).getMaxNumberOfColumns()) {
+            currentDynamicColumn = getStartIndexDynamicColumns();
+        }
+        if (currentDynamicColumn == -1 || currentDynamicColumn == getStartIndexDynamicColumns()) {
+            unmappedRow = rowReader.readRow();
+        }
         if (unmappedRow == null) {
             return null;
         }
         getMapper().verifyHeader(unmappedRow);
-        return getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine());
+        T bean = getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine());
+        currentDynamicColumn += currentDynamicColumn == -1 ? 0 : 1;
+        return bean;
     }
 
     protected void logSettings() {
