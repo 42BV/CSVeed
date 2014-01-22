@@ -29,19 +29,27 @@ public abstract class AbstractMapper<T> {
             return;
         }
         for (Column key : keys()) {
-            checkKey(row, key);
+            if (!getBeanProperty(key).isDynamicColumnProperty()) {
+                checkKey(row, key);
+            }
         }
         verified = true;
     }
 
     protected abstract Column getColumn(Row row);
 
-    public T convert(T bean, Row row, int lineNumber) {
+    public T convert(T bean, Row row, int lineNumber, Column currentDynamicColumn) {
         BeanWrapper beanWrapper = new BeanWrapper(defaultConverters, bean);
 
         Column currentColumn = null;
         for (String cell : row) {
             currentColumn = currentColumn == null ? getColumn(row) : currentColumn.nextColumn();
+
+            if (currentDynamicColumn != null && currentColumn.getColumnIndex() == currentDynamicColumn.getColumnIndex()) {
+                setDynamicColumnProperties(row, lineNumber, beanWrapper, currentColumn);
+                continue;
+            }
+
             BeanProperty beanProperty = getBeanProperty(currentColumn);
             if (beanProperty == null) {
                 continue;
@@ -52,16 +60,30 @@ public abstract class AbstractMapper<T> {
                                 "\" is required and may not be empty or null",
                         row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
             }
-            try {
-                beanWrapper.setProperty(beanProperty, cell);
-            } catch (ConversionException err) {
-                String message =
-                        err.getMessage()+" cell"+currentColumn.getColumnText()+" ["+cell+"] to "+
-                        beanProperty.getPropertyName() + ": " + err.getTypeDescription();
-                throw new CsvException(new RowError(message, row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
-            }
+            setBeanProperty(row, lineNumber, beanWrapper, currentColumn, cell, beanProperty);
         }
         return bean;
+    }
+
+    private void setDynamicColumnProperties(Row row, int lineNumber, BeanWrapper beanWrapper, Column currentColumn) {
+        String dynamicHeaderName = row.getHeader().getName(currentColumn.getColumnIndex());
+        BeanProperty headerNameProperty = beanReaderInstructions.getProperties().getHeaderNameProperty();
+        setBeanProperty(row, lineNumber, beanWrapper, currentColumn, dynamicHeaderName, headerNameProperty);
+
+        String dynamicHeaderValue = row.get(currentColumn.getColumnIndex() - 1);
+        BeanProperty headerValueProperty = beanReaderInstructions.getProperties().getHeaderValueProperty();
+        setBeanProperty(row, lineNumber, beanWrapper, currentColumn, dynamicHeaderValue, headerValueProperty);
+    }
+
+    private void setBeanProperty(Row row, int lineNumber, BeanWrapper beanWrapper, Column currentColumn, String cell, BeanProperty beanProperty) {
+        try {
+            beanWrapper.setProperty(beanProperty, cell);
+        } catch (ConversionException err) {
+            String message =
+                    err.getMessage()+" cell"+currentColumn.getColumnText()+" ["+cell+"] to "+
+                    beanProperty.getPropertyName() + ": " + err.getTypeDescription();
+            throw new CsvException(new RowError(message, row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
+        }
     }
 
     public void setBeanReaderInstructions(BeanReaderInstructionsImpl beanReaderInstructions) {

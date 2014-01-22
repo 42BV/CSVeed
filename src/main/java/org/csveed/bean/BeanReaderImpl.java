@@ -1,5 +1,6 @@
 package org.csveed.bean;
 
+import org.csveed.common.Column;
 import org.csveed.report.GeneralError;
 import org.csveed.row.HeaderImpl;
 import org.csveed.row.RowReader;
@@ -19,7 +20,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private AbstractMapper<T> mapper;
 
-    private int currentDynamicColumn;
+    private Column currentDynamicColumn;
 
     private Row unmappedRow;
 
@@ -30,10 +31,17 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     public BeanReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
         this.beanReaderInstructions = (BeanReaderInstructionsImpl)beanReaderInstructions;
         this.rowReader = new RowReaderImpl(reader, this.beanReaderInstructions.getRowReaderInstructions());
-        this.currentDynamicColumn = getStartIndexDynamicColumns();
+        resetStartIndexDynamicColumns();
     }
 
-    protected int getStartIndexDynamicColumns() {
+    protected void resetStartIndexDynamicColumns() {
+        if (getStartIndexDynamicColumns() == null) {
+            return;
+        }
+        this.currentDynamicColumn = new Column(getStartIndexDynamicColumns());
+    }
+
+    protected Column getStartIndexDynamicColumns() {
         return beanReaderInstructions.getStartIndexDynamicColumns();
     }
 
@@ -58,18 +66,20 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     public T readBean() {
         logSettings();
-        if (currentDynamicColumn == ((RowReaderImpl)rowReader).getMaxNumberOfColumns()) {
-            currentDynamicColumn = getStartIndexDynamicColumns();
+        if (currentDynamicColumn != null && currentDynamicColumn.getColumnIndex() > ((RowReaderImpl)rowReader).getMaxNumberOfColumns()) {
+            resetStartIndexDynamicColumns();
         }
-        if (currentDynamicColumn == -1 || currentDynamicColumn == getStartIndexDynamicColumns()) {
+        if (currentDynamicColumn == null || currentDynamicColumn.getColumnIndex() == getStartIndexDynamicColumns().getColumnIndex()) {
             unmappedRow = rowReader.readRow();
         }
         if (unmappedRow == null) {
             return null;
         }
         getMapper().verifyHeader(unmappedRow);
-        T bean = getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine());
-        currentDynamicColumn += currentDynamicColumn == -1 ? 0 : 1;
+        T bean = getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine(), currentDynamicColumn);
+        if (currentDynamicColumn != null) {
+            currentDynamicColumn = currentDynamicColumn.nextColumn();
+        }
         return bean;
     }
 

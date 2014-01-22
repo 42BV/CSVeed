@@ -46,6 +46,10 @@ public class BeanParser {
                 parseCsvDate(propertyName, (CsvDate)annotation);
             } else if (annotation instanceof CsvLocalizedNumber) {
                 parseCsvLocalizedNumber(propertyName, (CsvLocalizedNumber) annotation);
+            } else if (annotation instanceof CsvHeaderName) {
+                this.beanReaderInstructions.setHeaderNameToProperty(propertyName);
+            } else if (annotation instanceof CsvHeaderValue) {
+                this.beanReaderInstructions.setHeaderValueToProperty(propertyName);
             } else if (annotation instanceof CsvIgnore) {
                 this.beanReaderInstructions.ignoreProperty(propertyName);
                 return;

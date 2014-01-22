@@ -100,6 +100,15 @@ public interface BeanReaderInstructions {
     BeanReaderInstructions skipCommentLines(boolean skip);
 
     /**
+    * A file can have a special layout with a dynamic number of columns. If the intention is to duplicate rows
+    * for every separate column, this is the method you require. It will remember the start position of the
+    * dynamic columns and treat every column after that as dynamic. For every dynamic column a row will be
+    * created. If a bean has fields annotated with @CsvHeaderName or @CsvHeaderValue, it will store the
+    * values of the header or the cell for that index column in the fields.
+    */
+    BeanReaderInstructions setStartIndexDynamicColumns(int startIndex);
+
+    /**
     * Determines which mapping strategy is to be employed for mapping cells to bean properties. This
     * method is called whenever {@link org.csveed.annotations.CsvFile#mappingStrategy()} is
     * used. The default mapping strategy is {@link org.csveed.bean.ColumnIndexMapper}, which
@@ -184,13 +193,18 @@ public interface BeanReaderInstructions {
     BeanReaderInstructions mapColumnNameToProperty(String columnName, String propertyName);
 
     /**
-    * A file can have a special layout with a dynamic number of columns. If the intention is to duplicate rows
-    * for every separate column, this is the method you require. It will remember the start position of the
-    * dynamic columns and treat every column after that as dynamic. For every dynamic column a row will be
-    * created. If a bean has fields annotated with @CsvHeaderName or @CsvHeaderValue, it will store the
-    * values of the header or the cell for that index column in the fields.
+    * Determines what property will receive the header name in the currently active dynamic column
+    * @param propertyName property in which the active dynamic header name must be stored
+    * @return convenience for chaining
     */
-    BeanReaderInstructions setStartIndexDynamicColumns(int startIndex);
+    BeanReaderInstructions setHeaderNameToProperty(String propertyName);
+
+    /**
+    * Determines what property will receive the cell value in the currently active dynamic column
+    * @param propertyName property in which the active dynamic column value must be stored
+    * @return convenience for chaining
+    */
+    BeanReaderInstructions setHeaderValueToProperty(String propertyName);
 
     Class getBeanClass();
 

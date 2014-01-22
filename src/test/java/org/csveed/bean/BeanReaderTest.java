@@ -24,6 +24,20 @@ public class BeanReaderTest {
         BeanReader<BeanCommodity> beanReader = new BeanReaderImpl<BeanCommodity>(reader, BeanCommodity.class);
         List<BeanCommodity> commodities = beanReader.readBeans();
         assertEquals(6, commodities.size());
+        assertBeanCommodity(commodities.get(0), "corn", "NL", "14-01", 1);
+        assertBeanCommodity(commodities.get(1), "corn", "NL", "14-02", 2);
+        assertBeanCommodity(commodities.get(2), "corn", "NL", "14-03", 3);
+        assertBeanCommodity(commodities.get(3), "corn", "BE", "14-01", 4);
+        assertBeanCommodity(commodities.get(4), "corn", "BE", "14-02", 5);
+        assertBeanCommodity(commodities.get(5), "corn", "BE", "14-03", 6);
+    }
+
+    protected void assertBeanCommodity(BeanCommodity beanCommodity, String expectedCommodity, String expectedLanguage,
+                                       String expectedDay, int expectedAmount) {
+        assertEquals(expectedCommodity, beanCommodity.getCommodity());
+        assertEquals(expectedLanguage, beanCommodity.getLanguage());
+        assertEquals(expectedDay, beanCommodity.getDay());
+        assertEquals(expectedAmount, beanCommodity.getAmount());
     }
 
     @Test

@@ -24,6 +24,10 @@ public class Column implements Comparable<Column> {
         this(FIRST_COLUMN_INDEX);
     }
 
+    public Column(Column column) {
+        setColumnIndex(column.getColumnIndex());
+    }
+
     public Column(int columnIndex) {
         if (columnIndex <= 0) {
             throw new CsvException(new GeneralError("Column index cannot be set at 0 or lower. Column indexes are 1-based"));

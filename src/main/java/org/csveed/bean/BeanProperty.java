@@ -19,6 +19,8 @@ public class BeanProperty {
 
     private boolean required = false;
 
+    private boolean dynamicColumnProperty = false;
+
     @SuppressWarnings("unchecked")
     public Class<? extends Number> getNumberClass() {
         if (Number.class.isAssignableFrom(propertyDescriptor.getPropertyType())) {
@@ -77,6 +79,14 @@ public class BeanProperty {
 
     public String getPropertyName() {
         return propertyDescriptor.getName();
+    }
+
+    public void setDynamicColumnProperty(boolean dynamicColumnProperty) {
+        this.dynamicColumnProperty = dynamicColumnProperty;
+    }
+
+    public boolean isDynamicColumnProperty() {
+        return this.dynamicColumnProperty;
     }
 
     @Override

@@ -1,22 +1,21 @@
 package org.csveed.test.model;
 
 import org.csveed.annotations.CsvFile;
-import org.csveed.annotations.CsvIgnore;
+import org.csveed.annotations.CsvHeaderName;
+import org.csveed.annotations.CsvHeaderValue;
 import org.csveed.bean.ColumnNameMapper;
 
-@CsvFile(mappingStrategy = ColumnNameMapper.class, startIndexDynamicColumns = 2)
+@CsvFile(mappingStrategy = ColumnNameMapper.class, startIndexDynamicColumns = 3)
 public class BeanCommodity {
 
     private String commodity;
 
     private String language;
 
-    // @CsvHeaderName
-    @CsvIgnore
+    @CsvHeaderName
     private String day;
 
-    // @CsvHeaderValue
-    @CsvIgnore
+    @CsvHeaderValue
     private int amount;
 
     public String getCommodity() {

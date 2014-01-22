@@ -1,6 +1,7 @@
 package org.csveed.bean;
 
 import org.csveed.bean.conversion.Converter;
+import org.csveed.common.Column;
 import org.csveed.row.RowReaderInstructions;
 import org.csveed.row.RowReaderInstructionsImpl;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
 
     private boolean settingsLogged = false;
 
-    private int startIndexDynamicColumns = -1;
+    private Column startIndexDynamicColumns = null;
 
     public BeanReaderInstructionsImpl(Class beanClass) {
         this.properties = new BeanProperties(beanClass);
@@ -174,8 +175,20 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
     }
 
     @Override
+    public BeanReaderInstructions setHeaderNameToProperty(String propertyName) {
+        this.getProperties().setHeaderNameProperty(propertyName);
+        return this;
+    }
+
+    @Override
+    public BeanReaderInstructions setHeaderValueToProperty(String propertyName) {
+        this.getProperties().setHeaderValueProperty(propertyName);
+        return this;
+    }
+
+    @Override
     public BeanReaderInstructions setStartIndexDynamicColumns(int startIndex) {
-        this.startIndexDynamicColumns = startIndex;
+        this.startIndexDynamicColumns = startIndex == 0 ? null : new Column(startIndex);
         return this;
     }
 
@@ -187,7 +200,7 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
         return this.properties;
     }
 
-    public int getStartIndexDynamicColumns() {
+    public Column getStartIndexDynamicColumns() {
         return this.startIndexDynamicColumns;
     }
 

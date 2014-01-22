@@ -27,6 +27,9 @@ public class BeanProperties implements Iterable<BeanProperty> {
 
     private Class beanClass;
 
+    private BeanProperty headerValueProperty;
+    private BeanProperty headerNameProperty;
+
     public BeanProperties(Class beanClass) {
         this.beanClass = beanClass;
         parseBean(beanClass);
@@ -113,6 +116,24 @@ public class BeanProperties implements Iterable<BeanProperty> {
         properties.remove(property);
         removeFromColumnIndex(property);
         removeFromColumnName(property);
+    }
+
+    public void setHeaderValueProperty(String propertyName) {
+        this.headerValueProperty = get(propertyName);
+        this.headerValueProperty.setDynamicColumnProperty(true);
+    }
+
+    public void setHeaderNameProperty(String propertyName) {
+        this.headerNameProperty = get(propertyName);
+        this.headerNameProperty.setDynamicColumnProperty(true);
+    }
+
+    public BeanProperty getHeaderValueProperty() {
+        return this.headerValueProperty;
+    }
+
+    public BeanProperty getHeaderNameProperty() {
+        return this.headerNameProperty;
     }
 
     public void mapIndexToProperty(int columnIndex, String propertyName) {

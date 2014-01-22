@@ -177,6 +177,18 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
         return this;
     }
 
+    @Override
+    public CsvReader<T> setHeaderNameToProperty(String propertyName) {
+        getBeanReader().getBeanReaderInstructions().setHeaderNameToProperty(propertyName);
+        return this;
+    }
+
+    @Override
+    public CsvReader<T> setHeaderValueToProperty(String propertyName) {
+        getBeanReader().getBeanReaderInstructions().setHeaderValueToProperty(propertyName);
+        return this;
+    }
+
     private BeanReaderImpl<T> getBeanReader() {
         if (this.beanReader == null) {
             throw new CsvException(new GeneralError(
