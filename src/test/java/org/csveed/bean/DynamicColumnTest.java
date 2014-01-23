@@ -23,7 +23,7 @@ public class DynamicColumnTest {
 
     @Test
     public void weHaveNoDynamicColumns() {
-        DynamicColumn column = new DynamicColumn(new Column(0));
+        DynamicColumn column = new DynamicColumn(null);
         column.advanceDynamicColumn(); // should have no effect
         assertTrue("Must be at first dynamic column now", column.atFirstDynamicColumn()); // always the case if empty
     }
