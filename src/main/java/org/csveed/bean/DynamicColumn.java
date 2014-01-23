@@ -39,7 +39,7 @@ import org.csveed.common.Column;
  * </p>
  * <p>
  *     The header name and the cell value can be copied into bean properties. In the example, the bean requires
- *     two fields date and visits. date must be annotated with @CsvHeaderName and visits with @CsvHeaderName.
+ *     two fields date and visits. date must be annotated with @CsvHeaderName and visits with @CsvHeaderValue.
  * </p>
  * @author Robert Bor
  */
