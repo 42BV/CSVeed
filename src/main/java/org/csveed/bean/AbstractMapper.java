@@ -38,14 +38,14 @@ public abstract class AbstractMapper<T> {
 
     protected abstract Column getColumn(Row row);
 
-    public T convert(T bean, Row row, int lineNumber, Column currentDynamicColumn) {
+    public T convert(T bean, Row row, int lineNumber, DynamicColumn currentDynamicColumn) {
         BeanWrapper beanWrapper = new BeanWrapper(defaultConverters, bean);
 
         Column currentColumn = null;
         for (String cell : row) {
             currentColumn = currentColumn == null ? getColumn(row) : currentColumn.nextColumn();
 
-            if (currentDynamicColumn != null && currentColumn.getColumnIndex() == currentDynamicColumn.getColumnIndex()) {
+            if (currentDynamicColumn.isDynamicColumnActive(currentColumn)) {
                 setDynamicColumnProperties(row, lineNumber, beanWrapper, currentColumn);
                 continue;
             }
@@ -66,13 +66,17 @@ public abstract class AbstractMapper<T> {
     }
 
     private void setDynamicColumnProperties(Row row, int lineNumber, BeanWrapper beanWrapper, Column currentColumn) {
-        String dynamicHeaderName = row.getHeader().getName(currentColumn.getColumnIndex());
         BeanProperty headerNameProperty = beanReaderInstructions.getProperties().getHeaderNameProperty();
-        setBeanProperty(row, lineNumber, beanWrapper, currentColumn, dynamicHeaderName, headerNameProperty);
+        if (headerNameProperty != null) {
+            String dynamicHeaderName = row.getHeader().getName(currentColumn.getColumnIndex());
+            setBeanProperty(row, lineNumber, beanWrapper, currentColumn, dynamicHeaderName, headerNameProperty);
+        }
 
-        String dynamicHeaderValue = row.get(currentColumn.getColumnIndex() - 1);
         BeanProperty headerValueProperty = beanReaderInstructions.getProperties().getHeaderValueProperty();
-        setBeanProperty(row, lineNumber, beanWrapper, currentColumn, dynamicHeaderValue, headerValueProperty);
+        if (headerValueProperty != null) {
+            String dynamicHeaderValue = row.get(currentColumn.getColumnIndex() - 1);
+            setBeanProperty(row, lineNumber, beanWrapper, currentColumn, dynamicHeaderValue, headerValueProperty);
+        }
     }
 
     private void setBeanProperty(Row row, int lineNumber, BeanWrapper beanWrapper, Column currentColumn, String cell, BeanProperty beanProperty) {
