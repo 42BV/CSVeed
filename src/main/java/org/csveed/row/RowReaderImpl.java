@@ -64,7 +64,7 @@ public class RowReaderImpl implements RowReader {
         return this.stateMachine.getCurrentLine();
     }
 
-    protected HeaderImpl getHeader() {
+    public HeaderImpl getHeader() {
         return header == null && rowReaderInstructions.isUseHeader() ? readHeader() : header;
     }
 
@@ -89,9 +89,9 @@ public class RowReaderImpl implements RowReader {
         }
         if (unmappedLine.size() != maxNumberOfColumns) {
             throw new CsvException(new RowError(
-                    "The expected number of columns is "+ maxNumberOfColumns +", whereas it was "+unmappedLine.size(),
+                    "The expected number of columns is " + maxNumberOfColumns + ", whereas it was " + unmappedLine.size(),
                     unmappedLine.reportOnEndOfLine(), getCurrentLine()
-            ));
+                    ));
         }
     }
 

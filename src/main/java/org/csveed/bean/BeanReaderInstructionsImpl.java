@@ -27,6 +27,8 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
 
     private Column startIndexDynamicColumns = null;
 
+    private boolean useHeader = true;
+
     public BeanReaderInstructionsImpl(Class beanClass) {
         this.properties = new BeanProperties(beanClass);
         this.beanClass = beanClass;
@@ -47,13 +49,13 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
         List<String> lineParts = new ArrayList<String>();
         lineParts.add("- CSV config");
         if (mappingStrategy.equals(ColumnIndexMapper.class)) {
-            lineParts.add("Column index "+property.getColumnIndex()+" -> property ["+property.getPropertyName()+"]");
+            lineParts.add("Column index " + property.getColumnIndex() + " -> property [" + property.getPropertyName() + "]");
         } else if (mappingStrategy.equals(ColumnNameMapper.class)) {
-            lineParts.add("Column name ["+property.getColumnName()+"] -> property ["+property.getPropertyName()+"]");
+            lineParts.add("Column name [" + property.getColumnName() + "] -> property [" + property.getPropertyName() + "]");
         }
-        lineParts.add("Required: "+(property.isRequired()?"yes":"no"));
+        lineParts.add("Required: " + (property.isRequired() ? "yes" : "no"));
         if (property.getConverter() != null) {
-            lineParts.add("Converter: "+property.getConverter().getClass().getSimpleName()+" for "+property.getPropertyType());
+            lineParts.add("Converter: " + property.getConverter().getClass().getSimpleName() + " for " + property.getPropertyType());
         }
 
         StringBuilder logLine = new StringBuilder();
@@ -75,6 +77,7 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
     @Override
     public BeanReaderInstructions setUseHeader(boolean useHeader) {
         this.rowReaderInstructions.setUseHeader(useHeader);
+        this.useHeader = useHeader;
         return this;
     }
 
@@ -206,6 +209,10 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
 
     public Class getBeanClass() {
         return this.beanClass;
+    }
+
+    public boolean useHeader() {
+        return useHeader;
     }
 
 }

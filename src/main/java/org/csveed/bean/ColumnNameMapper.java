@@ -1,5 +1,6 @@
 package org.csveed.bean;
 
+import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.common.Column;
 import org.csveed.report.CsvException;
@@ -20,15 +21,15 @@ public class ColumnNameMapper<T> extends AbstractMapper<T> {
     }
 
     @Override
-    protected void checkKey(Row row, Column key) {
+    protected void checkKey(Header header, Column key) {
         try {
-            row.getHeader().getIndex(key.getColumnName());
+            header.getIndex(key.getColumnName());
         } catch (CsvException err) {
             throw new CsvException(new RowError(
-                    "The header row does not contain column \""+key+"\". Originally mapped to property \""+
-                            getBeanProperty(key).getPropertyName()+"\"",
-                    row.getHeader().reportOnEndOfLine(), 0
-            ));
+                    "The header row does not contain column \"" + key + "\". Originally mapped to property \"" +
+                            getBeanProperty(key).getPropertyName() + "\"",
+                    header.reportOnEndOfLine(), 0
+                    ));
         }
     }
 

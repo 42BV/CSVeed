@@ -1,31 +1,33 @@
 package org.csveed.row;
 
-import org.csveed.api.Row;
-import org.csveed.common.Column;
-import org.csveed.report.CsvException;
-import org.csveed.report.RowReport;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
+import org.csveed.api.Header;
+import org.csveed.api.Row;
+import org.csveed.common.Column;
+import org.csveed.report.CsvException;
+import org.csveed.report.RowReport;
+import org.junit.Test;
 
 public class RowReaderTest {
 
     @Test
     public void emptyLines() {
         Reader reader = new StringReader(
-            "\n"+
-            "\n"+
-            "\n"+
-            "alpha;beta;gamma\n"+
-            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
-            "\n"+
-            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
-        );
+                "\n" +
+                        "\n" +
+                        "\n" +
+                        "alpha;beta;gamma\n" +
+                        "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n" +
+                        "\n" +
+                        "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
+                );
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         assertEquals(2, lineReader.readRows().size());
     }
@@ -33,16 +35,16 @@ public class RowReaderTest {
     @Test
     public void doNotSkipEmptyLines() {
         Reader reader = new StringReader(
-            "alpha\n"+
-            "\n"+
-            "word\n"+
-            "\n"+
-            "\n"
-        );
+                "alpha\n" +
+                        "\n" +
+                        "word\n" +
+                        "\n" +
+                        "\n"
+                );
         RowReaderImpl lineReader = new RowReaderImpl(reader,
                 new RowReaderInstructionsImpl()
-                .skipEmptyLines(false)
-        );
+                        .skipEmptyLines(false)
+                );
         assertEquals(5, lineReader.readRows().size());
     }
 
@@ -50,7 +52,7 @@ public class RowReaderTest {
     public void getColumnIndexAt0() {
         Reader reader = new StringReader(
                 "alpha;beta;gamma"
-        );
+                );
         RowReaderImpl rowReader = new RowReaderImpl(reader);
         HeaderImpl header = rowReader.getHeader();
         assertEquals("alpha", header.getName(0));
@@ -59,14 +61,14 @@ public class RowReaderTest {
     @Test
     public void commentLine() {
         Reader reader = new StringReader(
-            "# lots of text\n"+
-            "# bla...\n"+
-            "# more bla...\n"+
-            "alpha;beta;gamma\n"+
-            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
-            "# this line must be ignored!\n"+
-            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
-        );
+                "# lots of text\n" +
+                        "# bla...\n" +
+                        "# more bla...\n" +
+                        "alpha;beta;gamma\n" +
+                        "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n" +
+                        "# this line must be ignored!\n" +
+                        "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
+                );
         RowReaderImpl rowReader = new RowReaderImpl(reader);
         assertEquals(2, rowReader.readRows().size());
         HeaderImpl header = rowReader.getHeader();
@@ -76,10 +78,10 @@ public class RowReaderTest {
     @Test(expected = CsvException.class)
     public void dissimilarNumberOfColumns() {
         Reader reader = new StringReader(
-            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
-            "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"+
-            "\"row 3, cell 1\";\"row 3, cell 2\""
-        );
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n" +
+                        "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n" +
+                        "\"row 3, cell 1\";\"row 3, cell 2\""
+                );
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         lineReader.readRows();
     }
@@ -87,11 +89,11 @@ public class RowReaderTest {
     @Test
     public void readUnmapped() {
         Reader reader = new StringReader(
-                "alpha;beta;gamma\n"+
-                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
-                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"+
-                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\""
-        );
+                "alpha;beta;gamma\n" +
+                        "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n" +
+                        "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n" +
+                        "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\""
+                );
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         List<Row> rows = lineReader.readRows();
         assertEquals(3, rows.size());
@@ -100,19 +102,19 @@ public class RowReaderTest {
     @Test
     public void nonContentBeforeLines() {
         Reader reader = new StringReader(
-                "# line 1\n"+
-                "# line 2\n"+
-                "# line 3\n"+
-                "alpha;beta;gamma\n"+
-                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
-                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"
-        );
+                "# line 1\n" +
+                        "# line 2\n" +
+                        "# line 3\n" +
+                        "alpha;beta;gamma\n" +
+                        "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n" +
+                        "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"
+                );
         RowReaderImpl lineReader = new RowReaderImpl(
-            reader,
-            new RowReaderInstructionsImpl()
-                .setStartRow(4)
-                .setUseHeader(true)
-        );
+                reader,
+                new RowReaderInstructionsImpl()
+                        .setStartRow(4)
+                        .setUseHeader(true)
+                );
         List<Row> rows = lineReader.readRows();
         assertEquals(2, rows.size());
     }
@@ -136,10 +138,10 @@ public class RowReaderTest {
     public void doubleQuotesAsEscape() throws IOException {
         Reader reader = new StringReader("\"\"\"very literal\"\"\";\"a\"\"b\"\"c\"\n\"abc\";\"first this, \"\"then that\"\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(
-            reader,
-            new RowReaderInstructionsImpl()
-                .setUseHeader(false)
-        );
+                reader,
+                new RowReaderInstructionsImpl()
+                        .setUseHeader(false)
+                );
         checkEscapedStrings(lineReader.readRows());
     }
 
@@ -147,11 +149,11 @@ public class RowReaderTest {
     public void backSlashesAsEscape() throws IOException {
         Reader reader = new StringReader("\"\\\"very literal\\\"\";\"a\\\"b\\\"c\"\n\"abc\";\"first this, \\\"then that\\\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(
-            reader,
-            new RowReaderInstructionsImpl()
-                .setUseHeader(false)
-                .setEscape('\\')
-        );
+                reader,
+                new RowReaderInstructionsImpl()
+                        .setUseHeader(false)
+                        .setEscape('\\')
+                );
         checkEscapedStrings(lineReader.readRows());
     }
 
@@ -168,10 +170,10 @@ public class RowReaderTest {
     public void readAllLines() throws IOException {
         Reader reader = new StringReader(";;;\n;;;\n;;;\n");
         RowReaderImpl lineReader = new RowReaderImpl(
-            reader,
-            new RowReaderInstructionsImpl()
-                .setUseHeader(false)
-        );
+                reader,
+                new RowReaderInstructionsImpl()
+                        .setUseHeader(false)
+                );
         List<Row> allLines = lineReader.readRows();
         assertEquals(3, allLines.size());
     }
@@ -230,6 +232,41 @@ public class RowReaderTest {
         assertEquals("             ^---------^                                                      ", report.getPrintableLines().get(1));
         report = row.reportOnColumn(new Column(3));
         assertEquals("           ^                                                                  ", report.getPrintableLines().get(1));
+    }
+
+    @Test
+    public void readHeader() {
+        Reader reader = new StringReader("alpha;beta;gamma");
+        RowReader rowReader = new RowReaderImpl(reader);
+        HeaderImpl header = rowReader.readHeader();
+        assertNotNull(header);
+        assertEquals(3, header.size());
+    }
+
+    @Test
+    public void readHeaderSecondLine() {
+        Reader reader = new StringReader("alpha;beta;gamma\nalpha2;beta2");
+        RowReader rowReader = new RowReaderImpl(
+                reader,
+                new RowReaderInstructionsImpl()
+                        .setStartRow(2)
+                );
+        HeaderImpl header = rowReader.readHeader();
+        assertNotNull(header);
+        assertEquals(2, header.size());
+    }
+
+    @Test
+    public void readHeaderWithoutUseHeader() {
+        Reader reader = new StringReader("alpha;beta;gamma");
+        RowReader rowReader = new RowReaderImpl(
+                reader,
+                new RowReaderInstructionsImpl()
+                        .setUseHeader(false)
+                );
+        Header header = rowReader.readHeader();
+        assertNotNull(header);
+        assertEquals(3, header.size());
     }
 
 }
