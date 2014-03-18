@@ -1,3 +1,7 @@
 .idea
 CSVeed.iml
 target
+#eclipse files
+.project
+.classpath
+.settings
