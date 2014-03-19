@@ -1,17 +1,19 @@
 package org.csveed.row;
 
-import org.csveed.api.Row;
-import org.csveed.common.Column;
-import org.csveed.report.CsvException;
-import org.csveed.report.RowReport;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
+import org.csveed.api.Header;
+import org.csveed.api.Row;
+import org.csveed.common.Column;
+import org.csveed.report.CsvException;
+import org.csveed.report.RowReport;
+import org.junit.Test;
 
 public class RowReaderTest {
 
@@ -230,6 +232,41 @@ public class RowReaderTest {
         assertEquals("             ^---------^                                                      ", report.getPrintableLines().get(1));
         report = row.reportOnColumn(new Column(3));
         assertEquals("           ^                                                                  ", report.getPrintableLines().get(1));
+    }
+
+    @Test
+    public void readHeader() {
+        Reader reader = new StringReader("alpha;beta;gamma");
+        RowReader rowReader = new RowReaderImpl(reader);
+        HeaderImpl header = rowReader.readHeader();
+        assertNotNull(header);
+        assertEquals(3, header.size());
+    }
+
+    @Test
+    public void readHeaderSecondLine() {
+        Reader reader = new StringReader("alpha;beta;gamma\nalpha2;beta2");
+        RowReader rowReader = new RowReaderImpl(
+                reader,
+                new RowReaderInstructionsImpl()
+                        .setStartRow(2)
+                );
+        HeaderImpl header = rowReader.readHeader();
+        assertNotNull(header);
+        assertEquals(2, header.size());
+    }
+
+    @Test
+    public void readHeaderWithoutUseHeader() {
+        Reader reader = new StringReader("alpha;beta;gamma");
+        RowReader rowReader = new RowReaderImpl(
+                reader,
+                new RowReaderInstructionsImpl()
+                        .setUseHeader(false)
+                );
+        Header header = rowReader.readHeader();
+        assertNotNull(header);
+        assertEquals(3, header.size());
     }
 
 }

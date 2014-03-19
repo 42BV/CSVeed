@@ -1,5 +1,6 @@
 package org.csveed.bean;
 
+import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.bean.conversion.BeanWrapper;
 import org.csveed.bean.conversion.ConversionException;
@@ -22,15 +23,15 @@ public abstract class AbstractMapper<T> {
 
     protected abstract Set<Column> keys();
 
-    protected abstract void checkKey(Row row, Column key);
+    protected abstract void checkKey(Header header, Column key);
 
-    public void verifyHeader(Row row) {
+    public void verifyHeader(Header header) {
         if (verified) {
             return;
         }
         for (Column key : keys()) {
             if (!getBeanProperty(key).isDynamicColumnProperty()) {
-                checkKey(row, key);
+                checkKey(header, key);
             }
         }
         verified = true;
@@ -56,9 +57,9 @@ public abstract class AbstractMapper<T> {
             }
             if (beanProperty.isRequired() && (cell == null || cell.equals(""))) {
                 throw new CsvException(
-                        new RowError("Bean property \""+beanProperty.getPropertyName()+
+                        new RowError("Bean property \"" + beanProperty.getPropertyName() +
                                 "\" is required and may not be empty or null",
-                        row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
+                                row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
             }
             setBeanProperty(row, lineNumber, beanWrapper, currentColumn, cell, beanProperty);
         }
@@ -84,8 +85,8 @@ public abstract class AbstractMapper<T> {
             beanWrapper.setProperty(beanProperty, cell);
         } catch (ConversionException err) {
             String message =
-                    err.getMessage()+" cell"+currentColumn.getColumnText()+" ["+cell+"] to "+
-                    beanProperty.getPropertyName() + ": " + err.getTypeDescription();
+                    err.getMessage() + " cell" + currentColumn.getColumnText() + " [" + cell + "] to " +
+                            beanProperty.getPropertyName() + ": " + err.getTypeDescription();
             throw new CsvException(new RowError(message, row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
         }
     }

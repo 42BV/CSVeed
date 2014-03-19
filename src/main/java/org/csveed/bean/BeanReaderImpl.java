@@ -1,15 +1,15 @@
 package org.csveed.bean;
 
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.csveed.api.Row;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.row.HeaderImpl;
 import org.csveed.row.RowReader;
 import org.csveed.row.RowReaderImpl;
-
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BeanReaderImpl<T> implements BeanReader<T> {
 
@@ -28,7 +28,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     }
 
     public BeanReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
-        this.beanReaderInstructions = (BeanReaderInstructionsImpl)beanReaderInstructions;
+        this.beanReaderInstructions = (BeanReaderInstructionsImpl) beanReaderInstructions;
         this.rowReader = new RowReaderImpl(reader, this.beanReaderInstructions.getRowReaderInstructions());
         this.currentDynamicColumn = new DynamicColumn(this.beanReaderInstructions.getStartIndexDynamicColumns());
     }
@@ -54,14 +54,18 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     public T readBean() {
         logSettings();
-        currentDynamicColumn.checkForReset(((RowReaderImpl)rowReader).getMaxNumberOfColumns());
+
+        if (this.beanReaderInstructions.useHeader())
+            getMapper().verifyHeader(getHeader());
+
+        currentDynamicColumn.checkForReset(((RowReaderImpl) rowReader).getMaxNumberOfColumns());
         if (currentDynamicColumn.atFirstDynamicColumn()) {
             unmappedRow = rowReader.readRow();
         }
         if (unmappedRow == null) {
             return null;
         }
-        getMapper().verifyHeader(unmappedRow);
+
         T bean = getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine(), currentDynamicColumn);
         currentDynamicColumn.advanceDynamicColumn();
         return bean;
@@ -69,6 +73,12 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     protected void logSettings() {
         this.beanReaderInstructions.logSettings();
+    }
+
+    protected HeaderImpl getHeader() {
+        if (this.beanReaderInstructions.useHeader())
+            return rowReader.getHeader();
+        return null;
     }
 
     @Override
@@ -94,9 +104,9 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
             return this.getBeanClass().newInstance();
         } catch (Exception err) {
             throw new CsvException(new GeneralError(
-                    "Unable to instantiate the bean class "+this.getBeanClass().getName()+
-                    ". Does it have a no-arg public constructor?"
-            ));
+                    "Unable to instantiate the bean class " + this.getBeanClass().getName() +
+                            ". Does it have a no-arg public constructor?"
+                    ));
         }
     }
 
@@ -112,7 +122,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         } catch (Exception err) {
             throw new CsvException(new GeneralError(
                     "Unable to instantiate the mapping strategy"
-            ));
+                    ));
         }
     }
 

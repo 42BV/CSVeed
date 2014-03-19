@@ -36,9 +36,15 @@ public interface RowReader {
     public boolean isFinished();
 
     /**
-    * Returns the header of the CSV file. Only possibly returns a value when useHeader==true
-    * @return header or null if the useHeader==false
+    * Returns the first readable line of the CSV file as header, regardless if useHeader==true.
+    * @return header
     */
     public HeaderImpl readHeader();
+
+    /**
+     * Returns the header of the CSV file. Only possibly returns a value when useHeader==true
+     * @return header or null if the useHeader==false
+     */
+    public HeaderImpl getHeader();
 
 }

@@ -1,5 +1,6 @@
 package org.csveed.bean;
 
+import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.common.Column;
 import org.csveed.report.CsvException;
@@ -20,12 +21,12 @@ public class ColumnIndexMapper<T> extends AbstractMapper<T> {
     }
 
     @Override
-    protected void checkKey(Row row, Column key) {
-        if (key.getColumnIndex() > row.size()) {
+    protected void checkKey(Header header, Column key) {
+        if (key.getColumnIndex() > header.size()) {
             throw new CsvException(new GeneralError(
-                    "Column with index "+key+" does not exist in file with "+row.size()+" columns. "+
-                    "Originally mapped to property \""+getBeanProperty(key).getPropertyName()+"\""
-            ));
+                    "Column with index " + key + " does not exist in file with " + header.size() + " columns. " +
+                            "Originally mapped to property \"" + getBeanProperty(key).getPropertyName() + "\""
+                    ));
         };
     }
 
