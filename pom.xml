@@ -3,7 +3,7 @@
 
     <groupId>org.csveed</groupId>
     <artifactId>csveed</artifactId>
-    <version>0.3.6-SNAPSHOT</version>
+    <version>0.3.7</version>
     <packaging>jar</packaging>
     <name>CSVeed</name>
     <description>Java toolkit for mapping CSV-to-Bean mapping and vice versa</description>
