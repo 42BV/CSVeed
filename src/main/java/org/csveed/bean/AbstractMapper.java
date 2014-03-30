@@ -75,7 +75,7 @@ public abstract class AbstractMapper<T> {
 
         BeanProperty headerValueProperty = beanReaderInstructions.getProperties().getHeaderValueProperty();
         if (headerValueProperty != null) {
-            String dynamicHeaderValue = row.get(currentColumn.getColumnIndex() - 1);
+            String dynamicHeaderValue = row.get(currentColumn.getColumnIndex());
             setBeanProperty(row, lineNumber, beanWrapper, currentColumn, dynamicHeaderValue, headerValueProperty);
         }
     }

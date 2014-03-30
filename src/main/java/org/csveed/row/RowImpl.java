@@ -61,7 +61,7 @@ public class RowImpl implements Row {
 
     @Override
     public String get(int columnIndex) {
-        return line.get(columnIndex);
+        return line.get(columnIndex-1);
     }
 
     /**

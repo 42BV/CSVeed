@@ -18,6 +18,18 @@ import org.junit.Test;
 public class RowReaderTest {
 
     @Test
+    public void columnIndexesSameOneBasedApproach() {
+        Reader reader = new StringReader(
+            "alpha;beta;gamma\n"+
+            "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
+        );
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
+        Row row = lineReader.readRow();
+        assertEquals("alpha", row.getColumnName(1));
+        assertEquals("row 1, cell 1", row.get(1));
+    }
+
+    @Test
     public void emptyLines() {
         Reader reader = new StringReader(
             "\n"+
@@ -159,11 +171,11 @@ public class RowReaderTest {
 
     private void checkEscapedStrings(List<Row> lines) {
         Row row = lines.get(0);
-        assertEquals("\"very literal\"", row.get(0));
-        assertEquals("a\"b\"c", row.get(1));
+        assertEquals("\"very literal\"", row.get(1));
+        assertEquals("a\"b\"c", row.get(2));
         row = lines.get(1);
-        assertEquals("abc", row.get(0));
-        assertEquals("first this, \"then that\"", row.get(1));
+        assertEquals("abc", row.get(1));
+        assertEquals("first this, \"then that\"", row.get(2));
     }
 
     @Test
