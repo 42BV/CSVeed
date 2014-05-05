@@ -34,6 +34,7 @@ public class RowInstructionsImpl implements RowInstructions {
         return skipEmptyLines;
     }
 
+    @Override
     public boolean isUseHeader() {
         return useHeader;
     }
@@ -57,9 +58,19 @@ public class RowInstructionsImpl implements RowInstructions {
     }
 
     @Override
+    public char getQuote() {
+        return symbolMapping.getFirstMappedCharacter(EncounteredSymbol.QUOTE_SYMBOL);
+    }
+
+    @Override
     public RowInstructions setQuote(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, symbol);
         return this;
+    }
+
+    @Override
+    public char getSeparator() {
+        return symbolMapping.getFirstMappedCharacter(EncounteredSymbol.SEPARATOR_SYMBOL);
     }
 
     @Override
@@ -72,6 +83,11 @@ public class RowInstructionsImpl implements RowInstructions {
     public RowInstructions setComment(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.COMMENT_SYMBOL, symbol);
         return this;
+    }
+
+    @Override
+    public char getEndOfLine() {
+        return this.symbolMapping.getFirstMappedCharacter(EncounteredSymbol.EOL_SYMBOL);
     }
 
     @Override

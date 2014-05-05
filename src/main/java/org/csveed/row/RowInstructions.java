@@ -14,7 +14,13 @@ public interface RowInstructions {
     * @param useHeader true if the header is interpreted and used
     * @return convenience for chaining
     */
-    public RowInstructions setUseHeader(boolean useHeader);
+    RowInstructions setUseHeader(boolean useHeader);
+
+    /**
+    * Checks to see if a header must be used for the table.
+    * @return true if a header must be used
+    */
+    boolean isUseHeader();
 
     /**
     * Sets the start row of the CSV file. If {@link #setUseHeader(boolean)} == true, this will be the header
@@ -24,7 +30,7 @@ public interface RowInstructions {
     * @param startRow the first row to start reading, including the header row
     * @return convenience for chaining
     */
-    public RowInstructions setStartRow(int startRow);
+    RowInstructions setStartRow(int startRow);
 
     /**
     * Sets the character that will be interpreted as an escape symbol while within a quoted field. This
@@ -33,7 +39,13 @@ public interface RowInstructions {
     * @param symbol the symbol to use for escaping characters within a quoted field
     * @return convenience for chaining
     */
-    public RowInstructions setEscape(char symbol);
+    RowInstructions setEscape(char symbol);
+
+    /**
+    * Returns the character that will be used when writing quote characters
+    * @return character used to represent quote characters
+    */
+    char getQuote();
 
     /**
     * Sets the character that will be interpreted as a quote symbol, signifying either the start or the
@@ -42,7 +54,13 @@ public interface RowInstructions {
     * @param symbol the symbol to use for indicating start/end of a quoted field
     * @return convenience for chaining
     */
-    public RowInstructions setQuote(char symbol);
+    RowInstructions setQuote(char symbol);
+
+    /**
+    * Gets the character that will be used when writing separators
+    * @return character used to represent separator characters
+    */
+    char getSeparator();
 
     /**
     * Sets the character that will be interpreted as a separator between cells. This method is called whenever
@@ -51,7 +69,7 @@ public interface RowInstructions {
     * @param symbol the symbol to use as a separator between cells
     * @return convenience for chaining
     */
-    public RowInstructions setSeparator(char symbol);
+    RowInstructions setSeparator(char symbol);
 
     /**
     * Sets the character that will be interpreted as a comment field on the first position of a row.
@@ -60,7 +78,13 @@ public interface RowInstructions {
     * @param symbol the symbol to use as the 0-position comment marker
     * @return convenience for chaining
     */
-    public RowInstructions setComment(char symbol);
+    RowInstructions setComment(char symbol);
+
+    /**
+    * Gets the character that will be used when writing End-of-line separators
+    * @return the EOL character
+    */
+    char getEndOfLine();
 
     /**
     * Sets the characters (plural) that will be interpreted as end-of-line markers (unless within a quoted
@@ -69,7 +93,7 @@ public interface RowInstructions {
     * @param symbols the symbol to interpret as end-of-line markers (unless within a quoted field)
     * @return convenience for chaining
     */
-    public RowInstructions setEndOfLine(char[] symbols);
+    RowInstructions setEndOfLine(char[] symbols);
 
     /**
     * Determines whether empty lines must be skipped or treated as single-column rows. This method is called

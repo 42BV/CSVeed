@@ -43,6 +43,11 @@ public class SymbolMapping {
         addMapping(EncounteredSymbol.COMMENT_SYMBOL, '#');
     }
 
+    public char getFirstMappedCharacter(EncounteredSymbol encounteredSymbol) {
+        char[] mappedCharacters = symbolToChars.get(encounteredSymbol);
+        return mappedCharacters == null ? 0 : mappedCharacters[0];
+    }
+
     public void addMapping(EncounteredSymbol symbol, Character character) {
         addMapping(symbol, new char[] { character } );
         if (symbol.isCheckForSimilarEscapeAndQuote()) {
