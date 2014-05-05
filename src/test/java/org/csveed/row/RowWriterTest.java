@@ -17,7 +17,7 @@ public class RowWriterTest {
         RowWriter rowWriter = new RowWriterImpl(writer, instructions);
         rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
         writer.close();
-        assertEquals("\"alpha\";\"beta\";\"gamma\"", writer.getBuffer().toString());
+        assertEquals("\"alpha\";\"beta\";\"gamma\"\r", writer.getBuffer().toString());
     }
 
     @Test
