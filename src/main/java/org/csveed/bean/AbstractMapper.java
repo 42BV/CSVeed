@@ -13,7 +13,7 @@ import java.util.Set;
 
 public abstract class AbstractMapper<T> {
 
-    protected BeanInstructionsImpl beanReaderInstructions;
+    protected BeanInstructions beanInstructions;
 
     private boolean verified = false;
 
@@ -67,13 +67,13 @@ public abstract class AbstractMapper<T> {
     }
 
     private void setDynamicColumnProperties(Row row, int lineNumber, BeanWrapper beanWrapper, Column currentColumn) {
-        BeanProperty headerNameProperty = beanReaderInstructions.getProperties().getHeaderNameProperty();
+        BeanProperty headerNameProperty = beanInstructions.getProperties().getHeaderNameProperty();
         if (headerNameProperty != null) {
             String dynamicHeaderName = row.getHeader().getName(currentColumn.getColumnIndex());
             setBeanProperty(row, lineNumber, beanWrapper, currentColumn, dynamicHeaderName, headerNameProperty);
         }
 
-        BeanProperty headerValueProperty = beanReaderInstructions.getProperties().getHeaderValueProperty();
+        BeanProperty headerValueProperty = beanInstructions.getProperties().getHeaderValueProperty();
         if (headerValueProperty != null) {
             String dynamicHeaderValue = row.get(currentColumn.getColumnIndex());
             setBeanProperty(row, lineNumber, beanWrapper, currentColumn, dynamicHeaderValue, headerValueProperty);
@@ -91,8 +91,8 @@ public abstract class AbstractMapper<T> {
         }
     }
 
-    public void setBeanReaderInstructions(BeanInstructionsImpl beanReaderInstructions) {
-        this.beanReaderInstructions = beanReaderInstructions;
+    public void setBeanInstructions(BeanInstructions beanInstructions) {
+        this.beanInstructions = beanInstructions;
     }
 
 }

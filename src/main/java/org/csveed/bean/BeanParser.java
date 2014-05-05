@@ -24,7 +24,7 @@ public class BeanParser {
             }
         }
 
-        for (BeanProperty beanProperty : ((BeanInstructionsImpl) beanInstructions).getProperties()) {
+        for (BeanProperty beanProperty : beanInstructions.getProperties()) {
             checkForAnnotations(beanProperty);
         }
 

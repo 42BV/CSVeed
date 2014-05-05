@@ -53,7 +53,7 @@ public interface CsvReader<T> {
     * Returns the header of the CSV file. Only possibly returns a value when useHeader==true
     * @return header or null if the useHeader==false
     */
-    public HeaderImpl readHeader();
+    public Header readHeader();
 
     /**
     * Returns the line from which the row was read. Note that a line is seen as a legitimate CSV row, not

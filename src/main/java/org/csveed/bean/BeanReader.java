@@ -1,6 +1,6 @@
 package org.csveed.bean;
 
-import org.csveed.row.HeaderImpl;
+import org.csveed.api.Header;
 import org.csveed.row.RowReader;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public interface BeanReader<T> {
     * Returns the first readable line of the CSV file as header, regardless if useHeader==true.
     * @return header
     */
-    public HeaderImpl readHeader();
+    public Header readHeader();
 
     /**
     * Returns the line from which the bean was read. Note that a line is seen as a legitimate CSV row, not
@@ -59,5 +59,11 @@ public interface BeanReader<T> {
     * @return the underlying line reader
     */
     public RowReader getRowReader();
+
+    /**
+    * The set of instructions for dealing with beans
+    * @return bean instructions
+    */
+    public BeanInstructions getBeanInstructions();
 
 }

@@ -15,7 +15,7 @@ public class RowImpl implements Row {
 
     private Header header;
 
-    public RowImpl(Line line, HeaderImpl header) {
+    public RowImpl(Line line, Header header) {
         this.line = line;
         this.header = header;
     }

@@ -1,5 +1,6 @@
 package org.csveed.row;
 
+import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowError;
@@ -64,7 +65,7 @@ public class RowReaderImpl implements RowReader {
         return this.stateMachine.getCurrentLine();
     }
 
-    public HeaderImpl getHeader() {
+    public Header getHeader() {
         return header == null && rowInstructions.isUseHeader() ? readHeader() : header;
     }
 
@@ -72,7 +73,7 @@ public class RowReaderImpl implements RowReader {
         return this.maxNumberOfColumns;
     }
 
-    public HeaderImpl readHeader() {
+    public Header readHeader() {
         if (header != null) {
             return header;
         }

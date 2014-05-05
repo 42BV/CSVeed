@@ -4,10 +4,10 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
-import org.csveed.row.HeaderImpl;
 import org.csveed.row.RowReader;
 import org.csveed.row.RowReaderImpl;
 
@@ -15,7 +15,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private RowReader rowReader;
 
-    private BeanInstructionsImpl beanInstructions;
+    private BeanInstructions beanInstructions;
 
     private AbstractMapper<T> mapper;
 
@@ -28,7 +28,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     }
 
     public BeanReaderImpl(Reader reader, BeanInstructions beanInstructions) {
-        this.beanInstructions = (BeanInstructionsImpl) beanInstructions;
+        this.beanInstructions = beanInstructions;
         this.rowReader = new RowReaderImpl(reader, this.beanInstructions.getRowInstructions());
         this.currentDynamicColumn = new DynamicColumn(this.beanInstructions.getStartIndexDynamicColumns());
     }
@@ -36,7 +36,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     public AbstractMapper<T> getMapper() {
         if (this.mapper == null) {
             this.mapper = this.createMappingStrategy();
-            mapper.setBeanReaderInstructions(this.beanInstructions);
+            mapper.setBeanInstructions(this.beanInstructions);
         }
         return mapper;
     }
@@ -75,14 +75,14 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         this.beanInstructions.logSettings();
     }
 
-    protected HeaderImpl getHeader() {
+    protected Header getHeader() {
         if (this.beanInstructions.useHeader())
             return rowReader.getHeader();
         return null;
     }
 
     @Override
-    public HeaderImpl readHeader() {
+    public Header readHeader() {
         return rowReader.readHeader();
     }
 

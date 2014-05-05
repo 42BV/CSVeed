@@ -1,5 +1,6 @@
 package org.csveed.row;
 
+import org.csveed.api.Header;
 import org.csveed.api.Row;
 
 import java.util.List;
@@ -39,12 +40,18 @@ public interface RowReader {
     * Returns the first readable line of the CSV file as header, regardless if useHeader==true.
     * @return header
     */
-    public HeaderImpl readHeader();
+    public Header readHeader();
 
     /**
-     * Returns the header of the CSV file. Only possibly returns a value when useHeader==true
-     * @return header or null if the useHeader==false
-     */
-    public HeaderImpl getHeader();
+    * Returns the header of the CSV file. Only possibly returns a value when useHeader==true
+    * @return header or null if the useHeader==false
+    */
+    public Header getHeader();
+
+    /**
+    * The set of instructions for dealing with rows
+    * @return row instructions
+    */
+    public RowInstructions getRowInstructions();
 
 }

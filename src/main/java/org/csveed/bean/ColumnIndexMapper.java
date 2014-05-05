@@ -12,12 +12,12 @@ public class ColumnIndexMapper<T> extends AbstractMapper<T> {
 
     @Override
     protected Set<Column> keys() {
-        return beanReaderInstructions.getProperties().columnIndexKeys();
+        return beanInstructions.getProperties().columnIndexKeys();
     }
 
     @Override
     public BeanProperty getBeanProperty(Column currentColumn) {
-        return beanReaderInstructions.getProperties().fromIndex(currentColumn);
+        return beanInstructions.getProperties().fromIndex(currentColumn);
     }
 
     @Override

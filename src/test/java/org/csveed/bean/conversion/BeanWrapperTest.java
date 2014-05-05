@@ -1,5 +1,6 @@
 package org.csveed.bean.conversion;
 
+import org.csveed.bean.BeanInstructions;
 import org.csveed.bean.BeanInstructionsImpl;
 import org.csveed.bean.BeanParser;
 import org.csveed.bean.BeanProperties;
@@ -192,7 +193,7 @@ public class BeanWrapperTest {
     }
 
     protected BeanProperties deriveProperties() {
-        BeanInstructionsImpl instructions = (BeanInstructionsImpl)new BeanParser().getBeanInstructions(Bean.class);
+        BeanInstructions instructions = new BeanParser().getBeanInstructions(Bean.class);
         return instructions.getProperties();
     }
 }

@@ -66,7 +66,7 @@ public class RowReaderTest {
                 "alpha;beta;gamma"
         );
         RowReaderImpl rowReader = new RowReaderImpl(reader);
-        HeaderImpl header = rowReader.getHeader();
+        Header header = rowReader.getHeader();
         assertEquals("alpha", header.getName(0));
     }
 
@@ -83,7 +83,7 @@ public class RowReaderTest {
         );
         RowReaderImpl rowReader = new RowReaderImpl(reader);
         assertEquals(2, rowReader.readRows().size());
-        HeaderImpl header = rowReader.getHeader();
+        Header header = rowReader.getHeader();
         assertEquals("alpha", header.getName(1));
     }
 
@@ -250,7 +250,7 @@ public class RowReaderTest {
     public void readHeader() {
         Reader reader = new StringReader("alpha;beta;gamma");
         RowReader rowReader = new RowReaderImpl(reader);
-        HeaderImpl header = rowReader.readHeader();
+        Header header = rowReader.readHeader();
         assertNotNull(header);
         assertEquals(3, header.size());
     }
@@ -263,7 +263,7 @@ public class RowReaderTest {
                 new RowInstructionsImpl()
                         .setStartRow(2)
                 );
-        HeaderImpl header = rowReader.readHeader();
+        Header header = rowReader.readHeader();
         assertNotNull(header);
         assertEquals(2, header.size());
     }

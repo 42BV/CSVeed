@@ -2,12 +2,10 @@ package org.csveed.api;
 
 import org.csveed.bean.*;
 import org.csveed.bean.conversion.Converter;
-import org.csveed.report.GeneralError;
-import org.csveed.row.HeaderImpl;
-import org.csveed.row.RowReaderImpl;
 import org.csveed.report.CsvException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.csveed.report.GeneralError;
+import org.csveed.row.RowReader;
+import org.csveed.row.RowReaderImpl;
 
 import java.io.Reader;
 import java.util.List;
@@ -15,11 +13,9 @@ import java.util.Locale;
 
 public class CsvReaderImpl<T> implements CsvReader<T> {
 
-    public static final Logger LOG = LoggerFactory.getLogger(CsvReaderImpl.class);
+    private BeanReader<T> beanReader;
 
-    private BeanReaderImpl<T> beanReader;
-
-    private RowReaderImpl rowReader;
+    private RowReader rowReader;
 
     public CsvReaderImpl(Reader reader) {
         this.rowReader = new RowReaderImpl(reader);
@@ -31,7 +27,7 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
 
     public CsvReaderImpl(Reader reader, BeanInstructions beanInstructions) {
         this.beanReader = new BeanReaderImpl<T>(reader, beanInstructions);
-        this.rowReader = (RowReaderImpl)getBeanReader().getRowReader();
+        this.rowReader = getBeanReader().getRowReader();
     }
 
     @Override
@@ -55,7 +51,7 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
     }
 
     @Override
-    public HeaderImpl readHeader() {
+    public Header readHeader() {
         return getRowReader().readHeader();
     }
 
@@ -189,7 +185,7 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
         return this;
     }
 
-    private BeanReaderImpl<T> getBeanReader() {
+    private BeanReader<T> getBeanReader() {
         if (this.beanReader == null) {
             throw new CsvException(new GeneralError(
                     "BeanReader has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvReader."
@@ -198,7 +194,7 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
         return this.beanReader;
     }
 
-    private RowReaderImpl getRowReader() {
+    private RowReader getRowReader() {
         return this.rowReader;
     }
 
