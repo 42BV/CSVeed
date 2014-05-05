@@ -15,7 +15,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private RowReader rowReader;
 
-    private BeanReaderInstructionsImpl beanReaderInstructions;
+    private BeanInstructionsImpl beanInstructions;
 
     private AbstractMapper<T> mapper;
 
@@ -27,16 +27,16 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         this(reader, new BeanParser().getBeanInstructions(beanClass));
     }
 
-    public BeanReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
-        this.beanReaderInstructions = (BeanReaderInstructionsImpl) beanReaderInstructions;
-        this.rowReader = new RowReaderImpl(reader, this.beanReaderInstructions.getRowReaderInstructions());
-        this.currentDynamicColumn = new DynamicColumn(this.beanReaderInstructions.getStartIndexDynamicColumns());
+    public BeanReaderImpl(Reader reader, BeanInstructions beanInstructions) {
+        this.beanInstructions = (BeanInstructionsImpl) beanInstructions;
+        this.rowReader = new RowReaderImpl(reader, this.beanInstructions.getRowInstructions());
+        this.currentDynamicColumn = new DynamicColumn(this.beanInstructions.getStartIndexDynamicColumns());
     }
 
     public AbstractMapper<T> getMapper() {
         if (this.mapper == null) {
             this.mapper = this.createMappingStrategy();
-            mapper.setBeanReaderInstructions(this.beanReaderInstructions);
+            mapper.setBeanReaderInstructions(this.beanInstructions);
         }
         return mapper;
     }
@@ -55,7 +55,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     public T readBean() {
         logSettings();
 
-        if (this.beanReaderInstructions.useHeader())
+        if (this.beanInstructions.useHeader())
             getMapper().verifyHeader(getHeader());
 
         currentDynamicColumn.checkForReset(((RowReaderImpl) rowReader).getMaxNumberOfColumns());
@@ -72,11 +72,11 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     }
 
     protected void logSettings() {
-        this.beanReaderInstructions.logSettings();
+        this.beanInstructions.logSettings();
     }
 
     protected HeaderImpl getHeader() {
-        if (this.beanReaderInstructions.useHeader())
+        if (this.beanInstructions.useHeader())
             return rowReader.getHeader();
         return null;
     }
@@ -112,13 +112,13 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     @SuppressWarnings("unchecked")
     public Class<T> getBeanClass() {
-        return this.beanReaderInstructions.getBeanClass();
+        return this.beanInstructions.getBeanClass();
     }
 
     @SuppressWarnings("unchecked")
     public AbstractMapper<T> createMappingStrategy() {
         try {
-            return this.beanReaderInstructions.getMappingStrategy().newInstance();
+            return this.beanInstructions.getMappingStrategy().newInstance();
         } catch (Exception err) {
             throw new CsvException(new GeneralError(
                     "Unable to instantiate the mapping strategy"
@@ -126,8 +126,8 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         }
     }
 
-    public BeanReaderInstructions getBeanReaderInstructions() {
-        return this.beanReaderInstructions;
+    public BeanInstructions getBeanInstructions() {
+        return this.beanInstructions;
     }
 
 }

@@ -14,7 +14,7 @@ import java.util.List;
 * <ul>
 *     <li>Point it to class. The {@link org.csveed.annotations} in the class are read, as is the order
 *         of the properties within the class.</li>
-*     <li>Roll your own. Pass a {@link BeanReaderInstructions} implementation with your
+*     <li>Roll your own. Pass a {@link BeanInstructions} implementation with your
 *         own configuration settings</li>
 * </ul>
 *

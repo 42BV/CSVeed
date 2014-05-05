@@ -75,7 +75,7 @@ public class BeanReaderTest {
     @Test (expected = CsvException.class)
     public void illegalColumnIndexMappingTooLow() {
         checkIllegalMapping(
-                new BeanReaderInstructionsImpl(BeanWithMultipleStrings.class)
+                new BeanInstructionsImpl(BeanWithMultipleStrings.class)
                         .setMapper(ColumnIndexMapper.class)
                         .mapColumnIndexToProperty(-1, "alpha")
         );
@@ -84,7 +84,7 @@ public class BeanReaderTest {
     @Test (expected = CsvException.class)
     public void illegalColumnIndexMappingTooHigh() {
         checkIllegalMapping(
-            new BeanReaderInstructionsImpl(BeanWithMultipleStrings.class)
+            new BeanInstructionsImpl(BeanWithMultipleStrings.class)
                 .setMapper(ColumnIndexMapper.class)
                 .mapColumnIndexToProperty(99, "alpha")
         );
@@ -93,18 +93,18 @@ public class BeanReaderTest {
     @Test (expected = CsvException.class)
     public void illegalColumnName() {
         checkIllegalMapping(
-            new BeanReaderInstructionsImpl(BeanWithMultipleStrings.class)
+            new BeanInstructionsImpl(BeanWithMultipleStrings.class)
                 .setMapper(ColumnNameMapper.class)
                 .mapColumnNameToProperty("Alphabetical", "alpha")
         );
     }
 
-    protected void checkIllegalMapping(BeanReaderInstructions beanReaderInstructions) {
+    protected void checkIllegalMapping(BeanInstructions beanInstructions) {
         Reader reader = new StringReader(
             "alpha;beta;gamma\n"+
             "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
         );
-        BeanReader<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(reader, beanReaderInstructions);
+        BeanReader<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(reader, beanInstructions);
         beanReader.readBean();
     }
 
@@ -129,7 +129,7 @@ public class BeanReaderTest {
         );
         BeanReaderImpl<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(
                 reader,
-                new BeanReaderInstructionsImpl(BeanWithMultipleStrings.class)
+                new BeanInstructionsImpl(BeanWithMultipleStrings.class)
                 .setMapper(ColumnNameMapper.class)
                 .mapColumnNameToProperty("a", "alpha")
                 .mapColumnNameToProperty("b", "beta")

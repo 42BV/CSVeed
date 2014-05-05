@@ -6,11 +6,11 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertNull;
 
-public class BeanReaderInstructionsImplTest {
+public class BeanInstructionsImplTest {
 
     @Test
     public void propertyNameIsNull() {
-        BeanReaderInstructionsImpl instructions = new BeanReaderInstructionsImpl(BeanSimple.class);
+        BeanInstructionsImpl instructions = new BeanInstructionsImpl(BeanSimple.class);
         assertNull(instructions.getProperties().fromName(new Column("definitelyNotHere")));
     }
 

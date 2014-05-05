@@ -20,7 +20,7 @@ public class RowReaderImpl implements RowReader {
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
-    private RowReaderInstructionsImpl rowReaderInstructions;
+    private RowInstructionsImpl rowInstructions;
 
     private int maxNumberOfColumns = -1;
 
@@ -29,13 +29,13 @@ public class RowReaderImpl implements RowReader {
     private Reader reader;
 
     public RowReaderImpl(Reader reader) {
-        this(reader, new RowReaderInstructionsImpl());
+        this(reader, new RowInstructionsImpl());
     }
 
-    public RowReaderImpl(Reader reader, RowReaderInstructions instructionsInterface) {
+    public RowReaderImpl(Reader reader, RowInstructions instructionsInterface) {
         this.reader = reader;
-        this.rowReaderInstructions = (RowReaderInstructionsImpl) instructionsInterface;
-        stateMachine.setSymbolMapping(rowReaderInstructions.getSymbolMapping());
+        this.rowInstructions = (RowInstructionsImpl) instructionsInterface;
+        stateMachine.setSymbolMapping(rowInstructions.getSymbolMapping());
     }
 
     public List<Row> readRows() {
@@ -65,7 +65,7 @@ public class RowReaderImpl implements RowReader {
     }
 
     public HeaderImpl getHeader() {
-        return header == null && rowReaderInstructions.isUseHeader() ? readHeader() : header;
+        return header == null && rowInstructions.isUseHeader() ? readHeader() : header;
     }
 
     public int getMaxNumberOfColumns() {
@@ -100,7 +100,7 @@ public class RowReaderImpl implements RowReader {
     }
 
     protected void logSettings() {
-        rowReaderInstructions.logSettings();
+        rowInstructions.logSettings();
         this.stateMachine.getSymbolMapping().logSettings();
     }
 
@@ -137,13 +137,13 @@ public class RowReaderImpl implements RowReader {
                     break;
                 }
             }
-            line = stateMachine.ignoreLine() && rowReaderInstructions.isSkipEmptyLines() ? null : line;
+            line = stateMachine.ignoreLine() && rowInstructions.isSkipEmptyLines() ? null : line;
         }
         return line;
     }
 
-    public RowReaderInstructions getRowReaderInstructions() {
-        return this.rowReaderInstructions;
+    public RowInstructions getRowInstructions() {
+        return this.rowInstructions;
     }
 
 }

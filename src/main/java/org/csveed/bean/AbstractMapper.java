@@ -13,7 +13,7 @@ import java.util.Set;
 
 public abstract class AbstractMapper<T> {
 
-    protected BeanReaderInstructionsImpl beanReaderInstructions;
+    protected BeanInstructionsImpl beanReaderInstructions;
 
     private boolean verified = false;
 
@@ -91,7 +91,7 @@ public abstract class AbstractMapper<T> {
         }
     }
 
-    public void setBeanReaderInstructions(BeanReaderInstructionsImpl beanReaderInstructions) {
+    public void setBeanReaderInstructions(BeanInstructionsImpl beanReaderInstructions) {
         this.beanReaderInstructions = beanReaderInstructions;
     }
 

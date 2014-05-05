@@ -2,8 +2,8 @@ package org.csveed.bean;
 
 import org.csveed.bean.conversion.Converter;
 import org.csveed.common.Column;
-import org.csveed.row.RowReaderInstructions;
-import org.csveed.row.RowReaderInstructionsImpl;
+import org.csveed.row.RowInstructions;
+import org.csveed.row.RowInstructionsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
+public class BeanInstructionsImpl implements BeanInstructions {
 
-    public static final Logger LOG = LoggerFactory.getLogger(BeanReaderInstructionsImpl.class);
+    public static final Logger LOG = LoggerFactory.getLogger(BeanInstructionsImpl.class);
 
-    private RowReaderInstructions rowReaderInstructions = new RowReaderInstructionsImpl();
+    private RowInstructions rowInstructions = new RowInstructionsImpl();
 
     private BeanProperties properties;
 
@@ -29,7 +29,7 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
 
     private boolean useHeader = true;
 
-    public BeanReaderInstructionsImpl(Class beanClass) {
+    public BeanInstructionsImpl(Class beanClass) {
         this.properties = new BeanProperties(beanClass);
         this.beanClass = beanClass;
     }
@@ -70,127 +70,127 @@ public class BeanReaderInstructionsImpl implements BeanReaderInstructions {
         return logLine.toString();
     }
 
-    public RowReaderInstructions getRowReaderInstructions() {
-        return this.rowReaderInstructions;
+    public RowInstructions getRowInstructions() {
+        return this.rowInstructions;
     }
 
     @Override
-    public BeanReaderInstructions setUseHeader(boolean useHeader) {
-        this.rowReaderInstructions.setUseHeader(useHeader);
+    public BeanInstructions setUseHeader(boolean useHeader) {
+        this.rowInstructions.setUseHeader(useHeader);
         this.useHeader = useHeader;
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setStartRow(int startRow) {
-        this.rowReaderInstructions.setStartRow(startRow);
+    public BeanInstructions setStartRow(int startRow) {
+        this.rowInstructions.setStartRow(startRow);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setEscape(char symbol) {
-        this.rowReaderInstructions.setEscape(symbol);
+    public BeanInstructions setEscape(char symbol) {
+        this.rowInstructions.setEscape(symbol);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setQuote(char symbol) {
-        this.rowReaderInstructions.setQuote(symbol);
+    public BeanInstructions setQuote(char symbol) {
+        this.rowInstructions.setQuote(symbol);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setSeparator(char symbol) {
-        this.rowReaderInstructions.setSeparator(symbol);
+    public BeanInstructions setSeparator(char symbol) {
+        this.rowInstructions.setSeparator(symbol);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setComment(char symbol) {
-        this.rowReaderInstructions.setComment(symbol);
+    public BeanInstructions setComment(char symbol) {
+        this.rowInstructions.setComment(symbol);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setEndOfLine(char[] symbols) {
-        this.rowReaderInstructions.setEndOfLine(symbols);
+    public BeanInstructions setEndOfLine(char[] symbols) {
+        this.rowInstructions.setEndOfLine(symbols);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions skipEmptyLines(boolean skip) {
-        this.rowReaderInstructions.skipEmptyLines(skip);
+    public BeanInstructions skipEmptyLines(boolean skip) {
+        this.rowInstructions.skipEmptyLines(skip);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions skipCommentLines(boolean skip) {
-        this.rowReaderInstructions.skipCommentLines(skip);
+    public BeanInstructions skipCommentLines(boolean skip) {
+        this.rowInstructions.skipCommentLines(skip);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setMapper(Class<? extends AbstractMapper> mapper) {
+    public BeanInstructions setMapper(Class<? extends AbstractMapper> mapper) {
         this.mappingStrategy = mapper;
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setDate(String propertyName, String dateFormat) {
+    public BeanInstructions setDate(String propertyName, String dateFormat) {
         this.getProperties().setDate(propertyName, dateFormat);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setLocalizedNumber(String propertyName, Locale locale) {
+    public BeanInstructions setLocalizedNumber(String propertyName, Locale locale) {
         this.getProperties().setLocalizedNumber(propertyName, locale);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setRequired(String propertyName, boolean required) {
+    public BeanInstructions setRequired(String propertyName, boolean required) {
         this.getProperties().setRequired(propertyName, required);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setConverter(String propertyName, Converter converter) {
+    public BeanInstructions setConverter(String propertyName, Converter converter) {
         this.getProperties().setConverter(propertyName, converter);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions ignoreProperty(String propertyName) {
+    public BeanInstructions ignoreProperty(String propertyName) {
         this.getProperties().ignoreProperty(propertyName);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions mapColumnIndexToProperty(int columnIndex, String propertyName) {
+    public BeanInstructions mapColumnIndexToProperty(int columnIndex, String propertyName) {
         this.getProperties().mapIndexToProperty(columnIndex, propertyName);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions mapColumnNameToProperty(String columnName, String propertyName) {
+    public BeanInstructions mapColumnNameToProperty(String columnName, String propertyName) {
         this.getProperties().mapNameToProperty(columnName, propertyName);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setHeaderNameToProperty(String propertyName) {
+    public BeanInstructions setHeaderNameToProperty(String propertyName) {
         this.getProperties().setHeaderNameProperty(propertyName);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setHeaderValueToProperty(String propertyName) {
+    public BeanInstructions setHeaderValueToProperty(String propertyName) {
         this.getProperties().setHeaderValueProperty(propertyName);
         return this;
     }
 
     @Override
-    public BeanReaderInstructions setStartIndexDynamicColumns(int startIndex) {
+    public BeanInstructions setStartIndexDynamicColumns(int startIndex) {
         this.startIndexDynamicColumns = startIndex == 0 ? null : new Column(startIndex);
         return this;
     }

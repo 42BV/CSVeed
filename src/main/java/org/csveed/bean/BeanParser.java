@@ -9,13 +9,13 @@ import java.util.Locale;
 
 public class BeanParser {
 
-    private BeanReaderInstructions beanReaderInstructions;
+    private BeanInstructions beanInstructions;
 
     private Column currentColumn = new Column();
 
-    public BeanReaderInstructions getBeanInstructions(Class beanClass) {
+    public BeanInstructions getBeanInstructions(Class beanClass) {
 
-        this.beanReaderInstructions = new BeanReaderInstructionsImpl(beanClass);
+        this.beanInstructions = new BeanInstructionsImpl(beanClass);
 
         Annotation[] annotations = beanClass.getAnnotations();
         for (Annotation annotation : annotations) {
@@ -24,11 +24,11 @@ public class BeanParser {
             }
         }
 
-        for (BeanProperty beanProperty : ((BeanReaderInstructionsImpl)beanReaderInstructions).getProperties()) {
+        for (BeanProperty beanProperty : ((BeanInstructionsImpl) beanInstructions).getProperties()) {
             checkForAnnotations(beanProperty);
         }
 
-        return this.beanReaderInstructions;
+        return this.beanInstructions;
     }
 
     public void checkForAnnotations(BeanProperty beanProperty) {
@@ -47,16 +47,16 @@ public class BeanParser {
             } else if (annotation instanceof CsvLocalizedNumber) {
                 parseCsvLocalizedNumber(propertyName, (CsvLocalizedNumber) annotation);
             } else if (annotation instanceof CsvHeaderName) {
-                this.beanReaderInstructions.setHeaderNameToProperty(propertyName);
+                this.beanInstructions.setHeaderNameToProperty(propertyName);
             } else if (annotation instanceof CsvHeaderValue) {
-                this.beanReaderInstructions.setHeaderValueToProperty(propertyName);
+                this.beanInstructions.setHeaderValueToProperty(propertyName);
             } else if (annotation instanceof CsvIgnore) {
-                this.beanReaderInstructions.ignoreProperty(propertyName);
+                this.beanInstructions.ignoreProperty(propertyName);
                 return;
             }
         }
-        this.beanReaderInstructions.mapColumnNameToProperty(columnName, propertyName);
-        this.beanReaderInstructions.mapColumnIndexToProperty(currentColumn.getColumnIndex(), propertyName);
+        this.beanInstructions.mapColumnNameToProperty(columnName, propertyName);
+        this.beanInstructions.mapColumnIndexToProperty(currentColumn.getColumnIndex(), propertyName);
         currentColumn = currentColumn.nextColumn();
     }
 
@@ -69,12 +69,12 @@ public class BeanParser {
         } else {
             locale = new Locale(annotation.language(), annotation.country(), annotation.variant());
         }
-        this.beanReaderInstructions.setLocalizedNumber(propertyName, locale);
+        this.beanInstructions.setLocalizedNumber(propertyName, locale);
     }
 
     private void parseCsvFile(CsvFile csvFile) {
 
-        this.beanReaderInstructions
+        this.beanInstructions
             .setEscape(csvFile.escape())
             .setQuote(csvFile.quote())
             .setSeparator(csvFile.separator())
@@ -89,12 +89,12 @@ public class BeanParser {
     }
 
     private void parseCsvDate(String propertyName, CsvDate csvDate) {
-        this.beanReaderInstructions.setDate(propertyName, csvDate.format());
+        this.beanInstructions.setDate(propertyName, csvDate.format());
     }
 
     private void parseCsvConverter(String propertyName, CsvConverter csvConverter) {
         try {
-            this.beanReaderInstructions.setConverter(propertyName, csvConverter.converter().newInstance());
+            this.beanInstructions.setConverter(propertyName, csvConverter.converter().newInstance());
         } catch (Exception err) {
             throw new RuntimeException(err);
         }
@@ -102,7 +102,7 @@ public class BeanParser {
 
     private String parseCsvCell(String propertyName, CsvCell csvCell) {
         String columnName = (csvCell.columnName() == null || csvCell.columnName().equals("")) ? propertyName : csvCell.columnName();
-        this.beanReaderInstructions.setRequired(propertyName, csvCell.required());
+        this.beanInstructions.setRequired(propertyName, csvCell.required());
         currentColumn = csvCell.columnIndex() != -1 ? new Column(csvCell.columnIndex()) : currentColumn;
         return columnName;
     }

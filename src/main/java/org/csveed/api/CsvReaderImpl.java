@@ -29,8 +29,8 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
         this(reader, new BeanParser().getBeanInstructions(beanClass));
     }
 
-    public CsvReaderImpl(Reader reader, BeanReaderInstructions beanReaderInstructions) {
-        this.beanReader = new BeanReaderImpl<T>(reader, beanReaderInstructions);
+    public CsvReaderImpl(Reader reader, BeanInstructions beanInstructions) {
+        this.beanReader = new BeanReaderImpl<T>(reader, beanInstructions);
         this.rowReader = (RowReaderImpl)getBeanReader().getRowReader();
     }
 
@@ -71,128 +71,128 @@ public class CsvReaderImpl<T> implements CsvReader<T> {
 
     @Override
     public CsvReader<T> setUseHeader(boolean useHeader) {
-        getRowReader().getRowReaderInstructions().setUseHeader(useHeader);
+        getRowReader().getRowInstructions().setUseHeader(useHeader);
         return this;
     }
 
     @Override
     public CsvReader<T> setStartRow(int startRow) {
-        getRowReader().getRowReaderInstructions().setStartRow(startRow);
+        getRowReader().getRowInstructions().setStartRow(startRow);
         return this;
     }
 
     @Override
     public CsvReader<T> setEscape(char symbol) {
-        getRowReader().getRowReaderInstructions().setEscape(symbol);
+        getRowReader().getRowInstructions().setEscape(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setQuote(char symbol) {
-        getRowReader().getRowReaderInstructions().setQuote(symbol);
+        getRowReader().getRowInstructions().setQuote(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setSeparator(char symbol) {
-        getRowReader().getRowReaderInstructions().setSeparator(symbol);
+        getRowReader().getRowInstructions().setSeparator(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setComment(char symbol) {
-        getRowReader().getRowReaderInstructions().setComment(symbol);
+        getRowReader().getRowInstructions().setComment(symbol);
         return this;
     }
 
     @Override
     public CsvReader<T> setEndOfLine(char[] symbols) {
-        getRowReader().getRowReaderInstructions().setEndOfLine(symbols);
+        getRowReader().getRowInstructions().setEndOfLine(symbols);
         return this;
     }
 
     @Override
     public CsvReader<T> skipEmptyLines(boolean skip) {
-        getRowReader().getRowReaderInstructions().skipEmptyLines(skip);
+        getRowReader().getRowInstructions().skipEmptyLines(skip);
         return this;
     }
 
     @Override
     public CsvReader<T> skipCommentLines(boolean skip) {
-        getRowReader().getRowReaderInstructions().skipCommentLines(skip);
+        getRowReader().getRowInstructions().skipCommentLines(skip);
         return this;
     }
 
     @Override
     public CsvReader<T> setMapper(Class<? extends AbstractMapper> mapper) {
-        getBeanReader().getBeanReaderInstructions().setMapper(mapper);
+        getBeanReader().getBeanInstructions().setMapper(mapper);
         return this;
     }
 
     @Override
     public CsvReader<T> setDate(String propertyName, String dateFormat) {
-        getBeanReader().getBeanReaderInstructions().setDate(propertyName, dateFormat);
+        getBeanReader().getBeanInstructions().setDate(propertyName, dateFormat);
         return this;
     }
 
     @Override
     public CsvReader<T> setLocalizedNumber(String propertyName, Locale locale) {
-        getBeanReader().getBeanReaderInstructions().setLocalizedNumber(propertyName, locale);
+        getBeanReader().getBeanInstructions().setLocalizedNumber(propertyName, locale);
         return this;
     }
 
     @Override
     public CsvReader<T> setRequired(String propertyName, boolean required) {
-        getBeanReader().getBeanReaderInstructions().setRequired(propertyName, required);
+        getBeanReader().getBeanInstructions().setRequired(propertyName, required);
         return this;
     }
 
     @Override
     public CsvReader<T> setConverter(String propertyName, Converter converter) {
-        getBeanReader().getBeanReaderInstructions().setConverter(propertyName, converter);
+        getBeanReader().getBeanInstructions().setConverter(propertyName, converter);
         return this;
     }
 
     @Override
     public CsvReader<T> ignoreProperty(String propertyName) {
-        getBeanReader().getBeanReaderInstructions().ignoreProperty(propertyName);
+        getBeanReader().getBeanInstructions().ignoreProperty(propertyName);
         return this;
     }
 
     @Override
     public CsvReader<T> mapColumnIndexToProperty(int columnIndex, String propertyName) {
-        getBeanReader().getBeanReaderInstructions().mapColumnIndexToProperty(columnIndex, propertyName);
+        getBeanReader().getBeanInstructions().mapColumnIndexToProperty(columnIndex, propertyName);
         return this;
     }
 
     @Override
     public CsvReader<T> mapColumnNameToProperty(String columnName, String propertyName) {
-        getBeanReader().getBeanReaderInstructions().mapColumnNameToProperty(columnName, propertyName);
+        getBeanReader().getBeanInstructions().mapColumnNameToProperty(columnName, propertyName);
         return this;
     }
 
     @Override
     public CsvReader<T> setStartIndexDynamicColumns(int startIndex) {
-        getBeanReader().getBeanReaderInstructions().setStartIndexDynamicColumns(startIndex);
+        getBeanReader().getBeanInstructions().setStartIndexDynamicColumns(startIndex);
         return this;
     }
 
     @Override
     public CsvReader<T> setHeaderNameToProperty(String propertyName) {
-        getBeanReader().getBeanReaderInstructions().setHeaderNameToProperty(propertyName);
+        getBeanReader().getBeanInstructions().setHeaderNameToProperty(propertyName);
         return this;
     }
 
     @Override
     public CsvReader<T> setHeaderValueToProperty(String propertyName) {
-        getBeanReader().getBeanReaderInstructions().setHeaderValueToProperty(propertyName);
+        getBeanReader().getBeanInstructions().setHeaderValueToProperty(propertyName);
         return this;
     }
 
     private BeanReaderImpl<T> getBeanReader() {
         if (this.beanReader == null) {
             throw new CsvException(new GeneralError(
-                    "BeanReader has not been initialized. Make sure to pass BeanReaderInstructions or the bean class to CsvReader."
+                    "BeanReader has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvReader."
             ));
         }
         return this.beanReader;

@@ -54,7 +54,7 @@ public class RowReaderTest {
             "\n"
         );
         RowReaderImpl lineReader = new RowReaderImpl(reader,
-                new RowReaderInstructionsImpl()
+                new RowInstructionsImpl()
                 .skipEmptyLines(false)
         );
         assertEquals(5, lineReader.readRows().size());
@@ -123,7 +123,7 @@ public class RowReaderTest {
         );
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
-            new RowReaderInstructionsImpl()
+            new RowInstructionsImpl()
                 .setStartRow(4)
                 .setUseHeader(true)
         );
@@ -151,7 +151,7 @@ public class RowReaderTest {
         Reader reader = new StringReader("\"\"\"very literal\"\"\";\"a\"\"b\"\"c\"\n\"abc\";\"first this, \"\"then that\"\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
-            new RowReaderInstructionsImpl()
+            new RowInstructionsImpl()
                 .setUseHeader(false)
         );
         checkEscapedStrings(lineReader.readRows());
@@ -162,7 +162,7 @@ public class RowReaderTest {
         Reader reader = new StringReader("\"\\\"very literal\\\"\";\"a\\\"b\\\"c\"\n\"abc\";\"first this, \\\"then that\\\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
-            new RowReaderInstructionsImpl()
+            new RowInstructionsImpl()
                 .setUseHeader(false)
                 .setEscape('\\')
         );
@@ -183,7 +183,7 @@ public class RowReaderTest {
         Reader reader = new StringReader(";;;\n;;;\n;;;\n");
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
-            new RowReaderInstructionsImpl()
+            new RowInstructionsImpl()
                 .setUseHeader(false)
         );
         List<Row> allLines = lineReader.readRows();
@@ -260,7 +260,7 @@ public class RowReaderTest {
         Reader reader = new StringReader("alpha;beta;gamma\nalpha2;beta2");
         RowReader rowReader = new RowReaderImpl(
                 reader,
-                new RowReaderInstructionsImpl()
+                new RowInstructionsImpl()
                         .setStartRow(2)
                 );
         HeaderImpl header = rowReader.readHeader();
@@ -273,7 +273,7 @@ public class RowReaderTest {
         Reader reader = new StringReader("alpha;beta;gamma");
         RowReader rowReader = new RowReaderImpl(
                 reader,
-                new RowReaderInstructionsImpl()
+                new RowInstructionsImpl()
                         .setUseHeader(false)
                 );
         Header header = rowReader.readHeader();

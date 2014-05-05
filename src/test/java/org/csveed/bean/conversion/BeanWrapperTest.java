@@ -1,8 +1,8 @@
 package org.csveed.bean.conversion;
 
+import org.csveed.bean.BeanInstructionsImpl;
 import org.csveed.bean.BeanParser;
 import org.csveed.bean.BeanProperties;
-import org.csveed.bean.BeanReaderInstructionsImpl;
 import org.csveed.common.Column;
 import org.junit.Before;
 import org.junit.Test;
@@ -192,7 +192,7 @@ public class BeanWrapperTest {
     }
 
     protected BeanProperties deriveProperties() {
-        BeanReaderInstructionsImpl instructions = (BeanReaderInstructionsImpl)new BeanParser().getBeanInstructions(Bean.class);
+        BeanInstructionsImpl instructions = (BeanInstructionsImpl)new BeanParser().getBeanInstructions(Bean.class);
         return instructions.getProperties();
     }
 }

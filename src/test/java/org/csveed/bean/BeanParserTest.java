@@ -15,16 +15,16 @@ public class BeanParserTest {
     @Test
     public void noGettersAndSetters() {
         BeanParser beanParser = new BeanParser();
-        BeanReaderInstructions instructions = beanParser.getBeanInstructions(BeanWithoutGettersAndSetters.class);
-        assertNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName(new Column("a")));
+        BeanInstructions instructions = beanParser.getBeanInstructions(BeanWithoutGettersAndSetters.class);
+        assertNull(((BeanInstructionsImpl) instructions).getProperties().fromName(new Column("a")));
     }
 
     @Test
     public void caseInsensitivity() {
         BeanParser beanParser = new BeanParser();
-        BeanReaderInstructions instructions = beanParser.getBeanInstructions(BeanLotsOfIgnores.class);
-        assertNotNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName(new Column("takeThis1")));
-        assertNotNull(((BeanReaderInstructionsImpl) instructions).getProperties().fromName(new Column("takethis1")));
+        BeanInstructions instructions = beanParser.getBeanInstructions(BeanLotsOfIgnores.class);
+        assertNotNull(((BeanInstructionsImpl) instructions).getProperties().fromName(new Column("takeThis1")));
+        assertNotNull(((BeanInstructionsImpl) instructions).getProperties().fromName(new Column("takethis1")));
     }
 
     @Test(expected = CsvException.class)

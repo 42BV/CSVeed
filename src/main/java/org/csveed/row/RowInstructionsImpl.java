@@ -5,9 +5,9 @@ import org.csveed.token.SymbolMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RowReaderInstructionsImpl implements RowReaderInstructions {
+public class RowInstructionsImpl implements RowInstructions {
 
-    public static final Logger LOG = LoggerFactory.getLogger(RowReaderInstructionsImpl.class);
+    public static final Logger LOG = LoggerFactory.getLogger(RowInstructionsImpl.class);
 
     private SymbolMapping symbolMapping = new SymbolMapping();
 
@@ -39,55 +39,55 @@ public class RowReaderInstructionsImpl implements RowReaderInstructions {
     }
 
     @Override
-    public RowReaderInstructions setUseHeader(boolean useHeader) {
+    public RowInstructions setUseHeader(boolean useHeader) {
         this.useHeader = useHeader;
         return this;
     }
 
     @Override
-    public RowReaderInstructions setStartRow(int startRow) {
+    public RowInstructions setStartRow(int startRow) {
         this.symbolMapping.setStartLine(startRow);
         return this;
     }
 
     @Override
-    public RowReaderInstructions setEscape(char symbol) {
+    public RowInstructions setEscape(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, symbol);
         return this;
     }
 
     @Override
-    public RowReaderInstructions setQuote(char symbol) {
+    public RowInstructions setQuote(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, symbol);
         return this;
     }
 
     @Override
-    public RowReaderInstructions setSeparator(char symbol) {
+    public RowInstructions setSeparator(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, symbol);
         return this;
     }
 
     @Override
-    public RowReaderInstructions setComment(char symbol) {
+    public RowInstructions setComment(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.COMMENT_SYMBOL, symbol);
         return this;
     }
 
     @Override
-    public RowReaderInstructions setEndOfLine(char[] symbols) {
+    public RowInstructions setEndOfLine(char[] symbols) {
         this.symbolMapping.addMapping(EncounteredSymbol.EOL_SYMBOL, symbols);
         return this;
     }
 
     @Override
-    public RowReaderInstructions skipEmptyLines(boolean skip) {
+    public RowInstructions skipEmptyLines(boolean skip) {
         this.skipEmptyLines = skip;
         return this;
     }
 
     @Override
-    public RowReaderInstructions skipCommentLines(boolean skip) {
+    public RowInstructions skipCommentLines(boolean skip) {
         this.symbolMapping.setSkipCommentLines(skip);
         return this;
     }

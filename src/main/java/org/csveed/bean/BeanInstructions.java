@@ -10,56 +10,56 @@ import java.util.Locale;
 * internally if annotations are used.
 * @author Robert Bor
 */
-public interface BeanReaderInstructions {
+public interface BeanInstructions {
 
     /**
     * Makes sure that the first readable line is interpreted as the header line. That line will not be read
     * as content. This method is called whenever {@link org.csveed.annotations.CsvFile#useHeader()}
     * is used. The default value for this setting is true. This call is a facade for
-     * {@link org.csveed.row.RowReaderInstructions#setUseHeader(boolean)}.
+     * {@link org.csveed.row.RowInstructions#setUseHeader(boolean)}.
     * @param useHeader true if the header is interpreted and used
     * @return convenience for chaining
     */
-    BeanReaderInstructions setUseHeader(boolean useHeader);
+    BeanInstructions setUseHeader(boolean useHeader);
 
     /**
     * Sets the start row of the CSV file. If {@link #setUseHeader(boolean)} == true, this will be the header
     * row and the next ones are all content rows. This method is called whenever
     * {@link org.csveed.annotations.CsvFile#startRow()} is used. The default value for this
-    * setting is 1. This call is a facade for {@link org.csveed.row.RowReaderInstructions#setStartRow(int)}.
+    * setting is 1. This call is a facade for {@link org.csveed.row.RowInstructions#setStartRow(int)}.
     * @param startRow the first row to start reading, including the header row
     * @return convenience for chaining
     */
-    BeanReaderInstructions setStartRow(int startRow);
+    BeanInstructions setStartRow(int startRow);
 
     /**
     * Sets the character that will be interpreted as an escape symbol while within a quoted field. This
     * method is called whenever {@link org.csveed.annotations.CsvFile#escape()} is used. The
     * default value for this setting is a double quote (") symbol. This call is a facade for
-    * {@link org.csveed.row.RowReaderInstructions#setEscape(char)}.
+    * {@link org.csveed.row.RowInstructions#setEscape(char)}.
     * @param symbol the symbol to use for escaping characters within a quoted field
     * @return convenience for chaining
     */
-    BeanReaderInstructions setEscape(char symbol);
+    BeanInstructions setEscape(char symbol);
 
     /**
     * Sets the character that will be interpreted as a quote symbol, signifying either the start or the
     * end of a quoted field. This method is called whenever {@link org.csveed.annotations.CsvFile#quote()}
     * is used. The default value for this setting is a double quote (") symbol. This call is a facade for
-    * {@link org.csveed.row.RowReaderInstructions#setQuote(char)}.
+    * {@link org.csveed.row.RowInstructions#setQuote(char)}.
     * @param symbol the symbol to use for indicating start/end of a quoted field
     * @return convenience for chaining
     */
-    BeanReaderInstructions setQuote(char symbol);
+    BeanInstructions setQuote(char symbol);
 
     /**
     * Sets the character that will be interpreted as a separator between cells. This method is called whenever
     * {@link org.csveed.annotations.CsvFile#separator()} is used. The default value for this
-    * setting is a semi-colon (;). This call is a facade for {@link org.csveed.row.RowReaderInstructions#setSeparator(char)}.
+    * setting is a semi-colon (;). This call is a facade for {@link org.csveed.row.RowInstructions#setSeparator(char)}.
     * @param symbol the symbol to use as a separator between cells
     * @return convenience for chaining
     */
-    BeanReaderInstructions setSeparator(char symbol);
+    BeanInstructions setSeparator(char symbol);
 
     /**
     * Sets the character that will be interpreted as a comment field on the first position of a row.
@@ -68,17 +68,17 @@ public interface BeanReaderInstructions {
     * @param symbol the symbol to use as the 0-position comment marker
     * @return convenience for chaining
     */
-    BeanReaderInstructions setComment(char symbol);
+    BeanInstructions setComment(char symbol);
 
     /**
     * Sets the characters (plural) that will be interpreted as end-of-line markers (unless within a quoted
     * field). This method is called whenever {@link org.csveed.annotations.CsvFile#endOfLine()}
     * is used. The default values for this setting are \r and \n.  This call is a facade for
-    * {@link org.csveed.row.RowReaderInstructions#setEndOfLine(char[])}.
+    * {@link org.csveed.row.RowInstructions#setEndOfLine(char[])}.
     * @param symbols the symbol to interpret as end-of-line markers (unless within a quoted field)
     * @return convenience for chaining
     */
-    BeanReaderInstructions setEndOfLine(char[] symbols);
+    BeanInstructions setEndOfLine(char[] symbols);
 
     /**
     * Determines whether empty lines must be skipped or treated as single-column rows. This method is called
@@ -87,7 +87,7 @@ public interface BeanReaderInstructions {
     * @param skip true to skip empty lines, false to treat as single-column rows
     * @return convenience for chaining
     */
-    BeanReaderInstructions skipEmptyLines(boolean skip);
+    BeanInstructions skipEmptyLines(boolean skip);
 
     /**
     * Determines whether comment lines must be skipped. This method is called whenever
@@ -97,7 +97,7 @@ public interface BeanReaderInstructions {
     * @param skip true to skip comment lines, identified as starting with a comment marker
     * @return convenience for chaining
     */
-    BeanReaderInstructions skipCommentLines(boolean skip);
+    BeanInstructions skipCommentLines(boolean skip);
 
     /**
     * A file can have a special layout with a dynamic number of columns. If the intention is to duplicate rows
@@ -106,7 +106,7 @@ public interface BeanReaderInstructions {
     * created. If a bean has fields annotated with @CsvHeaderName or @CsvHeaderValue, it will store the
     * values of the header or the cell for that index column in the fields.
     */
-    BeanReaderInstructions setStartIndexDynamicColumns(int startIndex);
+    BeanInstructions setStartIndexDynamicColumns(int startIndex);
 
     /**
     * Determines which mapping strategy is to be employed for mapping cells to bean properties. This
@@ -118,7 +118,7 @@ public interface BeanReaderInstructions {
     * @param mapper the mapping strategy to employ for mapping cells to bean properties
     * @return convenience for chaining
     */
-    BeanReaderInstructions setMapper(Class<? extends AbstractMapper> mapper);
+    BeanInstructions setMapper(Class<? extends AbstractMapper> mapper);
 
     /**
     * Determines what dateformat to apply to the cell value before storing it as a date. This method is called
@@ -128,7 +128,7 @@ public interface BeanReaderInstructions {
     * @param dateFormat the date format to apply for parsing the date value
     * @return convenience for chaining
     */
-    BeanReaderInstructions setDate(String propertyName, String dateFormat);
+    BeanInstructions setDate(String propertyName, String dateFormat);
 
     /**
     * Determines what Locale to apply to the cell value before converting it to a number. This method is called
@@ -137,7 +137,7 @@ public interface BeanReaderInstructions {
     * @param propertyName the name of the property to write the data to
     * @param locale the Locale to apply for converting the number
     */
-    BeanReaderInstructions setLocalizedNumber(String propertyName, Locale locale);
+    BeanInstructions setLocalizedNumber(String propertyName, Locale locale);
 
     /**
     * Determines if the field is required. If so, the cell may not be empty and a
@@ -148,7 +148,7 @@ public interface BeanReaderInstructions {
     * @param required whether the cell must be not-null
     * @return convenience for chaining
     */
-    BeanReaderInstructions setRequired(String propertyName, boolean required);
+    BeanInstructions setRequired(String propertyName, boolean required);
 
     /**
     * Sets a custom {@link PropertyEditor} for the property. This PropertyEditor is called to convert the
@@ -160,7 +160,7 @@ public interface BeanReaderInstructions {
     * @param converter PropertyEditor to apply to the property
     * @return convenience for chaining
     */
-    BeanReaderInstructions setConverter(String propertyName, Converter converter);
+    BeanInstructions setConverter(String propertyName, Converter converter);
 
     /**
     * Sets a field to be ignored for purposes of mapping. This method is called whenever
@@ -169,7 +169,7 @@ public interface BeanReaderInstructions {
     * @param propertyName property which must be ignored for mapping
     * @return convenience for chaining
     */
-    BeanReaderInstructions ignoreProperty(String propertyName);
+    BeanInstructions ignoreProperty(String propertyName);
 
     /**
     * Maps a column in the CSV to a specific property. This method is called whenever
@@ -179,7 +179,7 @@ public interface BeanReaderInstructions {
     * @param propertyName property to which the index-based mapping must be applied
     * @return convenience for chaining
     */
-    BeanReaderInstructions mapColumnIndexToProperty(int columnIndex, String propertyName);
+    BeanInstructions mapColumnIndexToProperty(int columnIndex, String propertyName);
 
     /**
     * Maps a column name (which is found in the header) to a specific property. Note that to use this, headers
@@ -190,21 +190,21 @@ public interface BeanReaderInstructions {
     * @param propertyName property to which the name-based mapping must be applied
     * @return convenience for chaining
     */
-    BeanReaderInstructions mapColumnNameToProperty(String columnName, String propertyName);
+    BeanInstructions mapColumnNameToProperty(String columnName, String propertyName);
 
     /**
     * Determines what property will receive the header name in the currently active dynamic column
     * @param propertyName property in which the active dynamic header name must be stored
     * @return convenience for chaining
     */
-    BeanReaderInstructions setHeaderNameToProperty(String propertyName);
+    BeanInstructions setHeaderNameToProperty(String propertyName);
 
     /**
     * Determines what property will receive the cell value in the currently active dynamic column
     * @param propertyName property in which the active dynamic column value must be stored
     * @return convenience for chaining
     */
-    BeanReaderInstructions setHeaderValueToProperty(String propertyName);
+    BeanInstructions setHeaderValueToProperty(String propertyName);
 
     Class getBeanClass();
 
