@@ -4,6 +4,10 @@ import java.nio.charset.Charset;
 
 public class CharsetConverter extends AbstractConverter<Charset> {
 
+    public CharsetConverter() {
+        super(Charset.class);
+    }
+
     @Override
     public Charset fromString(String text) throws Exception {
         if (text != null && !text.equals("")) {
@@ -11,11 +15,6 @@ public class CharsetConverter extends AbstractConverter<Charset> {
         } else {
             return null;
         }
-    }
-
-    @Override
-    public Class getType() {
-        return Charset.class;
     }
 
 //    @Override

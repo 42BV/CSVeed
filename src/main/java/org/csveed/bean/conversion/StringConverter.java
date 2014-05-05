@@ -2,14 +2,13 @@ package org.csveed.bean.conversion;
 
 public class StringConverter extends AbstractConverter<String> {
 
-    @Override
-    public String fromString(String text) {
-        return text;
+    public StringConverter() {
+        super(String.class);
     }
 
     @Override
-    public Class getType() {
-        return String.class;
+    public String fromString(String text) {
+        return text;
     }
 
 //    @Override

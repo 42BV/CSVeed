@@ -4,14 +4,13 @@ import java.util.Currency;
 
 public class CurrencyConverter extends AbstractConverter<Currency> {
 
-    @Override
-    public Currency fromString(String text) {
-        return Currency.getInstance(text);
+    public CurrencyConverter() {
+        super(Currency.class);
     }
 
     @Override
-    public Class getType() {
-        return Currency.class;
+    public Currency fromString(String text) {
+        return Currency.getInstance(text);
     }
 
 //    @Override

@@ -7,21 +7,17 @@ public class PatternConverter extends AbstractConverter<Pattern> {
     private final int flags;
 
     public PatternConverter() {
-        this.flags = 0;
+        this(0);
     }
 
     public PatternConverter(int flags) {
+        super(Pattern.class);
         this.flags = flags;
     }
 
     @Override
     public Pattern fromString(String text) throws Exception {
         return text != null ? Pattern.compile(text, this.flags) : null;
-    }
-
-    @Override
-    public Class getType() {
-        return Pattern.class;
     }
 
 //    @Override

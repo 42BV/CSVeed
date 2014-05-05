@@ -2,14 +2,13 @@ package org.csveed.bean.conversion;
 
 public class ByteArrayConverter extends AbstractConverter<byte[]> {
 
-    @Override
-    public byte[] fromString(String text) throws Exception {
-        return text != null ? text.getBytes() : null;
+    public ByteArrayConverter() {
+        super(byte[].class);
     }
 
     @Override
-    public Class getType() {
-        return byte[].class;
+    public byte[] fromString(String text) throws Exception {
+        return text != null ? text.getBytes() : null;
     }
 
 //    @Override

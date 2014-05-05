@@ -4,14 +4,13 @@ import java.util.TimeZone;
 
 public class TimeZoneConverter extends AbstractConverter<TimeZone> {
 
-    @Override
-    public TimeZone fromString(String text) throws Exception {
-        return TimeZone.getTimeZone(text);
+    public TimeZoneConverter() {
+        super(TimeZone.class);
     }
 
     @Override
-    public Class getType() {
-        return TimeZone.class;
+    public TimeZone fromString(String text) throws Exception {
+        return TimeZone.getTimeZone(text);
     }
 
 //    @Override

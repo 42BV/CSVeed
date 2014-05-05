@@ -18,6 +18,7 @@ public class DateConverter extends AbstractConverter<Date> {
     private final String formatText;
 
     public DateConverter(String formatText, boolean allowEmpty) {
+        super(Date.class);
         this.formatText = formatText;
         this.dateFormat = new SimpleDateFormat(formatText);
         this.dateFormat.setLenient(false);
@@ -42,11 +43,6 @@ public class DateConverter extends AbstractConverter<Date> {
                 throw new IllegalArgumentException("Could not parse date: " + ex.getMessage(), ex);
             }
         }
-    }
-
-    @Override
-    public Class getType() {
-        return Date.class;
     }
 
     @Override

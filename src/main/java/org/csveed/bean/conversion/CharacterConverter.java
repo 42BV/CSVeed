@@ -11,6 +11,7 @@ public class CharacterConverter extends AbstractConverter<Character> {
     private final boolean allowEmpty;
 
     public CharacterConverter(boolean allowEmpty) {
+        super(Character.class);
         this.allowEmpty = allowEmpty;
     }
 
@@ -32,11 +33,6 @@ public class CharacterConverter extends AbstractConverter<Character> {
         } else {
             return new Character(text.charAt(0));
         }
-    }
-
-    @Override
-    public Class getType() {
-        return Character.class;
     }
 
 //    @Override

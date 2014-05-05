@@ -18,6 +18,7 @@ public class CustomNumberConverter extends AbstractConverter<Number> {
 
     public CustomNumberConverter(Class<? extends Number> numberClass,
                               NumberFormat numberFormat, boolean allowEmpty) throws IllegalArgumentException {
+        super(Number.class);
 
         if (numberClass == null || !Number.class.isAssignableFrom(numberClass)) {
             throw new IllegalArgumentException("Property class must be a subclass of Number");
@@ -38,11 +39,6 @@ public class CustomNumberConverter extends AbstractConverter<Number> {
         else {
             return determineValue(NumberUtils.parseNumber(text, this.numberClass));
         }
-    }
-
-    @Override
-    public Class getType() {
-        return numberClass;
     }
 
     public Number determineValue(Object value) {

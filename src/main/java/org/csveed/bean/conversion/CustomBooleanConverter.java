@@ -27,6 +27,7 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
     }
 
     public CustomBooleanConverter(String trueString, String falseString, boolean allowEmpty) {
+        super(Boolean.class);
         this.trueString = trueString;
         this.falseString = falseString;
         this.allowEmpty = allowEmpty;
@@ -57,11 +58,6 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
         else {
             throw new IllegalArgumentException("Invalid boolean value [" + text + "]");
         }
-    }
-
-    @Override
-    public Class getType() {
-        return Boolean.class;
     }
 
 //    @Override

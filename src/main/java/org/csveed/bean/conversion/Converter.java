@@ -13,6 +13,6 @@ public interface Converter<K> {
 
     String infoOnType();
 
-    Class getType();
+    Class<K> getType();
 
 }
