@@ -5,6 +5,7 @@ import org.csveed.api.Row;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Collection;
 import java.util.Iterator;
 
 public class RowWriterImpl implements RowWriter {
@@ -25,8 +26,22 @@ public class RowWriterImpl implements RowWriter {
     }
 
     @Override
-    public Row writeRow(String[] cells) {
-        return writeRow(new RowImpl(convertToLine(cells), header));
+    public void writeRows(String[][] rows) {
+        for (String[] row : rows) {
+            writeRow(row);
+        }
+    }
+
+    @Override
+    public void writeRows(Collection<Row> rows) {
+        for (Row row : rows) {
+            writeRow(row);
+        }
+    }
+
+    @Override
+    public void writeRow(String[] cells) {
+        writeRow(new RowImpl(convertToLine(cells), header));
     }
 
     @Override
@@ -40,14 +55,15 @@ public class RowWriterImpl implements RowWriter {
 
     @Override
     public Header writeHeader(String[] headerNames) {
-        return writeHeader(new HeaderImpl(convertToLine(headerNames)));
+        Header header = new HeaderImpl(convertToLine(headerNames));
+        writeHeader(header);
+        return header;
     }
 
     @Override
-    public Header writeHeader(Header header) {
+    public void writeHeader(Header header) {
         this.header = header;
         writeCells(header.iterator());
-        return header;
     }
 
     @Override
@@ -82,7 +98,9 @@ public class RowWriterImpl implements RowWriter {
 
     private void writeCell(String cell) throws IOException {
         writer.write(rowInstructions.getQuote());
-        writer.write(cell);
+        String searchString = Character.toString(rowInstructions.getQuote());
+        String replaceString = new String(new char[] { rowInstructions.getEscape(), rowInstructions.getQuote() } );
+        writer.write(cell.replace(searchString, replaceString));
         writer.write(rowInstructions.getQuote());
     }
 

@@ -33,6 +33,12 @@ public interface RowInstructions {
     RowInstructions setStartRow(int startRow);
 
     /**
+    * Returns the escape character to use for writing a cell.
+    * @return the escape character
+    */
+    char getEscape();
+
+    /**
     * Sets the character that will be interpreted as an escape symbol while within a quoted field. This
     * method is called whenever {@link org.csveed.annotations.CsvFile#escape()} is used. The
     * default value for this setting is a double quote (") symbol.

@@ -52,6 +52,11 @@ public class RowInstructionsImpl implements RowInstructions {
     }
 
     @Override
+    public char getEscape() {
+        return this.symbolMapping.getFirstMappedCharacter(EncounteredSymbol.ESCAPE_SYMBOL);
+    }
+
+    @Override
     public RowInstructions setEscape(char symbol) {
         this.symbolMapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, symbol);
         return this;
