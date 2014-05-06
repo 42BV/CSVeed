@@ -1,5 +1,6 @@
 package org.csveed.api;
 
+import org.csveed.bean.BeanInstructionsImpl;
 import org.csveed.bean.ColumnNameMapper;
 import org.csveed.report.CsvException;
 import org.csveed.test.converters.BeanSimpleConverter;
@@ -7,6 +8,7 @@ import org.csveed.test.model.*;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,7 +17,58 @@ import static junit.framework.Assert.*;
 public class CsvClientTest {
 
     @Test
-    public void readAndWrite() throws IOException {
+    public void writeBeansBasedOnClass() throws IOException {
+        StringWriter writer = new StringWriter();
+        List<BeanWithMultipleStrings> beans = new ArrayList<BeanWithMultipleStrings>();
+        beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
+        beans.add(createBean("row 2, cell 3", "row 2, cell 2", "row 2, cell 1"));
+        beans.add(createBean("row 3, cell 3", "row 3, cell 2", "row 3, cell 1"));
+        CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<BeanWithMultipleStrings>(
+                writer, BeanWithMultipleStrings.class
+        );
+        client.writeBeans(beans);
+        writer.close();
+        assertEquals(
+                "\"gamma\";\"beta\";\"alpha\"\r"+
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r"+
+                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r"+
+                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r",
+                writer.getBuffer().toString());
+    }
+
+    @Test
+    public void writeBeansBasedOnInstructions() throws IOException {
+        StringWriter writer = new StringWriter();
+        List<BeanWithMultipleStrings> beans = new ArrayList<BeanWithMultipleStrings>();
+        beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
+        beans.add(createBean("row 2, cell 3", "row 2, cell 2", "row 2, cell 1"));
+        beans.add(createBean("row 3, cell 3", "row 3, cell 2", "row 3, cell 1"));
+        CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<BeanWithMultipleStrings>(
+                writer, new BeanInstructionsImpl(BeanWithMultipleStrings.class)
+                    .mapColumnNameToProperty("alpha", "alpha")
+                    .mapColumnNameToProperty("beta", "beta")
+                    .ignoreProperty("gamma")
+        );
+        client.writeBeans(beans);
+        writer.close();
+        assertEquals(
+                "\"beta\";\"alpha\"\r"+
+                "\"row 1, cell 2\";\"row 1, cell 3\"\r"+
+                "\"row 2, cell 2\";\"row 2, cell 3\"\r"+
+                "\"row 3, cell 2\";\"row 3, cell 3\"\r",
+                writer.getBuffer().toString());
+    }
+
+    private BeanWithMultipleStrings createBean(String alpha, String beta, String gamma) {
+        BeanWithMultipleStrings bean = new BeanWithMultipleStrings();
+        bean.setAlpha(alpha);
+        bean.setBeta(beta);
+        bean.setGamma(gamma);
+        return bean;
+    }
+
+    @Test
+    public void readAndWriteRows() throws IOException {
         Reader reader = new StringReader(
                 "alpha;beta;gamma\n"+
                 "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+

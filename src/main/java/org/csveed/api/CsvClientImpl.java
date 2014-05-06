@@ -28,7 +28,7 @@ public class CsvClientImpl<T> implements CsvClient<T> {
 
     public CsvClientImpl(Writer writer) {
         this.rowWriter = new RowWriterImpl(writer);
-        this.rowInstructions = this.rowWriter.getRowInstructions();
+        this.rowInstructions = getRowWriter().getRowInstructions();
     }
 
     public CsvClientImpl(Writer writer, Class<T> beanClass) {
@@ -38,13 +38,13 @@ public class CsvClientImpl<T> implements CsvClient<T> {
     public CsvClientImpl(Writer writer, BeanInstructions beanInstructions) {
         this.beanWriter= new BeanWriterImpl<T>(writer, beanInstructions);
         this.rowWriter = getBeanWriter().getRowWriter();
-        this.rowInstructions = this.rowReader.getRowInstructions();
+        this.rowInstructions = getRowWriter().getRowInstructions();
         this.beanInstructions = beanInstructions;
     }
 
     public CsvClientImpl(Reader reader) {
         this.rowReader = new RowReaderImpl(reader);
-        this.rowInstructions = this.rowReader.getRowInstructions();
+        this.rowInstructions = getRowReader().getRowInstructions();
     }
     
     public CsvClientImpl(Reader reader, Class<T> beanClass) {
@@ -54,7 +54,7 @@ public class CsvClientImpl<T> implements CsvClient<T> {
     public CsvClientImpl(Reader reader, BeanInstructions beanInstructions) {
         this.beanReader = new BeanReaderImpl<T>(reader, beanInstructions);
         this.rowReader = getBeanReader().getRowReader();
-        this.rowInstructions = this.rowReader.getRowInstructions();
+        this.rowInstructions = getRowReader().getRowInstructions();
         this.beanInstructions = beanInstructions;
     }
 
@@ -271,7 +271,7 @@ public class CsvClientImpl<T> implements CsvClient<T> {
     }
 
     private BeanWriter<T> getBeanWriter() {
-        if (this.beanReader == null) {
+        if (this.beanWriter == null) {
             throw new CsvException(new GeneralError(
                     "BeanWriter has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvClient."
             ));
