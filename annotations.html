@@ -62,9 +62,9 @@
         <strong><a href="#csvconverter">CsvConverter</a></strong>; set a custom Converted to be applied for converting text to a property</li>
 </ul>
 
-<p>For the annotations to work, the Bean class must be passed to CsvReader:</p>
+<p>For the annotations to work, the Bean class must be passed to CsvClient:</p>
 
-<div class="highlight"><pre>  <span class="n">CsvReader</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvReaderImpl</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;(</span><span class="n">reader</span><span class="o">,</span> <span class="n">Bean</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<div class="highlight"><pre>  <span class="n">CsvClient</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvClientImpl</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;(</span><span class="n">reader</span><span class="o">,</span> <span class="n">Bean</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 </pre></div>
 
 <h2 id="csvfile">CsvFile</h2>
@@ -84,7 +84,7 @@
         <strong>mapping strategy</strong>; by default this will be ColumnIndexMapping, which maps to Bean properties on the basis of the column index. Alternatively, this could be ColumnNameMapping, which maps to Bean properties on the basis of the name of the column (ie, the header name).</li>
 </ul><h3>Parse instructions</h3>
 
-<p>Parse instructions help CsvReader to read and interpret the CSV file. Assume the following CSV:</p>
+<p>Parse instructions help CsvClient to read and interpret the CSV file. Assume the following CSV:</p>
 
 <div class="highlight"><pre>  <span class="n">first</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">street</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">trademark</span>
   <span class="o">%</span> <span class="n">First</span> <span class="n">a</span> <span class="n">line</span> <span class="n">on</span> <span class="n">mr</span> <span class="n">Hawking</span>
