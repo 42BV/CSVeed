@@ -16,15 +16,30 @@ public class CsvClientImpl<T> implements CsvClient<T> {
 
     private BeanReader<T> beanReader;
 
+    private BeanWriter<T> beanWriter;
+
     private RowReader rowReader;
 
     private RowWriter rowWriter;
     
     private final RowInstructions rowInstructions;
 
+    private BeanInstructions beanInstructions;
+
     public CsvClientImpl(Writer writer) {
         this.rowWriter = new RowWriterImpl(writer);
         this.rowInstructions = this.rowWriter.getRowInstructions();
+    }
+
+    public CsvClientImpl(Writer writer, Class<T> beanClass) {
+        this(writer, new BeanParser().getBeanInstructions(beanClass));
+    }
+
+    public CsvClientImpl(Writer writer, BeanInstructions beanInstructions) {
+        this.beanWriter= new BeanWriterImpl<T>(writer, beanInstructions);
+        this.rowWriter = getBeanWriter().getRowWriter();
+        this.rowInstructions = this.rowReader.getRowInstructions();
+        this.beanInstructions = beanInstructions;
     }
 
     public CsvClientImpl(Reader reader) {
@@ -40,6 +55,17 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         this.beanReader = new BeanReaderImpl<T>(reader, beanInstructions);
         this.rowReader = getBeanReader().getRowReader();
         this.rowInstructions = this.rowReader.getRowInstructions();
+        this.beanInstructions = beanInstructions;
+    }
+
+    @Override
+    public void writeBeans(Collection<T> beans) {
+        getBeanWriter().writeBeans(beans);
+    }
+
+    @Override
+    public void writeBean(T bean) {
+        getBeanWriter().writeBean(bean);
     }
 
     @Override
@@ -161,68 +187,78 @@ public class CsvClientImpl<T> implements CsvClient<T> {
 
     @Override
     public CsvClient<T> setMapper(Class<? extends AbstractMapper> mapper) {
-        getBeanReader().getBeanInstructions().setMapper(mapper);
+        getBeanInstructions().setMapper(mapper);
         return this;
     }
 
     @Override
     public CsvClient<T> setDate(String propertyName, String dateFormat) {
-        getBeanReader().getBeanInstructions().setDate(propertyName, dateFormat);
+        getBeanInstructions().setDate(propertyName, dateFormat);
         return this;
     }
 
     @Override
     public CsvClient<T> setLocalizedNumber(String propertyName, Locale locale) {
-        getBeanReader().getBeanInstructions().setLocalizedNumber(propertyName, locale);
+        getBeanInstructions().setLocalizedNumber(propertyName, locale);
         return this;
     }
 
     @Override
     public CsvClient<T> setRequired(String propertyName, boolean required) {
-        getBeanReader().getBeanInstructions().setRequired(propertyName, required);
+        getBeanInstructions().setRequired(propertyName, required);
         return this;
     }
 
     @Override
     public CsvClient<T> setConverter(String propertyName, Converter converter) {
-        getBeanReader().getBeanInstructions().setConverter(propertyName, converter);
+        getBeanInstructions().setConverter(propertyName, converter);
         return this;
     }
 
     @Override
     public CsvClient<T> ignoreProperty(String propertyName) {
-        getBeanReader().getBeanInstructions().ignoreProperty(propertyName);
+        getBeanInstructions().ignoreProperty(propertyName);
         return this;
     }
 
     @Override
     public CsvClient<T> mapColumnIndexToProperty(int columnIndex, String propertyName) {
-        getBeanReader().getBeanInstructions().mapColumnIndexToProperty(columnIndex, propertyName);
+        getBeanInstructions().mapColumnIndexToProperty(columnIndex, propertyName);
         return this;
     }
 
     @Override
     public CsvClient<T> mapColumnNameToProperty(String columnName, String propertyName) {
-        getBeanReader().getBeanInstructions().mapColumnNameToProperty(columnName, propertyName);
+        getBeanInstructions().mapColumnNameToProperty(columnName, propertyName);
         return this;
     }
 
     @Override
     public CsvClient<T> setStartIndexDynamicColumns(int startIndex) {
-        getBeanReader().getBeanInstructions().setStartIndexDynamicColumns(startIndex);
+        getBeanInstructions().setStartIndexDynamicColumns(startIndex);
         return this;
     }
 
     @Override
     public CsvClient<T> setHeaderNameToProperty(String propertyName) {
-        getBeanReader().getBeanInstructions().setHeaderNameToProperty(propertyName);
+        getBeanInstructions().setHeaderNameToProperty(propertyName);
         return this;
     }
 
     @Override
     public CsvClient<T> setHeaderValueToProperty(String propertyName) {
-        getBeanReader().getBeanInstructions().setHeaderValueToProperty(propertyName);
+        getBeanInstructions().setHeaderValueToProperty(propertyName);
         return this;
+    }
+    
+    private BeanInstructions getBeanInstructions() {
+        if (this.beanInstructions == null) {
+            throw new CsvException(new GeneralError(
+                    "BeanInstructions have not been initialized. Make sure to pass BeanInstructions or the bean class" +
+                    " to CsvClient."
+            ));
+        }
+        return this.beanInstructions;
     }
 
     private BeanReader<T> getBeanReader() {
@@ -234,11 +270,28 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         return this.beanReader;
     }
 
+    private BeanWriter<T> getBeanWriter() {
+        if (this.beanReader == null) {
+            throw new CsvException(new GeneralError(
+                    "BeanWriter has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvClient."
+            ));
+        }
+        return this.beanWriter;
+    }
+
     private RowReader getRowReader() {
+        if (this.rowReader == null) {
+            throw new CsvException(new GeneralError(
+                    "RowReader has not been initialized. Make sure to pass a Reader to the constructor."));
+        }
         return this.rowReader;
     }
 
     public RowWriter getRowWriter() {
+        if (this.rowWriter == null) {
+            throw new CsvException(new GeneralError(
+                    "RowWriter has not been initialized. Make sure to pass a Writer to the constructor."));
+        }
         return rowWriter;
     }
 

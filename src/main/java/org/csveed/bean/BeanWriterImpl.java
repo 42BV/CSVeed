@@ -6,7 +6,7 @@ import org.csveed.bean.conversion.DefaultConverters;
 import org.csveed.row.*;
 
 import java.io.Writer;
-import java.util.List;
+import java.util.Collection;
 
 public class BeanWriterImpl<T> implements BeanWriter<T> {
 
@@ -30,7 +30,7 @@ public class BeanWriterImpl<T> implements BeanWriter<T> {
     }
 
     @Override
-    public void writeBeans(List<T> beans) {
+    public void writeBeans(Collection<T> beans) {
         for (T bean : beans) {
             writeBean(bean);
         }
@@ -64,6 +64,11 @@ public class BeanWriterImpl<T> implements BeanWriter<T> {
         header = new HeaderImpl(line);
         rowWriter.writeHeader(header);
         headerWritten = true;
+    }
+
+    @Override
+    public RowWriter getRowWriter() {
+        return rowWriter;
     }
 
 }

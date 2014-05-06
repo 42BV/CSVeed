@@ -29,6 +29,18 @@ import java.util.Locale;
 public interface CsvClient<T> {
 
     /**
+    * Writes a collection of Beans to the table
+    * @param beans beans to write to the table
+    */
+    public void writeBeans(Collection<T> beans);
+
+    /**
+    * Writes a single Bean to the table
+    * @param bean bean to write to the table
+    */
+    public void writeBean(T bean);
+
+    /**
     * Writes a single row to the table
     * @param row single row
     */
