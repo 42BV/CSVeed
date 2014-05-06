@@ -11,8 +11,8 @@ public class ByteArrayConverter extends AbstractConverter<byte[]> {
         return text != null ? text.getBytes() : null;
     }
 
-//    @Override
-//    public String toString(byte[] value) throws Exception {
-//        return value != null ? new String(value) : "";
-//    }
+    @Override
+    public String toString(byte[] value) throws Exception {
+        return value != null ? new String(value) : "";
+    }
 }

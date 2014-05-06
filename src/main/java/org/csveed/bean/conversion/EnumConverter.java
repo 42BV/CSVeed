@@ -14,9 +14,9 @@ public class EnumConverter<T extends Enum> extends AbstractConverter<T> {
         return (T)Enum.valueOf(this.enumClass, text);
     }
 
-//    @Override
-//    public String toString(Charset value) throws Exception {
-//        return value != null ? value.name() : "";
-//    }
+    @Override
+    public String toString(T value) throws Exception {
+        return value.toString();
+    }
 
 }

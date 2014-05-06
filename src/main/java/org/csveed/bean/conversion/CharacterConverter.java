@@ -35,10 +35,10 @@ public class CharacterConverter extends AbstractConverter<Character> {
         }
     }
 
-//    @Override
-//    public String toString(Character value) throws Exception {
-//        return value != null ? value.toString() : "";
-//    }
+    @Override
+    public String toString(Character value) throws Exception {
+        return value != null ? value.toString() : "";
+    }
 
     private boolean isUnicodeCharacterSequence(String sequence) {
         return (sequence.startsWith(UNICODE_PREFIX) && sequence.length() == UNICODE_LENGTH);

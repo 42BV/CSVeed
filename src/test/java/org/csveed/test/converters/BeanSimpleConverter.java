@@ -16,4 +16,9 @@ public class BeanSimpleConverter extends AbstractConverter<BeanSimple> {
         return bean;
     }
 
+    @Override
+    public String toString(BeanSimple value) throws Exception {
+        return value.getName();
+    }
+
 }

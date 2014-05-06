@@ -17,9 +17,9 @@ public class CharsetConverter extends AbstractConverter<Charset> {
         }
     }
 
-//    @Override
-//    public String toString(Charset value) throws Exception {
-//        return value != null ? value.name() : "";
-//    }
+    @Override
+    public String toString(Charset value) throws Exception {
+        return value != null ? value.name() : "";
+    }
 
 }

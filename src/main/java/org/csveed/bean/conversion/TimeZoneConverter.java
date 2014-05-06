@@ -13,8 +13,8 @@ public class TimeZoneConverter extends AbstractConverter<TimeZone> {
         return TimeZone.getTimeZone(text);
     }
 
-//    @Override
-//    public String toString(TimeZone value) throws Exception {
-//        return null;
-//    }
+    @Override
+    public String toString(TimeZone value) throws Exception {
+        return value.getDisplayName();
+    }
 }

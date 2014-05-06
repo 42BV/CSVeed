@@ -9,15 +9,18 @@ import java.util.Locale;
 
 /**
 * <p>
-*     The BeanReader is responsible for reading CSV rows and converting those into beans. There are two
-*     ways to initialize a {@link org.csveed.bean.BeanReaderImpl}:
+*     The CsvClient is responsible for reading/writing CSV rows and converting those into beans/rows. There are a couple
+*     of ways to initialize a {@link org.csveed.api.CsvClientImpl}:
 * </p>
 *
 * <ul>
-*     <li>Point it to class. The {@link org.csveed.annotations} in the class are read, as is the order
+*     <li>Just use a Reader/Writer. In this case you can only use the row functionality of CSVeed,
+*         not the bean functionality</li>
+*     <li>Pass a Reader or Writer and point it to class. The {@link org.csveed.annotations} in the class are read,
+*         as is the order
 *         of the properties within the class.</li>
-*     <li>Roll your own. Pass a {@link org.csveed.bean.BeanInstructions} implementation with your
-*         own configuration settings</li>
+*     <li>Pass a Reader or Writer and roll your own instructions. Pass a {@link org.csveed.bean.BeanInstructions}
+*         implementation with your own configuration settings</li>
 * </ul>
 *
 * @param <T> the bean class into which the rows are converted

@@ -13,13 +13,13 @@ import org.csveed.row.RowReaderImpl;
 
 public class BeanReaderImpl<T> implements BeanReader<T> {
 
-    private RowReader rowReader;
+    private final RowReader rowReader;
 
-    private BeanInstructions beanInstructions;
+    private final BeanInstructions beanInstructions;
 
     private AbstractMapper<T> mapper;
 
-    private DynamicColumn currentDynamicColumn;
+    private final DynamicColumn currentDynamicColumn;
 
     private Row unmappedRow;
 

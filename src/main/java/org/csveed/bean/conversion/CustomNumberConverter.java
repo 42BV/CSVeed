@@ -48,17 +48,17 @@ public class CustomNumberConverter extends AbstractConverter<Number> {
         return null;
     }
 
-//    @Override
-//    public String toString(Number value) throws Exception {
-//        if (value == null) {
-//            return "";
-//        }
-//        if (this.numberFormat != null) {
-//            return this.numberFormat.format(value);
-//        }
-//        else {
-//            return value.toString();
-//        }
-//    }
+    @Override
+    public String toString(Number value) throws Exception {
+        if (value == null) {
+            return "";
+        }
+        if (this.numberFormat != null) {
+            return this.numberFormat.format(value);
+        }
+        else {
+            return value.toString();
+        }
+    }
 
 }

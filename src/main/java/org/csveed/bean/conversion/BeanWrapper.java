@@ -15,6 +15,20 @@ public class BeanWrapper {
         this.bean = bean;
     }
 
+    public String getProperty(BeanProperty property) throws ConversionException {
+        Method readMethod = property.getPropertyDescriptor().getReadMethod();
+        Converter converter = getConverter(property);
+        if (converter == null) {
+            throw new NoConverterFoundException("No Converter found for", getPropertyType(property));
+        }
+        try {
+            Object value = readMethod.invoke(bean);
+            return converter.toString(value);
+        } catch (Exception err) {
+            throw new BeanPropertyConversionException("Problem converting", converter.infoOnType(), err);
+        }
+    }
+
     public void setProperty(BeanProperty property, String value) throws ConversionException {
         Method writeMethod = property.getPropertyDescriptor().getWriteMethod();
         Converter converter = getConverter(property);

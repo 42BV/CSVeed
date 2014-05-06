@@ -11,9 +11,9 @@ public class StringConverter extends AbstractConverter<String> {
         return text;
     }
 
-//    @Override
-//    public String toString(String value) {
-//        return value;
-//    }
+    @Override
+    public String toString(String value) {
+        return value;
+    }
 
 }

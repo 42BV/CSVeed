@@ -11,8 +11,9 @@ public class CharArrayConverter extends AbstractConverter<char[]> {
         return text != null ? text.toCharArray() : null;
     }
 
-//    @Override
-//    public String toString(char[] value) throws Exception {
-//        return value != null ? new String(value) : "";
-//    }
+    @Override
+    public String toString(char[] value) throws Exception {
+        return value != null ? new String(value) : "";
+    }
+
 }

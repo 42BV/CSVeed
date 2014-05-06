@@ -20,8 +20,8 @@ public class PatternConverter extends AbstractConverter<Pattern> {
         return text != null ? Pattern.compile(text, this.flags) : null;
     }
 
-//    @Override
-//    public String toString(Pattern value) throws Exception {
-//        return value != null ? value.pattern() : "";
-//    }
+    @Override
+    public String toString(Pattern value) throws Exception {
+        return value != null ? value.pattern() : "";
+    }
 }

@@ -50,9 +50,9 @@ public class DateConverter extends AbstractConverter<Date> {
         return super.infoOnType() + " " + formatText;
     }
 
-//    @Override
-//    public String toString(Date value) {
-//        return value != null ? this.dateFormat.format(value) : "";
-//    }
+    @Override
+    public String toString(Date value) {
+        return value != null ? this.dateFormat.format(value) : "";
+    }
 
 }
