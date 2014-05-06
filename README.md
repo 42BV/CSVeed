@@ -59,8 +59,8 @@ CSV text value into a java.util.Date using the date format in the annotation.
                 "\"Gamma\";1902;\"30-09-1978\""
         );
 
-        CsvReader<Bean> csvReader = new CsvReaderImpl<Bean>(reader, Bean.class);
-        final List<Bean> beans = csvReader.readBeans();
+        CsvReader<Bean> csvClient = new CsvReaderImpl<Bean>(reader, Bean.class);
+        final List<Bean> beans = csvClient.readBeans();
 
         for (Bean bean : beans) {
             System.out.println(bean.getName()+" | "+bean.getNumber()+" | "+bean.getDate());
@@ -77,13 +77,13 @@ It's that simple to get up and running. You could also opt to declare your instr
                 "\"Gamma\";1902;\"30-09-1978\""
         );
 
-        CsvReader<Bean> csvReader = new CsvReaderImpl<Bean>(reader, new BeanReaderInstructionsImpl(Bean.class))
+        CsvReader<Bean> csvClient = new CsvReaderImpl<Bean>(reader, new BeanReaderInstructionsImpl(Bean.class))
                 .setMapper(ColumnNameMapper.class)
                 .mapColumnNameToProperty("name", "name")
                 .mapColumnNameToProperty("number", "number")
                 .mapColumnNameToProperty("date", "date")
                 .setDate("date", "dd-MM-yyyy");
-        final List<Bean> beans = csvReader.readBeans();
+        final List<Bean> beans = csvClient.readBeans();
 
         for (Bean bean : beans) {
             System.out.println(bean.getName()+" | "+bean.getNumber()+" | "+bean.getDate());

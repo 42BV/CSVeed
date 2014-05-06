@@ -12,7 +12,62 @@ import java.util.Locale;
 
 import static junit.framework.Assert.*;
 
-public class CsvReaderTest {
+public class CsvClientTest {
+
+    @Test
+    public void readAndWrite() throws IOException {
+        Reader reader = new StringReader(
+                "alpha;beta;gamma\n"+
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
+                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"
+        );
+        CsvClient csvReader = new CsvClientImpl(reader);
+        List<Row> rows = csvReader.readRows();
+
+        StringWriter writer = new StringWriter();
+        CsvClient csvWriter = new CsvClientImpl(writer);
+        csvWriter.writeHeader(rows.get(0).getHeader());
+        csvWriter.writeRows(rows);
+        writer.close();
+
+        assertEquals(
+                "\"alpha\";\"beta\";\"gamma\"\r"+
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r"+
+                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r",
+                writer.getBuffer().toString());
+    }
+
+    @Test
+    public void writeRow() throws IOException {
+        StringWriter writer = new StringWriter();
+        CsvClient csvClient = new CsvClientImpl(writer)
+                .setUseHeader(false);
+        csvClient.writeRow(new String[] { "alpha", "beta", "gamma" } );
+        writer.close();
+        assertEquals("\"alpha\";\"beta\";\"gamma\"\r", writer.getBuffer().toString());
+    }
+
+    @Test
+    public void writeRows() throws IOException {
+        StringWriter writer = new StringWriter();
+        CsvClient csvClient = new CsvClientImpl(writer)
+                .setUseHeader(false);
+        csvClient.writeHeader(new String[] {
+                "h1", "h2", "h3"
+        } );
+        csvClient.writeRows(new String[][] {
+                { "l1c1", "l1c2", "l1c3" },
+                { "l2c1", "l2c2", "l2c3" },
+                { "l3c1", "l3c2", "l3c3" }
+        } );
+        writer.close();
+        assertEquals(
+                "\"h1\";\"h2\";\"h3\"\r"+
+                "\"l1c1\";\"l1c2\";\"l1c3\"\r"+
+                "\"l2c1\";\"l2c2\";\"l2c3\"\r"+
+                "\"l3c1\";\"l3c2\";\"l3c3\"\r",
+                writer.getBuffer().toString());
+    }
 
     @Test
     public void WindowsCRLF0x0d0x0a() throws IOException {
@@ -24,8 +79,8 @@ public class CsvReaderTest {
         };
         String fileText = new String(file);
         Reader reader = new StringReader(fileText);
-        CsvReader<BeanSimple> csvReader = new CsvReaderImpl<BeanSimple>(reader, BeanSimple.class);
-        final List<BeanSimple> beans = csvReader.readBeans();
+        CsvClient<BeanSimple> csvClient = new CsvClientImpl<BeanSimple>(reader, BeanSimple.class);
+        final List<BeanSimple> beans = csvClient.readBeans();
         assertEquals(3, beans.size());
     }
 
@@ -35,9 +90,9 @@ public class CsvReaderTest {
                 "name;name 2;name 3\n"+
                 "# ignore me!\n"
         );
-        CsvReader csvReader = new CsvReaderImpl(reader)
+        CsvClient csvClient = new CsvClientImpl(reader)
                 .skipCommentLines(false);
-        csvReader.readRows();
+        csvClient.readRows();
     }
 
     @Test
@@ -47,16 +102,16 @@ public class CsvReaderTest {
                 "% ignore me!\n"+
                 "some name\n"
         );
-        CsvReader<BeanCustomComments> csvReader = new CsvReaderImpl<BeanCustomComments>(reader, BeanCustomComments.class);
-        List<BeanCustomComments> beans = csvReader.readBeans();
+        CsvClient<BeanCustomComments> csvClient = new CsvClientImpl<BeanCustomComments>(reader, BeanCustomComments.class);
+        List<BeanCustomComments> beans = csvClient.readBeans();
         assertEquals(1, beans.size());
     }
 
     @Test(expected = CsvException.class)
     public void callBeanMethodOnNonBeanReaderFacade() {
         Reader reader = new StringReader("");
-        CsvReader csvReader = new CsvReaderImpl(reader);
-        csvReader.readBean();
+        CsvClient csvClient = new CsvClientImpl(reader);
+        csvClient.readBean();
     }
 
     @Test
@@ -65,7 +120,7 @@ public class CsvReaderTest {
                 "money\n"+
                 "11.398,22"
         );
-        CsvReader<BeanWithCustomNumber> beanReader = new CsvReaderImpl<BeanWithCustomNumber>(reader, BeanWithCustomNumber.class)
+        CsvClient<BeanWithCustomNumber> beanReader = new CsvClientImpl<BeanWithCustomNumber>(reader, BeanWithCustomNumber.class)
                 .setLocalizedNumber("number", Locale.GERMANY);
         BeanWithCustomNumber bean = beanReader.readBean();
         assertEquals(11398.22, bean.getNumber());
@@ -81,8 +136,8 @@ public class CsvReaderTest {
                 "'and yet more text',1985,42.42,1972-01-15,'line 1\nline 2\nline 3',2015-04\n"
         );
 
-        CsvReader<BeanVariousNotAnnotated> csvReader =
-                new CsvReaderImpl<BeanVariousNotAnnotated>(reader, BeanVariousNotAnnotated.class)
+        CsvClient<BeanVariousNotAnnotated> csvClient =
+                new CsvClientImpl<BeanVariousNotAnnotated>(reader, BeanVariousNotAnnotated.class)
                 .setEscape('\\')
                 .setQuote('\'')
                 .setComment('#')
@@ -104,9 +159,9 @@ public class CsvReaderTest {
                 .setConverter("simple", new BeanSimpleConverter())
                 ;
 
-        List<BeanVariousNotAnnotated> beans = csvReader.readBeans();
-        assertTrue(csvReader.isFinished());
-        assertEquals(6, csvReader.getCurrentLine());
+        List<BeanVariousNotAnnotated> beans = csvClient.readBeans();
+        assertTrue(csvClient.isFinished());
+        assertEquals(6, csvClient.getCurrentLine());
         assertEquals(3, beans.size());
     }
 
@@ -118,11 +173,11 @@ public class CsvReaderTest {
                 "\"more text\";1984;42.42;1972-01-14;\"line 1\nline 2\";2014-04\n"+
                 "\"and yet more text\";1985;42.42;1972-01-15;\"line 1\nline 2\nline 3\";2015-04\n"
         );
-        CsvReader<BeanVariousNotAnnotated> csvReader =
-                new CsvReaderImpl<BeanVariousNotAnnotated>(reader, BeanVariousNotAnnotated.class);
+        CsvClient<BeanVariousNotAnnotated> csvClient =
+                new CsvClientImpl<BeanVariousNotAnnotated>(reader, BeanVariousNotAnnotated.class);
 
-        assertNotNull(csvReader.readHeader());
-        assertNotNull(csvReader.readHeader());
+        assertNotNull(csvClient.readHeader());
+        assertNotNull(csvClient.readHeader());
     }
 
     @Test(expected = CsvException.class)
@@ -133,11 +188,11 @@ public class CsvReaderTest {
                 "\"l2c1\";\"l2c2\";\"l2c3\"\n"+
                 "\"l3c1\";\"l3c2\";"
         );
-        CsvReader<BeanWithMultipleStrings> csvReader =
-                new CsvReaderImpl<BeanWithMultipleStrings>(reader, BeanWithMultipleStrings.class)
+        CsvClient<BeanWithMultipleStrings> csvClient =
+                new CsvClientImpl<BeanWithMultipleStrings>(reader, BeanWithMultipleStrings.class)
                 .setMapper(ColumnNameMapper.class)
                 .setRequired("gamma", true);
-        csvReader.readBeans();
+        csvClient.readBeans();
     }
 
     @Test
@@ -151,12 +206,12 @@ public class CsvReaderTest {
                 "\"more text\";1984;42.42;1972-01-14;\"line 1\nline 2\";2014-04\n"+
                 "\"and yet more text\";1985;42.42;1972-01-15;\"line 1\nline 2\nline 3\";2015-04\n"
         );
-        CsvReader<BeanVariousNotAnnotated> csvReader =
-                new CsvReaderImpl<BeanVariousNotAnnotated>(reader, BeanVariousNotAnnotated.class)
+        CsvClient<BeanVariousNotAnnotated> csvClient =
+                new CsvClientImpl<BeanVariousNotAnnotated>(reader, BeanVariousNotAnnotated.class)
                 .setStartRow(4);
-        List<Row> rows = csvReader.readRows();
+        List<Row> rows = csvClient.readRows();
         assertEquals(3, rows.size());
-        assertEquals(8, csvReader.getCurrentLine());
+        assertEquals(8, csvClient.getCurrentLine());
     }
 
     @Test
@@ -168,9 +223,9 @@ public class CsvReaderTest {
             "#3;Jane\n"+
             "#4;Will"
         );
-        CsvReader<BeanSimple> csvReader = new CsvReaderImpl<BeanSimple>(reader, BeanSimple.class)
+        CsvClient<BeanSimple> csvClient = new CsvClientImpl<BeanSimple>(reader, BeanSimple.class)
                 .skipCommentLines(false);
-        List<Row> rows = csvReader.readRows();
+        List<Row> rows = csvClient.readRows();
         assertEquals(4, rows.size());
     }
 

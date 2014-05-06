@@ -2,6 +2,8 @@ package org.csveed.row;
 
 import org.csveed.api.Header;
 import org.csveed.api.Row;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -40,17 +42,19 @@ public class RowWriterImpl implements RowWriter {
     }
 
     @Override
-    public void writeRow(String[] cells) {
-        writeRow(new RowImpl(convertToLine(cells), header));
+    public Row writeRow(String[] cells) {
+        Row row = new RowImpl(convertToLine(cells), header);
+        writeRow(row);
+        return row;
     }
 
     @Override
-    public Row writeRow(Row row) {
+    public void writeRow(Row row) {
         if (rowInstructions.isUseHeader() && this.header == null) {
-            throw new RowWriteException("Header has not been set for this table");
+            throw new CsvException(new GeneralError("Header has not been set for this table. Make sure to write it or configure " +
+                    "it to be not used: .setUseHeader(false)"));
         }
         writeCells(row.iterator());
-        return row;
     }
 
     @Override
@@ -84,7 +88,7 @@ public class RowWriterImpl implements RowWriter {
             }
             writeEOL();
         } catch(IOException err){
-            throw new RowWriteException(err, "Error in writing to the writer: " + err.getMessage());
+            throw new CsvException(new GeneralError("Error in writing to the writer: " + err.getMessage()));
         }
     }
 

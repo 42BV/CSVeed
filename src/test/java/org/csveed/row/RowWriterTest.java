@@ -1,6 +1,7 @@
 package org.csveed.row;
 
 import org.csveed.api.Row;
+import org.csveed.report.CsvException;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -94,7 +95,7 @@ public class RowWriterTest {
                 writer.getBuffer().toString());
     }
 
-    @Test(expected = RowWriteException.class)
+    @Test(expected = CsvException.class)
     public void noHeaderWritten() {
         RowWriter rowWriter = new RowWriterImpl(new StringWriter());
         rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );

@@ -2,8 +2,8 @@ package org.csveed.api;
 
 import org.csveed.bean.AbstractMapper;
 import org.csveed.bean.conversion.Converter;
-import org.csveed.row.HeaderImpl;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,7 +23,44 @@ import java.util.Locale;
 * @param <T> the bean class into which the rows are converted
 * @author Robert Bor
 */
-public interface CsvReader<T> {
+public interface CsvClient<T> {
+
+    /**
+    * Writes a single row to the table
+    * @param row single row
+    */
+    public void writeRow(Row row);
+
+    /**
+    * Writes a single row (consisting of String cells) to the table
+    * @param row single row
+    */
+    public Row writeRow(String[] row);
+
+    /**
+    * Writes a collection of rows to the table
+    * @param rows collections of rows
+    */
+    public void writeRows(Collection<Row> rows);
+
+    /**
+    * Writes a two-dimensional array of cells (rows with cells) to the table
+    * @param rows two-dimensional array of cells
+    */
+    public void writeRows(String[][] rows);
+
+    /**
+    * Writes the header to the table
+    * @param header the header row
+    * @return the converted Header
+    */
+    public Header writeHeader(String[] header);
+
+    /**
+    * Writes the header to the table
+    * @param header the header row
+    */
+    public void writeHeader(Header header);
 
     /**
     * Reads all rows from the file and return these as beans.
@@ -76,7 +113,7 @@ public interface CsvReader<T> {
     * @param useHeader true if the header is interpreted and used
     * @return convenience for chaining
     */
-    CsvReader<T> setUseHeader(boolean useHeader);
+    CsvClient<T> setUseHeader(boolean useHeader);
 
     /**
     * Sets the start row of the CSV file. If {@link #setUseHeader(boolean)} == true, this will be the header
@@ -86,7 +123,7 @@ public interface CsvReader<T> {
     * @param startRow the first row to start reading, including the header row
     * @return convenience for chaining
     */
-    CsvReader<T> setStartRow(int startRow);
+    CsvClient<T> setStartRow(int startRow);
 
     /**
     * Sets the character that will be interpreted as an escape symbol while within a quoted field. This
@@ -96,7 +133,7 @@ public interface CsvReader<T> {
     * @param symbol the symbol to use for escaping characters within a quoted field
     * @return convenience for chaining
     */
-    CsvReader<T> setEscape(char symbol);
+    CsvClient<T> setEscape(char symbol);
 
     /**
     * Sets the character that will be interpreted as a quote symbol, signifying either the start or the
@@ -106,7 +143,7 @@ public interface CsvReader<T> {
     * @param symbol the symbol to use for indicating start/end of a quoted field
     * @return convenience for chaining
     */
-    CsvReader<T> setQuote(char symbol);
+    CsvClient<T> setQuote(char symbol);
 
     /**
     * Sets the character that will be interpreted as a separator between cells. This method is called whenever
@@ -115,7 +152,7 @@ public interface CsvReader<T> {
     * @param symbol the symbol to use as a separator between cells
     * @return convenience for chaining
     */
-    CsvReader<T> setSeparator(char symbol);
+    CsvClient<T> setSeparator(char symbol);
 
     /**
     * Sets the character that will be interpreted as a comment field on the first position of a row.
@@ -124,7 +161,7 @@ public interface CsvReader<T> {
     * @param symbol the symbol to use as the 0-position comment marker
     * @return convenience for chaining
     */
-    CsvReader<T> setComment(char symbol);
+    CsvClient<T> setComment(char symbol);
 
     /**
     * Sets the characters (plural) that will be interpreted as end-of-line markers (unless within a quoted
@@ -134,7 +171,7 @@ public interface CsvReader<T> {
     * @param symbols the symbol to interpret as end-of-line markers (unless within a quoted field)
     * @return convenience for chaining
     */
-    CsvReader<T> setEndOfLine(char[] symbols);
+    CsvClient<T> setEndOfLine(char[] symbols);
 
     /**
     * Determines whether empty lines must be skipped or treated as single-column rows. This method is called
@@ -143,7 +180,7 @@ public interface CsvReader<T> {
     * @param skip true to skip empty lines, false to treat as single-column rows
     * @return convenience for chaining
     */
-    CsvReader<T> skipEmptyLines(boolean skip);
+    CsvClient<T> skipEmptyLines(boolean skip);
 
     /**
     * Determines whether comment lines must be skipped. This method is called whenever
@@ -153,7 +190,7 @@ public interface CsvReader<T> {
     * @param skip true to skip comment lines, identified as starting with a comment marker
     * @return convenience for chaining
     */
-    CsvReader<T> skipCommentLines(boolean skip);
+    CsvClient<T> skipCommentLines(boolean skip);
 
     /**
     * A file can have a special layout with a dynamic number of columns. If the intention is to duplicate rows
@@ -162,7 +199,7 @@ public interface CsvReader<T> {
     * created. If a bean has fields annotated with @CsvHeaderName or @CsvHeaderValue, it will store the
     * values of the header or the cell for that index column in the fields.
     */
-    CsvReader<T> setStartIndexDynamicColumns(int startIndex);
+    CsvClient<T> setStartIndexDynamicColumns(int startIndex);
 
     /**
     * Determines which mapping strategy is to be employed for mapping cells to bean properties. This
@@ -174,7 +211,7 @@ public interface CsvReader<T> {
     * @param mapper the mapping strategy to employ for mapping cells to bean properties
     * @return convenience for chaining
     */
-    CsvReader<T> setMapper(Class<? extends AbstractMapper> mapper);
+    CsvClient<T> setMapper(Class<? extends AbstractMapper> mapper);
 
     /**
     * Determines what dateformat to apply to the cell value before storing it as a date. This method is called
@@ -184,7 +221,7 @@ public interface CsvReader<T> {
     * @param dateFormat the date format to apply for parsing the date value
     * @return convenience for chaining
     */
-    CsvReader<T> setDate(String propertyName, String dateFormat);
+    CsvClient<T> setDate(String propertyName, String dateFormat);
 
     /**
     * Determines what Locale to apply to the cell value before converting it to a number. This method is called
@@ -193,7 +230,7 @@ public interface CsvReader<T> {
     * @param propertyName the name of the property to write the data to
     * @param locale the Locale to apply for converting the number
     */
-    CsvReader<T> setLocalizedNumber(String propertyName, Locale locale);
+    CsvClient<T> setLocalizedNumber(String propertyName, Locale locale);
 
     /**
     * Determines if the field is required. If so, the cell may not be empty and a
@@ -204,7 +241,7 @@ public interface CsvReader<T> {
     * @param required whether the cell must be not-null
     * @return convenience for chaining
     */
-    CsvReader<T> setRequired(String propertyName, boolean required);
+    CsvClient<T> setRequired(String propertyName, boolean required);
 
     /**
     * Sets a custom {@link java.beans.PropertyEditor} for the property. This PropertyEditor is called to convert the
@@ -216,7 +253,7 @@ public interface CsvReader<T> {
     * @param converter PropertyEditor to apply to the property
     * @return convenience for chaining
     */
-    CsvReader<T> setConverter(String propertyName, Converter converter);
+    CsvClient<T> setConverter(String propertyName, Converter converter);
 
     /**
     * Sets a field to be ignored for purposes of mapping. This method is called whenever
@@ -225,7 +262,7 @@ public interface CsvReader<T> {
     * @param propertyName property which must be ignored for mapping
     * @return convenience for chaining
     */
-    CsvReader<T> ignoreProperty(String propertyName);
+    CsvClient<T> ignoreProperty(String propertyName);
 
     /**
     * Maps a column in the CSV to a specific property. This method is called whenever
@@ -235,7 +272,7 @@ public interface CsvReader<T> {
     * @param propertyName property to which the index-based mapping must be applied
     * @return convenience for chaining
     */
-    CsvReader<T> mapColumnIndexToProperty(int columnIndex, String propertyName);
+    CsvClient<T> mapColumnIndexToProperty(int columnIndex, String propertyName);
 
     /**
     * Maps a column name (which is found in the header) to a specific property. Note that to use this, headers
@@ -246,20 +283,20 @@ public interface CsvReader<T> {
     * @param propertyName property to which the name-based mapping must be applied
     * @return convenience for chaining
     */
-    CsvReader<T> mapColumnNameToProperty(String columnName, String propertyName);
+    CsvClient<T> mapColumnNameToProperty(String columnName, String propertyName);
 
     /**
     * Determines what property will receive the header name in the currently active dynamic column
     * @param propertyName property in which the active dynamic header name must be stored
     * @return convenience for chaining
     */
-    CsvReader<T> setHeaderNameToProperty(String propertyName);
+    CsvClient<T> setHeaderNameToProperty(String propertyName);
 
     /**
     * Determines what property will receive the cell value in the currently active dynamic column
     * @param propertyName property in which the active dynamic column value must be stored
     * @return convenience for chaining
     */
-    CsvReader<T> setHeaderValueToProperty(String propertyName);
+    CsvClient<T> setHeaderValueToProperty(String propertyName);
 
 }

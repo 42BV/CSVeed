@@ -23,14 +23,14 @@ public interface RowWriter {
     * Writes the cells of a table row as an individual row
     * @param cells the individual cells of the row
     */
-    public void writeRow(String[] cells);
+    public Row writeRow(String[] cells);
 
     /**
     * Writes a single row to the Writer.
     * @param row row to write to the Writer
     * @return the Row, created from the cells
     */
-    public Row writeRow(Row row) throws RowWriteException;
+    public void writeRow(Row row);
 
     /**
     * Creates and sets the header of the table
