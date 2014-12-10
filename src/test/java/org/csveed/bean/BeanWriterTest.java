@@ -24,10 +24,10 @@ public class BeanWriterTest {
         beanWriter.writeBeans(beans);
         writer.close();
         assertEquals(
-                "\"gamma\";\"beta\";\"alpha\"\r"+
-                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r"+
-                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r"+
-                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r",
+                "\"gamma\";\"beta\";\"alpha\"\r\n"+
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
+                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
+                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
                 writer.getBuffer().toString());
     }
 

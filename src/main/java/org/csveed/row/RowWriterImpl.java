@@ -93,7 +93,7 @@ public class RowWriterImpl implements RowWriter {
     }
 
     private void writeEOL() throws IOException {
-        writer.write(rowInstructions.getEndOfLine());
+        writer.write("\r\n");
     }
 
     private void writeSeparator() throws IOException {
