@@ -101,6 +101,10 @@ public class RowWriterImpl implements RowWriter {
     }
 
     private void writeCell(String cell) throws IOException {
+        if (cell == null) {
+            return;
+        }
+
         writer.write(rowInstructions.getQuote());
         String searchString = Character.toString(rowInstructions.getQuote());
         String replaceString = new String(new char[] { rowInstructions.getEscape(), rowInstructions.getQuote() } );

@@ -59,6 +59,26 @@ public class CsvClientTest {
                 writer.getBuffer().toString());
     }
 
+    @Test
+    public void writeBeanBasedOnInstructionsWithNull() throws IOException {
+        StringWriter writer = new StringWriter();
+        BeanWithMultipleStrings bean = createBean(null, "row 1, cell 2", "row 1, cell 1");
+        CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<BeanWithMultipleStrings>(
+                writer, new BeanInstructionsImpl(BeanWithMultipleStrings.class)
+                    .mapColumnNameToProperty("alpha", "alpha")
+                    .mapColumnNameToProperty("beta", "beta")
+                    .ignoreProperty("gamma")
+        );
+        client.writeBean(bean);
+        writer.close();
+        assertEquals(
+                "\"beta\";\"alpha\"\r\n"+
+                "\"row 1, cell 2\";\r\n",
+                writer.getBuffer().toString());
+    }
+
+
+
     private BeanWithMultipleStrings createBean(String alpha, String beta, String gamma) {
         BeanWithMultipleStrings bean = new BeanWithMultipleStrings();
         bean.setAlpha(alpha);
