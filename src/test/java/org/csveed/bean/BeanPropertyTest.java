@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
-import java.math.BigDecimal;
-
 import static junit.framework.Assert.*;
 
 public class BeanPropertyTest {
@@ -17,7 +15,7 @@ public class BeanPropertyTest {
     @Test
     public void construct() throws IntrospectionException {
         BeanProperty property = new BeanProperty();
-        Converter converter = new BeanSimpleConverter();
+        Converter<BeanSimple> converter = new BeanSimpleConverter();
         PropertyDescriptor propertyDescriptor = new PropertyDescriptor("name", BeanSimple.class);
         property.setConverter(converter);
         property.setColumnIndex(3);
