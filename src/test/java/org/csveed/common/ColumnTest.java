@@ -3,7 +3,6 @@ package org.csveed.common;
 import org.csveed.api.Header;
 import org.csveed.report.CsvException;
 import org.csveed.row.HeaderImpl;
-import org.csveed.row.Line;
 import org.csveed.row.LineWithInfo;
 import org.junit.Test;
 
