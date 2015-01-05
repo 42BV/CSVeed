@@ -8,7 +8,7 @@ public class BeanWithoutNoArgPublicConstructor {
     private String name;
 
     public BeanWithoutNoArgPublicConstructor(String name) {
-        this.name = this.name;
+        this.name = name;
     }
 
     public String getName() {
