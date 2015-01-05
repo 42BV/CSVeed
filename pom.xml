@@ -47,9 +47,9 @@
         <maven.compiler.source>1.6</maven.compiler.source>
         <maven.compiler.target>1.6</maven.compiler.target>
 
-        <junit.version>4.10</junit.version>
-        <slf4j.version>1.7.2</slf4j.version>
-        <spring-beans.version>3.2.1.RELEASE</spring-beans.version>
+        <junit.version>4.12</junit.version>
+        <slf4j.version>1.7.9</slf4j.version>
+        <spring-beans.version>3.2.13.RELEASE</spring-beans.version>
         <!-- Reporting -->
         <maven.cobertura.version>2.6</maven.cobertura.version>
         <maven.javadoc.version>2.10.1</maven.javadoc.version>
@@ -61,7 +61,7 @@
         <!-- Used for unit testing -->
         <dependency>
             <groupId>junit</groupId>
-            <artifactId>junit-dep</artifactId>
+            <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
