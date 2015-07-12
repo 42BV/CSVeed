@@ -48,11 +48,11 @@
         <maven.compiler.target>1.6</maven.compiler.target>
 
         <junit.version>4.12</junit.version>
-        <slf4j.version>1.7.10</slf4j.version>
-        <spring-beans.version>3.2.13.RELEASE</spring-beans.version>
+        <slf4j.version>1.7.12</slf4j.version>
+        <spring-beans.version>3.2.14.RELEASE</spring-beans.version>
         <!-- Reporting -->
-        <maven.cobertura.version>2.6</maven.cobertura.version>
-        <maven.javadoc.version>2.10.1</maven.javadoc.version>
+        <maven.cobertura.version>2.7</maven.cobertura.version>
+        <maven.javadoc.version>2.10.3</maven.javadoc.version>
         <maven.project.version>2.4</maven.project.version>
     </properties>
 
@@ -100,7 +100,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.2</version>
+                    <version>3.3</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
