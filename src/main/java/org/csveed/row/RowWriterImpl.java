@@ -1,16 +1,20 @@
 package org.csveed.row;
 
-import org.csveed.api.Header;
-import org.csveed.api.Row;
-import org.csveed.report.CsvException;
-import org.csveed.report.GeneralError;
-
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.csveed.api.Header;
+import org.csveed.api.Row;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class RowWriterImpl implements RowWriter {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RowWriterImpl.class);
 
     private final Writer writer;
 
@@ -76,15 +80,17 @@ public class RowWriterImpl implements RowWriter {
     }
 
     private void writeCells(Iterator<String> cells) {
-        boolean firstCell = true;
+        int columnPosition = 1;
         try {
             while (cells.hasNext()) {
                 String cell = cells.next();
-                if (!firstCell) {
+                String headerValue = header != null ?  header.getName(columnPosition) : "";
+                LOG.debug("Writing cell value [{}] in column position [{}], header value is [{}].", cell, columnPosition, headerValue);
+                if (columnPosition != 1) {
                     writeSeparator();
                 }
-                firstCell = false;
                 writeCell(cell);
+                columnPosition++;
             }
             writeEOL();
         } catch(IOException err){
@@ -104,7 +110,7 @@ public class RowWriterImpl implements RowWriter {
         writer.write(rowInstructions.getQuote());
         String searchString = Character.toString(rowInstructions.getQuote());
         String replaceString = new String(new char[] { rowInstructions.getEscape(), rowInstructions.getQuote() } );
-        writer.write(cell.replace(searchString, replaceString));
+        writer.write(cell != null ? cell.replace(searchString, replaceString) : "");
         writer.write(rowInstructions.getQuote());
     }
 

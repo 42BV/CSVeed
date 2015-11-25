@@ -1,8 +1,6 @@
 package org.csveed.row;
 
-import org.csveed.api.Row;
-import org.csveed.report.CsvException;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -10,7 +8,9 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
+import org.csveed.api.Row;
+import org.csveed.report.CsvException;
+import org.junit.Test;
 
 public class RowWriterTest {
 
@@ -80,6 +80,17 @@ public class RowWriterTest {
         rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
         writer.close();
         assertEquals("\"alpha\";\"beta\";\"gamma\"\r", writer.getBuffer().toString());
+    }
+
+    @Test
+    public void writeRowWithNullValue() throws IOException {
+        StringWriter writer = new StringWriter();
+        RowInstructions instructions = new RowInstructionsImpl()
+                .setUseHeader(false);
+        RowWriter rowWriter = new RowWriterImpl(writer, instructions);
+        rowWriter.writeRow(new String[] { "alpha", null, "gamma" } );
+        writer.close();
+        assertEquals("\"alpha\";\"\";\"gamma\"\r", writer.getBuffer().toString());
     }
 
     @Test
