@@ -9,8 +9,12 @@ import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RowWriterImpl implements RowWriter {
+
+    private static final Logger LOG = LoggerFactory.getLogger(RowWriterImpl.class);
 
     private final Writer writer;
 
@@ -76,15 +80,17 @@ public class RowWriterImpl implements RowWriter {
     }
 
     private void writeCells(Iterator<String> cells) {
-        boolean firstCell = true;
+        int columnPosition = 1;
         try {
             while (cells.hasNext()) {
                 String cell = cells.next();
-                if (!firstCell) {
+                String headerValue = header != null ?  header.getName(columnPosition) : "";
+                LOG.debug("Writing cell value [{}] in column position [{}], header value is [{}].", cell, columnPosition, headerValue);
+                if (columnPosition != 1) {
                     writeSeparator();
                 }
-                firstCell = false;
                 writeCell(cell);
+                columnPosition++;
             }
             writeEOL();
         } catch(IOException err){
