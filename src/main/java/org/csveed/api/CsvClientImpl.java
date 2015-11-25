@@ -1,16 +1,26 @@
 package org.csveed.api;
 
-import org.csveed.bean.*;
-import org.csveed.bean.conversion.Converter;
-import org.csveed.report.CsvException;
-import org.csveed.report.GeneralError;
-import org.csveed.row.*;
-
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+
+import org.csveed.bean.AbstractMapper;
+import org.csveed.bean.BeanInstructions;
+import org.csveed.bean.BeanParser;
+import org.csveed.bean.BeanReader;
+import org.csveed.bean.BeanReaderImpl;
+import org.csveed.bean.BeanWriter;
+import org.csveed.bean.BeanWriterImpl;
+import org.csveed.bean.conversion.Converter;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
+import org.csveed.row.RowInstructions;
+import org.csveed.row.RowReader;
+import org.csveed.row.RowReaderImpl;
+import org.csveed.row.RowWriter;
+import org.csveed.row.RowWriterImpl;
 
 public class CsvClientImpl<T> implements CsvClient<T> {
 
@@ -88,12 +98,19 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         getRowWriter().writeRows(rows);
     }
 
+    @Override
     public Header writeHeader(String[] header) {
         return getRowWriter().writeHeader(header);
     }
 
+    @Override
     public void writeHeader(Header header) {
         getRowWriter().writeHeader(header);
+    }
+
+    @Override
+    public void writeHeader() {
+        getBeanWriter().writeHeader();
     }
 
     @Override

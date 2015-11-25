@@ -1,12 +1,16 @@
 package org.csveed.bean;
 
+import java.io.Writer;
+import java.util.Collection;
+
 import org.csveed.bean.conversion.BeanWrapper;
 import org.csveed.bean.conversion.ConversionException;
 import org.csveed.bean.conversion.DefaultConverters;
-import org.csveed.row.*;
-
-import java.io.Writer;
-import java.util.Collection;
+import org.csveed.row.HeaderImpl;
+import org.csveed.row.LineWithInfo;
+import org.csveed.row.RowImpl;
+import org.csveed.row.RowWriter;
+import org.csveed.row.RowWriterImpl;
 
 public class BeanWriterImpl<T> implements BeanWriter<T> {
 
@@ -53,7 +57,8 @@ public class BeanWriterImpl<T> implements BeanWriter<T> {
         rowWriter.writeRow(new RowImpl(line, header));
     }
 
-    private void writeHeader() {
+    @Override
+    public void writeHeader() {
         if (!beanInstructions.useHeader() || headerWritten) {
             return;
         }
