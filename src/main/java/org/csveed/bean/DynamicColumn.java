@@ -8,16 +8,16 @@ import org.csveed.common.Column;
  *     of the columns, but should have been separate rows. For example, let's say you have a table that looks
  *     like this:
  * </p>
- * <code><pre>
+ * <code>
  *     | name   | town   | jan 14 | jan 15 | jan 16 |
  *     | Rob    | Leiden |   4    |   1    |   7    |
  *     | Rob    | Delft  |   0    |   3    |   8    |
  *     | Erik   | Leiden |   2    |   4    |   1    |
  *     | Erik   | Sneek  |   1    |   0    |   9    |
- * </pre></code>
+ * </code>
  * <p>
  *     Let's say you want to compact this table into the following, normalized format:
- * <code><pre>
+ * <code>
  *     | name   | town   | date   | visits |
  *     | Rob    | Leiden | jan 14 |   4    |
  *     | Rob    | Leiden | jan 15 |   1    |
@@ -31,7 +31,7 @@ import org.csveed.common.Column;
  *     | Erik   | Sneek  | jan 14 |   1    |
  *     | Erik   | Sneek  | jan 15 |   0    |
  *     | Erik   | Sneek  | jan 16 |   9    |
- * </pre></code>
+ * </code>
  * <p>
  *     In order to realize this goal, you need to make that startIndexDynamicColumns is set to 3 on @CsvFile.
  *     This will assume the columns starting with the third and all thereafter are dynamic. For every dynamic

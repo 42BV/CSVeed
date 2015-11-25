@@ -49,6 +49,7 @@ public interface CsvClient<T> {
     /**
     * Writes a single row (consisting of String cells) to the table
     * @param row single row
+    * @return the written row
     */
     public Row writeRow(String[] row);
 
@@ -213,6 +214,8 @@ public interface CsvClient<T> {
     * dynamic columns and treat every column after that as dynamic. For every dynamic column a row will be
     * created. If a bean has fields annotated with @CsvHeaderName or @CsvHeaderValue, it will store the
     * values of the header or the cell for that index column in the fields.
+    * @param startIndex the index where the dynamic columns start
+    * @return convenience for chaining
     */
     CsvClient<T> setStartIndexDynamicColumns(int startIndex);
 
@@ -244,6 +247,7 @@ public interface CsvClient<T> {
     * of the server.
     * @param propertyName the name of the property to write the data to
     * @param locale the Locale to apply for converting the number
+    * @return convenience for chaining
     */
     CsvClient<T> setLocalizedNumber(String propertyName, Locale locale);
 
@@ -272,7 +276,7 @@ public interface CsvClient<T> {
 
     /**
     * Sets a field to be ignored for purposes of mapping. This method is called whenever
-    * {@link org.csveed.annotations.CsvIgnore)} is used. By default none of the fields are ignored
+    * {@link org.csveed.annotations.CsvIgnore} is used. By default none of the fields are ignored
     * unless, custom instructions are used. In this case, all fields are ignored by default.
     * @param propertyName property which must be ignored for mapping
     * @return convenience for chaining
@@ -284,6 +288,7 @@ public interface CsvClient<T> {
     * {@link org.csveed.annotations.CsvCell#columnIndex()} is used. By default there is NO mapping
     * when custom instructions are used, so you should roll your own. Note that column indexes are
     * 1-based, not 0-based.
+    * @param columnIndex index of the column for which the property mapping must be applied
     * @param propertyName property to which the index-based mapping must be applied
     * @return convenience for chaining
     */
@@ -295,6 +300,7 @@ public interface CsvClient<T> {
     * is used. By default there is NO mapping when custom instructions are used, so you should roll your own.
     * Also, don't forget to {@link #setMapper(Class)} to
     * {@link org.csveed.bean.ColumnNameMapper} for this to work.
+    * @param columnName name of the column for which the property mapping must be applied
     * @param propertyName property to which the name-based mapping must be applied
     * @return convenience for chaining
     */
