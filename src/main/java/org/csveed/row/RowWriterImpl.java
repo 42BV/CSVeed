@@ -1,14 +1,14 @@
 package org.csveed.row;
 
-import org.csveed.api.Header;
-import org.csveed.api.Row;
-import org.csveed.report.CsvException;
-import org.csveed.report.GeneralError;
-
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.Iterator;
+
+import org.csveed.api.Header;
+import org.csveed.api.Row;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
 
 public class RowWriterImpl implements RowWriter {
 
@@ -104,7 +104,7 @@ public class RowWriterImpl implements RowWriter {
         writer.write(rowInstructions.getQuote());
         String searchString = Character.toString(rowInstructions.getQuote());
         String replaceString = new String(new char[] { rowInstructions.getEscape(), rowInstructions.getQuote() } );
-        writer.write(cell.replace(searchString, replaceString));
+        writer.write(cell != null ? cell.replace(searchString, replaceString) : "");
         writer.write(rowInstructions.getQuote());
     }
 
