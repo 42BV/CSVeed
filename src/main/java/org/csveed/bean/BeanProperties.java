@@ -34,7 +34,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
         parseBean(beanClass);
     }
     
-    public static List<Field> getInheritedFields(Class<?> type) {
+    private List<Field> getInheritedFields(Class<?> type) {
         List<Field> fields = new ArrayList<Field>();
         for (Class<?> c = type; c != null; c = c.getSuperclass()) {
             fields.addAll(0,Arrays.asList(c.getDeclaredFields()));
