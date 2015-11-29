@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.beans.*;
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -34,6 +33,14 @@ public class BeanProperties implements Iterable<BeanProperty> {
         this.beanClass = beanClass;
         parseBean(beanClass);
     }
+    
+    public static List<Field> getInheritedFields(Class<?> type) {
+        List<Field> fields = new ArrayList<Field>();
+        for (Class<?> c = type; c != null; c = c.getSuperclass()) {
+            fields.addAll(0,Arrays.asList(c.getDeclaredFields()));
+        }
+        return fields;
+    }    
 
     private void parseBean(Class beanClass) {
         final BeanInfo beanInfo;
@@ -47,7 +54,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
 
         // Note that we use getDeclaredFields here instead of the PropertyDescriptor order. The order we now
         // use is guaranteed to be the declaration order from JDK 6+, which is exactly what we need.
-        for(Field field : beanClass.getDeclaredFields()) {
+        for(Field field : getInheritedFields(beanClass)) {
             PropertyDescriptor propertyDescriptor = getPropertyDescriptor(propertyDescriptors, field);
             if (propertyDescriptor == null || propertyDescriptor.getWriteMethod() == null) {
                 LOG.info("Skipping "+beanClass.getName()+"."+field.getName());
