@@ -104,8 +104,8 @@ public class RowInstructionsImpl implements RowInstructions {
     }
 
     @Override
-    public char getEndOfLine() {
-        return this.symbolMapping.getFirstMappedCharacter(EncounteredSymbol.EOL_SYMBOL);
+    public char[] getEndOfLine() {
+        return this.symbolMapping.getMappedCharacters(EncounteredSymbol.EOL_SYMBOL);
     }
 
     @Override

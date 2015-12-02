@@ -33,9 +33,9 @@ public class RowWriterTest {
 
         writer.close();
         assertEquals(
-                "\"alpha\";\"beta\";\"gamma\"\r"+
-                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r"+
-                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r",
+                "\"alpha\";\"beta\";\"gamma\"\r\n"+
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
+                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n",
                 writer.getBuffer().toString());
     }
 
@@ -52,10 +52,10 @@ public class RowWriterTest {
         });
         writer.close();
         assertEquals(
-                "\"desc1\";\"desc2\";\"desc3\"\r"+
-                "\"alpha\";\"beta\";\"gamma\"\r"+
-                "\"delta\";\"epsilon\";\"phi\"\r"+
-                "\"b1\";\"b2\";\"b3\"\r",
+                "\"desc1\";\"desc2\";\"desc3\"\r\n"+
+                "\"alpha\";\"beta\";\"gamma\"\r\n"+
+                "\"delta\";\"epsilon\";\"phi\"\r\n"+
+                "\"b1\";\"b2\";\"b3\"\r\n",
                 writer.getBuffer().toString());
     }
 
@@ -68,7 +68,7 @@ public class RowWriterTest {
         RowWriter rowWriter = new RowWriterImpl(writer, instructions);
         rowWriter.writeRow(new String[] { "\"tekst met \"quotes\"\"" } );
         writer.close();
-        assertEquals("\"\\\"tekst met \\\"quotes\\\"\\\"\"\r", writer.getBuffer().toString());
+        assertEquals("\"\\\"tekst met \\\"quotes\\\"\\\"\"\r\n", writer.getBuffer().toString());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class RowWriterTest {
         RowWriter rowWriter = new RowWriterImpl(writer, instructions);
         rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
         writer.close();
-        assertEquals("\"alpha\";\"beta\";\"gamma\"\r", writer.getBuffer().toString());
+        assertEquals("\"alpha\";\"beta\";\"gamma\"\r\n", writer.getBuffer().toString());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class RowWriterTest {
         RowWriter rowWriter = new RowWriterImpl(writer, instructions);
         rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
         writer.close();
-        assertEquals("alpha;beta;gamma\r", writer.getBuffer().toString());
+        assertEquals("alpha;beta;gamma\r\n", writer.getBuffer().toString());
     }
 
     @Test
@@ -103,7 +103,7 @@ public class RowWriterTest {
         RowWriter rowWriter = new RowWriterImpl(writer, instructions);
         rowWriter.writeRow(new String[] { "\"tekst met \"quotes\"\"" } );
         writer.close();
-        assertEquals("\"tekst met \"quotes\"\"\r", writer.getBuffer().toString());
+        assertEquals("\"tekst met \"quotes\"\"\r\n", writer.getBuffer().toString());
     }
 
 
@@ -115,7 +115,7 @@ public class RowWriterTest {
         RowWriter rowWriter = new RowWriterImpl(writer, instructions);
         rowWriter.writeRow(new String[] { "alpha", null, "gamma" } );
         writer.close();
-        assertEquals("\"alpha\";\"\";\"gamma\"\r", writer.getBuffer().toString());
+        assertEquals("\"alpha\";\"\";\"gamma\"\r\n", writer.getBuffer().toString());
     }
 
     @Test
@@ -126,8 +126,8 @@ public class RowWriterTest {
         rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
         writer.close();
         assertEquals(
-                "\"desc1\";\"desc2\";\"desc3\"\r"+
-                "\"alpha\";\"beta\";\"gamma\"\r",
+                "\"desc1\";\"desc2\";\"desc3\"\r\n"+
+                "\"alpha\";\"beta\";\"gamma\"\r\n",
                 writer.getBuffer().toString());
     }
 

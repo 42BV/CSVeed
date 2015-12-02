@@ -1,16 +1,14 @@
 package org.csveed.bean;
 
-import org.csveed.bean.conversion.Bean;
-import org.csveed.report.CsvException;
-import org.csveed.test.model.BeanWithMultipleStrings;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
+import org.csveed.test.model.BeanWithMultipleStrings;
+import org.junit.Test;
 
 public class BeanWriterTest {
     
@@ -26,10 +24,10 @@ public class BeanWriterTest {
         beanWriter.writeBeans(beans);
         writer.close();
         assertEquals(
-                "\"gamma\";\"beta\";\"alpha\"\r"+
-                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r"+
-                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r"+
-                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r",
+                "\"gamma\";\"beta\";\"alpha\"\r\n"+
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
+                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
+                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
                 writer.getBuffer().toString());
     }
 
@@ -52,10 +50,10 @@ public class BeanWriterTest {
         beanWriter.writeBeans(beans);
         writer.close();
         assertEquals(
-                "\"Aap\";\"Noot\";\"Mies\"\r"+
-                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r"+
-                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r"+
-                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r",
+                "\"Aap\";\"Noot\";\"Mies\"\r\n"+
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
+                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
+                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
                 writer.getBuffer().toString());
     }
 

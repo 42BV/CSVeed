@@ -38,10 +38,10 @@ public class CsvClientTest {
         client.writeBeans(beans);
         writer.close();
         assertEquals(
-                "\"gamma\";\"beta\";\"alpha\"\r"+
-                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r"+
-                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r"+
-                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r",
+                "\"gamma\";\"beta\";\"alpha\"\r\n"+
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
+                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
+                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
                 writer.getBuffer().toString());
     }
 
@@ -61,10 +61,10 @@ public class CsvClientTest {
         client.writeBeans(beans);
         writer.close();
         assertEquals(
-                "\"beta\";\"alpha\"\r"+
-                "\"row 1, cell 2\";\"row 1, cell 3\"\r"+
-                "\"row 2, cell 2\";\"row 2, cell 3\"\r"+
-                "\"row 3, cell 2\";\"row 3, cell 3\"\r",
+                "\"beta\";\"alpha\"\r\n"+
+                "\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
+                "\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
+                "\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
                 writer.getBuffer().toString());
     }
 
@@ -93,9 +93,9 @@ public class CsvClientTest {
         writer.close();
 
         assertEquals(
-                "\"alpha\";\"beta\";\"gamma\"\r"+
-                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r"+
-                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r",
+                "\"alpha\";\"beta\";\"gamma\"\r\n"+
+                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
+                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n",
                 writer.getBuffer().toString());
     }
 
@@ -106,7 +106,7 @@ public class CsvClientTest {
                 .setUseHeader(false);
         csvClient.writeRow(new String[] { "alpha", "beta", "gamma" } );
         writer.close();
-        assertEquals("\"alpha\";\"beta\";\"gamma\"\r", writer.getBuffer().toString());
+        assertEquals("\"alpha\";\"beta\";\"gamma\"\r\n", writer.getBuffer().toString());
     }
 
     @Test
@@ -124,10 +124,10 @@ public class CsvClientTest {
         } );
         writer.close();
         assertEquals(
-                "\"h1\";\"h2\";\"h3\"\r"+
-                "\"l1c1\";\"l1c2\";\"l1c3\"\r"+
-                "\"l2c1\";\"l2c2\";\"l2c3\"\r"+
-                "\"l3c1\";\"l3c2\";\"l3c3\"\r",
+                "\"h1\";\"h2\";\"h3\"\r\n"+
+                "\"l1c1\";\"l1c2\";\"l1c3\"\r\n"+
+                "\"l2c1\";\"l2c2\";\"l2c3\"\r\n"+
+                "\"l3c1\";\"l3c2\";\"l3c3\"\r\n",
                 writer.getBuffer().toString());
     }
 
@@ -309,6 +309,6 @@ public class CsvClientTest {
         );
         client.writeHeader();
         writer.close();
-        assertEquals("\"gamma\";\"beta\";\"alpha\"\r", writer.getBuffer().toString());
+        assertEquals("\"gamma\";\"beta\";\"alpha\"\r\n", writer.getBuffer().toString());
     }
 }
