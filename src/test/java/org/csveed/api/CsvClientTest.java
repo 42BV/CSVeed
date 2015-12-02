@@ -1,18 +1,27 @@
 package org.csveed.api;
 
-import org.csveed.bean.BeanInstructionsImpl;
-import org.csveed.bean.ColumnNameMapper;
-import org.csveed.report.CsvException;
-import org.csveed.test.converters.BeanSimpleConverter;
-import org.csveed.test.model.*;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static junit.framework.Assert.*;
+import org.csveed.bean.BeanInstructionsImpl;
+import org.csveed.bean.ColumnNameMapper;
+import org.csveed.report.CsvException;
+import org.csveed.test.converters.BeanSimpleConverter;
+import org.csveed.test.model.BeanCustomComments;
+import org.csveed.test.model.BeanSimple;
+import org.csveed.test.model.BeanVariousNotAnnotated;
+import org.csveed.test.model.BeanWithCustomNumber;
+import org.csveed.test.model.BeanWithMultipleStrings;
+import org.junit.Test;
 
 public class CsvClientTest {
 
@@ -282,4 +291,24 @@ public class CsvClientTest {
         assertEquals(4, rows.size());
     }
 
+    @Test
+    public void headerNotWrittenForOtherwiseEmptyCsv() throws IOException {
+        StringWriter writer = new StringWriter();
+        new CsvClientImpl<BeanWithMultipleStrings>(
+                writer, BeanWithMultipleStrings.class
+        );
+        writer.close();
+        assertEquals("", writer.getBuffer().toString());
+    }
+
+    @Test
+    public void writeHeaderBasedOnBeanProperties() throws IOException {
+        StringWriter writer = new StringWriter();
+        CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<BeanWithMultipleStrings>(
+                writer, BeanWithMultipleStrings.class
+        );
+        client.writeHeader();
+        writer.close();
+        assertEquals("\"gamma\";\"beta\";\"alpha\"\r", writer.getBuffer().toString());
+    }
 }

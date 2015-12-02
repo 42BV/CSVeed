@@ -1,11 +1,11 @@
 package org.csveed.api;
 
-import org.csveed.bean.AbstractMapper;
-import org.csveed.bean.conversion.Converter;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+
+import org.csveed.bean.AbstractMapper;
+import org.csveed.bean.conversion.Converter;
 
 /**
 * <p>
@@ -77,6 +77,11 @@ public interface CsvClient<T> {
     * @param header the header row
     */
     public void writeHeader(Header header);
+
+    /**
+     * Writes a header based on the bean properties to the table
+     */
+    public void writeHeader();
 
     /**
     * Reads all rows from the file and return these as beans.
