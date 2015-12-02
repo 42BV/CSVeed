@@ -22,13 +22,13 @@ public interface RowWriter {
     /**
     * Writes the cells of a table row as an individual row
     * @param cells the individual cells of the row
+    * @return the row just written
     */
     public Row writeRow(String[] cells);
 
     /**
     * Writes a single row to the Writer.
     * @param row row to write to the Writer
-    * @return the Row, created from the cells
     */
     public void writeRow(Row row);
 

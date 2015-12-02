@@ -43,6 +43,7 @@ public @interface CsvFile {
     /**
     * All lines starting with this symbol (must be at the first encountered position) will be considered
     * comments, which are ignored by the parser
+    * @return comment symbol
     */
     char comment() default '#';
 
@@ -79,6 +80,7 @@ public @interface CsvFile {
     /**
     * The column where the dynamic headers start. All columns following this column are automatically assumed
     * to be dynamic also.
+    * @return index where dynamic columns start
     */
     int startIndexDynamicColumns() default 0;
 

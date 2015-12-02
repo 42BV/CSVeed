@@ -17,16 +17,19 @@ public @interface CsvLocalizedNumber {
 
     /**
     * Language used to construct Locale
+    * @return language
     */
     String language();
 
     /**
     * Country used to construct Locale
+    * @return country
     */
     String country() default "";
 
     /**
     * Variant used to construct Locale
+    * @return variant
     */
     String variant() default "";
 }

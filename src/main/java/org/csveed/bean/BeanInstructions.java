@@ -116,6 +116,8 @@ public interface BeanInstructions {
      * dynamic columns and treat every column after that as dynamic. For every dynamic column a row will be
      * created. If a bean has fields annotated with @CsvHeaderName or @CsvHeaderValue, it will store the
      * values of the header or the cell for that index column in the fields.
+     * @return convenience for chaining
+     * @param startIndex start index of dynamic columns
      */
     BeanInstructions setStartIndexDynamicColumns(int startIndex);
 
@@ -150,6 +152,7 @@ public interface BeanInstructions {
      *
      * @param propertyName the name of the property to write the data to
      * @param locale       the Locale to apply for converting the number
+     * @return convenience for chaining
      */
     BeanInstructions setLocalizedNumber(String propertyName, Locale locale);
 
@@ -180,7 +183,7 @@ public interface BeanInstructions {
 
     /**
      * Sets a field to be ignored for purposes of mapping. This method is called whenever
-     * {@link org.csveed.annotations.CsvIgnore)} is used. By default none of the fields are ignored
+     * {@link org.csveed.annotations.CsvIgnore} is used. By default none of the fields are ignored
      * unless, custom instructions are used. In this case, all fields are ignored by default.
      *
      * @param propertyName property which must be ignored for mapping
@@ -194,6 +197,7 @@ public interface BeanInstructions {
      * when custom instructions are used, so you should roll your own. Note that column indexes are
      * 1-based, not 0-based
      *
+     * @param columnIndex column index for which the property mapping must be applied
      * @param propertyName property to which the index-based mapping must be applied
      * @return convenience for chaining
      */
@@ -206,6 +210,7 @@ public interface BeanInstructions {
      * Also, don't forget to {@link #setMapper(Class)} to
      * {@link org.csveed.bean.ColumnNameMapper} for this to work.
      *
+     * @param columnName column name for which the property mapping must be applied
      * @param propertyName property to which the name-based mapping must be applied
      * @return convenience for chaining
      */
