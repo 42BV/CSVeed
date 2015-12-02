@@ -17,6 +17,8 @@ public class RowInstructionsImpl implements RowInstructions {
 
     private boolean settingsLogged = false;
 
+    private boolean quoteFields = true;
+
     public void logSettings() {
         if (settingsLogged) {
             return;
@@ -65,6 +67,17 @@ public class RowInstructionsImpl implements RowInstructions {
     @Override
     public char getQuote() {
         return symbolMapping.getFirstMappedCharacter(EncounteredSymbol.QUOTE_SYMBOL);
+    }
+
+    @Override
+    public RowInstructions setQuotingEnabled(boolean quoteFields) {
+        this.quoteFields = quoteFields;
+        return this;
+    }
+
+    @Override
+    public boolean getQuotingEnabled() {
+        return quoteFields;
     }
 
     @Override
