@@ -84,12 +84,17 @@ public class RowWriterImpl implements RowWriter {
         try {
             while (cells.hasNext()) {
                 String cell = cells.next();
+                String nullSafeCell = cell != null ? cell : "";
                 String headerValue = header != null ?  header.getName(columnPosition) : "";
-                LOG.debug("Writing cell value [{}] in column position [{}], header value is [{}].", cell, columnPosition, headerValue);
+                LOG.debug("Writing cell value [{}] in column position [{}], header value is [{}].", nullSafeCell, columnPosition, headerValue);
                 if (columnPosition != 1) {
                     writeSeparator();
                 }
-                writeCell(cell);
+                if (rowInstructions.getQuotingEnabled()) {
+                    writeQuotedCell(nullSafeCell);
+                } else {
+                    writeCell(nullSafeCell);
+                }
                 columnPosition++;
             }
             writeEOL();
@@ -106,12 +111,17 @@ public class RowWriterImpl implements RowWriter {
         writer.write(rowInstructions.getSeparator());
     }
 
-    private void writeCell(String cell) throws IOException {
+    private void writeQuotedCell(String cell) throws IOException {
         writer.write(rowInstructions.getQuote());
         String searchString = Character.toString(rowInstructions.getQuote());
         String replaceString = new String(new char[] { rowInstructions.getEscape(), rowInstructions.getQuote() } );
-        writer.write(cell != null ? cell.replace(searchString, replaceString) : "");
+        String replacedString = cell.replace(searchString, replaceString);
+        writeCell(replacedString);
         writer.write(rowInstructions.getQuote());
+    }
+
+    private void writeCell(String cell) throws IOException {
+        writer.write(cell);
     }
 
     private LineWithInfo convertToLine(String[] cells) {

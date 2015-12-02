@@ -1,12 +1,12 @@
 package org.csveed.annotations;
 
-import org.csveed.bean.AbstractMapper;
-import org.csveed.bean.ColumnIndexMapper;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import org.csveed.bean.AbstractMapper;
+import org.csveed.bean.ColumnIndexMapper;
 
 /**
 * Various settings applying to the entire CSV file and BeanInstructions.
@@ -27,6 +27,15 @@ public @interface CsvFile {
     * @return quote symbol for a field
     */
     char quote() default '"';
+
+    /**
+     * Sets whether or not quotes are written around the field values.
+     * If enabled, the character set as the escape symbol will be disabled.
+     * If disabled, no quotes are written around the field values and the escape symbol is not escaped.
+     * This setting has <strong>no</strong> effect when reading CSV files, only when writing them.
+     * @return whether or not to write quotes around field values
+     */
+    boolean quotingEnabled() default true;
 
     /**
     * The separator is the symbol between two fields. By default this will be a semi-colon

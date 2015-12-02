@@ -63,6 +63,22 @@ public interface RowInstructions {
     RowInstructions setQuote(char symbol);
 
     /**
+     * Sets whether or not quotes are written around the field values.
+     * If enabled, the character set as the escape symbol will be disabled.
+     * If disabled, no quotes are written around the field values and the escape symbol is not escaped.
+     * This setting has <strong>no</strong> effect when reading CSV files, only when writing them.
+     * @param enabled whether or not to put quotes around fields
+     * @return convenience for chaining
+     */
+    RowInstructions setQuotingEnabled(boolean enabled);
+
+    /**
+     * Returns whether or not quotes around fields are enabled.
+     * @return true if quotes are enabled
+     */
+    boolean getQuotingEnabled();
+
+    /**
     * Gets the character that will be used when writing separators
     * @return character used to represent separator characters
     */

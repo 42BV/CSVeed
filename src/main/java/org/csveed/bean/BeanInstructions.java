@@ -1,11 +1,11 @@
 package org.csveed.bean;
 
+import java.beans.PropertyEditor;
+import java.util.Locale;
+
 import org.csveed.bean.conversion.Converter;
 import org.csveed.common.Column;
 import org.csveed.row.RowInstructions;
-
-import java.beans.PropertyEditor;
-import java.util.Locale;
 
 /**
 * These instructions are used to power the {@link BeanReader}. Note that the instructions are also used
@@ -57,6 +57,16 @@ public interface BeanInstructions {
      * @return convenience for chaining
      */
     BeanInstructions setQuote(char symbol);
+
+    /**
+     * Sets whether or not quotes are written around the field values.
+     * If enabled, the character set as the escape symbol will be disabled.
+     * If disabled, no quotes are written around the field values and the escape symbol is not escaped.
+     * This setting has <strong>no</strong> effect when reading CSV files, only when writing them.
+     * @param enabled whether or not to put quotes around fields
+     * @return convenience for chaining
+     */
+    BeanInstructions setQuotingEnabled(boolean enabled);
 
     /**
      * Sets the character that will be interpreted as a separator between cells. This method is called whenever

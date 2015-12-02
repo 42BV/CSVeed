@@ -83,6 +83,31 @@ public class RowWriterTest {
     }
 
     @Test
+    public void writeRowWithoutQuoting() throws IOException {
+        StringWriter writer = new StringWriter();
+        RowInstructions instructions = new RowInstructionsImpl()
+                .setUseHeader(false)
+                .setQuotingEnabled(false);
+        RowWriter rowWriter = new RowWriterImpl(writer, instructions);
+        rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
+        writer.close();
+        assertEquals("alpha;beta;gamma\r", writer.getBuffer().toString());
+    }
+
+    @Test
+    public void writeRowWithoutQuotingAndEscaping() throws IOException {
+        StringWriter writer = new StringWriter();
+        RowInstructions instructions = new RowInstructionsImpl()
+                .setUseHeader(false)
+                .setQuotingEnabled(false);
+        RowWriter rowWriter = new RowWriterImpl(writer, instructions);
+        rowWriter.writeRow(new String[] { "\"tekst met \"quotes\"\"" } );
+        writer.close();
+        assertEquals("\"tekst met \"quotes\"\"\r", writer.getBuffer().toString());
+    }
+
+
+    @Test
     public void writeRowWithNullValue() throws IOException {
         StringWriter writer = new StringWriter();
         RowInstructions instructions = new RowInstructionsImpl()
