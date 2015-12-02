@@ -1,11 +1,18 @@
 package org.csveed.bean;
 
-import org.csveed.annotations.*;
-import org.csveed.common.Column;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Locale;
+
+import org.csveed.annotations.CsvCell;
+import org.csveed.annotations.CsvConverter;
+import org.csveed.annotations.CsvDate;
+import org.csveed.annotations.CsvFile;
+import org.csveed.annotations.CsvHeaderName;
+import org.csveed.annotations.CsvHeaderValue;
+import org.csveed.annotations.CsvIgnore;
+import org.csveed.annotations.CsvLocalizedNumber;
+import org.csveed.common.Column;
 
 public class BeanParser {
 
@@ -77,6 +84,7 @@ public class BeanParser {
         this.beanInstructions
             .setEscape(csvFile.escape())
             .setQuote(csvFile.quote())
+            .setQuotingEnabled(csvFile.quotingEnabled())
             .setSeparator(csvFile.separator())
             .setComment(csvFile.comment())
             .setEndOfLine(csvFile.endOfLine())

@@ -1,15 +1,15 @@
 package org.csveed.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import org.csveed.bean.conversion.Converter;
 import org.csveed.common.Column;
 import org.csveed.row.RowInstructions;
 import org.csveed.row.RowInstructionsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class BeanInstructionsImpl implements BeanInstructions {
 
@@ -96,6 +96,12 @@ public class BeanInstructionsImpl implements BeanInstructions {
     @Override
     public BeanInstructions setQuote(char symbol) {
         this.rowInstructions.setQuote(symbol);
+        return this;
+    }
+
+    @Override
+    public BeanInstructions setQuotingEnabled(boolean enabled) {
+        this.rowInstructions.setQuotingEnabled(enabled);
         return this;
     }
 
