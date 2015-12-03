@@ -30,8 +30,9 @@
     </licenses>
 
     <scm>
-        <url>scm:git://github.com/robert-bor/CSVeed</url>
+        <url>https://github.com/robert-bor/CSVeed</url>
         <connection>scm:git://github.com/robert-bor/CSVeed</connection>
+        <developerConnection>scm:git://github.com/robert-bor/CSVeed</developerConnection>
     </scm>
 
     <developers>
