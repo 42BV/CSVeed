@@ -110,10 +110,20 @@ public class CsvClientTest {
     }
 
     @Test
-    public void writeRows() throws IOException {
+    public void writeRowsLF() throws IOException {
+        writeRows("\n");
+    }
+
+    @Test
+    public void writeRowsCRLF() throws IOException {
+        writeRows("\r\n");
+    }
+
+    private void writeRows(String lineTerminators) throws IOException {
         StringWriter writer = new StringWriter();
         CsvClient csvClient = new CsvClientImpl(writer)
-                .setUseHeader(false);
+                .setUseHeader(false)
+                .setEndOfLine(lineTerminators.toCharArray());
         csvClient.writeHeader(new String[] {
                 "h1", "h2", "h3"
         } );
@@ -124,10 +134,10 @@ public class CsvClientTest {
         } );
         writer.close();
         assertEquals(
-                "\"h1\";\"h2\";\"h3\"\r\n"+
-                "\"l1c1\";\"l1c2\";\"l1c3\"\r\n"+
-                "\"l2c1\";\"l2c2\";\"l2c3\"\r\n"+
-                "\"l3c1\";\"l3c2\";\"l3c3\"\r\n",
+                "\"h1\";\"h2\";\"h3\"" + lineTerminators +
+                        "\"l1c1\";\"l1c2\";\"l1c3\"" + lineTerminators +
+                        "\"l2c1\";\"l2c2\";\"l2c3\"" + lineTerminators +
+                        "\"l3c1\";\"l3c2\";\"l3c3\"" + lineTerminators,
                 writer.getBuffer().toString());
     }
 
@@ -189,36 +199,42 @@ public class CsvClientTest {
     }
 
     @Test
-    public void readLines() {
-        Reader reader = new StringReader(
-                "text,year,number,date,lines,year and month\n"+
-                "'a bit of text',1983,42.42,1972-01-13,'line 1',2013-04\n"+
-                "'more text',1984,42.42,1972-01-14,'line 1\nline 2',2014-04\n"+
-                "# please ignore me\n"+
-                "'and yet more text',1985,42.42,1972-01-15,'line 1\nline 2\nline 3',2015-04\n"
-        );
+    public void readLinesLF() {
+        readLines("\n");
+    }
+
+    @Test
+    public void readLinesCRLF() {
+        readLines("\r\n");
+    }
+
+    private void readLines(String lineTerminators) {
+        Reader reader = new StringReader("text,year,number,date,lines,year and month" + lineTerminators + "'a bit of text',1983,42.42,1972-01-13,'line 1',2013-04" + lineTerminators
+                + "'more text',1984,42.42,1972-01-14,'line 1" + lineTerminators + "line 2',2014-04" + lineTerminators + "# please ignore me"
+                + lineTerminators + "'and yet more text',1985,42.42,1972-01-15,'line 1" + lineTerminators + "line 2" + lineTerminators
+                + "line 3',2015-04" + lineTerminators);
 
         CsvClient<BeanVariousNotAnnotated> csvClient =
                 new CsvClientImpl<BeanVariousNotAnnotated>(reader, BeanVariousNotAnnotated.class)
-                .setEscape('\\')
-                .setQuote('\'')
-                .setComment('#')
-                .setEndOfLine(new char[]{'\n'})
-                .setSeparator(',')
-                .setStartRow(1)
-                .setUseHeader(true)
-                .setMapper(ColumnNameMapper.class)
-                .ignoreProperty("ignoreMe")
-                .mapColumnNameToProperty("text", "txt")
-                .setRequired("txt", true)
-                .mapColumnNameToProperty("year", "year")
-                .mapColumnNameToProperty("number", "number")
-                .mapColumnNameToProperty("date", "date")
-                .setDate("date", "yyyy-MM-dd")
-                .mapColumnNameToProperty("year and month", "yearMonth")
-                .setDate("yearMonth", "yyyy-MM")
-                .mapColumnNameToProperty("lines", "simple")
-                .setConverter("simple", new BeanSimpleConverter())
+                        .setEscape('\\')
+                        .setQuote('\'')
+                        .setComment('#')
+                        .setEndOfLine(new char[]{'\n'})
+                        .setSeparator(',')
+                        .setStartRow(1)
+                        .setUseHeader(true)
+                        .setMapper(ColumnNameMapper.class)
+                        .ignoreProperty("ignoreMe")
+                        .mapColumnNameToProperty("text", "txt")
+                        .setRequired("txt", true)
+                        .mapColumnNameToProperty("year", "year")
+                        .mapColumnNameToProperty("number", "number")
+                        .mapColumnNameToProperty("date", "date")
+                        .setDate("date", "yyyy-MM-dd")
+                        .mapColumnNameToProperty("year and month", "yearMonth")
+                        .setDate("yearMonth", "yyyy-MM")
+                        .mapColumnNameToProperty("lines", "simple")
+                        .setConverter("simple", new BeanSimpleConverter())
                 ;
 
         List<BeanVariousNotAnnotated> beans = csvClient.readBeans();

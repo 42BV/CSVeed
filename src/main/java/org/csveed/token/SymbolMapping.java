@@ -32,7 +32,6 @@ public class SymbolMapping {
 
     private boolean skipCommentLines = true;
 
-    //TODO: find out why this is the case
     private char acceptedEndOfLine = 0; // When multiple EOL characters have been given,
                                         // only the first one encountered will be accepted.
 
