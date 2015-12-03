@@ -26,7 +26,7 @@ previous SLF4J logger configured and you want to get up and running quickly, use
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.2</version>
+            <version>1.7.13</version>
         </dependency>
 ```
 
