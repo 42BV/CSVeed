@@ -103,10 +103,10 @@ public interface RowInstructions {
     RowInstructions setComment(char symbol);
 
     /**
-    * Gets the character that will be used when writing End-of-line separators
-    * @return the EOL character
+    * Gets the characters that will be used when writing End-of-line separators
+    * @return the EOL characters
     */
-    char getEndOfLine();
+    char[] getEndOfLine();
 
     /**
     * Sets the characters (plural) that will be interpreted as end-of-line markers (unless within a quoted

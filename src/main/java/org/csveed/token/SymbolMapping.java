@@ -1,14 +1,19 @@
 package org.csveed.token;
 
-import org.csveed.report.CsvException;
-import org.csveed.report.GeneralError;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.csveed.token.EncounteredSymbol.END_OF_FILE_SYMBOL;
+import static org.csveed.token.EncounteredSymbol.EOL_SYMBOL;
+import static org.csveed.token.EncounteredSymbol.EOL_SYMBOL_TRASH;
+import static org.csveed.token.EncounteredSymbol.ESCAPE_SYMBOL;
+import static org.csveed.token.EncounteredSymbol.OTHER_SYMBOL;
+import static org.csveed.token.EncounteredSymbol.QUOTE_SYMBOL;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-import static org.csveed.token.EncounteredSymbol.*;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SymbolMapping {
 
@@ -44,8 +49,12 @@ public class SymbolMapping {
     }
 
     public char getFirstMappedCharacter(EncounteredSymbol encounteredSymbol) {
-        char[] mappedCharacters = symbolToChars.get(encounteredSymbol);
+        char[] mappedCharacters = getMappedCharacters(encounteredSymbol);
         return mappedCharacters == null ? 0 : mappedCharacters[0];
+    }
+
+    public char[] getMappedCharacters(EncounteredSymbol encounteredSymbol) {
+        return symbolToChars.get(encounteredSymbol);
     }
 
     public void addMapping(EncounteredSymbol symbol, Character character) {
