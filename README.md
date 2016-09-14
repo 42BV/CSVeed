@@ -77,7 +77,7 @@ It's that simple to get up and running. You could also opt to declare your instr
                 "\"Gamma\";1902;\"30-09-1978\""
         );
 
-        CsvClient<Bean> csvClient = new CsvClientImpl<Bean>(reader, new BeanReaderInstructionsImpl(Bean.class))
+        CsvClient<Bean> csvClient = new CsvClientImpl<Bean>(reader, new BeanInstructionsImpl(Bean.class))
                 .setMapper(ColumnNameMapper.class)
                 .mapColumnNameToProperty("name", "name")
                 .mapColumnNameToProperty("number", "number")
