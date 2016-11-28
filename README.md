@@ -1,3 +1,10 @@
+CSVeed
+======
+
+[![Build Status](https://travis-ci.org/robert-bor/CSVeed.svg?branch=master)](https://travis-ci.org/robert-bor/CSVeed)
+[![Maven central](https://maven-badges.herokuapp.com/maven-central/org.csveed/CSVeed/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.csveed/CSVeed)
+[![Apache 2](http://img.shields.io/badge/license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
 Be sure to check the project site at [csveed.org](http://csveed.org). [![Build Status](https://buildhive.cloudbees.com/job/robert-bor/job/CSVeed/badge/icon)](https://buildhive.cloudbees.com/job/robert-bor/job/CSVeed/)
 
 CSVeed is a Java library for reading [Comma Separated Value (CSV)](http://tools.ietf.org/html/rfc4180)
@@ -19,7 +26,7 @@ previous SLF4J logger configured and you want to get up and running quickly, use
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.2</version>
+            <version>1.7.13</version>
         </dependency>
 ```
 

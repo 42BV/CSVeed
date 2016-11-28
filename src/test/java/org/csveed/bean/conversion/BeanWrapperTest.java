@@ -1,7 +1,6 @@
 package org.csveed.bean.conversion;
 
 import org.csveed.bean.BeanInstructions;
-import org.csveed.bean.BeanInstructionsImpl;
 import org.csveed.bean.BeanParser;
 import org.csveed.bean.BeanProperties;
 import org.csveed.common.Column;

@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 public class CsvException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     public static final Logger LOG = LoggerFactory.getLogger(CsvException.class);
 
     private CsvError error;

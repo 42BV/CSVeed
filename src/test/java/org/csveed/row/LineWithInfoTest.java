@@ -43,7 +43,7 @@ public class LineWithInfoTest {
     public void getReportOnColumnIndex0() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Hello");
-        RowReport report = row.reportOnColumn(new Column(0));
+        row.reportOnColumn(new Column(0));
     }
 
     @Test

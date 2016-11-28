@@ -64,7 +64,6 @@ public class SymbolMapping {
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     public void addMapping(EncounteredSymbol symbol, char[] characters) {
         while (charToSymbol.values().remove(symbol));
         for (Character character : characters) {

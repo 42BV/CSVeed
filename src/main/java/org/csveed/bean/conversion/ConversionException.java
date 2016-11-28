@@ -2,6 +2,8 @@ package org.csveed.bean.conversion;
 
 public abstract class ConversionException extends Exception {
 
+    private static final long serialVersionUID = 1L;
+
     private String typeDescription;
 
     public ConversionException(String message, Class clazz) {
