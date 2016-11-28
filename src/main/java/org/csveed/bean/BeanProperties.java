@@ -54,6 +54,10 @@ public class BeanProperties implements Iterable<BeanProperty> {
             }
             addProperty(propertyDescriptor, field);
         }
+        
+        if (beanClass.getSuperclass() != null) {
+        	parseBean(beanClass.getSuperclass());
+        }
     }
 
     @SuppressWarnings("unchecked")
