@@ -2,7 +2,7 @@ CSVeed
 ======
 
 [![Build Status](https://travis-ci.org/robert-bor/CSVeed.svg?branch=master)](https://travis-ci.org/robert-bor/CSVeed)
-[![Maven central](https://maven-badges.herokuapp.com/maven-central/org.csveed/CSVeed/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed)
+[![Maven central](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed)
 [![Apache 2](http://img.shields.io/badge/license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 Be sure to check the project site at [csveed.org](http://csveed.org). [![Build Status](https://buildhive.cloudbees.com/job/robert-bor/job/CSVeed/badge/icon)](https://buildhive.cloudbees.com/job/robert-bor/job/CSVeed/)
