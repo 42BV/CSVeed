@@ -41,6 +41,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return mapper;
     }
 
+    @Override
     public List<T> readBeans() {
         List<T> beans = new ArrayList<T>();
         while (!isFinished()) {
@@ -52,6 +53,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return beans;
     }
 
+    @Override
     public T readBean() {
         logSettings();
 
@@ -86,10 +88,12 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return rowReader.readHeader();
     }
 
+    @Override
     public int getCurrentLine() {
         return this.rowReader.getCurrentLine();
     }
 
+    @Override
     public boolean isFinished() {
         return rowReader.isFinished();
     }
@@ -126,6 +130,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         }
     }
 
+    @Override
     public BeanInstructions getBeanInstructions() {
         return this.beanInstructions;
     }

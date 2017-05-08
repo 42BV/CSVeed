@@ -68,6 +68,7 @@ public class RowImpl implements Row {
     * Returns an iterator over the individual cells of a Row
     * @return iterator over the cells in String format
     */
+    @Override
     public Iterator<String> iterator() {
         return line.iterator();
     }

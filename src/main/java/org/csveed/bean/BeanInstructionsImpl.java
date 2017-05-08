@@ -34,6 +34,7 @@ public class BeanInstructionsImpl implements BeanInstructions {
         this.beanClass = beanClass;
     }
 
+    @Override
     public void logSettings() {
         if (settingsLogged) {
             return;
@@ -70,6 +71,7 @@ public class BeanInstructionsImpl implements BeanInstructions {
         return logLine.toString();
     }
 
+    @Override
     public RowInstructions getRowInstructions() {
         return this.rowInstructions;
     }
@@ -201,22 +203,27 @@ public class BeanInstructionsImpl implements BeanInstructions {
         return this;
     }
 
+    @Override
     public Class<? extends AbstractMapper> getMappingStrategy() {
         return this.mappingStrategy;
     }
 
+    @Override
     public BeanProperties getProperties() {
         return this.properties;
     }
 
+    @Override
     public Column getStartIndexDynamicColumns() {
         return this.startIndexDynamicColumns;
     }
 
+    @Override
     public Class getBeanClass() {
         return this.beanClass;
     }
 
+    @Override
     public boolean useHeader() {
         return useHeader;
     }

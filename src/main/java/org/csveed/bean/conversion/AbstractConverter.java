@@ -8,6 +8,7 @@ public abstract class AbstractConverter<K> implements Converter<K> {
         this.clazz = clazz;
     }
 
+    @Override
     public String infoOnType() {
         return getType().getName();
     }

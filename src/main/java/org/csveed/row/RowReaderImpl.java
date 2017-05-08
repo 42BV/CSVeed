@@ -39,6 +39,7 @@ public class RowReaderImpl implements RowReader {
         stateMachine.setSymbolMapping(rowInstructions.getSymbolMapping());
     }
 
+    @Override
     public List<Row> readRows() {
         List<Row> allRows = new ArrayList<Row>();
         while (!isFinished()) {
@@ -50,6 +51,7 @@ public class RowReaderImpl implements RowReader {
         return allRows;
     }
 
+    @Override
     public Row readRow() {
         getHeader();
         Line unmappedLine = readBareLine();
@@ -65,6 +67,7 @@ public class RowReaderImpl implements RowReader {
         return this.stateMachine.getCurrentLine();
     }
 
+    @Override
     public Header getHeader() {
         return header == null && rowInstructions.isUseHeader() ? readHeader() : header;
     }
@@ -73,6 +76,7 @@ public class RowReaderImpl implements RowReader {
         return this.maxNumberOfColumns;
     }
 
+    @Override
     public Header readHeader() {
         if (header != null) {
             return header;
@@ -96,6 +100,7 @@ public class RowReaderImpl implements RowReader {
         }
     }
 
+    @Override
     public boolean isFinished() {
         return stateMachine.isFinished();
     }
@@ -143,6 +148,7 @@ public class RowReaderImpl implements RowReader {
         return line;
     }
 
+    @Override
     public RowInstructions getRowInstructions() {
         return this.rowInstructions;
     }
