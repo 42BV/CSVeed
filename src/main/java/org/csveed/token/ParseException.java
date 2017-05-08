@@ -4,11 +4,11 @@ public class ParseException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
-    private ParseState state;
+    private final ParseState state;
 
-    private EncounteredSymbol symbol;
+    private final EncounteredSymbol symbol;
 
-    private int symbolCharacter;
+    private final int symbolCharacter;
 
     public ParseException(ParseState state, int symbolCharacter, EncounteredSymbol symbol) {
         this.state = state;
