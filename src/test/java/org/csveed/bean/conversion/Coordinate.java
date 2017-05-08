@@ -34,6 +34,7 @@ public class Coordinate {
         return null;
     }
 
+    @Override
     public String toString() {
         return x + "/" + y;
     }

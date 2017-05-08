@@ -26,10 +26,12 @@ public class HeaderImpl implements Header {
         }
     }
 
+    @Override
     public int size() {
         return header.size();
     }
 
+    @Override
     public String getName(int columnIndex) {
         Column column = new Column(columnIndex);
         String name = this.indexToName.get(column);
@@ -39,6 +41,7 @@ public class HeaderImpl implements Header {
         return name;
     }
 
+    @Override
     public int getIndex(String columnName) {
         Column column = this.nameToIndex.get(columnName.toLowerCase());
         if (column == null) {
@@ -47,10 +50,12 @@ public class HeaderImpl implements Header {
         return column.getColumnIndex();
     }
 
+    @Override
     public Iterator<String> iterator() {
         return header.iterator();
     }
 
+    @Override
     public RowReport reportOnEndOfLine() {
         return header.reportOnEndOfLine();
     }

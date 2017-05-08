@@ -1,8 +1,8 @@
 package org.csveed.api;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -195,7 +195,7 @@ public class CsvClientTest {
         CsvClient<BeanWithCustomNumber> beanReader = new CsvClientImpl<BeanWithCustomNumber>(reader, BeanWithCustomNumber.class)
                 .setLocalizedNumber("number", Locale.GERMANY);
         BeanWithCustomNumber bean = beanReader.readBean();
-        assertEquals(11398.22, bean.getNumber());
+        assertEquals(Double.valueOf(11398.22), bean.getNumber());
     }
 
     @Test

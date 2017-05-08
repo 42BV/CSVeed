@@ -25,13 +25,13 @@ public class CharacterConverter extends AbstractConverter<Character> {
         }
         else if (isUnicodeCharacterSequence(text)) {
             int code = Integer.parseInt(text.substring(UNICODE_PREFIX.length()), 16);
-            return new Character((char) code);
+            return (char) code;
         }
         else if (text.length() != 1) {
             throw new IllegalArgumentException("String [" + text + "] with length " +
                     text.length() + " cannot be converted to char type");
         } else {
-            return new Character(text.charAt(0));
+            return text.charAt(0);
         }
     }
 

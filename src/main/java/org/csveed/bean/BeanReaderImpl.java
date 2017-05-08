@@ -10,8 +10,12 @@ import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.row.RowReader;
 import org.csveed.row.RowReaderImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BeanReaderImpl<T> implements BeanReader<T> {
+
+    private static final Logger logger = LoggerFactory.getLogger(BeanReaderImpl.class);
 
     private final RowReader rowReader;
 
@@ -41,6 +45,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return mapper;
     }
 
+    @Override
     public List<T> readBeans() {
         List<T> beans = new ArrayList<T>();
         while (!isFinished()) {
@@ -52,6 +57,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return beans;
     }
 
+    @Override
     public T readBean() {
         logSettings();
 
@@ -86,10 +92,12 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return rowReader.readHeader();
     }
 
+    @Override
     public int getCurrentLine() {
         return this.rowReader.getCurrentLine();
     }
 
+    @Override
     public boolean isFinished() {
         return rowReader.isFinished();
     }
@@ -119,13 +127,15 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     public AbstractMapper<T> createMappingStrategy() {
         try {
             return this.beanInstructions.getMappingStrategy().newInstance();
-        } catch (Exception err) {
+        } catch (Exception e) {
+            logger.trace("", e);
             throw new CsvException(new GeneralError(
                     "Unable to instantiate the mapping strategy"
                     ));
         }
     }
 
+    @Override
     public BeanInstructions getBeanInstructions() {
         return this.beanInstructions;
     }

@@ -1,10 +1,10 @@
 package org.csveed.token;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+
 import org.csveed.report.CsvException;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotSame;
 
 public class SymbolMappingTest {
 

@@ -79,7 +79,7 @@ public class ParseStateMachine {
         }
 
         ParseState newState = determineState(symbolCharacter, symbol);
-        LOG.debug((char)symbolCharacter+" ("+symbol+"): "+state+" => "+newState);
+        LOG.debug("{} ({}): {} => {}", (char)symbolCharacter, symbol, state, newState);
 
         if (newState.isTokenize()) {
             if (tokenState.isReset()) {

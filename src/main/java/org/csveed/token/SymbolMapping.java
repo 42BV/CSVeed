@@ -76,11 +76,11 @@ public class SymbolMapping {
         if (settingsLogged) {
             return;
         }
-        LOG.info("- CSV config / skip comment lines? "+(isSkipCommentLines()?"yes":"no"));
-        LOG.info("- CSV config / start line: "+startLine);
+        LOG.info("- CSV config / skip comment lines? {}", (isSkipCommentLines()?"yes":"no"));
+        LOG.info("- CSV config / start line: {}", startLine);
         for (EncounteredSymbol symbol : symbolToChars.keySet()) {
             char[] characters = symbolToChars.get(symbol);
-            LOG.info("- CSV config / Characters for "+symbol+" "+charactersToString(characters));
+            LOG.info("- CSV config / Characters for {} {}", symbol, charactersToString(characters));
         }
         settingsLogged = true;
     }
@@ -125,7 +125,7 @@ public class SymbolMapping {
         }
         if (symbol == EOL_SYMBOL) {
             if (acceptedEndOfLine == 0) {
-                LOG.info("- Triggering EOL character: "+character);
+                LOG.info("- Triggering EOL character: {}", character);
                 acceptedEndOfLine = (char)character;
             }
             if (acceptedEndOfLine != character) {

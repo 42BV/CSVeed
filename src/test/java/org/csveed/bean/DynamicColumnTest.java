@@ -1,10 +1,10 @@
 package org.csveed.bean;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.csveed.common.Column;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
 
 public class DynamicColumnTest {
 
@@ -35,6 +35,5 @@ public class DynamicColumnTest {
         DynamicColumn dynamicColumn = new DynamicColumn(activeColumn);
         assertTrue("Column "+activeColumn.getColumnIndex()+" must be active", dynamicColumn.isDynamicColumnActive(activeColumn));
         assertFalse("Column "+inactiveColumn.getColumnIndex()+" must be active", dynamicColumn.isDynamicColumnActive(inactiveColumn));
-
     }
 }

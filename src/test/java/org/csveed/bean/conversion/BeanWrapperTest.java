@@ -7,6 +7,9 @@ import org.csveed.common.Column;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -14,9 +17,6 @@ import java.util.Arrays;
 import java.util.Currency;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 public class BeanWrapperTest {
 
@@ -276,7 +276,7 @@ public class BeanWrapperTest {
     @Test
     public void setFloatPrimitive() throws Exception {
         beanWrapper.setProperty(properties.fromName(new Column("floatPrimitive")),"42.42");
-        assertEquals((float)42.42, bean.getFloatPrimitive());
+        assertEquals((float)42.42, bean.getFloatPrimitive(), 1);
     }
 
     @Test
@@ -300,7 +300,7 @@ public class BeanWrapperTest {
     @Test
     public void setDoublePrimitive() throws Exception {
         beanWrapper.setProperty(properties.fromName(new Column("doublePrimitive")),"42.42");
-        assertEquals(42.42, bean.getDoublePrimitive());
+        assertEquals(42.42, bean.getDoublePrimitive(), 1);
     }
 
     @Test

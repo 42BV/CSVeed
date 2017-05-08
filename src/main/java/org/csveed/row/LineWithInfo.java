@@ -29,17 +29,18 @@ public class LineWithInfo implements Line {
         markEndOfColumn();
     }
 
+    @Override
     public Iterator<String> iterator() {
         return cells.iterator();
     }
 
     public void markStartOfColumn() {
-        LOG.debug("Start of column: "+printLength);
+        LOG.debug("Start of column: {}", printLength);
         getCellPosition(currentColumn).setStart(printLength);
     }
 
     protected void markEndOfColumn() {
-        LOG.debug("End of column: "+printLength);
+        LOG.debug("End of column: {}", printLength);
         getCellPosition(currentColumn).setEnd(printLength);
         currentColumn = currentColumn.nextColumn();
     }
@@ -69,14 +70,17 @@ public class LineWithInfo implements Line {
         else return Character.toString((char)symbol);
     }
 
+    @Override
     public int size() {
         return this.cells.size();
     }
 
+    @Override
     public String get(int index) {
         return this.cells.get(index);
     }
 
+    @Override
     public RowReport reportOnColumn(Column column) {
         CellPositionInRow cellPosition = cellPositions.get(column);
         if (cellPosition == null) {
@@ -85,6 +89,7 @@ public class LineWithInfo implements Line {
         return new RowReport(originalLine.toString(), cellPosition.getStart(), cellPosition.getEnd());
     }
 
+    @Override
     public RowReport reportOnEndOfLine() {
         return new RowReport(originalLine.toString(), printLength, printLength);
     }

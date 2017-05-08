@@ -1,9 +1,9 @@
 package org.csveed.bean.conversion;
 
+import static org.junit.Assert.assertEquals;
+
 import org.csveed.token.ParseState;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
 
 public class EnumConverterTest {
 

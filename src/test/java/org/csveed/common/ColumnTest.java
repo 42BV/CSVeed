@@ -6,11 +6,11 @@ import org.csveed.row.HeaderImpl;
 import org.csveed.row.LineWithInfo;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Map;
 import java.util.TreeMap;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 
 public class ColumnTest {
 

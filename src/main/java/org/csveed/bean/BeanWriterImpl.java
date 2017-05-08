@@ -11,8 +11,12 @@ import org.csveed.row.LineWithInfo;
 import org.csveed.row.RowImpl;
 import org.csveed.row.RowWriter;
 import org.csveed.row.RowWriterImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BeanWriterImpl<T> implements BeanWriter<T> {
+
+    private static final Logger logger = LoggerFactory.getLogger(BeanWriterImpl.class);
 
     private final RowWriter rowWriter;
 
@@ -51,7 +55,8 @@ public class BeanWriterImpl<T> implements BeanWriter<T> {
             try {
                 line.addCell(beanWrapper.getProperty(property));
             } catch (ConversionException e) {
-                System.out.println(e.getMessage());
+                logger.error(e.getMessage());
+                logger.trace("", e);
             }
         }
         rowWriter.writeRow(new RowImpl(line, header));
