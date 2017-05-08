@@ -69,9 +69,9 @@ public class BeanParser {
 
     private void parseCsvLocalizedNumber(String propertyName, CsvLocalizedNumber annotation) {
         final Locale locale;
-        if (annotation.country().equals("")) {
+        if (annotation.country().isEmpty()) {
             locale = new Locale(annotation.language());
-        } else if (annotation.variant().equals("")) {
+        } else if (annotation.variant().isEmpty()) {
             locale = new Locale(annotation.language(), annotation.country());
         } else {
             locale = new Locale(annotation.language(), annotation.country(), annotation.variant());
@@ -109,7 +109,7 @@ public class BeanParser {
     }
 
     private String parseCsvCell(String propertyName, CsvCell csvCell) {
-        String columnName = (csvCell.columnName() == null || csvCell.columnName().equals("")) ? propertyName : csvCell.columnName();
+        String columnName = (csvCell.columnName() == null || csvCell.columnName().isEmpty()) ? propertyName : csvCell.columnName();
         this.beanInstructions.setRequired(propertyName, csvCell.required());
         currentColumn = csvCell.columnIndex() != -1 ? new Column(csvCell.columnIndex()) : currentColumn;
         return columnName;
