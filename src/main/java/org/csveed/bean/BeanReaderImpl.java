@@ -10,8 +10,12 @@ import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.row.RowReader;
 import org.csveed.row.RowReaderImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BeanReaderImpl<T> implements BeanReader<T> {
+
+    private static final Logger logger = LoggerFactory.getLogger(BeanReaderImpl.class);
 
     private final RowReader rowReader;
 
@@ -123,7 +127,8 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     public AbstractMapper<T> createMappingStrategy() {
         try {
             return this.beanInstructions.getMappingStrategy().newInstance();
-        } catch (Exception err) {
+        } catch (Exception e) {
+            logger.trace("", e);
             throw new CsvException(new GeneralError(
                     "Unable to instantiate the mapping strategy"
                     ));

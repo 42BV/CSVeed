@@ -35,12 +35,12 @@ public class LineWithInfo implements Line {
     }
 
     public void markStartOfColumn() {
-        LOG.debug("Start of column: "+printLength);
+        LOG.debug("Start of column: {}", printLength);
         getCellPosition(currentColumn).setStart(printLength);
     }
 
     protected void markEndOfColumn() {
-        LOG.debug("End of column: "+printLength);
+        LOG.debug("End of column: {}", printLength);
         getCellPosition(currentColumn).setEnd(printLength);
         currentColumn = currentColumn.nextColumn();
     }

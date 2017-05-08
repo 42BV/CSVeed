@@ -98,8 +98,9 @@ public class RowWriterImpl implements RowWriter {
                 columnPosition++;
             }
             writeEOL();
-        } catch(IOException err){
-            throw new CsvException(new GeneralError("Error in writing to the writer: " + err.getMessage()));
+        } catch(IOException e){
+            LOG.trace("", e);
+            throw new CsvException(new GeneralError("Error in writing to the writer: " + e.getMessage()));
         }
     }
 
