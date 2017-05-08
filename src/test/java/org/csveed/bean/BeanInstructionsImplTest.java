@@ -1,10 +1,10 @@
 package org.csveed.bean;
 
+import static org.junit.Assert.assertNull;
+
 import org.csveed.common.Column;
 import org.csveed.test.model.BeanSimple;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertNull;
 
 public class BeanInstructionsImplTest {
 

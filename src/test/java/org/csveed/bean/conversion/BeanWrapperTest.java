@@ -7,6 +7,9 @@ import org.csveed.common.Column;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -14,9 +17,6 @@ import java.util.Arrays;
 import java.util.Currency;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 public class BeanWrapperTest {
 

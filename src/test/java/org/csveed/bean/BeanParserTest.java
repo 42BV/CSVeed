@@ -1,14 +1,14 @@
 package org.csveed.bean;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.test.model.BeanLotsOfIgnores;
 import org.csveed.test.model.BeanWithWrongAnnotation;
 import org.csveed.test.model.BeanWithoutGettersAndSetters;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
 
 public class BeanParserTest {
 

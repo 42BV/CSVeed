@@ -6,9 +6,13 @@ import org.csveed.test.model.BeanSimple;
 import org.csveed.test.model.BeanVariousNotAnnotated;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
-import static junit.framework.Assert.*;
 
 public class BeanPropertyTest {
 

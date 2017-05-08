@@ -5,13 +5,13 @@ import org.csveed.test.model.*;
 import org.csveed.token.ParseState;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.io.Reader;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
 
 public class BeanReaderTest {
 
@@ -116,7 +116,7 @@ public class BeanReaderTest {
         );
         BeanReader<BeanWithCustomNumberAnnotated> beanReader = new BeanReaderImpl<BeanWithCustomNumberAnnotated>(reader, BeanWithCustomNumberAnnotated.class);
         BeanWithCustomNumberAnnotated bean = beanReader.readBean();
-        assertEquals(11398.22, bean.getNumber());
+        assertEquals(Double.valueOf(11398.22), bean.getNumber());
     }
 
     @Test
@@ -203,7 +203,7 @@ public class BeanReaderTest {
         BeanWithVariousTypes bean = beans.get(0);
         assertEquals("a bit of text", bean.getText());
         assertEquals((Integer)1984, bean.getYear());
-        assertEquals(42.42, bean.getNumber());
+        assertEquals(Double.valueOf(42.42), bean.getNumber());
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         assertEquals("1972-01-13", formatter.format(bean.getDate()));
         formatter = new SimpleDateFormat("yyyy-MM");
