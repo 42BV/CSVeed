@@ -53,7 +53,7 @@
 
         <!-- Reporting -->
         <maven.cobertura.version>2.7</maven.cobertura.version>
-        <maven.javadoc.version>2.10.4</maven.javadoc.version>
+        <maven.javadoc.version>3.0.0-M1</maven.javadoc.version>
     </properties>
 
     <dependencies>
