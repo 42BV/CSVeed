@@ -2,6 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- This parent is obsolete, consider using base-parent from hazendaz -->
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+        <relativePath />
+    </parent>
+
     <groupId>org.csveed</groupId>
     <artifactId>csveed</artifactId>
     <version>0.5.1-SNAPSHOT</version>
@@ -10,13 +18,6 @@
     <description>Java toolkit for mapping CSV-to-Bean mapping and vice versa</description>
     <inceptionYear>2013</inceptionYear>
     <url>http://csveed.org</url>
-
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
-        <relativePath />
-    </parent>
 
     <organization>
         <name>42 BV</name>
