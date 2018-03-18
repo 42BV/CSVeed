@@ -53,7 +53,7 @@
         <slf4j.version>1.7.25</slf4j.version>
 
         <!-- Reporting -->
-        <maven.jacoco.version>0.7.9</maven.jacoco.version>
+        <maven.jacoco.version>0.8.0</maven.jacoco.version>
         <maven.javadoc.version>3.0.0</maven.javadoc.version>
     </properties>
 
