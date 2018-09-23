@@ -23,9 +23,9 @@ public class BeanInstructionsImpl implements BeanInstructions {
 
     private Class beanClass;
 
-    private boolean settingsLogged = false;
+    private boolean settingsLogged;
 
-    private Column startIndexDynamicColumns = null;
+    private Column startIndexDynamicColumns;
 
     private boolean useHeader = true;
 

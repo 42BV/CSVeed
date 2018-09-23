@@ -15,7 +15,7 @@ public abstract class AbstractMapper<T> {
 
     protected BeanInstructions beanInstructions;
 
-    private boolean verified = false;
+    private boolean verified;
 
     private DefaultConverters defaultConverters = new DefaultConverters();
 

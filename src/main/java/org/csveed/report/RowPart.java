@@ -4,7 +4,7 @@ public class RowPart {
 
     private String token;
 
-    private boolean highlight = false;
+    private boolean highlight;
 
     public RowPart(String token, boolean highlight) {
         this.token = token;

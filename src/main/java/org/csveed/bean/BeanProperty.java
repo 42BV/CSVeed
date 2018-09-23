@@ -11,15 +11,15 @@ public class BeanProperty {
 
     private Field field;
 
-    private Converter converter = null;
+    private Converter converter;
 
-    private String columnName = null;
+    private String columnName;
 
     private int columnIndex = -1;
 
-    private boolean required = false;
+    private boolean required;
 
-    private boolean dynamicColumnProperty = false;
+    private boolean dynamicColumnProperty;
 
     @SuppressWarnings("unchecked")
     public Class<? extends Number> getNumberClass() {

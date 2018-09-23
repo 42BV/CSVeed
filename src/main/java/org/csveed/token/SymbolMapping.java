@@ -26,14 +26,15 @@ public class SymbolMapping {
 
     private Character quoteCharacter;
 
-    private boolean settingsLogged = false;
+    private boolean settingsLogged;
 
     private int startLine = 1;
 
     private boolean skipCommentLines = true;
 
-    private char acceptedEndOfLine = 0; // When multiple EOL characters have been given,
-                                        // only the first one encountered will be accepted.
+    // When multiple EOL characters have been given,
+    // only the first one encountered will be accepted.
+    private char acceptedEndOfLine;
 
     public SymbolMapping() {
         initDefaultMapping();
