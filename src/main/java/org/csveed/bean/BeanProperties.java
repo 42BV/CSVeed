@@ -175,7 +175,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
     @SuppressWarnings("unchecked")
     @Override
     public Iterator<BeanProperty> iterator() {
-        return ((List<BeanProperty>)((ArrayList)this.properties).clone()).iterator();
+        return ((List<BeanProperty>)((ArrayList<BeanProperty>)this.properties).clone()).iterator();
     }
 
     public Set<Column> columnIndexKeys() {
