@@ -4,11 +4,11 @@ import org.csveed.bean.BeanInstructions;
 import org.csveed.bean.BeanParser;
 import org.csveed.bean.BeanProperties;
 import org.csveed.common.Column;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -28,7 +28,7 @@ public class BeanWrapperTest {
 
     private BeanWrapper beanWrapper;
 
-    @Before
+    @BeforeEach
     public void init() {
         bean = new Bean();
         beanWrapper = new BeanWrapper(defaultConverters, bean);

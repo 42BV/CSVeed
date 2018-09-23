@@ -1,17 +1,20 @@
 package org.csveed.token;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.csveed.report.CsvException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SymbolMappingTest {
 
-    @Test(expected = CsvException.class)
+    @Test
     public void setRowAtZero() {
         SymbolMapping mapping = new SymbolMapping();
-        mapping.setStartLine(0);
+        assertThrows(CsvException.class, () ->  {
+            mapping.setStartLine(0);
+        });
     }
 
     @Test

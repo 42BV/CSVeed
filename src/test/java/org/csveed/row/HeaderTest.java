@@ -2,22 +2,27 @@ package org.csveed.row;
 
 import org.csveed.api.Header;
 import org.csveed.report.CsvException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class HeaderTest {
 
-    @Test(expected = CsvException.class)
+    @Test
     public void getNonExistingColumnName() {
         Header header = new HeaderImpl(createLine("alpha"));
-        header.getIndex("does-not-exist");
+        assertThrows(CsvException.class, () ->  {
+            header.getIndex("does-not-exist");
+        });
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void getNonExistingColumnIndex() {
         Header header = new HeaderImpl(createLine("alpha"));
-        header.getName(13);
+        assertThrows(CsvException.class, () ->  {
+            header.getName(13);
+        });
     }
 
     @Test

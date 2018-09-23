@@ -3,10 +3,11 @@ package org.csveed.bean;
 import org.csveed.report.CsvException;
 import org.csveed.test.model.*;
 import org.csveed.token.ParseState;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -62,26 +63,28 @@ public class BeanReaderTest {
         assertEquals(ParseState.FIRST_CHAR_INSIDE_QUOTED_FIELD, bean.getParseState());
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void missingConverter() {
         Reader reader = new StringReader(
             "alpha\n"+
             "\"row 1, cell 1\""
         );
         BeanReader<BeanWithNonStandardObject> beanReader = new BeanReaderImpl<BeanWithNonStandardObject>(reader, BeanWithNonStandardObject.class);
-        beanReader.readBean();
+        assertThrows(CsvException.class, () ->  {
+            beanReader.readBean();
+        });
     }
 
-    @Test (expected = CsvException.class)
+    @Test
     public void illegalColumnIndexMappingTooLow() {
-        checkIllegalMapping(
-                new BeanInstructionsImpl(BeanWithMultipleStrings.class)
-                        .setMapper(ColumnIndexMapper.class)
-                        .mapColumnIndexToProperty(-1, "alpha")
-        );
+        assertThrows(CsvException.class, () ->  {
+            new BeanInstructionsImpl(BeanWithMultipleStrings.class)
+                .setMapper(ColumnIndexMapper.class)
+                .mapColumnIndexToProperty(-1, "alpha");
+        });
     }
 
-    @Test (expected = CsvException.class)
+    @Test
     public void illegalColumnIndexMappingTooHigh() {
         checkIllegalMapping(
             new BeanInstructionsImpl(BeanWithMultipleStrings.class)
@@ -90,7 +93,7 @@ public class BeanReaderTest {
         );
     }
 
-    @Test (expected = CsvException.class)
+    @Test
     public void illegalColumnName() {
         checkIllegalMapping(
             new BeanInstructionsImpl(BeanWithMultipleStrings.class)
@@ -105,7 +108,9 @@ public class BeanReaderTest {
             "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\""
         );
         BeanReader<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<BeanWithMultipleStrings>(reader, beanInstructions);
-        beanReader.readBean();
+        assertThrows(CsvException.class, () ->  {
+            beanReader.readBean();
+        });
     }
 
     @Test
@@ -179,7 +184,7 @@ public class BeanReaderTest {
         assertEquals("row 1, cell 3", bean.getAlpha());
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void errorInDate() {
         Reader reader = new StringReader(
                 "text;year;number;date;year and month\n"+
@@ -187,7 +192,9 @@ public class BeanReaderTest {
         );
         BeanReader<BeanWithVariousTypes> beanReader =
                 new BeanReaderImpl<BeanWithVariousTypes>(reader, BeanWithVariousTypes.class);
-        beanReader.readBeans();
+        assertThrows(CsvException.class, () ->  {
+            beanReader.readBeans();
+        });
     }
 
     @Test
@@ -273,41 +280,49 @@ public class BeanReaderTest {
         assertEquals("some text", bean.getBean().getName());
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void illegalToken() {
         Reader reader = new StringReader(
             "\"alpha\";\"beta\";\"gamma\"a\n"
         );
         BeanReader<BeanSimple> beanReader = new BeanReaderImpl<BeanSimple>(reader, BeanSimple.class);
-        beanReader.readBeans();
+        assertThrows(CsvException.class, () ->  {
+            beanReader.readBeans();
+        });
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void beanMappingError() {
         Reader reader = new StringReader(
             "text;year;number;date;year and month\n"+
             "\"a bit of text\";UNEXPECTED TEXT!!!;42.42;1972-01-13;2013-04\n"
         );
         BeanReader<BeanWithVariousTypes> beanReader = new BeanReaderImpl<BeanWithVariousTypes>(reader, BeanWithVariousTypes.class);
-        beanReader.readBeans();
+        assertThrows(CsvException.class, () ->  {
+            beanReader.readBeans();
+        });
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void cannotConvertToNonStandardObject() {
         Reader reader = new StringReader(
             "\"can I convert this to a simple bean?\""
         );
         BeanReader<BeanWithNonStandardObject> beanReader = new BeanReaderImpl<BeanWithNonStandardObject>(reader, BeanWithNonStandardObject.class);
-        beanReader.readBeans();
+        assertThrows(CsvException.class, () ->  {
+            beanReader.readBeans();
+        });
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void nonInstantiableBean() {
         Reader reader = new StringReader(
             "\"can I convert this to a simple bean?\""
         );
         BeanReader<BeanWithoutNoArgPublicConstructor> beanReader = new BeanReaderImpl<BeanWithoutNoArgPublicConstructor>(reader, BeanWithoutNoArgPublicConstructor.class);
-        beanReader.readBeans();
+        assertThrows(CsvException.class, () ->  {
+            beanReader.readBeans();
+        });
     }
 
 }

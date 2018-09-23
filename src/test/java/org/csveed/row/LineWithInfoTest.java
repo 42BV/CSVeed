@@ -1,12 +1,13 @@
 package org.csveed.row;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowReport;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LineWithInfoTest {
 
@@ -39,11 +40,12 @@ public class LineWithInfoTest {
         assertNull(row.reportOnColumn(new Column()));
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void getReportOnColumnIndex0() {
-        LineWithInfo row = new LineWithInfo();
-        row = addString(row, "Hello");
-        row.reportOnColumn(new Column(0));
+        LineWithInfo row = addString(new LineWithInfo(), "Hello");
+        assertThrows(CsvException.class, () ->  {
+            row.reportOnColumn(new Column(0));
+        });
     }
 
     @Test
