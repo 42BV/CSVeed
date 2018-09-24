@@ -27,7 +27,7 @@ public class ColumnIndexMapper<T> extends AbstractMapper<T> {
                     "Column with index " + key + " does not exist in file with " + header.size() + " columns. " +
                             "Originally mapped to property \"" + getBeanProperty(key).getPropertyName() + "\""
                     ));
-        };
+        }
     }
 
     @Override
