@@ -55,7 +55,7 @@ public class BeanWriterTest {
                 "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
                 "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
                 writer.getBuffer().toString());
-        };
+        }
     }
 
     private BeanWithMultipleStrings createBean(String alpha, String beta, String gamma) {
