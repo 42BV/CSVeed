@@ -32,8 +32,7 @@ public class ConversionUtil {
         while (sb.length() > index) {
             if (Character.isWhitespace(sb.charAt(index))) {
                 sb.deleteCharAt(index);
-            }
-            else {
+            } else {
                 index++;
             }
         }

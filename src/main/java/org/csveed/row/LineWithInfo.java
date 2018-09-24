@@ -61,13 +61,21 @@ public class LineWithInfo implements Line {
     }
 
     public String convertToPrintable(int symbol) {
-        if (symbol == -1) return "[EOF]";
-        else if (symbol == '\b') return "\\b";
-        else if (symbol == '\f') return "\\f";
-        else if (symbol == '\n') return "\\n";
-        else if (symbol == '\r') return "\\r";
-        else if (symbol == '\t') return "\\t";
-        else return Character.toString((char)symbol);
+        if (symbol == -1) {
+            return "[EOF]";
+        } else if (symbol == '\b') {
+            return "\\b";
+        } else if (symbol == '\f') {
+            return "\\f";
+        } else if (symbol == '\n') {
+            return "\\n";
+        } else if (symbol == '\r') {
+            return "\\r";
+        } else if (symbol == '\t') {
+            return "\\t";
+        } else {
+            return Character.toString((char)symbol);
+        }
     }
 
     @Override

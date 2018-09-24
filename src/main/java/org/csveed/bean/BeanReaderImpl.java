@@ -61,8 +61,9 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     public T readBean() {
         logSettings();
 
-        if (this.beanInstructions.useHeader())
+        if (this.beanInstructions.useHeader()) {
             getMapper().verifyHeader(getHeader());
+        }
 
         currentDynamicColumn.checkForReset(((RowReaderImpl) rowReader).getMaxNumberOfColumns());
         if (currentDynamicColumn.atFirstDynamicColumn()) {
@@ -82,8 +83,9 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     }
 
     protected Header getHeader() {
-        if (this.beanInstructions.useHeader())
+        if (this.beanInstructions.useHeader()) {
             return rowReader.getHeader();
+        }
         return null;
     }
 
