@@ -57,21 +57,6 @@ public class BeanWriterTest {
                 writer.getBuffer().toString());
     }
 
-    // https://github.com/robert-bor/CSVeed/issues/46
-//    @Test
-//    public void bug46ReportedByJnash67() {
-//        String[] pids = new String[] { "alpha", "beta", "gamma", "delta" };
-//        BeanInstructions bi = new BeanInstructionsImpl(Bean.class);
-////        bi.setMapper(Bean.class);
-//        for (String pid : pids) {
-//            try {
-//                bi.mapColumnNameToProperty(pid, pid);
-//            } catch (CsvException ce) {
-//                ce.printStackTrace();
-//            }
-//        }
-//    }
-
     private BeanWithMultipleStrings createBean(String alpha, String beta, String gamma) {
         BeanWithMultipleStrings bean = new BeanWithMultipleStrings();
         bean.setAlpha(alpha);
