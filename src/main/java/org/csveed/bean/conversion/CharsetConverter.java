@@ -12,9 +12,8 @@ public class CharsetConverter extends AbstractConverter<Charset> {
     public Charset fromString(String text) throws Exception {
         if (text != null && !text.isEmpty()) {
             return Charset.forName(text);
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override

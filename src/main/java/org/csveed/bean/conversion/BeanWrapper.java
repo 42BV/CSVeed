@@ -45,9 +45,8 @@ public class BeanWrapper {
     protected Converter getConverter(BeanProperty property) {
         if (property.getConverter() != null) {
             return property.getConverter();
-        } else {
-            return defaultConverters.getConverter(getPropertyType(property));
         }
+        return defaultConverters.getConverter(getPropertyType(property));
     }
 
     protected Class getPropertyType(BeanProperty property) {

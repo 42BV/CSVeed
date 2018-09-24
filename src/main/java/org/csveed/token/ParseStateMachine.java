@@ -243,9 +243,9 @@ public class ParseStateMachine {
                         default :
                             throw new ParseException(state, symbolCharacter, symbol);
                     }
-                } else { // We're lenient -- accept everything
-                    return INSIDE_QUOTED_FIELD;
                 }
+                // We're lenient -- accept everything
+                return INSIDE_QUOTED_FIELD;
             default :
                 throw new ParseException(state, symbolCharacter, symbol);
         }

@@ -135,9 +135,8 @@ public class SymbolMapping {
         }
         if (symbol.isCheckForSimilarEscapeAndQuote() && isSameCharactersForEscapeAndQuote()) {
             return parseState.isUpgradeQuoteToEscape() ? ESCAPE_SYMBOL : QUOTE_SYMBOL;
-        } else {
-            return symbol;
         }
+        return symbol;
     }
 
     public int getStartLine() {
