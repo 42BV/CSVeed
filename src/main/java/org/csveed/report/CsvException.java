@@ -7,14 +7,14 @@ public class CsvException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public static final Logger LOG = LoggerFactory.getLogger(CsvException.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CsvException.class);
 
     private CsvError error;
 
     public CsvException(CsvError error) {
         this.error = error;
         for (String line : error.getPrintableLines()) {
-            LOG.error(line);
+            LOG.error("{}", line);
         }
     }
 

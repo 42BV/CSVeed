@@ -55,7 +55,7 @@ public class BeanWriterImpl<T> implements BeanWriter<T> {
             try {
                 line.addCell(beanWrapper.getProperty(property));
             } catch (ConversionException e) {
-                logger.error(e.getMessage());
+                logger.error("{}", e.getMessage());
                 logger.trace("", e);
             }
         }

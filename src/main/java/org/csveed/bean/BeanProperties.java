@@ -17,7 +17,7 @@ import java.util.*;
 
 public class BeanProperties implements Iterable<BeanProperty> {
 
-    public static final Logger LOG = LoggerFactory.getLogger(BeanProperties.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BeanProperties.class);
 
     private List<BeanProperty> properties = new ArrayList<>();
 
@@ -49,7 +49,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
         for(Field field : beanClass.getDeclaredFields()) {
             PropertyDescriptor propertyDescriptor = getPropertyDescriptor(propertyDescriptors, field);
             if (propertyDescriptor == null || propertyDescriptor.getWriteMethod() == null) {
-                LOG.info("Skipping "+beanClass.getName()+"."+field.getName());
+                LOG.info("Skipping {}.{}", beanClass.getName(), field.getName());
                 continue;
             }
             addProperty(propertyDescriptor, field);

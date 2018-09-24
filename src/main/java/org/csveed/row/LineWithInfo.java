@@ -9,7 +9,7 @@ import java.util.*;
 
 public class LineWithInfo implements Line {
 
-    public static final Logger LOG = LoggerFactory.getLogger(LineWithInfo.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LineWithInfo.class);
 
     private List<String> cells = new ArrayList<>();
 

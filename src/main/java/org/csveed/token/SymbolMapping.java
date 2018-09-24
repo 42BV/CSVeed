@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class SymbolMapping {
 
-    public static final Logger LOG = LoggerFactory.getLogger(SymbolMapping.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SymbolMapping.class);
 
     private Map<EncounteredSymbol, char[]> symbolToChars = new TreeMap<>();
     private Map<Character, EncounteredSymbol> charToSymbol = new TreeMap<>();

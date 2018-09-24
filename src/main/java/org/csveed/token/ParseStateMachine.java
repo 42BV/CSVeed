@@ -14,7 +14,7 @@ import static org.csveed.token.ParseState.*;
 */
 public class ParseStateMachine {
 
-    public static final Logger LOG = LoggerFactory.getLogger(ParseStateMachine.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ParseStateMachine.class);
 
     private ParseState state = START_OF_LINE;
 
