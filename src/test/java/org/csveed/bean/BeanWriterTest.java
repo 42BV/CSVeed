@@ -46,7 +46,6 @@ public class BeanWriterTest {
         bi.mapColumnNameToProperty("Mies", "alpha");
         BeanWriter<BeanWithMultipleStrings> beanWriter =
                 new BeanWriterImpl<BeanWithMultipleStrings>(writer, bi);
-//                new BeanWriterImpl<BeanWithMultipleStrings>(writer, BeanWithMultipleStrings.class);
         beanWriter.writeBeans(beans);
         writer.close();
         assertEquals(
