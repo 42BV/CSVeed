@@ -103,17 +103,14 @@ public class BeanProperties implements Iterable<BeanProperty> {
         get(propertyName).setConverter(converter);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     protected void removeFromColumnIndex(BeanProperty property) {
         while (indexToProperty.values().remove(property));
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     protected void removeFromColumnName(BeanProperty property) {
         while (nameToProperty.values().remove(property));
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     public void ignoreProperty(String propertyName) {
         BeanProperty property = get(propertyName);
         properties.remove(property);
