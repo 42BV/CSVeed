@@ -1,11 +1,11 @@
 package org.csveed.bean.conversion;
 
+import static org.csveed.bean.conversion.ConversionUtil.hasText;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static org.csveed.bean.conversion.ConversionUtil.hasText;
 
 public class DateConverter extends AbstractConverter<Date> {
 
@@ -30,16 +30,13 @@ public class DateConverter extends AbstractConverter<Date> {
     public Date fromString(String text) throws Exception {
         if (this.allowEmpty && !hasText(text)) {
             return null;
-        }
-        else if (text != null && this.exactDateLength >= 0 && text.length() != this.exactDateLength) {
+        } else if (text != null && this.exactDateLength >= 0 && text.length() != this.exactDateLength) {
             throw new IllegalArgumentException(
                     "Could not parse date: it is not exactly" + this.exactDateLength + "characters long");
-        }
-        else {
+        } else {
             try {
                 return this.dateFormat.parse(text);
-            }
-            catch (ParseException ex) {
+            } catch (ParseException ex) {
                 throw new IllegalArgumentException("Could not parse date: " + ex.getMessage(), ex);
             }
         }

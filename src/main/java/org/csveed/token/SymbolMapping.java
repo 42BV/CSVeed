@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class SymbolMapping {
 
-    public static final Logger LOG = LoggerFactory.getLogger(SymbolMapping.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SymbolMapping.class);
 
     private Map<EncounteredSymbol, char[]> symbolToChars = new TreeMap<>();
     private Map<Character, EncounteredSymbol> charToSymbol = new TreeMap<>();
@@ -44,7 +44,7 @@ public class SymbolMapping {
         addMapping(EncounteredSymbol.ESCAPE_SYMBOL, '"');
         addMapping(EncounteredSymbol.QUOTE_SYMBOL, '"');
         addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, ';');
-        addMapping(EncounteredSymbol.EOL_SYMBOL, new char[]{ '\r', '\n' } );
+        addMapping(EncounteredSymbol.EOL_SYMBOL, new char[] { '\r', '\n' } );
         addMapping(EncounteredSymbol.SPACE_SYMBOL, ' ');
         addMapping(EncounteredSymbol.COMMENT_SYMBOL, '#');
     }
@@ -77,7 +77,7 @@ public class SymbolMapping {
         if (settingsLogged) {
             return;
         }
-        LOG.info("- CSV config / skip comment lines? {}", (isSkipCommentLines()?"yes":"no"));
+        LOG.info("- CSV config / skip comment lines? {}", isSkipCommentLines() ? "yes" : "no");
         LOG.info("- CSV config / start line: {}", startLine);
         for (EncounteredSymbol symbol : symbolToChars.keySet()) {
             char[] characters = symbolToChars.get(symbol);

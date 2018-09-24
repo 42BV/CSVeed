@@ -1,8 +1,8 @@
 package org.csveed.test.model;
 
-import org.csveed.annotations.CsvDate;
-
 import java.util.Date;
+
+import org.csveed.annotations.CsvDate;
 
 public class BeanWithVariousTypes {
 

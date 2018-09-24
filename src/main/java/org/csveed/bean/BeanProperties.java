@@ -1,5 +1,19 @@
 package org.csveed.bean;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
 import org.csveed.bean.conversion.Converter;
 import org.csveed.bean.conversion.CustomNumberConverter;
 import org.csveed.bean.conversion.DateConverter;
@@ -10,14 +24,9 @@ import org.csveed.report.GeneralError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.*;
-import java.lang.reflect.Field;
-import java.text.NumberFormat;
-import java.util.*;
-
 public class BeanProperties implements Iterable<BeanProperty> {
 
-    public static final Logger LOG = LoggerFactory.getLogger(BeanProperties.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BeanProperties.class);
 
     private List<BeanProperty> properties = new ArrayList<>();
 
@@ -49,14 +58,14 @@ public class BeanProperties implements Iterable<BeanProperty> {
         for(Field field : beanClass.getDeclaredFields()) {
             PropertyDescriptor propertyDescriptor = getPropertyDescriptor(propertyDescriptors, field);
             if (propertyDescriptor == null || propertyDescriptor.getWriteMethod() == null) {
-                LOG.info("Skipping "+beanClass.getName()+"."+field.getName());
+                LOG.info("Skipping {}.{}", beanClass.getName(), field.getName());
                 continue;
             }
             addProperty(propertyDescriptor, field);
         }
         
         if (beanClass.getSuperclass() != null) {
-        	parseBean(beanClass.getSuperclass());
+            parseBean(beanClass.getSuperclass());
         }
     }
 

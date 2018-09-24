@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class BeanInstructionsImpl implements BeanInstructions {
 
-    public static final Logger LOG = LoggerFactory.getLogger(BeanInstructionsImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BeanInstructionsImpl.class);
 
     private RowInstructions rowInstructions = new RowInstructionsImpl();
 
@@ -39,9 +39,9 @@ public class BeanInstructionsImpl implements BeanInstructions {
         if (settingsLogged) {
             return;
         }
-        LOG.info("- CSV config / mapping strategy: " + this.getMappingStrategy());
+        LOG.info("- CSV config / mapping strategy: {}", this.getMappingStrategy());
         for (BeanProperty property : properties) {
-            LOG.info(getPropertyLogLine(property));
+            LOG.info("{}", getPropertyLogLine(property));
         }
         settingsLogged = true;
     }

@@ -1,9 +1,9 @@
 package org.csveed.bean;
 
-import org.csveed.bean.conversion.Converter;
-
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
+
+import org.csveed.bean.conversion.Converter;
 
 public class BeanProperty {
 

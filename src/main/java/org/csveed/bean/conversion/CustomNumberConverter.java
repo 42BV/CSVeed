@@ -1,8 +1,8 @@
 package org.csveed.bean.conversion;
 
-import java.text.NumberFormat;
-
 import static org.csveed.bean.conversion.ConversionUtil.hasText;
+
+import java.text.NumberFormat;
 
 public class CustomNumberConverter extends AbstractConverter<Number> {
 
@@ -32,11 +32,9 @@ public class CustomNumberConverter extends AbstractConverter<Number> {
     public Number fromString(String text) throws Exception {
         if (this.allowEmpty && !hasText(text)) {
             return null;
-        }
-        else if (this.numberFormat != null) {
+        } else if (this.numberFormat != null) {
             return determineValue(NumberUtils.parseNumber(text, this.numberClass, this.numberFormat));
-        }
-        else {
+        } else {
             return determineValue(NumberUtils.parseNumber(text, this.numberClass));
         }
     }

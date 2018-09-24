@@ -1,13 +1,13 @@
 package org.csveed.row;
 
+import java.util.Iterator;
+
 import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
-
-import java.util.Iterator;
 
 public class RowImpl implements Row {
 

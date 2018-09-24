@@ -1,15 +1,19 @@
 package org.csveed.row;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import org.csveed.common.Column;
 import org.csveed.report.RowReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
-
 public class LineWithInfo implements Line {
 
-    public static final Logger LOG = LoggerFactory.getLogger(LineWithInfo.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LineWithInfo.class);
 
     private List<String> cells = new ArrayList<>();
 
@@ -61,13 +65,21 @@ public class LineWithInfo implements Line {
     }
 
     public String convertToPrintable(int symbol) {
-        if (symbol == -1) return "[EOF]";
-        else if (symbol == '\b') return "\\b";
-        else if (symbol == '\f') return "\\f";
-        else if (symbol == '\n') return "\\n";
-        else if (symbol == '\r') return "\\r";
-        else if (symbol == '\t') return "\\t";
-        else return Character.toString((char)symbol);
+        if (symbol == -1) {
+            return "[EOF]";
+        } else if (symbol == '\b') {
+            return "\\b";
+        } else if (symbol == '\f') {
+            return "\\f";
+        } else if (symbol == '\n') {
+            return "\\n";
+        } else if (symbol == '\r') {
+            return "\\r";
+        } else if (symbol == '\t') {
+            return "\\t";
+        } else {
+            return Character.toString((char)symbol);
+        }
     }
 
     @Override

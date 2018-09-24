@@ -1,16 +1,16 @@
 package org.csveed.row;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowError;
 import org.csveed.token.ParseException;
 import org.csveed.token.ParseStateMachine;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
 * Builds up a List of cells (String) per read row. Note that this class is stateful, so it

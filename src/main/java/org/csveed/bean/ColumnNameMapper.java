@@ -1,5 +1,7 @@
 package org.csveed.bean;
 
+import java.util.Set;
+
 import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.common.Column;
@@ -7,8 +9,6 @@ import org.csveed.report.CsvException;
 import org.csveed.report.RowError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Set;
 
 public class ColumnNameMapper<T> extends AbstractMapper<T> {
 

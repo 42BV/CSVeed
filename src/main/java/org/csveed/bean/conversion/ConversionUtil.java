@@ -3,7 +3,7 @@ package org.csveed.bean.conversion;
 public class ConversionUtil {
 
     public static boolean hasLength(CharSequence str) {
-        return (str != null && str.length() > 0);
+        return str != null && str.length() > 0;
     }
 
     public static boolean hasText(String str) {
@@ -32,8 +32,7 @@ public class ConversionUtil {
         while (sb.length() > index) {
             if (Character.isWhitespace(sb.charAt(index))) {
                 sb.deleteCharAt(index);
-            }
-            else {
+            } else {
                 index++;
             }
         }

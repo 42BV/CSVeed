@@ -35,27 +35,22 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
 
     @Override
     public Boolean fromString(String text) throws Exception {
-        String input = (text != null ? text.trim() : null);
+        String input = text != null ? text.trim() : null;
         if (this.allowEmpty && !hasLength(input)) {
             return null;
-        }
-        else if (this.trueString != null && this.trueString.equalsIgnoreCase(input)) {
+        } else if (this.trueString != null && this.trueString.equalsIgnoreCase(input)) {
             return Boolean.TRUE;
-        }
-        else if (this.falseString != null && this.falseString.equalsIgnoreCase(input)) {
+        } else if (this.falseString != null && this.falseString.equalsIgnoreCase(input)) {
             return Boolean.FALSE;
-        }
-        else if (this.trueString == null &&
+        } else if (this.trueString == null &&
                 (VALUE_TRUE.equalsIgnoreCase(input) || VALUE_ON.equalsIgnoreCase(input) ||
                         VALUE_YES.equalsIgnoreCase(input) || VALUE_1.equals(input))) {
             return Boolean.TRUE;
-        }
-        else if (this.falseString == null &&
+        } else if (this.falseString == null &&
                 (VALUE_FALSE.equalsIgnoreCase(input) || VALUE_OFF.equalsIgnoreCase(input) ||
                         VALUE_NO.equalsIgnoreCase(input) || VALUE_0.equals(input))) {
             return Boolean.FALSE;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Invalid boolean value [" + text + "]");
         }
     }
@@ -63,12 +58,10 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
     @Override
     public String toString(Boolean value) throws Exception {
         if (Boolean.TRUE.equals(value)) {
-            return (this.trueString != null ? this.trueString : VALUE_TRUE);
-        }
-        else if (Boolean.FALSE.equals(value)) {
-            return (this.falseString != null ? this.falseString : VALUE_FALSE);
-        }
-        else {
+            return this.trueString != null ? this.trueString : VALUE_TRUE;
+        } else if (Boolean.FALSE.equals(value)) {
+            return this.falseString != null ? this.falseString : VALUE_FALSE;
+        } else {
             return "";
         }
     }

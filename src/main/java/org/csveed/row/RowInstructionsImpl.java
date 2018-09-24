@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public class RowInstructionsImpl implements RowInstructions {
 
-    public static final Logger LOG = LoggerFactory.getLogger(RowInstructionsImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RowInstructionsImpl.class);
 
     private SymbolMapping symbolMapping = new SymbolMapping();
 
@@ -23,8 +23,8 @@ public class RowInstructionsImpl implements RowInstructions {
         if (settingsLogged) {
             return;
         }
-        LOG.info("- CSV config / skip empty lines? "+(isSkipEmptyLines()?"yes":"no"));
-        LOG.info("- CSV config / has header line? "+(isUseHeader()?"yes":"no"));
+        LOG.info("- CSV config / skip empty lines? {}", isSkipEmptyLines() ? "yes" : "no");
+        LOG.info("- CSV config / has header line? {}", isUseHeader() ? "yes" : "no");
         settingsLogged = true;
     }
 

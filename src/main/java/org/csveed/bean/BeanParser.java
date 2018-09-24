@@ -109,7 +109,7 @@ public class BeanParser {
     }
 
     private String parseCsvCell(String propertyName, CsvCell csvCell) {
-        String columnName = (csvCell.columnName() == null || csvCell.columnName().isEmpty()) ? propertyName : csvCell.columnName();
+        String columnName = csvCell.columnName() == null || csvCell.columnName().isEmpty() ? propertyName : csvCell.columnName();
         this.beanInstructions.setRequired(propertyName, csvCell.required());
         currentColumn = csvCell.columnIndex() != -1 ? new Column(csvCell.columnIndex()) : currentColumn;
         return columnName;

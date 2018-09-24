@@ -1,14 +1,14 @@
 package org.csveed.row;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.csveed.api.Header;
 import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 public class HeaderImpl implements Header {
 

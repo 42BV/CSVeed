@@ -1,5 +1,7 @@
 package org.csveed.bean;
 
+import java.util.Set;
+
 import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.bean.conversion.BeanWrapper;
@@ -8,8 +10,6 @@ import org.csveed.bean.conversion.DefaultConverters;
 import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowError;
-
-import java.util.Set;
 
 public abstract class AbstractMapper<T> {
 

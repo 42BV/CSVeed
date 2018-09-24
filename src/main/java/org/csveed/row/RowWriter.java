@@ -1,9 +1,9 @@
 package org.csveed.row;
 
+import java.util.Collection;
+
 import org.csveed.api.Header;
 import org.csveed.api.Row;
-
-import java.util.Collection;
 
 public interface RowWriter {
 

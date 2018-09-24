@@ -15,7 +15,7 @@ public class CurrencyConverter extends AbstractConverter<Currency> {
 
     @Override
     public String toString(Currency value) {
-        return (value != null ? value.getCurrencyCode() : "");
+        return value != null ? value.getCurrencyCode() : "";
     }
 
 }
