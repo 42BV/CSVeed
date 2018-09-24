@@ -27,109 +27,116 @@ public class RowWriterTest {
         List<Row> rows = lineReader.readRows();
 
         // ... then write
-        StringWriter writer = new StringWriter();
-        RowWriter rowWriter = new RowWriterImpl(writer);
-        rowWriter.writeHeader(rows.get(0).getHeader());
-        rowWriter.writeRows(rows);
+        try (StringWriter writer = new StringWriter()) {
+            RowWriter rowWriter = new RowWriterImpl(writer);
+            rowWriter.writeHeader(rows.get(0).getHeader());
+            rowWriter.writeRows(rows);
 
-        writer.close();
-        assertEquals(
+            assertEquals(
                 "\"alpha\";\"beta\";\"gamma\"\r\n"+
                 "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
                 "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n",
                 writer.getBuffer().toString());
+        }
     }
 
     @Test
     public void writeMultipleRows() throws IOException {
-        StringWriter writer = new StringWriter();
-        RowWriter rowWriter = new RowWriterImpl(writer);
-        rowWriter.writeHeader(new String[]
+        try (StringWriter writer = new StringWriter()) {
+            RowWriter rowWriter = new RowWriterImpl(writer);
+            rowWriter.writeHeader(new String[]
                 { "desc1", "desc2", "desc3" } );
-        rowWriter.writeRows(new String[][]{
+            rowWriter.writeRows(new String[][]{
                 {"alpha", "beta", "gamma"},
                 {"delta", "epsilon", "phi"},
                 {"b1", "b2", "b3"}
-        });
-        writer.close();
-        assertEquals(
+            });
+
+            assertEquals(
                 "\"desc1\";\"desc2\";\"desc3\"\r\n"+
                 "\"alpha\";\"beta\";\"gamma\"\r\n"+
                 "\"delta\";\"epsilon\";\"phi\"\r\n"+
                 "\"b1\";\"b2\";\"b3\"\r\n",
                 writer.getBuffer().toString());
+        }
     }
 
     @Test
     public void writeRowWithEscapeCharacters() throws IOException {
-        StringWriter writer = new StringWriter();
-        RowInstructions instructions = new RowInstructionsImpl()
+        try (StringWriter writer = new StringWriter()) {
+            RowInstructions instructions = new RowInstructionsImpl()
                 .setUseHeader(false)
                 .setEscape('\\');
-        RowWriter rowWriter = new RowWriterImpl(writer, instructions);
-        rowWriter.writeRow(new String[] { "\"tekst met \"quotes\"\"" } );
-        writer.close();
-        assertEquals("\"\\\"tekst met \\\"quotes\\\"\\\"\"\r\n", writer.getBuffer().toString());
+            RowWriter rowWriter = new RowWriterImpl(writer, instructions);
+            rowWriter.writeRow(new String[] { "\"tekst met \"quotes\"\"" } );
+
+            assertEquals("\"\\\"tekst met \\\"quotes\\\"\\\"\"\r\n", writer.getBuffer().toString());
+        };
     }
 
     @Test
     public void writeRow() throws IOException {
-        StringWriter writer = new StringWriter();
-        RowInstructions instructions = new RowInstructionsImpl()
+        try (StringWriter writer = new StringWriter()) {
+            RowInstructions instructions = new RowInstructionsImpl()
                 .setUseHeader(false);
-        RowWriter rowWriter = new RowWriterImpl(writer, instructions);
-        rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
-        writer.close();
-        assertEquals("\"alpha\";\"beta\";\"gamma\"\r\n", writer.getBuffer().toString());
+            RowWriter rowWriter = new RowWriterImpl(writer, instructions);
+            rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
+        
+            assertEquals("\"alpha\";\"beta\";\"gamma\"\r\n", writer.getBuffer().toString());
+        }
     }
 
     @Test
     public void writeRowWithoutQuoting() throws IOException {
-        StringWriter writer = new StringWriter();
-        RowInstructions instructions = new RowInstructionsImpl()
+        try (StringWriter writer = new StringWriter()) {
+            RowInstructions instructions = new RowInstructionsImpl()
                 .setUseHeader(false)
                 .setQuotingEnabled(false);
-        RowWriter rowWriter = new RowWriterImpl(writer, instructions);
-        rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
-        writer.close();
-        assertEquals("alpha;beta;gamma\r\n", writer.getBuffer().toString());
+            RowWriter rowWriter = new RowWriterImpl(writer, instructions);
+            rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
+            
+            assertEquals("alpha;beta;gamma\r\n", writer.getBuffer().toString());
+        }
     }
 
     @Test
     public void writeRowWithoutQuotingAndEscaping() throws IOException {
-        StringWriter writer = new StringWriter();
-        RowInstructions instructions = new RowInstructionsImpl()
+        try (StringWriter writer = new StringWriter()) {
+            RowInstructions instructions = new RowInstructionsImpl()
                 .setUseHeader(false)
                 .setQuotingEnabled(false);
-        RowWriter rowWriter = new RowWriterImpl(writer, instructions);
-        rowWriter.writeRow(new String[] { "\"tekst met \"quotes\"\"" } );
-        writer.close();
-        assertEquals("\"tekst met \"quotes\"\"\r\n", writer.getBuffer().toString());
+            RowWriter rowWriter = new RowWriterImpl(writer, instructions);
+            rowWriter.writeRow(new String[] { "\"tekst met \"quotes\"\"" } );
+        
+            assertEquals("\"tekst met \"quotes\"\"\r\n", writer.getBuffer().toString());
+        }
     }
 
 
     @Test
     public void writeRowWithNullValue() throws IOException {
-        StringWriter writer = new StringWriter();
-        RowInstructions instructions = new RowInstructionsImpl()
+        try (StringWriter writer = new StringWriter()) {
+            RowInstructions instructions = new RowInstructionsImpl()
                 .setUseHeader(false);
-        RowWriter rowWriter = new RowWriterImpl(writer, instructions);
-        rowWriter.writeRow(new String[] { "alpha", null, "gamma" } );
-        writer.close();
-        assertEquals("\"alpha\";\"\";\"gamma\"\r\n", writer.getBuffer().toString());
+            RowWriter rowWriter = new RowWriterImpl(writer, instructions);
+            rowWriter.writeRow(new String[] { "alpha", null, "gamma" } );
+
+            assertEquals("\"alpha\";\"\";\"gamma\"\r\n", writer.getBuffer().toString());
+        };
     }
 
     @Test
     public void writeRowAndHeader() throws IOException {
-        StringWriter writer = new StringWriter();
-        RowWriter rowWriter = new RowWriterImpl(writer);
-        rowWriter.writeHeader(new String[] { "desc1", "desc2", "desc3" } );
-        rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
-        writer.close();
-        assertEquals(
+        try (StringWriter writer = new StringWriter()) {
+            RowWriter rowWriter = new RowWriterImpl(writer);
+            rowWriter.writeHeader(new String[] { "desc1", "desc2", "desc3" } );
+            rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
+
+            assertEquals(
                 "\"desc1\";\"desc2\";\"desc3\"\r\n"+
                 "\"alpha\";\"beta\";\"gamma\"\r\n",
                 writer.getBuffer().toString());
+        };
     }
 
     @Test
