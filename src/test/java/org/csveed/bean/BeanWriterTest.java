@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.csveed.test.model.BeanWithMultipleStrings;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class BeanWriterTest {
