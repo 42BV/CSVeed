@@ -36,7 +36,7 @@ public class BeanWrapper {
             throw new NoConverterFoundException("No Converter found for", getPropertyType(property));
         }
         try {
-            writeMethod.invoke(bean, (value == null || value.equals("")) ? null : converter.fromString(value));
+            writeMethod.invoke(bean, value == null || value.equals("") ? null : converter.fromString(value));
         } catch (Exception err) {
             throw new BeanPropertyConversionException("Problem converting", converter.infoOnType(), err);
         }

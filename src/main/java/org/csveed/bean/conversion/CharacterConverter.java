@@ -41,7 +41,7 @@ public class CharacterConverter extends AbstractConverter<Character> {
     }
 
     private boolean isUnicodeCharacterSequence(String sequence) {
-        return (sequence.startsWith(UNICODE_PREFIX) && sequence.length() == UNICODE_LENGTH);
+        return sequence.startsWith(UNICODE_PREFIX) && sequence.length() == UNICODE_LENGTH;
     }
 
 }
