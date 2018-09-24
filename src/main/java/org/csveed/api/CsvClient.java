@@ -57,7 +57,7 @@ public interface CsvClient<T> {
     * Writes a collection of rows to the table
     * @param rows collections of rows
     */
-    public void writeRows(Collection<Row> rows);
+    void writeRows(Collection<Row> rows);
 
     /**
     * Writes a two-dimensional array of cells (rows with cells) to the table
