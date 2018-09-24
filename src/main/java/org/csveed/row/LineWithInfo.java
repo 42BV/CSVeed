@@ -1,11 +1,11 @@
 package org.csveed.row;
 
+import java.util.*;
+
 import org.csveed.common.Column;
 import org.csveed.report.RowReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.*;
 
 public class LineWithInfo implements Line {
 

@@ -1,12 +1,12 @@
 package org.csveed.bean.conversion;
 
+import static org.csveed.bean.conversion.ConversionUtil.trimAllWhitespace;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
-
-import static org.csveed.bean.conversion.ConversionUtil.trimAllWhitespace;
 
 public abstract class NumberUtils {
 

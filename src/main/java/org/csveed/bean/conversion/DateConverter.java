@@ -1,11 +1,11 @@
 package org.csveed.bean.conversion;
 
+import static org.csveed.bean.conversion.ConversionUtil.hasText;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static org.csveed.bean.conversion.ConversionUtil.hasText;
 
 public class DateConverter extends AbstractConverter<Date> {
 

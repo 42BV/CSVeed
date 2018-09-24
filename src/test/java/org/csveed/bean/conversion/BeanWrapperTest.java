@@ -1,12 +1,5 @@
 package org.csveed.bean.conversion;
 
-import org.csveed.bean.BeanInstructions;
-import org.csveed.bean.BeanParser;
-import org.csveed.bean.BeanProperties;
-import org.csveed.common.Column;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,6 +10,13 @@ import java.util.Arrays;
 import java.util.Currency;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
+
+import org.csveed.bean.BeanInstructions;
+import org.csveed.bean.BeanParser;
+import org.csveed.bean.BeanProperties;
+import org.csveed.common.Column;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class BeanWrapperTest {
 

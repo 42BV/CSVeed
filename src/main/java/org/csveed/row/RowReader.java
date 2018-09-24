@@ -1,9 +1,9 @@
 package org.csveed.row;
 
+import java.util.List;
+
 import org.csveed.api.Header;
 import org.csveed.api.Row;
-
-import java.util.List;
 
 /**
 * LineReaders reads rows from the CSV file and returns those all at once, or one by one if desired.

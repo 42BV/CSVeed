@@ -1,10 +1,10 @@
 package org.csveed.token;
 
+import static org.csveed.token.ParseState.*;
+
 import org.csveed.common.Column;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.csveed.token.ParseState.*;
 
 /**
 * Yep, a state machine. Managing all kinds of booleans to form a pseudo-state doesn't work really well

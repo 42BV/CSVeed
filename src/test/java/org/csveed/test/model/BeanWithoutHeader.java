@@ -1,9 +1,9 @@
 package org.csveed.test.model;
 
+import java.util.Date;
+
 import org.csveed.annotations.CsvDate;
 import org.csveed.annotations.CsvFile;
-
-import java.util.Date;
 
 @CsvFile(useHeader = false)
 public class BeanWithoutHeader {

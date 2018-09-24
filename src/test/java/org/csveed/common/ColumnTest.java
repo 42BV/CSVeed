@@ -1,17 +1,17 @@
 package org.csveed.common;
 
-import org.csveed.api.Header;
-import org.csveed.report.CsvException;
-import org.csveed.row.HeaderImpl;
-import org.csveed.row.LineWithInfo;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.csveed.api.Header;
+import org.csveed.report.CsvException;
+import org.csveed.row.HeaderImpl;
+import org.csveed.row.LineWithInfo;
+import org.junit.jupiter.api.Test;
 
 public class ColumnTest {
 

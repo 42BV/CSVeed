@@ -1,10 +1,5 @@
 package org.csveed.bean;
 
-import org.csveed.report.CsvException;
-import org.csveed.test.model.*;
-import org.csveed.token.ParseState;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -13,6 +8,11 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import org.csveed.report.CsvException;
+import org.csveed.test.model.*;
+import org.csveed.token.ParseState;
+import org.junit.jupiter.api.Test;
 
 public class BeanReaderTest {
 

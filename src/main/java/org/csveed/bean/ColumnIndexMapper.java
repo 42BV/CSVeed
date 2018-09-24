@@ -1,12 +1,12 @@
 package org.csveed.bean;
 
+import java.util.Set;
+
 import org.csveed.api.Header;
 import org.csveed.api.Row;
 import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
-
-import java.util.Set;
 
 public class ColumnIndexMapper<T> extends AbstractMapper<T> {
 

@@ -1,8 +1,8 @@
 package org.csveed.bean.conversion;
 
-import org.csveed.bean.BeanProperty;
-
 import java.lang.reflect.Method;
+
+import org.csveed.bean.BeanProperty;
 
 public class BeanWrapper {
 

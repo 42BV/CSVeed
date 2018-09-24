@@ -1,8 +1,8 @@
 package org.csveed.bean.conversion;
 
-import java.text.NumberFormat;
-
 import static org.csveed.bean.conversion.ConversionUtil.hasText;
+
+import java.text.NumberFormat;
 
 public class CustomNumberConverter extends AbstractConverter<Number> {
 

@@ -1,9 +1,9 @@
 package org.csveed.bean;
 
+import java.util.List;
+
 import org.csveed.api.Header;
 import org.csveed.row.RowReader;
-
-import java.util.List;
 
 /**
 * <p>

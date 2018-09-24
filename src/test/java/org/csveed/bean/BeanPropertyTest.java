@@ -1,11 +1,5 @@
 package org.csveed.bean;
 
-import org.csveed.bean.conversion.Converter;
-import org.csveed.test.converters.BeanSimpleConverter;
-import org.csveed.test.model.BeanSimple;
-import org.csveed.test.model.BeanVariousNotAnnotated;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -13,6 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
+
+import org.csveed.bean.conversion.Converter;
+import org.csveed.test.converters.BeanSimpleConverter;
+import org.csveed.test.model.BeanSimple;
+import org.csveed.test.model.BeanVariousNotAnnotated;
+import org.junit.jupiter.api.Test;
 
 public class BeanPropertyTest {
 
