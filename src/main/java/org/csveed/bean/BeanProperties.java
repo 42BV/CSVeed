@@ -56,7 +56,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
         }
         
         if (beanClass.getSuperclass() != null) {
-        	parseBean(beanClass.getSuperclass());
+            parseBean(beanClass.getSuperclass());
         }
     }
 
