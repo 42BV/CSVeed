@@ -124,7 +124,7 @@ public abstract class NumberUtils {
                 throw new IllegalArgumentException("Could not parse number: " + ex.getMessage());
             }
             finally {
-                if (resetBigDecimal) {
+                if (resetBigDecimal && decimalFormat != null) {
                     decimalFormat.setParseBigDecimal(false);
                 }
             }
