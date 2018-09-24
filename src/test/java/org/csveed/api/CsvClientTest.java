@@ -44,7 +44,7 @@ public class CsvClientTest {
                 "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
                 "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
                 writer.getBuffer().toString());
-        };
+        }
     }
 
     @Test
@@ -68,7 +68,7 @@ public class CsvClientTest {
                 "\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
                 "\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
                 writer.getBuffer().toString());
-        };
+        }
     }
 
     private BeanWithMultipleStrings createBean(String alpha, String beta, String gamma) {
@@ -99,7 +99,7 @@ public class CsvClientTest {
                 "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
                 "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n",
                 writer.getBuffer().toString());
-        };
+        }
     }
 
     @Test
@@ -110,7 +110,7 @@ public class CsvClientTest {
             csvClient.writeRow(new String[] { "alpha", "beta", "gamma" } );
             
             assertEquals("\"alpha\";\"beta\";\"gamma\"\r\n", writer.getBuffer().toString());
-        };
+        }
     }
 
     @Test
@@ -143,11 +143,11 @@ public class CsvClientTest {
                         "\"l2c1\";\"l2c2\";\"l2c3\"" + lineTerminators +
                         "\"l3c1\";\"l3c2\";\"l3c3\"" + lineTerminators,
                 writer.getBuffer().toString());
-        };
+        }
     }
 
     @Test
-    public void WindowsCRLF0x0d0x0a() {
+    public void windowsCRLF0x0d0x0a() {
         char[] file = new char[] {
             'n', 'a', 'm', 'e', 0x0d, 0x0a,
             'A', 'l', 'p', 'h', 'a', 0x0d, 0x0a,
@@ -326,7 +326,7 @@ public class CsvClientTest {
             );
         
             assertEquals("", writer.getBuffer().toString());
-        };
+        }
     }
 
     @Test
@@ -338,6 +338,6 @@ public class CsvClientTest {
             client.writeHeader();
         
             assertEquals("\"gamma\";\"beta\";\"alpha\"\r\n", writer.getBuffer().toString());
-        };
+        }
     }
 }

@@ -71,7 +71,7 @@ public class RowWriterTest {
             rowWriter.writeRow(new String[] { "\"tekst met \"quotes\"\"" } );
 
             assertEquals("\"\\\"tekst met \\\"quotes\\\"\\\"\"\r\n", writer.getBuffer().toString());
-        };
+        }
     }
 
     @Test
@@ -122,7 +122,7 @@ public class RowWriterTest {
             rowWriter.writeRow(new String[] { "alpha", null, "gamma" } );
 
             assertEquals("\"alpha\";\"\";\"gamma\"\r\n", writer.getBuffer().toString());
-        };
+        }
     }
 
     @Test
@@ -136,7 +136,7 @@ public class RowWriterTest {
                 "\"desc1\";\"desc2\";\"desc3\"\r\n"+
                 "\"alpha\";\"beta\";\"gamma\"\r\n",
                 writer.getBuffer().toString());
-        };
+        }
     }
 
     @Test
