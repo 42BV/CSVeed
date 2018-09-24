@@ -47,7 +47,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     @Override
     public List<T> readBeans() {
-        List<T> beans = new ArrayList<T>();
+        List<T> beans = new ArrayList<>();
         while (!isFinished()) {
             T bean = readBean();
             if (bean != null) {

@@ -19,10 +19,10 @@ public class BeanProperties implements Iterable<BeanProperty> {
 
     public static final Logger LOG = LoggerFactory.getLogger(BeanProperties.class);
 
-    private List<BeanProperty> properties = new ArrayList<BeanProperty>();
+    private List<BeanProperty> properties = new ArrayList<>();
 
-    private Map<Column, BeanProperty> indexToProperty = new TreeMap<Column, BeanProperty>();
-    private Map<Column, BeanProperty> nameToProperty = new TreeMap<Column, BeanProperty>();
+    private Map<Column, BeanProperty> indexToProperty = new TreeMap<>();
+    private Map<Column, BeanProperty> nameToProperty = new TreeMap<>();
 
     private Class beanClass;
 

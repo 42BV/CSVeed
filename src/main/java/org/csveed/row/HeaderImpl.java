@@ -13,8 +13,8 @@ import java.util.Map;
 public class HeaderImpl implements Header {
 
     private Line header;
-    private Map<Column, String> indexToName = new HashMap<Column, String>();
-    private Map<String, Column> nameToIndex = new HashMap<String, Column>();
+    private Map<Column, String> indexToName = new HashMap<>();
+    private Map<String, Column> nameToIndex = new HashMap<>();
 
     public HeaderImpl(Line row) {
         this.header = row;

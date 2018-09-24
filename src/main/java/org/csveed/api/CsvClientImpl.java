@@ -46,7 +46,7 @@ public class CsvClientImpl<T> implements CsvClient<T> {
     }
 
     public CsvClientImpl(Writer writer, BeanInstructions beanInstructions) {
-        this.beanWriter= new BeanWriterImpl<T>(writer, beanInstructions);
+        this.beanWriter= new BeanWriterImpl<>(writer, beanInstructions);
         this.rowWriter = getBeanWriter().getRowWriter();
         this.rowInstructions = getRowWriter().getRowInstructions();
         this.beanInstructions = beanInstructions;
@@ -62,7 +62,7 @@ public class CsvClientImpl<T> implements CsvClient<T> {
     }
 
     public CsvClientImpl(Reader reader, BeanInstructions beanInstructions) {
-        this.beanReader = new BeanReaderImpl<T>(reader, beanInstructions);
+        this.beanReader = new BeanReaderImpl<>(reader, beanInstructions);
         this.rowReader = getBeanReader().getRowReader();
         this.rowInstructions = getRowReader().getRowInstructions();
         this.beanInstructions = beanInstructions;
