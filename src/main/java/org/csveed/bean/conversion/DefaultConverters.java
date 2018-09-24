@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class DefaultConverters {
 
-    private Map<Class<?>, Converter> converters = new HashMap<Class<?>, Converter>();
+    private Map<Class<?>, Converter> converters = new HashMap<>();
 
     public DefaultConverters() {
         registerConverters();

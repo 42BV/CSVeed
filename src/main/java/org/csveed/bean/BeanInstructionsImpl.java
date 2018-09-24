@@ -47,7 +47,7 @@ public class BeanInstructionsImpl implements BeanInstructions {
     }
 
     protected String getPropertyLogLine(BeanProperty property) {
-        List<String> lineParts = new ArrayList<String>();
+        List<String> lineParts = new ArrayList<>();
         lineParts.add("- CSV config");
         if (mappingStrategy.equals(ColumnIndexMapper.class)) {
             lineParts.add("Column index " + property.getColumnIndex() + " -> property [" + property.getPropertyName() + "]");
