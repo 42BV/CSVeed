@@ -32,26 +32,26 @@ public interface CsvClient<T> {
     * Writes a collection of Beans to the table
     * @param beans beans to write to the table
     */
-    public void writeBeans(Collection<T> beans);
+    void writeBeans(Collection<T> beans);
 
     /**
     * Writes a single Bean to the table
     * @param bean bean to write to the table
     */
-    public void writeBean(T bean);
+    void writeBean(T bean);
 
     /**
     * Writes a single row to the table
     * @param row single row
     */
-    public void writeRow(Row row);
+    void writeRow(Row row);
 
     /**
     * Writes a single row (consisting of String cells) to the table
     * @param row single row
     * @return the written row
     */
-    public Row writeRow(String[] row);
+    Row writeRow(String[] row);
 
     /**
     * Writes a collection of rows to the table
@@ -63,68 +63,68 @@ public interface CsvClient<T> {
     * Writes a two-dimensional array of cells (rows with cells) to the table
     * @param rows two-dimensional array of cells
     */
-    public void writeRows(String[][] rows);
+    void writeRows(String[][] rows);
 
     /**
     * Writes the header to the table
     * @param header the header row
     * @return the converted Header
     */
-    public Header writeHeader(String[] header);
+    Header writeHeader(String[] header);
 
     /**
     * Writes the header to the table
     * @param header the header row
     */
-    public void writeHeader(Header header);
+    void writeHeader(Header header);
 
     /**
      * Writes a header based on the bean properties to the table
      */
-    public void writeHeader();
+    void writeHeader();
 
     /**
     * Reads all rows from the file and return these as beans.
     * @return all beans read from the Reader
     */
-    public List<T> readBeans();
+    List<T> readBeans();
 
     /**
     * Reads a single row and returns this as a bean. The RowReader will keep track of its state.
     * @return Bean read from the Reader
     */
-    public T readBean();
+    T readBean();
 
     /**
     * Reads all rows from the file and returns them as a List. After this, the RowReader will be finished
     * @return all Rows read from the Reader
     */
-    public List<Row> readRows();
+    List<Row> readRows();
 
     /**
     * Reads a single row from the file and returns this. The RowReader will keep track of its state.
     * @return Row read from the Reader
     */
-    public Row readRow();
+    Row readRow();
 
     /**
     * Returns the header of the CSV file. Only possibly returns a value when useHeader==true
     * @return header or null if the useHeader==false
     */
-    public Header readHeader();
+    Header readHeader();
 
     /**
     * Returns the line from which the row was read. Note that a line is seen as a legitimate CSV row, not
     * necessarily a printable line (unless multi-lines are used, these values are the same).
     * @return current line number
     */
-    public int getCurrentLine();
+    int getCurrentLine();
 
     /**
     * States whether the Reader is done with the file
     * @return true if file is finished
     */
-    public boolean isFinished();
+    boolean isFinished();
 
     /**
     * Makes sure that the first readable line is interpreted as the header line. That line will not be read

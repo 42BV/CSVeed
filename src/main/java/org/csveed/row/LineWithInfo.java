@@ -11,13 +11,13 @@ public class LineWithInfo implements Line {
 
     public static final Logger LOG = LoggerFactory.getLogger(LineWithInfo.class);
 
-    private List<String> cells = new ArrayList<String>();
+    private List<String> cells = new ArrayList<>();
 
     private StringBuilder originalLine = new StringBuilder();
 
-    private Map<Column, CellPositionInRow> cellPositions = new TreeMap<Column, CellPositionInRow>();
+    private Map<Column, CellPositionInRow> cellPositions = new TreeMap<>();
 
-    private int printLength = 0;
+    private int printLength;
 
     private Column currentColumn = new Column();
 

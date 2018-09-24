@@ -19,21 +19,22 @@ public class SymbolMapping {
 
     public static final Logger LOG = LoggerFactory.getLogger(SymbolMapping.class);
 
-    private Map<EncounteredSymbol, char[]> symbolToChars = new TreeMap<EncounteredSymbol, char[]>();
-    private Map<Character, EncounteredSymbol> charToSymbol = new TreeMap<Character, EncounteredSymbol>();
+    private Map<EncounteredSymbol, char[]> symbolToChars = new TreeMap<>();
+    private Map<Character, EncounteredSymbol> charToSymbol = new TreeMap<>();
 
     private Character escapeCharacter;
 
     private Character quoteCharacter;
 
-    private boolean settingsLogged = false;
+    private boolean settingsLogged;
 
     private int startLine = 1;
 
     private boolean skipCommentLines = true;
 
-    private char acceptedEndOfLine = 0; // When multiple EOL characters have been given,
-                                        // only the first one encountered will be accepted.
+    // When multiple EOL characters have been given,
+    // only the first one encountered will be accepted.
+    private char acceptedEndOfLine;
 
     public SymbolMapping() {
         initDefaultMapping();
@@ -134,9 +135,8 @@ public class SymbolMapping {
         }
         if (symbol.isCheckForSimilarEscapeAndQuote() && isSameCharactersForEscapeAndQuote()) {
             return parseState.isUpgradeQuoteToEscape() ? ESCAPE_SYMBOL : QUOTE_SYMBOL;
-        } else {
-            return symbol;
         }
+        return symbol;
     }
 
     public int getStartLine() {

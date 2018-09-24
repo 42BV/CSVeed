@@ -15,43 +15,43 @@ public interface RowReader {
     * Reads all rows from the file and returns them as a List. After this, the RowReader will be finished
     * @return all Rows read from the Reader
     */
-    public List<Row> readRows();
+    List<Row> readRows();
 
     /**
     * Reads a single row from the file and returns this. The RowReader will keep track of its state.
     * @return Row read from the Reader
     */
-    public Row readRow();
+    Row readRow();
 
     /**
     * Returns the line from which the row was read. Note that a line is seen as a legitimate CSV row, not
     * necessarily a printable line (unless multi-lines are used, these values are the same).
     * @return current line number
     */
-    public int getCurrentLine();
+    int getCurrentLine();
 
     /**
     * States whether the Reader is done with the file
     * @return true if file is finished
     */
-    public boolean isFinished();
+    boolean isFinished();
 
     /**
     * Returns the first readable line of the CSV file as header, regardless if useHeader==true.
     * @return header
     */
-    public Header readHeader();
+    Header readHeader();
 
     /**
     * Returns the header of the CSV file. Only possibly returns a value when useHeader==true
     * @return header or null if the useHeader==false
     */
-    public Header getHeader();
+    Header getHeader();
 
     /**
     * The set of instructions for dealing with rows
     * @return row instructions
     */
-    public RowInstructions getRowInstructions();
+    RowInstructions getRowInstructions();
 
 }

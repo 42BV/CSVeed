@@ -46,10 +46,8 @@ public abstract class NumberUtils {
                 // do not lose precision - use BigDecimal's own conversion
                 return (T) ((BigDecimal) number).toBigInteger();
             }
-            else {
-                // original value is not a Big* number - use standard long conversion
-                return (T) BigInteger.valueOf(number.longValue());
-            }
+            // original value is not a Big* number - use standard long conversion
+            return (T) BigInteger.valueOf(number.longValue());
         }
         else if (targetClass.equals(Float.class)) {
             return (T) Float.valueOf(number.floatValue());
@@ -126,14 +124,12 @@ public abstract class NumberUtils {
                 throw new IllegalArgumentException("Could not parse number: " + ex.getMessage());
             }
             finally {
-                if (resetBigDecimal) {
+                if (resetBigDecimal && decimalFormat != null) {
                     decimalFormat.setParseBigDecimal(false);
                 }
             }
         }
-        else {
-            return parseNumber(text, targetClass);
-        }
+        return parseNumber(text, targetClass);
     }
 
     private static boolean isHexNumber(String value) {

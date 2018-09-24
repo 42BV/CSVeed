@@ -11,44 +11,44 @@ public interface RowWriter {
     * Writes multiple rows with cells to the table
     * @param rows two-dimensional string array with rows and cells within
     */
-    public void writeRows(String[][] rows);
+    void writeRows(String[][] rows);
 
     /**
     * Writes multiples rows to the table
     * @param rows collection of rows
     */
-    public void writeRows(Collection<Row> rows);
+    void writeRows(Collection<Row> rows);
 
     /**
     * Writes the cells of a table row as an individual row
     * @param cells the individual cells of the row
     * @return the row just written
     */
-    public Row writeRow(String[] cells);
+    Row writeRow(String[] cells);
 
     /**
     * Writes a single row to the Writer.
     * @param row row to write to the Writer
     */
-    public void writeRow(Row row);
+    void writeRow(Row row);
 
     /**
     * Creates and sets the header of the table
     * @param headerNames the individual cells of the header row
     * @return the Header, created from the header names
     */
-    public Header writeHeader(String[] headerNames);
+    Header writeHeader(String[] headerNames);
 
     /**
     * Sets the header of the table
     * @param header the header row
     */
-    public void writeHeader(Header header);
+    void writeHeader(Header header);
 
     /**
     * The set of instructions for dealing with rows
     * @return row instructions
     */
-    public RowInstructions getRowInstructions();
+    RowInstructions getRowInstructions();
 
 }

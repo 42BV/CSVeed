@@ -254,39 +254,39 @@ public interface BeanInstructions {
      *
      * @return the properties of the processed bean
      */
-    public BeanProperties getProperties();
+    BeanProperties getProperties();
 
     /**
      * Returns the instructions for processing rows
      *
      * @return the row instructions
      */
-    public RowInstructions getRowInstructions();
+    RowInstructions getRowInstructions();
 
     /**
      * States whether a header is used
      *
      * @return true if a header is used
      */
-    public boolean useHeader();
+    boolean useHeader();
 
     /**
      * The first column that counts as a dynamic column
      *
      * @return the first of the dynamic columns
      */
-    public Column getStartIndexDynamicColumns();
+    Column getStartIndexDynamicColumns();
 
     /**
      * The mapping strategy to use for processing the bean
      *
      * @return applied mapping strategy
      */
-    public Class<? extends AbstractMapper> getMappingStrategy();
+    Class<? extends AbstractMapper> getMappingStrategy();
 
     /**
     * Logs all the settings
     */
-    public void logSettings();
+    void logSettings();
 
 }

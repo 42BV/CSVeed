@@ -20,7 +20,7 @@ public class ParseStateMachine {
 
     private StringBuilder token = new StringBuilder();
 
-    private int charactersRead = 0;
+    private int charactersRead;
 
     private SymbolMapping symbolMapping = new SymbolMapping();
 
@@ -28,7 +28,7 @@ public class ParseStateMachine {
 
     private boolean trim = true;
 
-    private boolean trash = false;
+    private boolean trash;
 
     private Column currentColumn = new Column();
 
@@ -243,9 +243,9 @@ public class ParseStateMachine {
                         default :
                             throw new ParseException(state, symbolCharacter, symbol);
                     }
-                } else { // We're lenient -- accept everything
-                    return INSIDE_QUOTED_FIELD;
                 }
+                // We're lenient -- accept everything
+                return INSIDE_QUOTED_FIELD;
             default :
                 throw new ParseException(state, symbolCharacter, symbol);
         }

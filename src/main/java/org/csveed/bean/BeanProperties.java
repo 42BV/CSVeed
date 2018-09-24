@@ -19,10 +19,10 @@ public class BeanProperties implements Iterable<BeanProperty> {
 
     public static final Logger LOG = LoggerFactory.getLogger(BeanProperties.class);
 
-    private List<BeanProperty> properties = new ArrayList<BeanProperty>();
+    private List<BeanProperty> properties = new ArrayList<>();
 
-    private Map<Column, BeanProperty> indexToProperty = new TreeMap<Column, BeanProperty>();
-    private Map<Column, BeanProperty> nameToProperty = new TreeMap<Column, BeanProperty>();
+    private Map<Column, BeanProperty> indexToProperty = new TreeMap<>();
+    private Map<Column, BeanProperty> nameToProperty = new TreeMap<>();
 
     private Class beanClass;
 
@@ -103,17 +103,14 @@ public class BeanProperties implements Iterable<BeanProperty> {
         get(propertyName).setConverter(converter);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     protected void removeFromColumnIndex(BeanProperty property) {
         while (indexToProperty.values().remove(property));
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     protected void removeFromColumnName(BeanProperty property) {
         while (nameToProperty.values().remove(property));
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     public void ignoreProperty(String propertyName) {
         BeanProperty property = get(propertyName);
         properties.remove(property);
@@ -175,7 +172,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
     @SuppressWarnings("unchecked")
     @Override
     public Iterator<BeanProperty> iterator() {
-        return ((List<BeanProperty>)((ArrayList)this.properties).clone()).iterator();
+        return ((List<BeanProperty>)((ArrayList<BeanProperty>)this.properties).clone()).iterator();
     }
 
     public Set<Column> columnIndexKeys() {

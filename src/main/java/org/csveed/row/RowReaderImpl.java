@@ -41,7 +41,7 @@ public class RowReaderImpl implements RowReader {
 
     @Override
     public List<Row> readRows() {
-        List<Row> allRows = new ArrayList<Row>();
+        List<Row> allRows = new ArrayList<>();
         while (!isFinished()) {
             Row row = readRow();
             if (row != null && row.size() > 0) {

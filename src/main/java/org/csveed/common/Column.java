@@ -10,7 +10,7 @@ public class Column implements Comparable<Column> {
 
     private int columnIndex = -1;
 
-    private String columnName = null;
+    private String columnName;
 
     private Header header;
 

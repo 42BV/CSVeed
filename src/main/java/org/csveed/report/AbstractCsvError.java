@@ -17,7 +17,7 @@ public abstract class AbstractCsvError implements CsvError {
     }
 
     protected List<String> getMessageAsList() {
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
         lines.add(getMessage());
         return lines;
     }

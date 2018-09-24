@@ -30,7 +30,7 @@ public class RowReport {
     }
 
     public List<RowPart> tokenize() {
-        List<RowPart> lines = new ArrayList<RowPart>();
+        List<RowPart> lines = new ArrayList<>();
         if (start > 0) {
             lines.add(new RowPart(row.substring(0, start), false));
         }
@@ -44,7 +44,7 @@ public class RowReport {
     }
 
     public List<String> getPrintableLines() {
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
 
         List<RowPart> parts = tokenize();
 

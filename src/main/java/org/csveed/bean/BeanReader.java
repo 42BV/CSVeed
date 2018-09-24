@@ -27,43 +27,43 @@ public interface BeanReader<T> {
     * Reads all rows from the file and return these as beans.
     * @return all beans read from the Reader
     */
-    public List<T> readBeans();
+    List<T> readBeans();
 
     /**
     * Reads a single row and returns this as a bean. The RowReader will keep track of its state.
     * @return Bean read from the Reader
     */
-    public T readBean();
+    T readBean();
 
     /**
     * Returns the first readable line of the CSV file as header, regardless if useHeader==true.
     * @return header
     */
-    public Header readHeader();
+    Header readHeader();
 
     /**
     * Returns the line from which the bean was read. Note that a line is seen as a legitimate CSV row, not
     * necessarily a printable line (unless multi-lines are used, these values are the same).
     * @return current line number
     */
-    public int getCurrentLine();
+    int getCurrentLine();
 
     /**
     * States whether the Reader is done with the file
     * @return true if file is finished
     */
-    public boolean isFinished();
+    boolean isFinished();
 
     /**
     * Returns the underlying line reader for the bean reader
     * @return the underlying line reader
     */
-    public RowReader getRowReader();
+    RowReader getRowReader();
 
     /**
     * The set of instructions for dealing with beans
     * @return bean instructions
     */
-    public BeanInstructions getBeanInstructions();
+    BeanInstructions getBeanInstructions();
 
 }

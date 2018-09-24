@@ -59,7 +59,7 @@ public class ColumnTest {
 
     @Test
     public void treeMap() {
-        Map<Column, String> map = new TreeMap<Column, String>();
+        Map<Column, String> map = new TreeMap<>();
         Column storeColumn = new Column("name");
         map.put(storeColumn, "alpha");
         LineWithInfo line = new LineWithInfo();
@@ -71,7 +71,7 @@ public class ColumnTest {
 
     @Test
     public void treeMapWithColumnIndex() {
-        Map<Column, String> map = new TreeMap<Column, String>();
+        Map<Column, String> map = new TreeMap<>();
         map.put(new Column(1), "alpha");
         map.put(new Column(2), "beta");
         map.put(new Column(3), "gamma");

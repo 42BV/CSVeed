@@ -23,9 +23,9 @@ public class BeanInstructionsImpl implements BeanInstructions {
 
     private Class beanClass;
 
-    private boolean settingsLogged = false;
+    private boolean settingsLogged;
 
-    private Column startIndexDynamicColumns = null;
+    private Column startIndexDynamicColumns;
 
     private boolean useHeader = true;
 
@@ -47,7 +47,7 @@ public class BeanInstructionsImpl implements BeanInstructions {
     }
 
     protected String getPropertyLogLine(BeanProperty property) {
-        List<String> lineParts = new ArrayList<String>();
+        List<String> lineParts = new ArrayList<>();
         lineParts.add("- CSV config");
         if (mappingStrategy.equals(ColumnIndexMapper.class)) {
             lineParts.add("Column index " + property.getColumnIndex() + " -> property [" + property.getPropertyName() + "]");

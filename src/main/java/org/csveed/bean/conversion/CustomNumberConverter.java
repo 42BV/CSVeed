@@ -56,9 +56,7 @@ public class CustomNumberConverter extends AbstractConverter<Number> {
         if (this.numberFormat != null) {
             return this.numberFormat.format(value);
         }
-        else {
-            return value.toString();
-        }
+        return value.toString();
     }
 
 }

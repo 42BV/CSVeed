@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
@@ -137,7 +136,7 @@ public class RowReaderTest {
     }
 
     @Test
-    public void roughRide() throws IOException {
+    public void roughRide() {
         Reader reader = new StringReader("\"alpha\";\"\";;\"beta\";gamma;\"een \"\"echte\"\" test\";\"1\n2\n3\n\"\"regels\"\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line cells = lineReader.readBareLine();
@@ -152,7 +151,7 @@ public class RowReaderTest {
     }
 
     @Test
-    public void doubleQuotesAsEscape() throws IOException {
+    public void doubleQuotesAsEscape() {
         Reader reader = new StringReader("\"\"\"very literal\"\"\";\"a\"\"b\"\"c\"\n\"abc\";\"first this, \"\"then that\"\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
@@ -163,7 +162,7 @@ public class RowReaderTest {
     }
 
     @Test
-    public void backSlashesAsEscape() throws IOException {
+    public void backSlashesAsEscape() {
         Reader reader = new StringReader("\"\\\"very literal\\\"\";\"a\\\"b\\\"c\"\n\"abc\";\"first this, \\\"then that\\\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
@@ -184,7 +183,7 @@ public class RowReaderTest {
     }
 
     @Test
-    public void readAllLines() throws IOException {
+    public void readAllLines() {
         Reader reader = new StringReader(";;;\n;;;\n;;;\n");
         RowReaderImpl lineReader = new RowReaderImpl(
             reader,
@@ -196,7 +195,7 @@ public class RowReaderTest {
     }
 
     @Test
-    public void allNumbers() throws IOException {
+    public void allNumbers() {
         Reader reader = new StringReader("17.51;23.19;-100.23;");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();

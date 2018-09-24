@@ -16,7 +16,7 @@ public class GeneralError extends AbstractCsvError {
 
     @Override
     public List<RowPart> getRowParts() {
-        return new ArrayList<RowPart>();
+        return new ArrayList<>();
     }
 
     @Override

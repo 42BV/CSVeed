@@ -15,7 +15,7 @@ public class RowInstructionsImpl implements RowInstructions {
 
     private boolean skipEmptyLines = true;
 
-    private boolean settingsLogged = false;
+    private boolean settingsLogged;
 
     private boolean quoteFields = true;
 
