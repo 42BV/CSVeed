@@ -28,45 +28,47 @@ public class CsvClientTest {
 
     @Test
     public void writeBeansBasedOnClass() throws IOException {
-        StringWriter writer = new StringWriter();
-        List<BeanWithMultipleStrings> beans = new ArrayList<>();
-        beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
-        beans.add(createBean("row 2, cell 3", "row 2, cell 2", "row 2, cell 1"));
-        beans.add(createBean("row 3, cell 3", "row 3, cell 2", "row 3, cell 1"));
-        CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<>(
-                writer, BeanWithMultipleStrings.class
-        );
-        client.writeBeans(beans);
-        writer.close();
-        assertEquals(
+        try (StringWriter writer = new StringWriter()) {
+            List<BeanWithMultipleStrings> beans = new ArrayList<>();
+            beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
+            beans.add(createBean("row 2, cell 3", "row 2, cell 2", "row 2, cell 1"));
+            beans.add(createBean("row 3, cell 3", "row 3, cell 2", "row 3, cell 1"));
+            CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<>(
+                    writer, BeanWithMultipleStrings.class
+            );
+            client.writeBeans(beans);
+        
+            assertEquals(
                 "\"gamma\";\"beta\";\"alpha\"\r\n"+
                 "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
                 "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
                 "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
                 writer.getBuffer().toString());
+        };
     }
 
     @Test
     public void writeBeansBasedOnInstructions() throws IOException {
-        StringWriter writer = new StringWriter();
-        List<BeanWithMultipleStrings> beans = new ArrayList<>();
-        beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
-        beans.add(createBean("row 2, cell 3", "row 2, cell 2", "row 2, cell 1"));
-        beans.add(createBean("row 3, cell 3", "row 3, cell 2", "row 3, cell 1"));
-        CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<>(
+        try (StringWriter writer = new StringWriter()) {
+            List<BeanWithMultipleStrings> beans = new ArrayList<>();
+            beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
+            beans.add(createBean("row 2, cell 3", "row 2, cell 2", "row 2, cell 1"));
+            beans.add(createBean("row 3, cell 3", "row 3, cell 2", "row 3, cell 1"));
+            CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<>(
                 writer, new BeanInstructionsImpl(BeanWithMultipleStrings.class)
                     .mapColumnNameToProperty("alpha", "alpha")
                     .mapColumnNameToProperty("beta", "beta")
                     .ignoreProperty("gamma")
-        );
-        client.writeBeans(beans);
-        writer.close();
-        assertEquals(
+                    );
+            client.writeBeans(beans);
+        
+            assertEquals(
                 "\"beta\";\"alpha\"\r\n"+
                 "\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
                 "\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
                 "\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
                 writer.getBuffer().toString());
+        };
     }
 
     private BeanWithMultipleStrings createBean(String alpha, String beta, String gamma) {
@@ -87,27 +89,28 @@ public class CsvClientTest {
         CsvClient<Reader> csvReader = new CsvClientImpl<>(reader);
         List<Row> rows = csvReader.readRows();
 
-        StringWriter writer = new StringWriter();
-        CsvClient<StringWriter> csvWriter = new CsvClientImpl<>(writer);
-        csvWriter.writeHeader(rows.get(0).getHeader());
-        csvWriter.writeRows(rows);
-        writer.close();
+        try (StringWriter writer = new StringWriter()) {
+            CsvClient<StringWriter> csvWriter = new CsvClientImpl<>(writer);
+            csvWriter.writeHeader(rows.get(0).getHeader());
+            csvWriter.writeRows(rows);
 
-        assertEquals(
+            assertEquals(
                 "\"alpha\";\"beta\";\"gamma\"\r\n"+
                 "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
                 "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n",
                 writer.getBuffer().toString());
+        };
     }
 
     @Test
     public void writeRow() throws IOException {
-        StringWriter writer = new StringWriter();
-        CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(writer)
+        try (StringWriter writer = new StringWriter()) {
+            CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(writer)
                 .setUseHeader(false);
-        csvClient.writeRow(new String[] { "alpha", "beta", "gamma" } );
-        writer.close();
-        assertEquals("\"alpha\";\"beta\";\"gamma\"\r\n", writer.getBuffer().toString());
+            csvClient.writeRow(new String[] { "alpha", "beta", "gamma" } );
+            
+            assertEquals("\"alpha\";\"beta\";\"gamma\"\r\n", writer.getBuffer().toString());
+        };
     }
 
     @Test
@@ -121,29 +124,30 @@ public class CsvClientTest {
     }
 
     private void writeRows(String lineTerminators) throws IOException {
-        StringWriter writer = new StringWriter();
-        CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(writer)
+        try (StringWriter writer = new StringWriter()) {
+            CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(writer)
                 .setUseHeader(false)
                 .setEndOfLine(lineTerminators.toCharArray());
-        csvClient.writeHeader(new String[] {
+            csvClient.writeHeader(new String[] {
                 "h1", "h2", "h3"
-        } );
-        csvClient.writeRows(new String[][] {
+            } );
+            csvClient.writeRows(new String[][] {
                 { "l1c1", "l1c2", "l1c3" },
                 { "l2c1", "l2c2", "l2c3" },
                 { "l3c1", "l3c2", "l3c3" }
-        } );
-        writer.close();
-        assertEquals(
+            } );
+        
+            assertEquals(
                 "\"h1\";\"h2\";\"h3\"" + lineTerminators +
                         "\"l1c1\";\"l1c2\";\"l1c3\"" + lineTerminators +
                         "\"l2c1\";\"l2c2\";\"l2c3\"" + lineTerminators +
                         "\"l3c1\";\"l3c2\";\"l3c3\"" + lineTerminators,
                 writer.getBuffer().toString());
+        };
     }
 
     @Test
-    public void WindowsCRLF0x0d0x0a() throws IOException {
+    public void WindowsCRLF0x0d0x0a() {
         char[] file = new char[] {
             'n', 'a', 'm', 'e', 0x0d, 0x0a,
             'A', 'l', 'p', 'h', 'a', 0x0d, 0x0a,
@@ -316,22 +320,24 @@ public class CsvClientTest {
 
     @Test
     public void headerNotWrittenForOtherwiseEmptyCsv() throws IOException {
-        StringWriter writer = new StringWriter();
-        new CsvClientImpl<>(
+        try (StringWriter writer = new StringWriter()) {
+            new CsvClientImpl<>(
                 writer, BeanWithMultipleStrings.class
-        );
-        writer.close();
-        assertEquals("", writer.getBuffer().toString());
+            );
+        
+            assertEquals("", writer.getBuffer().toString());
+        };
     }
 
     @Test
     public void writeHeaderBasedOnBeanProperties() throws IOException {
-        StringWriter writer = new StringWriter();
-        CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<>(
+        try (StringWriter writer = new StringWriter()) {
+            CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<>(
                 writer, BeanWithMultipleStrings.class
-        );
-        client.writeHeader();
-        writer.close();
-        assertEquals("\"gamma\";\"beta\";\"alpha\"\r\n", writer.getBuffer().toString());
+                    );
+            client.writeHeader();
+        
+            assertEquals("\"gamma\";\"beta\";\"alpha\"\r\n", writer.getBuffer().toString());
+        };
     }
 }
