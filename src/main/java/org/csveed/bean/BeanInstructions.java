@@ -126,8 +126,8 @@ public interface BeanInstructions {
      * dynamic columns and treat every column after that as dynamic. For every dynamic column a row will be
      * created. If a bean has fields annotated with @CsvHeaderName or @CsvHeaderValue, it will store the
      * values of the header or the cell for that index column in the fields.
-     * @return convenience for chaining
      * @param startIndex start index of dynamic columns
+     * @return convenience for chaining
      */
     BeanInstructions setStartIndexDynamicColumns(int startIndex);
 

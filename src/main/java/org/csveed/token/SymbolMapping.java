@@ -44,7 +44,7 @@ public class SymbolMapping {
         addMapping(EncounteredSymbol.ESCAPE_SYMBOL, '"');
         addMapping(EncounteredSymbol.QUOTE_SYMBOL, '"');
         addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, ';');
-        addMapping(EncounteredSymbol.EOL_SYMBOL, new char[]{ '\r', '\n' } );
+        addMapping(EncounteredSymbol.EOL_SYMBOL, new char[] { '\r', '\n' } );
         addMapping(EncounteredSymbol.SPACE_SYMBOL, ' ');
         addMapping(EncounteredSymbol.COMMENT_SYMBOL, '#');
     }
