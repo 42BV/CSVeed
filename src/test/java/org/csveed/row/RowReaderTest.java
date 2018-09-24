@@ -1,7 +1,8 @@
 package org.csveed.row;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -13,7 +14,7 @@ import org.csveed.api.Row;
 import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowReport;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RowReaderTest {
 
@@ -60,14 +61,16 @@ public class RowReaderTest {
         assertEquals(5, lineReader.readRows().size());
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void getColumnIndexAt0() {
         Reader reader = new StringReader(
                 "alpha;beta;gamma"
         );
         RowReaderImpl rowReader = new RowReaderImpl(reader);
         Header header = rowReader.getHeader();
-        assertEquals("alpha", header.getName(0));
+        assertThrows(CsvException.class, () ->  {
+            assertEquals("alpha", header.getName(0));
+        });
     }
 
     @Test
@@ -87,7 +90,7 @@ public class RowReaderTest {
         assertEquals("alpha", header.getName(1));
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void dissimilarNumberOfColumns() {
         Reader reader = new StringReader(
             "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
@@ -95,7 +98,9 @@ public class RowReaderTest {
             "\"row 3, cell 1\";\"row 3, cell 2\""
         );
         RowReaderImpl lineReader = new RowReaderImpl(reader);
-        lineReader.readRows();
+        assertThrows(CsvException.class, () ->  {
+            lineReader.readRows();
+        });
     }
 
     @Test

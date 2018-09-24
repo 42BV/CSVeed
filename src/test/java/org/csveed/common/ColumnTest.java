@@ -4,10 +4,11 @@ import org.csveed.api.Header;
 import org.csveed.report.CsvException;
 import org.csveed.row.HeaderImpl;
 import org.csveed.row.LineWithInfo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -32,10 +33,11 @@ public class ColumnTest {
         assertEquals("AH", excel.getExcelColumn());
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void wrongIndex() {
-        Column excel = new Column(0);
-        excel.getExcelColumn();
+        assertThrows(CsvException.class, () ->  {
+            new Column(0);
+        });
     }
 
     @Test

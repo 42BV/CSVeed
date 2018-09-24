@@ -1,8 +1,9 @@
 package org.csveed.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -21,7 +22,7 @@ import org.csveed.test.model.BeanSimple;
 import org.csveed.test.model.BeanVariousNotAnnotated;
 import org.csveed.test.model.BeanWithCustomNumber;
 import org.csveed.test.model.BeanWithMultipleStrings;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CsvClientTest {
 
@@ -83,11 +84,11 @@ public class CsvClientTest {
                 "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"+
                 "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"
         );
-        CsvClient csvReader = new CsvClientImpl(reader);
+        CsvClient<Reader> csvReader = new CsvClientImpl<Reader>(reader);
         List<Row> rows = csvReader.readRows();
 
         StringWriter writer = new StringWriter();
-        CsvClient csvWriter = new CsvClientImpl(writer);
+        CsvClient<StringWriter> csvWriter = new CsvClientImpl<StringWriter>(writer);
         csvWriter.writeHeader(rows.get(0).getHeader());
         csvWriter.writeRows(rows);
         writer.close();
@@ -102,7 +103,7 @@ public class CsvClientTest {
     @Test
     public void writeRow() throws IOException {
         StringWriter writer = new StringWriter();
-        CsvClient csvClient = new CsvClientImpl(writer)
+        CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(writer)
                 .setUseHeader(false);
         csvClient.writeRow(new String[] { "alpha", "beta", "gamma" } );
         writer.close();
@@ -121,7 +122,7 @@ public class CsvClientTest {
 
     private void writeRows(String lineTerminators) throws IOException {
         StringWriter writer = new StringWriter();
-        CsvClient csvClient = new CsvClientImpl(writer)
+        CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(writer)
                 .setUseHeader(false)
                 .setEndOfLine(lineTerminators.toCharArray());
         csvClient.writeHeader(new String[] {
@@ -156,15 +157,17 @@ public class CsvClientTest {
         assertEquals(3, beans.size());
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void doNotSkipCommentLineMustCauseColumnCheckToFail() {
         Reader reader = new StringReader(
                 "name;name 2;name 3\n"+
                 "# ignore me!\n"
         );
-        CsvClient csvClient = new CsvClientImpl(reader)
+        CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(reader)
                 .skipCommentLines(false);
-        csvClient.readRows();
+        assertThrows(CsvException.class, () ->  {
+            csvClient.readRows();
+        });
     }
 
     @Test
@@ -179,11 +182,13 @@ public class CsvClientTest {
         assertEquals(1, beans.size());
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void callBeanMethodOnNonBeanReaderFacade() {
         Reader reader = new StringReader("");
-        CsvClient csvClient = new CsvClientImpl(reader);
-        csvClient.readBean();
+        CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(reader);
+        assertThrows(CsvException.class, () ->  {
+            csvClient.readBean();
+        });
     }
 
     @Test
@@ -258,7 +263,7 @@ public class CsvClientTest {
         assertNotNull(csvClient.readHeader());
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void requiredField() {
         Reader reader = new StringReader(
                 "alpha;beta;gamma\n"+
@@ -270,7 +275,9 @@ public class CsvClientTest {
                 new CsvClientImpl<BeanWithMultipleStrings>(reader, BeanWithMultipleStrings.class)
                 .setMapper(ColumnNameMapper.class)
                 .setRequired("gamma", true);
-        csvClient.readBeans();
+        assertThrows(CsvException.class, () ->  {
+            csvClient.readBeans();
+        });
     }
 
     @Test

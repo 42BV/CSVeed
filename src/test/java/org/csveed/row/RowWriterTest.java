@@ -1,6 +1,7 @@
 package org.csveed.row;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -10,7 +11,7 @@ import java.util.List;
 
 import org.csveed.api.Row;
 import org.csveed.report.CsvException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RowWriterTest {
 
@@ -131,10 +132,12 @@ public class RowWriterTest {
                 writer.getBuffer().toString());
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void noHeaderWritten() {
         RowWriter rowWriter = new RowWriterImpl(new StringWriter());
-        rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
+        assertThrows(CsvException.class, () ->  {
+            rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" } );
+        });
     }
 
 }

@@ -1,10 +1,10 @@
 package org.csveed.bean;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.csveed.common.Column;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DynamicColumnTest {
 
@@ -15,17 +15,17 @@ public class DynamicColumnTest {
         DynamicColumn column = new DynamicColumn(new Column(startColumn));
         for (int i = 0; i < numberOfColumns - startColumn + 1; i++) {
             column.advanceDynamicColumn();
-            assertFalse("Must not be at first column now", column.atFirstDynamicColumn());
+            assertFalse(column.atFirstDynamicColumn(), "Must not be at first column now");
             column.checkForReset(numberOfColumns);
         }
-        assertTrue("Must be at first dynamic column now", column.atFirstDynamicColumn());
+        assertTrue(column.atFirstDynamicColumn(), "Must be at first dynamic column now");
     }
 
     @Test
     public void weHaveNoDynamicColumns() {
         DynamicColumn column = new DynamicColumn(null);
         column.advanceDynamicColumn(); // should have no effect
-        assertTrue("Must be at first dynamic column now", column.atFirstDynamicColumn()); // always the case if empty
+        assertTrue(column.atFirstDynamicColumn(), "Must be at first dynamic column now"); // always the case if empty
     }
 
     @Test
@@ -33,7 +33,7 @@ public class DynamicColumnTest {
         Column activeColumn = new Column(4);
         Column inactiveColumn = new Column(5);
         DynamicColumn dynamicColumn = new DynamicColumn(activeColumn);
-        assertTrue("Column "+activeColumn.getColumnIndex()+" must be active", dynamicColumn.isDynamicColumnActive(activeColumn));
-        assertFalse("Column "+inactiveColumn.getColumnIndex()+" must be active", dynamicColumn.isDynamicColumnActive(inactiveColumn));
+        assertTrue(dynamicColumn.isDynamicColumnActive(activeColumn), "Column "+activeColumn.getColumnIndex()+" must be active");
+        assertFalse(dynamicColumn.isDynamicColumnActive(inactiveColumn), "Column "+inactiveColumn.getColumnIndex()+" must be active");
     }
 }

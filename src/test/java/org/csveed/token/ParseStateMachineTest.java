@@ -1,10 +1,11 @@
 package org.csveed.token;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ParseStateMachineTest {
 
@@ -61,17 +62,21 @@ public class ParseStateMachineTest {
         assertEquals("", machine.offerSymbol(-1));
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void illegalState() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         machine.offerSymbol(-1);
-        machine.offerSymbol(-1);
+        assertThrows(ParseException.class, () ->  {
+            machine.offerSymbol(-1);
+        });
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void illegalCharactersAfterQuotedContent() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
-        feedStateMachine(machine, "    \"alpha\"  ; \"beta\"   x; \"gamma\" ");
+        assertThrows(ParseException.class, () ->  {
+            feedStateMachine(machine, "    \"alpha\"  ; \"beta\"   x; \"gamma\" ");
+        });
     }
 
     @Test
@@ -98,16 +103,20 @@ public class ParseStateMachineTest {
         assertEquals("", machine.offerSymbol(';'));
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void cellNotFinished() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
-        feedStateMachine(machine, "\"alpha\";\"beta\";\"ga");
+        assertThrows(ParseException.class, () ->  {
+            feedStateMachine(machine, "\"alpha\";\"beta\";\"ga");
+        });
     }
 
-    @Test(expected = ParseException.class)
+    @Test
     public void doubleQuotesAfterFieldInfoStarted() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
-        feedStateMachine(machine, "some text and... \"double quote\"... WAT?;\"beta\";\"ga\"");
+        assertThrows(ParseException.class, () ->  {
+            feedStateMachine(machine, "some text and... \"double quote\"... WAT?;\"beta\";\"ga\"");
+        });
     }
 
     protected void feedStateMachine(ParseStateMachine machine, String symbols) throws ParseException {

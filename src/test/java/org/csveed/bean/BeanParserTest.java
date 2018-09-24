@@ -1,14 +1,15 @@
 package org.csveed.bean;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.test.model.BeanLotsOfIgnores;
 import org.csveed.test.model.BeanWithWrongAnnotation;
 import org.csveed.test.model.BeanWithoutGettersAndSetters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BeanParserTest {
 
@@ -27,10 +28,12 @@ public class BeanParserTest {
         assertNotNull(instructions.getProperties().fromName(new Column("takethis1")));
     }
 
-    @Test(expected = CsvException.class)
+    @Test
     public void wrongAnnotation() {
         BeanParser beanParser = new BeanParser();
-        beanParser.getBeanInstructions(BeanWithWrongAnnotation.class);
+        assertThrows(CsvException.class, () ->  {
+            beanParser.getBeanInstructions(BeanWithWrongAnnotation.class);
+        });
     }
 
 }

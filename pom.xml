@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.hazendaz</groupId>
         <artifactId>base-parent</artifactId>
-        <version>18</version>
+        <version>19</version>
         <relativePath />
     </parent>
 
@@ -45,8 +45,8 @@
     </developers>
 
     <properties>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
         <junit.version>5.3.1</junit.version>
         <slf4j.version>1.7.25</slf4j.version>
@@ -56,8 +56,8 @@
 
         <!-- Used for unit testing -->
         <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
