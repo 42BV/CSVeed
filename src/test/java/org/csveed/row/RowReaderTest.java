@@ -30,6 +30,17 @@ public class RowReaderTest {
     }
 
     @Test
+    public void getByColumnName() {
+        Reader reader = new StringReader(
+                "alpha;beta;gamma\n"+
+                        "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
+        );
+        RowReaderImpl lineReader = new RowReaderImpl(reader);
+        Row row = lineReader.readRow();
+        assertEquals("row 1, cell 2", row.get("beta"));
+    }
+
+    @Test
     public void emptyLines() {
         Reader reader = new StringReader(
             "\n"+
