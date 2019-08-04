@@ -41,7 +41,7 @@ public class RowImpl implements Row {
 
     @Override
     public String get(String columnName) {
-        return line.get(header.getIndex(columnName));
+        return line.get(header.getIndex(columnName)-1);
     }
 
     @Override
