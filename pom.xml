@@ -35,7 +35,23 @@
         <url>https://github.com/robert-bor/CSVeed</url>
         <connection>scm:git:https://github.com/robert-bor/CSVeed</connection>
         <developerConnection>scm:git:https://github.com/robert-bor/CSVeed</developerConnection>
+        <tag>HEAD</tag>
     </scm>
+    <issueManagement>
+        <system>GitHub Issue Management</system>
+        <url>https://github.com/robert-bor/CSVeed/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/robert-bor/CSVeed</url>
+    </ciManagement>
+    <distributionManagement>
+        <site>
+            <id>gh-pages</id>
+            <name>GitHub Pages</name>
+            <url>github:https://robert-bor.github.io/CSVeed/</url>
+        </site>
+    </distributionManagement>
 
     <developers>
         <developer>
