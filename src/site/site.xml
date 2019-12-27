@@ -21,7 +21,7 @@
 <project name="${project.name}" xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd">
     <bannerLeft>
-        <src>/images/csveed-banner.jpg</src>
+        <src>/images/csveed.png</src>
         <href>http://github.com/robert-bor/csveed</href>
     </bannerLeft>
     <bannerRight>
@@ -41,7 +41,7 @@
     </custom>
     <body>
         <links>
-            <item name="Robert-Bor" href="http://github.com/robert-bor/csveed" />
+            <item name="Csveed" href="http://github.com/robert-bor/csveed" />
         </links>
         <menu name="Reference Documentation">
             <item name="Introduction" href="csveed.html"/>
