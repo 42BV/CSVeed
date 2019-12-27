@@ -9,7 +9,7 @@
         <relativePath />
     </parent>
 
-    <groupId>org.csveed</groupId>
+    <groupId>com.github.hazendaz</groupId>
     <artifactId>csveed</artifactId>
     <version>0.7.0-SNAPSHOT</version>
 
