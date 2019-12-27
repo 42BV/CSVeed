@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2013 - 2019 42 BV</copyright>
     <item>
-      <title>File: 83,
+      <title>File: 73,
              Errors: 0,
              Warnings: 2828,
              Infos: 0
@@ -74,20 +74,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvHeaderValue.java">org/csveed/annotations/CsvHeaderValue.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowReader.java">org/csveed/row/RowReader.java</a>
                 </td>
                 <td>
@@ -109,20 +95,6 @@ under the License.
                 </td>
                 <td>
                   151
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.package-info.java">org/csveed/annotations/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
                 </td>
                 <td>
                   0
@@ -466,20 +438,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.api.package-info.java">org/csveed/api/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvConverter.java">org/csveed/annotations/CsvConverter.java</a>
                 </td>
                 <td>
@@ -648,20 +606,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.package-info.java">org/csveed/row/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanReaderImpl.java">org/csveed/bean/BeanReaderImpl.java</a>
                 </td>
                 <td>
@@ -690,20 +634,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.package-info.java">org/csveed/bean/conversion/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://csveed.org/checkstyle.html#org.csveed.bean.DynamicColumn.java">org/csveed/bean/DynamicColumn.java</a>
                 </td>
                 <td>
@@ -718,20 +648,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.package-info.java">org/csveed/bean/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://csveed.org/checkstyle.html#org.csveed.report.RowReport.java">org/csveed/report/RowReport.java</a>
                 </td>
                 <td>
@@ -739,20 +655,6 @@ under the License.
                 </td>
                 <td>
                   78
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.package-info.java">org/csveed/token/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
                 </td>
                 <td>
                   0
@@ -837,20 +739,6 @@ under the License.
                 </td>
                 <td>
                   9
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvHeaderName.java">org/csveed/annotations/CsvHeaderName.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
                 </td>
                 <td>
                   0
@@ -956,20 +844,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvIgnore.java">org/csveed/annotations/CsvIgnore.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanProperties.java">org/csveed/bean/BeanProperties.java</a>
                 </td>
                 <td>
@@ -991,20 +865,6 @@ under the License.
                 </td>
                 <td>
                   6
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.package-info.java">org/csveed/report/package-info.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
                 </td>
                 <td>
                   0
