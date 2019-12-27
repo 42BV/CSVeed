@@ -13,9 +13,9 @@ simply add the following dependency:
 
 ```xml
         <dependency>
-            <groupId>org.csveed</groupId>
+            <groupId>com.github.hazendaz</groupId>
             <artifactId>csveed</artifactId>
-            <version>0.6.0</version>
+            <version>0.7.0</version>
         </dependency>
 ```
 
@@ -26,7 +26,7 @@ previous SLF4J logger configured and you want to get up and running quickly, use
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.21</version>
+            <version>2.0.0-alpha1</version>
         </dependency>
 ```
 
