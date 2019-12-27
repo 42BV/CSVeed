@@ -39,7 +39,7 @@ public class BeanWrapper {
 <span class="fc bfc" id="L39" title="All 4 branches covered.">            writeMethod.invoke(bean, value == null || value.equals(&quot;&quot;) ? null : converter.fromString(value));</span>
 <span class="fc" id="L40">        } catch (Exception err) {</span>
 <span class="fc" id="L41">            throw new BeanPropertyConversionException(&quot;Problem converting&quot;, converter.infoOnType(), err);</span>
-<span class="fc" id="L42">        }</span>
+        }
 <span class="fc" id="L43">    }</span>
 
     protected Converter getConverter(BeanProperty property) {

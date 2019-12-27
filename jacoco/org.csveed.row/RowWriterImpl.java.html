@@ -42,7 +42,7 @@ public class RowWriterImpl implements RowWriter {
     public void writeRows(Collection&lt;Row&gt; rows) {
 <span class="fc bfc" id="L43" title="All 2 branches covered.">        for (Row row : rows) {</span>
 <span class="fc" id="L44">            writeRow(row);</span>
-<span class="fc" id="L45">        }</span>
+        }
 <span class="fc" id="L46">    }</span>
 
     @Override
@@ -92,16 +92,16 @@ public class RowWriterImpl implements RowWriter {
                 }
 <span class="fc bfc" id="L93" title="All 2 branches covered.">                if (rowInstructions.getQuotingEnabled()) {</span>
 <span class="fc" id="L94">                    writeQuotedCell(nullSafeCell);</span>
-                } else {
+<span class="fc" id="L95">                } else {</span>
 <span class="fc" id="L96">                    writeCell(nullSafeCell);</span>
                 }
 <span class="fc" id="L98">                columnPosition++;</span>
-<span class="fc" id="L99">            }</span>
+            }
 <span class="fc" id="L100">            writeEOL();</span>
-<span class="nc" id="L101">        } catch(IOException e){</span>
+<span class="pc" id="L101">        } catch(IOException e){</span>
 <span class="nc" id="L102">            LOG.trace(&quot;&quot;, e);</span>
 <span class="nc" id="L103">            throw new CsvException(new GeneralError(&quot;Error in writing to the writer: &quot; + e.getMessage()));</span>
-<span class="fc" id="L104">        }</span>
+        }
 <span class="fc" id="L105">    }</span>
 
     private void writeEOL() throws IOException {

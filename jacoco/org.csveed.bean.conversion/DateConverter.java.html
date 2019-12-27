@@ -32,7 +32,7 @@ public class DateConverter extends AbstractConverter&lt;Date&gt; {
 <span class="nc" id="L32">            return null;</span>
 <span class="pc bpc" id="L33" title="4 of 6 branches missed.">        } else if (text != null &amp;&amp; this.exactDateLength &gt;= 0 &amp;&amp; text.length() != this.exactDateLength) {</span>
 <span class="nc" id="L34">            throw new IllegalArgumentException(</span>
-                    &quot;Could not parse date: it is not exactly&quot; + this.exactDateLength + &quot;characters long&quot;);
+<span class="nc" id="L35">                    &quot;Could not parse date: it is not exactly&quot; + this.exactDateLength + &quot;characters long&quot;);</span>
         } else {
             try {
 <span class="fc" id="L38">                return this.dateFormat.parse(text);</span>

@@ -41,7 +41,7 @@ public class BeanWriterImpl&lt;T&gt; implements BeanWriter&lt;T&gt; {
     public void writeBeans(Collection&lt;T&gt; beans) {
 <span class="fc bfc" id="L42" title="All 2 branches covered.">        for (T bean : beans) {</span>
 <span class="fc" id="L43">            writeBean(bean);</span>
-<span class="fc" id="L44">        }</span>
+        }
 <span class="fc" id="L45">    }</span>
 
     @Override
@@ -54,11 +54,11 @@ public class BeanWriterImpl&lt;T&gt; implements BeanWriter&lt;T&gt; {
 <span class="fc bfc" id="L54" title="All 2 branches covered.">        for (BeanProperty property : beanInstructions.getProperties()) {</span>
             try {
 <span class="fc" id="L56">                line.addCell(beanWrapper.getProperty(property));</span>
-<span class="nc" id="L57">            } catch (ConversionException e) {</span>
+<span class="pc" id="L57">            } catch (ConversionException e) {</span>
 <span class="nc" id="L58">                logger.error(&quot;{}&quot;, e.getMessage());</span>
 <span class="nc" id="L59">                logger.trace(&quot;&quot;, e);</span>
-<span class="fc" id="L60">            }</span>
-<span class="fc" id="L61">        }</span>
+            }
+        }
 <span class="fc" id="L62">        rowWriter.writeRow(new RowImpl(line, header));</span>
 <span class="fc" id="L63">    }</span>
 
@@ -70,7 +70,7 @@ public class BeanWriterImpl&lt;T&gt; implements BeanWriter&lt;T&gt; {
 <span class="fc" id="L70">        LineWithInfo line = new LineWithInfo();</span>
 <span class="fc bfc" id="L71" title="All 2 branches covered.">        for (BeanProperty property : beanInstructions.getProperties()) {</span>
 <span class="fc" id="L72">            line.addCell(property.getColumnName());</span>
-<span class="fc" id="L73">        }</span>
+        }
 <span class="fc" id="L74">        header = new HeaderImpl(line);</span>
 <span class="fc" id="L75">        rowWriter.writeHeader(header);</span>
 <span class="fc" id="L76">        headerWritten = true;</span>

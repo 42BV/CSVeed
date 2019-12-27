@@ -31,11 +31,11 @@ import org.slf4j.LoggerFactory;
 <span class="fc" id="L31">        } catch (CsvException e) {</span>
 <span class="fc" id="L32">            logger.trace(&quot;&quot;, e);</span>
 <span class="fc" id="L33">            throw new CsvException(new RowError(</span>
-                    &quot;The header row does not contain column \&quot;&quot; + key + &quot;\&quot;. Originally mapped to property \&quot;&quot; +
+<span class="fc" id="L34">                    &quot;The header row does not contain column \&quot;&quot; + key + &quot;\&quot;. Originally mapped to property \&quot;&quot; +</span>
 <span class="fc" id="L35">                            getBeanProperty(key).getPropertyName() + &quot;\&quot;&quot;,</span>
 <span class="fc" id="L36">                    header.reportOnEndOfLine(), 0</span>
                     ));
-<span class="fc" id="L38">        }</span>
+        }
 <span class="fc" id="L39">    }</span>
 
     @Override

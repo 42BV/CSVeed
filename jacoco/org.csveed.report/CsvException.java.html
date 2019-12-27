@@ -15,7 +15,7 @@ public class CsvException extends RuntimeException {
 <span class="fc" id="L15">        this.error = error;</span>
 <span class="fc bfc" id="L16" title="All 2 branches covered.">        for (String line : error.getPrintableLines()) {</span>
 <span class="fc" id="L17">            LOG.error(&quot;{}&quot;, line);</span>
-<span class="fc" id="L18">        }</span>
+        }
 <span class="fc" id="L19">    }</span>
 
     public CsvError getError() {
@@ -37,7 +37,7 @@ public class CsvException extends RuntimeException {
             }
 <span class="nc" id="L38">            errorMessage.append(line);</span>
 <span class="nc" id="L39">            first = false;</span>
-<span class="nc" id="L40">        }</span>
+        }
 <span class="nc" id="L41">        return errorMessage.toString();</span>
     }
 

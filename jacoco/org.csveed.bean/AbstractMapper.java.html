@@ -33,7 +33,7 @@ import org.csveed.report.RowError;
 <span class="fc bfc" id="L33" title="All 2 branches covered.">            if (!getBeanProperty(key).isDynamicColumnProperty()) {</span>
 <span class="fc" id="L34">                checkKey(header, key);</span>
             }
-<span class="fc" id="L36">        }</span>
+        }
 <span class="fc" id="L37">        verified = true;</span>
 <span class="fc" id="L38">    }</span>
 
@@ -58,11 +58,11 @@ import org.csveed.report.RowError;
 <span class="pc bpc" id="L58" title="1 of 6 branches missed.">            if (beanProperty.isRequired() &amp;&amp; (cell == null || cell.equals(&quot;&quot;))) {</span>
 <span class="fc" id="L59">                throw new CsvException(</span>
 <span class="fc" id="L60">                        new RowError(&quot;Bean property \&quot;&quot; + beanProperty.getPropertyName() +</span>
-                                &quot;\&quot; is required and may not be empty or null&quot;,
+<span class="fc" id="L61">                                &quot;\&quot; is required and may not be empty or null&quot;,</span>
 <span class="fc" id="L62">                                row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));</span>
             }
 <span class="fc" id="L64">            setBeanProperty(row, lineNumber, beanWrapper, currentColumn, cell, beanProperty);</span>
-<span class="fc" id="L65">        }</span>
+        }
 <span class="fc" id="L66">        return bean;</span>
     }
 
@@ -88,7 +88,7 @@ import org.csveed.report.RowError;
 <span class="fc" id="L88">                    err.getMessage() + &quot; cell&quot; + currentColumn.getColumnText() + &quot; [&quot; + cell + &quot;] to &quot; +</span>
 <span class="fc" id="L89">                            beanProperty.getPropertyName() + &quot;: &quot; + err.getTypeDescription();</span>
 <span class="fc" id="L90">            throw new CsvException(new RowError(message, row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));</span>
-<span class="fc" id="L91">        }</span>
+        }
 <span class="fc" id="L92">    }</span>
 
     public void setBeanInstructions(BeanInstructions beanInstructions) {
