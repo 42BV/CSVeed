@@ -40,6 +40,9 @@
         </fluidoSkin>
     </custom>
     <body>
+        <breadcrumbs>
+            <item name="Csveed" href="csveed.html"/>
+        </breadcrumbs>
         <links>
             <item name="Csveed" href="http://github.com/robert-bor/csveed" />
         </links>
