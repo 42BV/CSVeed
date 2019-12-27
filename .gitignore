@@ -6,3 +6,6 @@ target
 .classpath
 .settings
 .mvn/wrapper/maven-wrapper.jar
+pom.xml.releaseBackup
+release.properties
+velocity.log
