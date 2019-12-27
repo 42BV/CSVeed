@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanInstructionsImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean</a> &gt; <span class="el_source">BeanInstructionsImpl.java</span></div><h1>BeanInstructionsImpl.java</h1><pre class="source lang-java linenums">package org.csveed.bean;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import org.csveed.bean.conversion.Converter;
+import org.csveed.common.Column;
+import org.csveed.row.RowInstructions;
+import org.csveed.row.RowInstructionsImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class BeanInstructionsImpl implements BeanInstructions {
+
+<span class="fc" id="L16">    private static final Logger LOG = LoggerFactory.getLogger(BeanInstructionsImpl.class);</span>
+
+<span class="fc" id="L18">    private RowInstructions rowInstructions = new RowInstructionsImpl();</span>
+
+    private BeanProperties properties;
+
+<span class="fc" id="L22">    private Class&lt;? extends AbstractMapper&gt; mappingStrategy = ColumnIndexMapper.class;</span>
+
+    private Class beanClass;
+
+    private boolean settingsLogged;
+
+    private Column startIndexDynamicColumns;
+
+<span class="fc" id="L30">    private boolean useHeader = true;</span>
+
+<span class="fc" id="L32">    public BeanInstructionsImpl(Class beanClass) {</span>
+<span class="fc" id="L33">        this.properties = new BeanProperties(beanClass);</span>
+<span class="fc" id="L34">        this.beanClass = beanClass;</span>
+<span class="fc" id="L35">    }</span>
+
+    @Override
+    public void logSettings() {
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (settingsLogged) {</span>
+<span class="fc" id="L40">            return;</span>
+        }
+<span class="fc" id="L42">        LOG.info(&quot;- CSV config / mapping strategy: {}&quot;, this.getMappingStrategy());</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (BeanProperty property : properties) {</span>
+<span class="fc" id="L44">            LOG.info(&quot;{}&quot;, getPropertyLogLine(property));</span>
+<span class="fc" id="L45">        }</span>
+<span class="fc" id="L46">        settingsLogged = true;</span>
+<span class="fc" id="L47">    }</span>
+
+    protected String getPropertyLogLine(BeanProperty property) {
+<span class="fc" id="L50">        List&lt;String&gt; lineParts = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L51">        lineParts.add(&quot;- CSV config&quot;);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (mappingStrategy.equals(ColumnIndexMapper.class)) {</span>
+<span class="fc" id="L53">            lineParts.add(&quot;Column index &quot; + property.getColumnIndex() + &quot; -&gt; property [&quot; + property.getPropertyName() + &quot;]&quot;);</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        } else if (mappingStrategy.equals(ColumnNameMapper.class)) {</span>
+<span class="fc" id="L55">            lineParts.add(&quot;Column name [&quot; + property.getColumnName() + &quot;] -&gt; property [&quot; + property.getPropertyName() + &quot;]&quot;);</span>
+        }
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        lineParts.add(&quot;Required: &quot; + (property.isRequired() ? &quot;yes&quot; : &quot;no&quot;));</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (property.getConverter() != null) {</span>
+<span class="fc" id="L59">            lineParts.add(&quot;Converter: &quot; + property.getConverter().getClass().getSimpleName() + &quot; for &quot; + property.getPropertyType());</span>
+        }
+
+<span class="fc" id="L62">        StringBuilder logLine = new StringBuilder();</span>
+<span class="fc" id="L63">        boolean first = true;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (String linePart : lineParts) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            if (!first) {</span>
+<span class="fc" id="L66">                logLine.append(&quot; | &quot;);</span>
+            }
+<span class="fc" id="L68">            logLine.append(linePart);</span>
+<span class="fc" id="L69">            first = false;</span>
+<span class="fc" id="L70">        }</span>
+<span class="fc" id="L71">        return logLine.toString();</span>
+    }
+
+    @Override
+    public RowInstructions getRowInstructions() {
+<span class="fc" id="L76">        return this.rowInstructions;</span>
+    }
+
+    @Override
+    public BeanInstructions setUseHeader(boolean useHeader) {
+<span class="fc" id="L81">        this.rowInstructions.setUseHeader(useHeader);</span>
+<span class="fc" id="L82">        this.useHeader = useHeader;</span>
+<span class="fc" id="L83">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setStartRow(int startRow) {
+<span class="fc" id="L88">        this.rowInstructions.setStartRow(startRow);</span>
+<span class="fc" id="L89">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setEscape(char symbol) {
+<span class="fc" id="L94">        this.rowInstructions.setEscape(symbol);</span>
+<span class="fc" id="L95">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setQuote(char symbol) {
+<span class="fc" id="L100">        this.rowInstructions.setQuote(symbol);</span>
+<span class="fc" id="L101">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setQuotingEnabled(boolean enabled) {
+<span class="fc" id="L106">        this.rowInstructions.setQuotingEnabled(enabled);</span>
+<span class="fc" id="L107">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setSeparator(char symbol) {
+<span class="fc" id="L112">        this.rowInstructions.setSeparator(symbol);</span>
+<span class="fc" id="L113">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setComment(char symbol) {
+<span class="fc" id="L118">        this.rowInstructions.setComment(symbol);</span>
+<span class="fc" id="L119">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setEndOfLine(char[] symbols) {
+<span class="fc" id="L124">        this.rowInstructions.setEndOfLine(symbols);</span>
+<span class="fc" id="L125">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions skipEmptyLines(boolean skip) {
+<span class="fc" id="L130">        this.rowInstructions.skipEmptyLines(skip);</span>
+<span class="fc" id="L131">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions skipCommentLines(boolean skip) {
+<span class="fc" id="L136">        this.rowInstructions.skipCommentLines(skip);</span>
+<span class="fc" id="L137">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setMapper(Class&lt;? extends AbstractMapper&gt; mapper) {
+<span class="fc" id="L142">        this.mappingStrategy = mapper;</span>
+<span class="fc" id="L143">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setDate(String propertyName, String dateFormat) {
+<span class="fc" id="L148">        this.getProperties().setDate(propertyName, dateFormat);</span>
+<span class="fc" id="L149">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setLocalizedNumber(String propertyName, Locale locale) {
+<span class="fc" id="L154">        this.getProperties().setLocalizedNumber(propertyName, locale);</span>
+<span class="fc" id="L155">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setRequired(String propertyName, boolean required) {
+<span class="fc" id="L160">        this.getProperties().setRequired(propertyName, required);</span>
+<span class="fc" id="L161">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setConverter(String propertyName, Converter converter) {
+<span class="fc" id="L166">        this.getProperties().setConverter(propertyName, converter);</span>
+<span class="fc" id="L167">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions ignoreProperty(String propertyName) {
+<span class="fc" id="L172">        this.getProperties().ignoreProperty(propertyName);</span>
+<span class="fc" id="L173">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions mapColumnIndexToProperty(int columnIndex, String propertyName) {
+<span class="fc" id="L178">        this.getProperties().mapIndexToProperty(columnIndex, propertyName);</span>
+<span class="fc" id="L179">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions mapColumnNameToProperty(String columnName, String propertyName) {
+<span class="fc" id="L184">        this.getProperties().mapNameToProperty(columnName, propertyName);</span>
+<span class="fc" id="L185">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setHeaderNameToProperty(String propertyName) {
+<span class="fc" id="L190">        this.getProperties().setHeaderNameProperty(propertyName);</span>
+<span class="fc" id="L191">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setHeaderValueToProperty(String propertyName) {
+<span class="fc" id="L196">        this.getProperties().setHeaderValueProperty(propertyName);</span>
+<span class="fc" id="L197">        return this;</span>
+    }
+
+    @Override
+    public BeanInstructions setStartIndexDynamicColumns(int startIndex) {
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        this.startIndexDynamicColumns = startIndex == 0 ? null : new Column(startIndex);</span>
+<span class="fc" id="L203">        return this;</span>
+    }
+
+    @Override
+    public Class&lt;? extends AbstractMapper&gt; getMappingStrategy() {
+<span class="fc" id="L208">        return this.mappingStrategy;</span>
+    }
+
+    @Override
+    public BeanProperties getProperties() {
+<span class="fc" id="L213">        return this.properties;</span>
+    }
+
+    @Override
+    public Column getStartIndexDynamicColumns() {
+<span class="fc" id="L218">        return this.startIndexDynamicColumns;</span>
+    }
+
+    @Override
+    public Class getBeanClass() {
+<span class="fc" id="L223">        return this.beanClass;</span>
+    }
+
+    @Override
+    public boolean useHeader() {
+<span class="fc" id="L228">        return useHeader;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

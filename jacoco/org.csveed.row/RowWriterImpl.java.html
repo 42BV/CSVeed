@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RowWriterImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.row</a> &gt; <span class="el_source">RowWriterImpl.java</span></div><h1>RowWriterImpl.java</h1><pre class="source lang-java linenums">package org.csveed.row;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.csveed.api.Header;
+import org.csveed.api.Row;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class RowWriterImpl implements RowWriter {
+
+<span class="fc" id="L17">    private static final Logger LOG = LoggerFactory.getLogger(RowWriterImpl.class);</span>
+
+    private final Writer writer;
+
+    private RowInstructions rowInstructions;
+
+    private Header header;
+
+    public RowWriterImpl(Writer writer) {
+<span class="fc" id="L26">        this(writer, new RowInstructionsImpl());</span>
+<span class="fc" id="L27">    }</span>
+
+<span class="fc" id="L29">    public RowWriterImpl(Writer writer, RowInstructions rowInstructions) {</span>
+<span class="fc" id="L30">        this.writer = writer;</span>
+<span class="fc" id="L31">        this.rowInstructions = rowInstructions;</span>
+<span class="fc" id="L32">    }</span>
+
+    @Override
+    public void writeRows(String[][] rows) {
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        for (String[] row : rows) {</span>
+<span class="fc" id="L37">            writeRow(row);</span>
+        }
+<span class="fc" id="L39">    }</span>
+
+    @Override
+    public void writeRows(Collection&lt;Row&gt; rows) {
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (Row row : rows) {</span>
+<span class="fc" id="L44">            writeRow(row);</span>
+<span class="fc" id="L45">        }</span>
+<span class="fc" id="L46">    }</span>
+
+    @Override
+    public Row writeRow(String[] cells) {
+<span class="fc" id="L50">        Row row = new RowImpl(convertToLine(cells), header);</span>
+<span class="fc" id="L51">        writeRow(row);</span>
+<span class="fc" id="L52">        return row;</span>
+    }
+
+    @Override
+    public void writeRow(Row row) {
+<span class="fc bfc" id="L57" title="All 4 branches covered.">        if (rowInstructions.isUseHeader() &amp;&amp; this.header == null) {</span>
+<span class="fc" id="L58">            throw new CsvException(new GeneralError(&quot;Header has not been set for this table. Make sure to write it or configure &quot; +</span>
+                    &quot;it to be not used: .setUseHeader(false)&quot;));
+        }
+<span class="fc" id="L61">        writeCells(row.iterator());</span>
+<span class="fc" id="L62">    }</span>
+
+    @Override
+    public Header writeHeader(String[] headerNames) {
+<span class="fc" id="L66">        Header header = new HeaderImpl(convertToLine(headerNames));</span>
+<span class="fc" id="L67">        writeHeader(header);</span>
+<span class="fc" id="L68">        return header;</span>
+    }
+
+    @Override
+    public void writeHeader(Header header) {
+<span class="fc" id="L73">        this.header = header;</span>
+<span class="fc" id="L74">        writeCells(header.iterator());</span>
+<span class="fc" id="L75">    }</span>
+
+    @Override
+    public RowInstructions getRowInstructions() {
+<span class="fc" id="L79">        return this.rowInstructions;</span>
+    }
+
+    private void writeCells(Iterator&lt;String&gt; cells) {
+<span class="fc" id="L83">        int columnPosition = 1;</span>
+        try {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            while (cells.hasNext()) {</span>
+<span class="fc" id="L86">                String cell = cells.next();</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">                String nullSafeCell = cell != null ? cell : &quot;&quot;;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">                String headerValue = header != null ?  header.getName(columnPosition) : &quot;&quot;;</span>
+<span class="fc" id="L89">                LOG.debug(&quot;Writing cell value [{}] in column position [{}], header value is [{}].&quot;, nullSafeCell, columnPosition, headerValue);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">                if (columnPosition != 1) {</span>
+<span class="fc" id="L91">                    writeSeparator();</span>
+                }
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                if (rowInstructions.getQuotingEnabled()) {</span>
+<span class="fc" id="L94">                    writeQuotedCell(nullSafeCell);</span>
+                } else {
+<span class="fc" id="L96">                    writeCell(nullSafeCell);</span>
+                }
+<span class="fc" id="L98">                columnPosition++;</span>
+<span class="fc" id="L99">            }</span>
+<span class="fc" id="L100">            writeEOL();</span>
+<span class="nc" id="L101">        } catch(IOException e){</span>
+<span class="nc" id="L102">            LOG.trace(&quot;&quot;, e);</span>
+<span class="nc" id="L103">            throw new CsvException(new GeneralError(&quot;Error in writing to the writer: &quot; + e.getMessage()));</span>
+<span class="fc" id="L104">        }</span>
+<span class="fc" id="L105">    }</span>
+
+    private void writeEOL() throws IOException {
+<span class="fc" id="L108">        writer.write(rowInstructions.getEndOfLine());</span>
+<span class="fc" id="L109">    }</span>
+
+    private void writeSeparator() throws IOException {
+<span class="fc" id="L112">        writer.write(rowInstructions.getSeparator());</span>
+<span class="fc" id="L113">    }</span>
+
+    private void writeQuotedCell(String cell) throws IOException {
+<span class="fc" id="L116">        writer.write(rowInstructions.getQuote());</span>
+<span class="fc" id="L117">        String searchString = Character.toString(rowInstructions.getQuote());</span>
+<span class="fc" id="L118">        String replaceString = new String(new char[] { rowInstructions.getEscape(), rowInstructions.getQuote() } );</span>
+<span class="fc" id="L119">        String replacedString = cell.replace(searchString, replaceString);</span>
+<span class="fc" id="L120">        writeCell(replacedString);</span>
+<span class="fc" id="L121">        writer.write(rowInstructions.getQuote());</span>
+<span class="fc" id="L122">    }</span>
+
+    private void writeCell(String cell) throws IOException {
+<span class="fc" id="L125">        writer.write(cell);</span>
+<span class="fc" id="L126">    }</span>
+
+    private LineWithInfo convertToLine(String[] cells) {
+<span class="fc" id="L129">        LineWithInfo line = new LineWithInfo();</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        for (String cell : cells) {</span>
+<span class="fc" id="L131">            line.addCell(cell);</span>
+        }
+<span class="fc" id="L133">        return line;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

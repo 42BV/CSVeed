@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>BeanWrapperTest xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../testapidocs/org/csveed/bean/conversion/BeanWrapperTest.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.csveed.bean.conversion;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertEquals;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertTrue;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">import</strong> java.math.BigDecimal;
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <strong class="jxr_keyword">import</strong> java.math.BigInteger;
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> java.nio.charset.Charset;
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> java.util.Arrays;
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> java.util.Currency;
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> java.util.TimeZone;
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> java.util.regex.Pattern;
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> org.csveed.bean.BeanInstructions;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> org.csveed.bean.BeanParser;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> org.csveed.bean.BeanProperties;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> org.csveed.common.Column;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.BeforeEach;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="BeanWrapperTest" href="../../../../org/csveed/bean/conversion/BeanWrapperTest.html#BeanWrapperTest">BeanWrapperTest</a> {
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>      <strong class="jxr_keyword">private</strong> BeanProperties properties = deriveProperties();
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      <strong class="jxr_keyword">private</strong> <a name="Bean" href="../../../../org/csveed/bean/conversion/Bean.html#Bean">Bean</a> bean;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">private</strong> DefaultConverters defaultConverters = <strong class="jxr_keyword">new</strong> DefaultConverters();
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">private</strong> BeanWrapper beanWrapper;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      @BeforeEach
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> init() {
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          bean = <strong class="jxr_keyword">new</strong> <a name="Bean" href="../../../../org/csveed/bean/conversion/Bean.html#Bean">Bean</a>();
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          beanWrapper = <strong class="jxr_keyword">new</strong> BeanWrapper(defaultConverters, bean);
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      }
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      @Test
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> hitAllProperties() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"charset"</span>)),<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"charset"</span>)),<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"chars"</span>)),<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bytes"</span>)),<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"booleanObject"</span>)),<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"byteObject"</span>)),<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"shortObject"</span>)),<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"intObject"</span>)),<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"longObject"</span>)),<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"floatObject"</span>)),<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"doubleObject"</span>)),<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bigDecimal"</span>)),<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bigInteger"</span>)),<span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      }
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      @Test
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getCharset() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          bean.setCharset(Charset.forName(<span class="jxr_string">"US-ASCII"</span>));
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          assertEquals(<span class="jxr_string">"US-ASCII"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"charset"</span>))));
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      }
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      @Test
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setCharset() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"charset"</span>)),<span class="jxr_string">"US-ASCII"</span>);
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          assertEquals(<span class="jxr_string">"US-ASCII"</span>, bean.getCharset().displayName());
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      }
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      @Test
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getCurrency() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          bean.setCurrency(Currency.getInstance(<span class="jxr_string">"USD"</span>));
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          assertEquals(<span class="jxr_string">"USD"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"currency"</span>))));
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      }
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>      @Test
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setCurrency() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"currency"</span>)),<span class="jxr_string">"USD"</span>);
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          assertEquals(<span class="jxr_string">"USD"</span>, bean.getCurrency().getCurrencyCode());
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      }
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>      @Test
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getPattern() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          bean.setPattern(Pattern.compile(<span class="jxr_string">"[0-9]"</span>));
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          assertEquals(<span class="jxr_string">"[0-9]"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"pattern"</span>))));
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>      }
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      @Test
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setPattern() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"pattern"</span>)),<span class="jxr_string">"[0-9]"</span>);
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          assertEquals(<span class="jxr_string">"[0-9]"</span>, bean.getPattern().pattern());
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      }
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      @Test
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getTimeZone() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          bean.setTimeZone(TimeZone.getTimeZone(<span class="jxr_string">"GMT-8"</span>));
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          assertEquals(<span class="jxr_string">"GMT-08:00"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"timeZone"</span>))));
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>      }
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>  
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>      @Test
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setTimeZone() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"timeZone"</span>)),<span class="jxr_string">"GMT-8"</span>);
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          assertEquals(<span class="jxr_string">"GMT-08:00"</span>, bean.getTimeZone().getDisplayName());
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>     }
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> 
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>     @Test
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getBytes() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         bean.setBytes(<strong class="jxr_keyword">new</strong> byte[]{65, 66, 67});
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>         assertEquals(<span class="jxr_string">"ABC"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bytes"</span>))));
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>     }
+<a class="jxr_linenumber" name="L107" href="#L107">107</a> 
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>     @Test
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setBytes() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bytes"</span>)),<span class="jxr_string">"ABC"</span>);
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         assertTrue(Arrays.equals(<strong class="jxr_keyword">new</strong> byte[]{65, 66, 67}, bean.getBytes()));
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>     }
+<a class="jxr_linenumber" name="L113" href="#L113">113</a> 
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>     @Test
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getChars() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>         bean.setChars(<strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">char</strong>[]{'A', 'B', 'C'});
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         assertEquals(<span class="jxr_string">"ABC"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"chars"</span>))));
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>     }
+<a class="jxr_linenumber" name="L119" href="#L119">119</a> 
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>     @Test
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setChars() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"chars"</span>)),<span class="jxr_string">"ABC"</span>);
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>         assertTrue(Arrays.equals(<strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">char</strong>[] { 'A', 'B', 'C' } , bean.getChars()));
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>     }
+<a class="jxr_linenumber" name="L125" href="#L125">125</a> 
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>     @Test
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getCharPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>         bean.setCharPrimitive('ü');
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>         assertEquals(<span class="jxr_string">"ü"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"charPrimitive"</span>))));
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>     }
+<a class="jxr_linenumber" name="L131" href="#L131">131</a> 
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>     @Test
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setCharPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"charPrimitive"</span>)),<span class="jxr_string">"ü"</span>);
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>         assertEquals('ü', bean.getCharPrimitive());
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>     }
+<a class="jxr_linenumber" name="L137" href="#L137">137</a> 
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>     @Test
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getCharacter() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>         bean.setCharacter('ü');
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>         assertEquals(<span class="jxr_string">"ü"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"character"</span>))));
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>     }
+<a class="jxr_linenumber" name="L143" href="#L143">143</a> 
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>     @Test
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setCharacter() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"character"</span>)),<span class="jxr_string">"ü"</span>);
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>         assertEquals('ü', (<strong class="jxr_keyword">char</strong>)bean.getCharacter());
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>     }
+<a class="jxr_linenumber" name="L149" href="#L149">149</a> 
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>     @Test
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getBooleanPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         bean.setBooleanPrimitive(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         assertEquals(<span class="jxr_string">"true"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"booleanPrimitive"</span>))));
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>     }
+<a class="jxr_linenumber" name="L155" href="#L155">155</a> 
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>     @Test
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setBooleanPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"booleanPrimitive"</span>)),<span class="jxr_string">"on"</span>);
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>         assertEquals(<strong class="jxr_keyword">true</strong>, bean.isBooleanPrimitive());
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>     }
+<a class="jxr_linenumber" name="L161" href="#L161">161</a> 
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>     @Test
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getBooleanObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>         bean.setBooleanObject(Boolean.TRUE);
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>         assertEquals(<span class="jxr_string">"true"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"booleanObject"</span>))));
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>     }
+<a class="jxr_linenumber" name="L167" href="#L167">167</a> 
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>     @Test
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setBooleanObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"booleanObject"</span>)),<span class="jxr_string">"on"</span>);
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>         assertEquals(Boolean.TRUE, bean.getBooleanObject());
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>     }
+<a class="jxr_linenumber" name="L173" href="#L173">173</a> 
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>     @Test
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getBytePrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>         bean.setBytePrimitive((byte) 17);
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>         assertEquals(<span class="jxr_string">"17"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bytePrimitive"</span>))));
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>     }
+<a class="jxr_linenumber" name="L179" href="#L179">179</a> 
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>     @Test
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setBytePrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bytePrimitive"</span>)),<span class="jxr_string">"17"</span>);
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>         assertEquals(17, bean.getBytePrimitive());
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>     }
+<a class="jxr_linenumber" name="L185" href="#L185">185</a> 
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>     @Test
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getByteObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>         bean.setByteObject(Byte.valueOf(<span class="jxr_string">"17"</span>));
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>         assertEquals(<span class="jxr_string">"17"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"byteObject"</span>))));
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>     }
+<a class="jxr_linenumber" name="L191" href="#L191">191</a> 
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>     @Test
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setByteObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"byteObject"</span>)),<span class="jxr_string">"17"</span>);
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>         assertEquals(Byte.valueOf(<span class="jxr_string">"17"</span>),bean.getByteObject());
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>     }
+<a class="jxr_linenumber" name="L197" href="#L197">197</a> 
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>     @Test
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getShortPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>         bean.setShortPrimitive((<strong class="jxr_keyword">short</strong>) 17);
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>         assertEquals(<span class="jxr_string">"17"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"shortPrimitive"</span>))));
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>     }
+<a class="jxr_linenumber" name="L203" href="#L203">203</a> 
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>     @Test
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setShortPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"shortPrimitive"</span>)),<span class="jxr_string">"17"</span>);
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>         assertEquals(17, bean.getShortPrimitive());
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>     }
+<a class="jxr_linenumber" name="L209" href="#L209">209</a> 
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>     @Test
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getShortObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>         bean.setShortObject(Short.valueOf(<span class="jxr_string">"17"</span>));
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>         assertEquals(<span class="jxr_string">"17"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"shortObject"</span>))));
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>     }
+<a class="jxr_linenumber" name="L215" href="#L215">215</a> 
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>     @Test
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setShortObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"shortObject"</span>)),<span class="jxr_string">"17"</span>);
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>         assertEquals(Short.valueOf(<span class="jxr_string">"17"</span>),bean.getShortObject());
+<a class="jxr_linenumber" name="L220" href="#L220">220</a>     }
+<a class="jxr_linenumber" name="L221" href="#L221">221</a> 
+<a class="jxr_linenumber" name="L222" href="#L222">222</a>     @Test
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getIntPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L224" href="#L224">224</a>         bean.setIntPrimitive(989);
+<a class="jxr_linenumber" name="L225" href="#L225">225</a>         assertEquals(<span class="jxr_string">"989"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"intPrimitive"</span>))));
+<a class="jxr_linenumber" name="L226" href="#L226">226</a>     }
+<a class="jxr_linenumber" name="L227" href="#L227">227</a> 
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>     @Test
+<a class="jxr_linenumber" name="L229" href="#L229">229</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setIntPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L230" href="#L230">230</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"intPrimitive"</span>)),<span class="jxr_string">"1989"</span>);
+<a class="jxr_linenumber" name="L231" href="#L231">231</a>         assertEquals(1989, bean.getIntPrimitive());
+<a class="jxr_linenumber" name="L232" href="#L232">232</a>     }
+<a class="jxr_linenumber" name="L233" href="#L233">233</a> 
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>     @Test
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getIntObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L236" href="#L236">236</a>         bean.setIntObject(989);
+<a class="jxr_linenumber" name="L237" href="#L237">237</a>         assertEquals(<span class="jxr_string">"989"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"intObject"</span>))));
+<a class="jxr_linenumber" name="L238" href="#L238">238</a>     }
+<a class="jxr_linenumber" name="L239" href="#L239">239</a> 
+<a class="jxr_linenumber" name="L240" href="#L240">240</a>     @Test
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setIntObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"intObject"</span>)),<span class="jxr_string">"1989"</span>);
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>         assertEquals((Integer)1989, bean.getIntObject());
+<a class="jxr_linenumber" name="L244" href="#L244">244</a>     }
+<a class="jxr_linenumber" name="L245" href="#L245">245</a> 
+<a class="jxr_linenumber" name="L246" href="#L246">246</a>     @Test
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getLongPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>         bean.setLongPrimitive(989);
+<a class="jxr_linenumber" name="L249" href="#L249">249</a>         assertEquals(<span class="jxr_string">"989"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"longPrimitive"</span>))));
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>     }
+<a class="jxr_linenumber" name="L251" href="#L251">251</a> 
+<a class="jxr_linenumber" name="L252" href="#L252">252</a>     @Test
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setLongPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L254" href="#L254">254</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"longPrimitive"</span>)),<span class="jxr_string">"1989"</span>);
+<a class="jxr_linenumber" name="L255" href="#L255">255</a>         assertEquals(1989, bean.getLongPrimitive());
+<a class="jxr_linenumber" name="L256" href="#L256">256</a>     }
+<a class="jxr_linenumber" name="L257" href="#L257">257</a> 
+<a class="jxr_linenumber" name="L258" href="#L258">258</a>     @Test
+<a class="jxr_linenumber" name="L259" href="#L259">259</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getLongObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>         bean.setLongObject(989L);
+<a class="jxr_linenumber" name="L261" href="#L261">261</a>         assertEquals(<span class="jxr_string">"989"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"longObject"</span>))));
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>     }
+<a class="jxr_linenumber" name="L263" href="#L263">263</a> 
+<a class="jxr_linenumber" name="L264" href="#L264">264</a>     @Test
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setLongObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"longObject"</span>)),<span class="jxr_string">"1989"</span>);
+<a class="jxr_linenumber" name="L267" href="#L267">267</a>         assertEquals((Long)1989L, bean.getLongObject());
+<a class="jxr_linenumber" name="L268" href="#L268">268</a>     }
+<a class="jxr_linenumber" name="L269" href="#L269">269</a> 
+<a class="jxr_linenumber" name="L270" href="#L270">270</a>     @Test
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getFloatPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>         bean.setFloatPrimitive((<strong class="jxr_keyword">float</strong>)42.42);
+<a class="jxr_linenumber" name="L273" href="#L273">273</a>         assertEquals(<span class="jxr_string">"42.42"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"floatPrimitive"</span>))));
+<a class="jxr_linenumber" name="L274" href="#L274">274</a>     }
+<a class="jxr_linenumber" name="L275" href="#L275">275</a> 
+<a class="jxr_linenumber" name="L276" href="#L276">276</a>     @Test
+<a class="jxr_linenumber" name="L277" href="#L277">277</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setFloatPrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L278" href="#L278">278</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"floatPrimitive"</span>)),<span class="jxr_string">"42.42"</span>);
+<a class="jxr_linenumber" name="L279" href="#L279">279</a>         assertEquals((<strong class="jxr_keyword">float</strong>)42.42, bean.getFloatPrimitive(), 1);
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>     }
+<a class="jxr_linenumber" name="L281" href="#L281">281</a> 
+<a class="jxr_linenumber" name="L282" href="#L282">282</a>     @Test
+<a class="jxr_linenumber" name="L283" href="#L283">283</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getFloatObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L284" href="#L284">284</a>         bean.setFloatObject(Float.valueOf(<span class="jxr_string">"42.42"</span>));
+<a class="jxr_linenumber" name="L285" href="#L285">285</a>         assertEquals(<span class="jxr_string">"42.42"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"floatObject"</span>))));
+<a class="jxr_linenumber" name="L286" href="#L286">286</a>     }
+<a class="jxr_linenumber" name="L287" href="#L287">287</a> 
+<a class="jxr_linenumber" name="L288" href="#L288">288</a>     @Test
+<a class="jxr_linenumber" name="L289" href="#L289">289</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setFloatObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"floatObject"</span>)),<span class="jxr_string">"42.42"</span>);
+<a class="jxr_linenumber" name="L291" href="#L291">291</a>         assertEquals(Float.valueOf(<span class="jxr_string">"42.42"</span>),bean.getFloatObject());
+<a class="jxr_linenumber" name="L292" href="#L292">292</a>     }
+<a class="jxr_linenumber" name="L293" href="#L293">293</a> 
+<a class="jxr_linenumber" name="L294" href="#L294">294</a>     @Test
+<a class="jxr_linenumber" name="L295" href="#L295">295</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getDoublePrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L296" href="#L296">296</a>         bean.setDoublePrimitive(42.42);
+<a class="jxr_linenumber" name="L297" href="#L297">297</a>         assertEquals(<span class="jxr_string">"42.42"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"doublePrimitive"</span>))));
+<a class="jxr_linenumber" name="L298" href="#L298">298</a>     }
+<a class="jxr_linenumber" name="L299" href="#L299">299</a> 
+<a class="jxr_linenumber" name="L300" href="#L300">300</a>     @Test
+<a class="jxr_linenumber" name="L301" href="#L301">301</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setDoublePrimitive() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L302" href="#L302">302</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"doublePrimitive"</span>)),<span class="jxr_string">"42.42"</span>);
+<a class="jxr_linenumber" name="L303" href="#L303">303</a>         assertEquals(42.42, bean.getDoublePrimitive(), 1);
+<a class="jxr_linenumber" name="L304" href="#L304">304</a>     }
+<a class="jxr_linenumber" name="L305" href="#L305">305</a> 
+<a class="jxr_linenumber" name="L306" href="#L306">306</a>     @Test
+<a class="jxr_linenumber" name="L307" href="#L307">307</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getDoubleObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L308" href="#L308">308</a>         bean.setDoubleObject(Double.valueOf(<span class="jxr_string">"42.42"</span>));
+<a class="jxr_linenumber" name="L309" href="#L309">309</a>         assertEquals(<span class="jxr_string">"42.42"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"doubleObject"</span>))));
+<a class="jxr_linenumber" name="L310" href="#L310">310</a>     }
+<a class="jxr_linenumber" name="L311" href="#L311">311</a> 
+<a class="jxr_linenumber" name="L312" href="#L312">312</a>     @Test
+<a class="jxr_linenumber" name="L313" href="#L313">313</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setDoubleObject() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L314" href="#L314">314</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"doubleObject"</span>)),<span class="jxr_string">"42.42"</span>);
+<a class="jxr_linenumber" name="L315" href="#L315">315</a>         assertEquals(Double.valueOf(<span class="jxr_string">"42.42"</span>),bean.getDoubleObject());
+<a class="jxr_linenumber" name="L316" href="#L316">316</a>     }
+<a class="jxr_linenumber" name="L317" href="#L317">317</a> 
+<a class="jxr_linenumber" name="L318" href="#L318">318</a>     @Test
+<a class="jxr_linenumber" name="L319" href="#L319">319</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getBigDecimal() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L320" href="#L320">320</a>         bean.setBigDecimal(<strong class="jxr_keyword">new</strong> BigDecimal(<span class="jxr_string">"42.123"</span>));
+<a class="jxr_linenumber" name="L321" href="#L321">321</a>         assertEquals(<span class="jxr_string">"42.123"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bigDecimal"</span>))));
+<a class="jxr_linenumber" name="L322" href="#L322">322</a>     }
+<a class="jxr_linenumber" name="L323" href="#L323">323</a> 
+<a class="jxr_linenumber" name="L324" href="#L324">324</a>     @Test
+<a class="jxr_linenumber" name="L325" href="#L325">325</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setBigDecimal() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L326" href="#L326">326</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bigDecimal"</span>)),<span class="jxr_string">"42.12345678901234567890"</span>);
+<a class="jxr_linenumber" name="L327" href="#L327">327</a>         assertEquals(<strong class="jxr_keyword">new</strong> BigDecimal(<span class="jxr_string">"42.12345678901234567890"</span>),bean.getBigDecimal());
+<a class="jxr_linenumber" name="L328" href="#L328">328</a>     }
+<a class="jxr_linenumber" name="L329" href="#L329">329</a> 
+<a class="jxr_linenumber" name="L330" href="#L330">330</a>     @Test
+<a class="jxr_linenumber" name="L331" href="#L331">331</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getBigInteger() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L332" href="#L332">332</a>         bean.setBigInteger(<strong class="jxr_keyword">new</strong> BigInteger(<span class="jxr_string">"4212345678901234567890"</span>));
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>         assertEquals(<span class="jxr_string">"4212345678901234567890"</span>, beanWrapper.getProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bigInteger"</span>))));
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>     }
+<a class="jxr_linenumber" name="L335" href="#L335">335</a> 
+<a class="jxr_linenumber" name="L336" href="#L336">336</a>     @Test
+<a class="jxr_linenumber" name="L337" href="#L337">337</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setBigInteger() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L338" href="#L338">338</a>         beanWrapper.setProperty(properties.fromName(<strong class="jxr_keyword">new</strong> Column(<span class="jxr_string">"bigInteger"</span>)),<span class="jxr_string">"4212345678901234567890"</span>);
+<a class="jxr_linenumber" name="L339" href="#L339">339</a>         assertEquals(<strong class="jxr_keyword">new</strong> BigInteger(<span class="jxr_string">"4212345678901234567890"</span>),bean.getBigInteger());
+<a class="jxr_linenumber" name="L340" href="#L340">340</a>     }
+<a class="jxr_linenumber" name="L341" href="#L341">341</a> 
+<a class="jxr_linenumber" name="L342" href="#L342">342</a>     <strong class="jxr_keyword">protected</strong> BeanProperties deriveProperties() {
+<a class="jxr_linenumber" name="L343" href="#L343">343</a>         BeanInstructions instructions = <strong class="jxr_keyword">new</strong> BeanParser().getBeanInstructions(Bean.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L344" href="#L344">344</a>         <strong class="jxr_keyword">return</strong> instructions.getProperties();
+<a class="jxr_linenumber" name="L345" href="#L345">345</a>     }
+<a class="jxr_linenumber" name="L346" href="#L346">346</a> }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2013&#x2013;2019 <a href="http://blog.42.nl/">42 BV</a>. All rights reserved.</div>
+</body>
+</html>

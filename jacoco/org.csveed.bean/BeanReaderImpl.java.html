@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanReaderImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean</a> &gt; <span class="el_source">BeanReaderImpl.java</span></div><h1>BeanReaderImpl.java</h1><pre class="source lang-java linenums">package org.csveed.bean;
+
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.csveed.api.Header;
+import org.csveed.api.Row;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
+import org.csveed.row.RowReader;
+import org.csveed.row.RowReaderImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class BeanReaderImpl&lt;T&gt; implements BeanReader&lt;T&gt; {
+
+<span class="fc" id="L18">    private static final Logger logger = LoggerFactory.getLogger(BeanReaderImpl.class);</span>
+
+    private final RowReader rowReader;
+
+    private final BeanInstructions beanInstructions;
+
+    private AbstractMapper&lt;T&gt; mapper;
+
+    private final DynamicColumn currentDynamicColumn;
+
+    private Row unmappedRow;
+
+    public BeanReaderImpl(Reader reader, Class&lt;T&gt; beanClass) {
+<span class="fc" id="L31">        this(reader, new BeanParser().getBeanInstructions(beanClass));</span>
+<span class="fc" id="L32">    }</span>
+
+<span class="fc" id="L34">    public BeanReaderImpl(Reader reader, BeanInstructions beanInstructions) {</span>
+<span class="fc" id="L35">        this.beanInstructions = beanInstructions;</span>
+<span class="fc" id="L36">        this.rowReader = new RowReaderImpl(reader, this.beanInstructions.getRowInstructions());</span>
+<span class="fc" id="L37">        this.currentDynamicColumn = new DynamicColumn(this.beanInstructions.getStartIndexDynamicColumns());</span>
+<span class="fc" id="L38">    }</span>
+
+    public AbstractMapper&lt;T&gt; getMapper() {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (this.mapper == null) {</span>
+<span class="fc" id="L42">            this.mapper = this.createMappingStrategy();</span>
+<span class="fc" id="L43">            mapper.setBeanInstructions(this.beanInstructions);</span>
+        }
+<span class="fc" id="L45">        return mapper;</span>
+    }
+
+    @Override
+    public List&lt;T&gt; readBeans() {
+<span class="fc" id="L50">        List&lt;T&gt; beans = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        while (!isFinished()) {</span>
+<span class="fc" id="L52">            T bean = readBean();</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">            if (bean != null) {</span>
+<span class="fc" id="L54">                beans.add(bean);</span>
+            }
+<span class="fc" id="L56">        }</span>
+<span class="fc" id="L57">        return beans;</span>
+    }
+
+    @Override
+    public T readBean() {
+<span class="fc" id="L62">        logSettings();</span>
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (this.beanInstructions.useHeader()) {</span>
+<span class="fc" id="L65">            getMapper().verifyHeader(getHeader());</span>
+        }
+
+<span class="fc" id="L68">        currentDynamicColumn.checkForReset(((RowReaderImpl) rowReader).getMaxNumberOfColumns());</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (currentDynamicColumn.atFirstDynamicColumn()) {</span>
+<span class="fc" id="L70">            unmappedRow = rowReader.readRow();</span>
+        }
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (unmappedRow == null) {</span>
+<span class="fc" id="L73">            return null;</span>
+        }
+
+<span class="fc" id="L76">        T bean = getMapper().convert(instantiateBean(), unmappedRow, getCurrentLine(), currentDynamicColumn);</span>
+<span class="fc" id="L77">        currentDynamicColumn.advanceDynamicColumn();</span>
+<span class="fc" id="L78">        return bean;</span>
+    }
+
+    protected void logSettings() {
+<span class="fc" id="L82">        this.beanInstructions.logSettings();</span>
+<span class="fc" id="L83">    }</span>
+
+    protected Header getHeader() {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (this.beanInstructions.useHeader()) {</span>
+<span class="fc" id="L87">            return rowReader.getHeader();</span>
+        }
+<span class="nc" id="L89">        return null;</span>
+    }
+
+    @Override
+    public Header readHeader() {
+<span class="nc" id="L94">        return rowReader.readHeader();</span>
+    }
+
+    @Override
+    public int getCurrentLine() {
+<span class="fc" id="L99">        return this.rowReader.getCurrentLine();</span>
+    }
+
+    @Override
+    public boolean isFinished() {
+<span class="fc" id="L104">        return rowReader.isFinished();</span>
+    }
+
+    @Override
+    public RowReader getRowReader() {
+<span class="fc" id="L109">        return this.rowReader;</span>
+    }
+
+    private T instantiateBean() {
+        try {
+<span class="fc" id="L114">            return this.getBeanClass().newInstance();</span>
+<span class="fc" id="L115">        } catch (Exception err) {</span>
+<span class="fc" id="L116">            throw new CsvException(new GeneralError(</span>
+<span class="fc" id="L117">                    &quot;Unable to instantiate the bean class &quot; + this.getBeanClass().getName() +</span>
+                            &quot;. Does it have a no-arg public constructor?&quot;
+                    ));
+        }
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public Class&lt;T&gt; getBeanClass() {
+<span class="fc" id="L125">        return this.beanInstructions.getBeanClass();</span>
+    }
+
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public AbstractMapper&lt;T&gt; createMappingStrategy() {
+        try {
+<span class="fc" id="L131">            return this.beanInstructions.getMappingStrategy().newInstance();</span>
+<span class="nc" id="L132">        } catch (Exception e) {</span>
+<span class="nc" id="L133">            logger.trace(&quot;&quot;, e);</span>
+<span class="nc" id="L134">            throw new CsvException(new GeneralError(</span>
+                    &quot;Unable to instantiate the mapping strategy&quot;
+                    ));
+        }
+    }
+
+    @Override
+    public BeanInstructions getBeanInstructions() {
+<span class="nc" id="L142">        return this.beanInstructions;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

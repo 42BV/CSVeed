@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean.conversion</a> &gt; <span class="el_source">DateConverter.java</span></div><h1>DateConverter.java</h1><pre class="source lang-java linenums">package org.csveed.bean.conversion;
+
+import static org.csveed.bean.conversion.ConversionUtil.hasText;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DateConverter extends AbstractConverter&lt;Date&gt; {
+
+    private final DateFormat dateFormat;
+
+    private final boolean allowEmpty;
+
+    private final int exactDateLength;
+
+    private final String formatText;
+
+    public DateConverter(String formatText, boolean allowEmpty) {
+<span class="fc" id="L21">        super(Date.class);</span>
+<span class="fc" id="L22">        this.formatText = formatText;</span>
+<span class="fc" id="L23">        this.dateFormat = new SimpleDateFormat(formatText);</span>
+<span class="fc" id="L24">        this.dateFormat.setLenient(false);</span>
+<span class="fc" id="L25">        this.allowEmpty = allowEmpty;</span>
+<span class="fc" id="L26">        this.exactDateLength = -1;</span>
+<span class="fc" id="L27">    }</span>
+
+    @Override
+    public Date fromString(String text) throws Exception {
+<span class="pc bpc" id="L31" title="2 of 4 branches missed.">        if (this.allowEmpty &amp;&amp; !hasText(text)) {</span>
+<span class="nc" id="L32">            return null;</span>
+<span class="pc bpc" id="L33" title="4 of 6 branches missed.">        } else if (text != null &amp;&amp; this.exactDateLength &gt;= 0 &amp;&amp; text.length() != this.exactDateLength) {</span>
+<span class="nc" id="L34">            throw new IllegalArgumentException(</span>
+                    &quot;Could not parse date: it is not exactly&quot; + this.exactDateLength + &quot;characters long&quot;);
+        } else {
+            try {
+<span class="fc" id="L38">                return this.dateFormat.parse(text);</span>
+<span class="fc" id="L39">            } catch (ParseException ex) {</span>
+<span class="fc" id="L40">                throw new IllegalArgumentException(&quot;Could not parse date: &quot; + ex.getMessage(), ex);</span>
+            }
+        }
+    }
+
+    @Override
+    public String infoOnType() {
+<span class="fc" id="L47">        return super.infoOnType() + &quot; &quot; + formatText;</span>
+    }
+
+    @Override
+    public String toString(Date value) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        return value != null ? this.dateFormat.format(value) : &quot;&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

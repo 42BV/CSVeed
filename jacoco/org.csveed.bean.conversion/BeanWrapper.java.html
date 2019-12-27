@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean.conversion</a> &gt; <span class="el_source">BeanWrapper.java</span></div><h1>BeanWrapper.java</h1><pre class="source lang-java linenums">package org.csveed.bean.conversion;
+
+import java.lang.reflect.Method;
+
+import org.csveed.bean.BeanProperty;
+
+public class BeanWrapper {
+
+    private DefaultConverters defaultConverters;
+
+    private Object bean;
+
+<span class="fc" id="L13">    public BeanWrapper(DefaultConverters defaultConverters, Object bean) {</span>
+<span class="fc" id="L14">        this.defaultConverters = defaultConverters;</span>
+<span class="fc" id="L15">        this.bean = bean;</span>
+<span class="fc" id="L16">    }</span>
+
+    public String getProperty(BeanProperty property) throws ConversionException {
+<span class="fc" id="L19">        Method readMethod = property.getPropertyDescriptor().getReadMethod();</span>
+<span class="fc" id="L20">        Converter converter = getConverter(property);</span>
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (converter == null) {</span>
+<span class="nc" id="L22">            throw new NoConverterFoundException(&quot;No Converter found for&quot;, getPropertyType(property));</span>
+        }
+        try {
+<span class="fc" id="L25">            Object value = readMethod.invoke(bean);</span>
+<span class="fc" id="L26">            return converter.toString(value);</span>
+<span class="nc" id="L27">        } catch (Exception err) {</span>
+<span class="nc" id="L28">            throw new BeanPropertyConversionException(&quot;Problem converting&quot;, converter.infoOnType(), err);</span>
+        }
+    }
+
+    public void setProperty(BeanProperty property, String value) throws ConversionException {
+<span class="fc" id="L33">        Method writeMethod = property.getPropertyDescriptor().getWriteMethod();</span>
+<span class="fc" id="L34">        Converter converter = getConverter(property);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">        if (converter == null) {</span>
+<span class="fc" id="L36">            throw new NoConverterFoundException(&quot;No Converter found for&quot;, getPropertyType(property));</span>
+        }
+        try {
+<span class="fc bfc" id="L39" title="All 4 branches covered.">            writeMethod.invoke(bean, value == null || value.equals(&quot;&quot;) ? null : converter.fromString(value));</span>
+<span class="fc" id="L40">        } catch (Exception err) {</span>
+<span class="fc" id="L41">            throw new BeanPropertyConversionException(&quot;Problem converting&quot;, converter.infoOnType(), err);</span>
+<span class="fc" id="L42">        }</span>
+<span class="fc" id="L43">    }</span>
+
+    protected Converter getConverter(BeanProperty property) {
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (property.getConverter() != null) {</span>
+<span class="fc" id="L47">            return property.getConverter();</span>
+        }
+<span class="fc" id="L49">        return defaultConverters.getConverter(getPropertyType(property));</span>
+    }
+
+    protected Class getPropertyType(BeanProperty property) {
+<span class="fc" id="L53">        return property.getPropertyDescriptor().getPropertyType();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

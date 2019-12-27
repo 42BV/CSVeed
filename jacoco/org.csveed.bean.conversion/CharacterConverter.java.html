@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CharacterConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean.conversion</a> &gt; <span class="el_source">CharacterConverter.java</span></div><h1>CharacterConverter.java</h1><pre class="source lang-java linenums">package org.csveed.bean.conversion;
+
+import static org.csveed.bean.conversion.ConversionUtil.hasLength;
+
+public class CharacterConverter extends AbstractConverter&lt;Character&gt; {
+
+    private static final String UNICODE_PREFIX = &quot;\\u&quot;;
+
+    private static final int UNICODE_LENGTH = 6;
+
+    private final boolean allowEmpty;
+
+    public CharacterConverter(boolean allowEmpty) {
+<span class="fc" id="L14">        super(Character.class);</span>
+<span class="fc" id="L15">        this.allowEmpty = allowEmpty;</span>
+<span class="fc" id="L16">    }</span>
+
+    @Override
+    public Character fromString(String text) throws Exception {
+<span class="pc bpc" id="L20" title="1 of 4 branches missed.">        if (this.allowEmpty &amp;&amp; !hasLength(text)) {</span>
+<span class="nc" id="L21">            return null;</span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        } else if (text == null) {</span>
+<span class="nc" id="L23">            throw new IllegalArgumentException(&quot;null String cannot be converted to char type&quot;);</span>
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        } else if (isUnicodeCharacterSequence(text)) {</span>
+<span class="nc" id="L25">            int code = Integer.parseInt(text.substring(UNICODE_PREFIX.length()), 16);</span>
+<span class="nc" id="L26">            return (char) code;</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        } else if (text.length() != 1) {</span>
+<span class="nc" id="L28">            throw new IllegalArgumentException(&quot;String [&quot; + text + &quot;] with length &quot; +</span>
+<span class="nc" id="L29">                    text.length() + &quot; cannot be converted to char type&quot;);</span>
+        } else {
+<span class="fc" id="L31">            return text.charAt(0);</span>
+        }
+    }
+
+    @Override
+    public String toString(Character value) throws Exception {
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        return value != null ? value.toString() : &quot;&quot;;</span>
+    }
+
+    private boolean isUnicodeCharacterSequence(String sequence) {
+<span class="pc bpc" id="L41" title="3 of 4 branches missed.">        return sequence.startsWith(UNICODE_PREFIX) &amp;&amp; sequence.length() == UNICODE_LENGTH;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

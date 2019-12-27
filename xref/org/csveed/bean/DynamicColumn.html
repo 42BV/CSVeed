@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>DynamicColumn xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../apidocs/org/csveed/bean/DynamicColumn.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> org.csveed.bean;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> org.csveed.common.Column;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *     The concept of dynamic columns comes into play when a sheet contains columns that are not really part</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *     of the columns, but should have been separate rows. For example, let's say you have a table that looks</em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *     like this:</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * &lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * &lt;code&gt;</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> *     | name   | town   | jan 14 | jan 15 | jan 16 |</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> *     | Rob    | Leiden |   4    |   1    |   7    |</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> *     | Rob    | Delft  |   0    |   3    |   8    |</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> *     | Erik   | Leiden |   2    |   4    |   1    |</em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> *     | Erik   | Sneek  |   1    |   0    |   9    |</em>
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment"> * &lt;/code&gt;</em>
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment"> *     Let's say you want to compact this table into the following, normalized format:</em>
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment"> * &lt;code&gt;</em>
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment"> *     | name   | town   | date   | visits |</em>
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment"> *     | Rob    | Leiden | jan 14 |   4    |</em>
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment"> *     | Rob    | Leiden | jan 15 |   1    |</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment"> *     | Rob    | Leiden | jan 16 |   7    |</em>
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> *     | Rob    | Delft  | jan 14 |   0    |</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment"> *     | Rob    | Delft  | jan 15 |   3    |</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment"> *     | Rob    | Delft  | jan 16 |   8    |</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment"> *     | Erik   | Leiden | jan 14 |   2    |</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment"> *     | Erik   | Leiden | jan 15 |   4    |</em>
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment"> *     | Erik   | Leiden | jan 16 |   1    |</em>
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment"> *     | Erik   | Sneek  | jan 14 |   1    |</em>
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> *     | Erik   | Sneek  | jan 15 |   0    |</em>
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> *     | Erik   | Sneek  | jan 16 |   9    |</em>
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> * &lt;/code&gt;</em>
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment"> *     In order to realize this goal, you need to make that startIndexDynamicColumns is set to 3 on @CsvFile.</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment"> *     This will assume the columns starting with the third and all thereafter are dynamic. For every dynamic</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment"> *     column, a new bean will be created. All static columns will be copied into every created bean.</em>
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> * &lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> *     The header name and the cell value can be copied into bean properties. In the example, the bean requires</em>
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> *     two fields date and visits. date must be annotated with @CsvHeaderName and visits with @CsvHeaderValue.</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> * &lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> * @author Robert Bor</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="DynamicColumn" href="../../../org/csveed/bean/DynamicColumn.html#DynamicColumn">DynamicColumn</a> {
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">private</strong> <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a> startColumn;
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">private</strong> <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a> currentColumn;
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">public</strong> <a name="DynamicColumn" href="../../../org/csveed/bean/DynamicColumn.html#DynamicColumn">DynamicColumn</a>(<a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a> configuredStartColumn) {
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          <strong class="jxr_keyword">this</strong>.startColumn = configuredStartColumn == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : <strong class="jxr_keyword">new</strong> <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a>(configuredStartColumn);
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>          <strong class="jxr_keyword">this</strong>.currentColumn = configuredStartColumn == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : <strong class="jxr_keyword">new</strong> <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a>(configuredStartColumn);
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      }
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> checkForReset(<strong class="jxr_keyword">int</strong> numberOfColumns) {
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          <strong class="jxr_keyword">if</strong> (lastDynamicColumnPassed(numberOfColumns)) {
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>              reset();
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          }
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      }
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> reset() {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          <strong class="jxr_keyword">this</strong>.currentColumn = <strong class="jxr_keyword">new</strong> <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a>(<strong class="jxr_keyword">this</strong>.startColumn);
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      }
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">boolean</strong> lastDynamicColumnPassed(<strong class="jxr_keyword">int</strong> numberOfColumns) {
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.currentColumn != <strong class="jxr_keyword">null</strong> &amp;&amp; <strong class="jxr_keyword">this</strong>.currentColumn.getColumnIndex() &gt; numberOfColumns;
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      }
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> atFirstDynamicColumn() {
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.startColumn == <strong class="jxr_keyword">null</strong> || <strong class="jxr_keyword">this</strong>.startColumn.equals(<strong class="jxr_keyword">this</strong>.currentColumn);
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      }
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>  
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> advanceDynamicColumn() {
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">if</strong> (currentColumn == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>              <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          }
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          <strong class="jxr_keyword">this</strong>.currentColumn = currentColumn.nextColumn();
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      }
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>  
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isDynamicColumnActive(<a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a> currentColumn) {
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.currentColumn != <strong class="jxr_keyword">null</strong> &amp;&amp; <strong class="jxr_keyword">this</strong>.currentColumn.getColumnIndex() == currentColumn.getColumnIndex();
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      }
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>  }
+</pre>
+<hr/>
+<div id="footer">Copyright &#169; 2013&#x2013;2019 <a href="http://blog.42.nl/">42 BV</a>. All rights reserved.</div>
+</body>
+</html>

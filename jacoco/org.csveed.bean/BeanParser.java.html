@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean</a> &gt; <span class="el_source">BeanParser.java</span></div><h1>BeanParser.java</h1><pre class="source lang-java linenums">package org.csveed.bean;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.Locale;
+
+import org.csveed.annotations.CsvCell;
+import org.csveed.annotations.CsvConverter;
+import org.csveed.annotations.CsvDate;
+import org.csveed.annotations.CsvFile;
+import org.csveed.annotations.CsvHeaderName;
+import org.csveed.annotations.CsvHeaderValue;
+import org.csveed.annotations.CsvIgnore;
+import org.csveed.annotations.CsvLocalizedNumber;
+import org.csveed.common.Column;
+
+<span class="fc" id="L17">public class BeanParser {</span>
+
+    private BeanInstructions beanInstructions;
+
+<span class="fc" id="L21">    private Column currentColumn = new Column();</span>
+
+    public BeanInstructions getBeanInstructions(Class beanClass) {
+
+<span class="fc" id="L25">        this.beanInstructions = new BeanInstructionsImpl(beanClass);</span>
+
+<span class="fc" id="L27">        Annotation[] annotations = beanClass.getAnnotations();</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        for (Annotation annotation : annotations) {</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">            if (annotation instanceof CsvFile) {</span>
+<span class="fc" id="L30">                parseCsvFile((CsvFile)annotation);</span>
+            }
+        }
+
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        for (BeanProperty beanProperty : beanInstructions.getProperties()) {</span>
+<span class="fc" id="L35">            checkForAnnotations(beanProperty);</span>
+<span class="fc" id="L36">        }</span>
+
+<span class="fc" id="L38">        return this.beanInstructions;</span>
+    }
+
+    public void checkForAnnotations(BeanProperty beanProperty) {
+
+<span class="fc" id="L43">        Field currentField = beanProperty.getField();</span>
+<span class="fc" id="L44">        Annotation[] annotations = currentField.getDeclaredAnnotations();</span>
+<span class="fc" id="L45">        String propertyName = beanProperty.getPropertyName();</span>
+<span class="fc" id="L46">        String columnName = propertyName;</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        for (Annotation annotation : annotations) {</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            if (annotation instanceof CsvCell) {</span>
+<span class="fc" id="L49">                columnName = parseCsvCell(propertyName, (CsvCell)annotation);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            } else if (annotation instanceof CsvConverter) {</span>
+<span class="fc" id="L51">                parseCsvConverter(propertyName, (CsvConverter)annotation);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            } else if (annotation instanceof CsvDate) {</span>
+<span class="fc" id="L53">                parseCsvDate(propertyName, (CsvDate)annotation);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            } else if (annotation instanceof CsvLocalizedNumber) {</span>
+<span class="fc" id="L55">                parseCsvLocalizedNumber(propertyName, (CsvLocalizedNumber) annotation);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            } else if (annotation instanceof CsvHeaderName) {</span>
+<span class="fc" id="L57">                this.beanInstructions.setHeaderNameToProperty(propertyName);</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            } else if (annotation instanceof CsvHeaderValue) {</span>
+<span class="fc" id="L59">                this.beanInstructions.setHeaderValueToProperty(propertyName);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            } else if (annotation instanceof CsvIgnore) {</span>
+<span class="fc" id="L61">                this.beanInstructions.ignoreProperty(propertyName);</span>
+<span class="fc" id="L62">                return;</span>
+            }
+        }
+<span class="fc" id="L65">        this.beanInstructions.mapColumnNameToProperty(columnName, propertyName);</span>
+<span class="fc" id="L66">        this.beanInstructions.mapColumnIndexToProperty(currentColumn.getColumnIndex(), propertyName);</span>
+<span class="fc" id="L67">        currentColumn = currentColumn.nextColumn();</span>
+<span class="fc" id="L68">    }</span>
+
+    private void parseCsvLocalizedNumber(String propertyName, CsvLocalizedNumber annotation) {
+        final Locale locale;
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (annotation.country().isEmpty()) {</span>
+<span class="fc" id="L73">            locale = new Locale(annotation.language());</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        } else if (annotation.variant().isEmpty()) {</span>
+<span class="fc" id="L75">            locale = new Locale(annotation.language(), annotation.country());</span>
+        } else {
+<span class="nc" id="L77">            locale = new Locale(annotation.language(), annotation.country(), annotation.variant());</span>
+        }
+<span class="fc" id="L79">        this.beanInstructions.setLocalizedNumber(propertyName, locale);</span>
+<span class="fc" id="L80">    }</span>
+
+    private void parseCsvFile(CsvFile csvFile) {
+
+<span class="fc" id="L84">        this.beanInstructions</span>
+<span class="fc" id="L85">            .setEscape(csvFile.escape())</span>
+<span class="fc" id="L86">            .setQuote(csvFile.quote())</span>
+<span class="fc" id="L87">            .setQuotingEnabled(csvFile.quotingEnabled())</span>
+<span class="fc" id="L88">            .setSeparator(csvFile.separator())</span>
+<span class="fc" id="L89">            .setComment(csvFile.comment())</span>
+<span class="fc" id="L90">            .setEndOfLine(csvFile.endOfLine())</span>
+<span class="fc" id="L91">            .setMapper(csvFile.mappingStrategy())</span>
+<span class="fc" id="L92">            .setStartRow(csvFile.startRow())</span>
+<span class="fc" id="L93">            .setUseHeader(csvFile.useHeader())</span>
+<span class="fc" id="L94">            .skipEmptyLines(csvFile.skipEmptyLines())</span>
+<span class="fc" id="L95">            .skipCommentLines(csvFile.skipCommentLines())</span>
+<span class="fc" id="L96">            .setStartIndexDynamicColumns(csvFile.startIndexDynamicColumns());</span>
+<span class="fc" id="L97">    }</span>
+
+    private void parseCsvDate(String propertyName, CsvDate csvDate) {
+<span class="fc" id="L100">        this.beanInstructions.setDate(propertyName, csvDate.format());</span>
+<span class="fc" id="L101">    }</span>
+
+    private void parseCsvConverter(String propertyName, CsvConverter csvConverter) {
+        try {
+<span class="fc" id="L105">            this.beanInstructions.setConverter(propertyName, csvConverter.converter().newInstance());</span>
+<span class="nc" id="L106">        } catch (Exception err) {</span>
+<span class="nc" id="L107">            throw new RuntimeException(err);</span>
+<span class="fc" id="L108">        }</span>
+<span class="fc" id="L109">    }</span>
+
+    private String parseCsvCell(String propertyName, CsvCell csvCell) {
+<span class="pc bpc" id="L112" title="1 of 4 branches missed.">        String columnName = csvCell.columnName() == null || csvCell.columnName().isEmpty() ? propertyName : csvCell.columnName();</span>
+<span class="fc" id="L113">        this.beanInstructions.setRequired(propertyName, csvCell.required());</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        currentColumn = csvCell.columnIndex() != -1 ? new Column(csvCell.columnIndex()) : currentColumn;</span>
+<span class="fc" id="L115">        return columnName;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Column.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.common</a> &gt; <span class="el_source">Column.java</span></div><h1>Column.java</h1><pre class="source lang-java linenums">package org.csveed.common;
+
+import org.csveed.api.Header;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
+
+public class Column implements Comparable&lt;Column&gt; {
+
+    public static final int FIRST_COLUMN_INDEX = 1;
+
+<span class="fc" id="L11">    private int columnIndex = -1;</span>
+
+    private String columnName;
+
+    private Header header;
+
+    private ColumnKey key;
+
+<span class="fc" id="L19">    public Column(String columnName) {</span>
+<span class="fc" id="L20">        setColumnName(columnName);</span>
+<span class="fc" id="L21">    }</span>
+
+    public Column() {
+<span class="fc" id="L24">        this(FIRST_COLUMN_INDEX);</span>
+<span class="fc" id="L25">    }</span>
+
+<span class="fc" id="L27">    public Column(Column column) {</span>
+<span class="fc" id="L28">        setColumnIndex(column.getColumnIndex());</span>
+<span class="fc" id="L29">    }</span>
+
+<span class="fc" id="L31">    public Column(int columnIndex) {</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (columnIndex &lt;= 0) {</span>
+<span class="fc" id="L33">            throw new CsvException(new GeneralError(&quot;Column index cannot be set at 0 or lower. Column indexes are 1-based&quot;));</span>
+        }
+<span class="fc" id="L35">        setColumnIndex(columnIndex);</span>
+<span class="fc" id="L36">    }</span>
+
+    private String columnIndexToExcelColumn(int columnIndex) {
+<span class="fc" id="L39">        StringBuilder excelColumn = new StringBuilder();</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        while (columnIndex % 26 &gt; 0) {</span>
+<span class="fc" id="L41">            excelColumn.insert(0, (char) (columnIndex % 26 + 'A' - 1));</span>
+<span class="fc" id="L42">            columnIndex /= 26;</span>
+        }
+<span class="fc" id="L44">        return excelColumn.toString();</span>
+    }
+
+    public Column setHeader(Header header) {
+<span class="fc" id="L48">        this.header = header;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (this.header != null) {</span>
+<span class="fc" id="L50">            setColumnName(header.getName(this.columnIndex));</span>
+        }
+<span class="fc" id="L52">        return this;</span>
+    }
+
+    public void setColumnIndex(int columnIndex) {
+<span class="fc" id="L56">        this.columnIndex = columnIndex;</span>
+<span class="fc" id="L57">        setKey(new ColumnIndexKey(this.columnIndex));</span>
+<span class="fc" id="L58">    }</span>
+
+    public void setColumnName(String columnName) {
+<span class="fc" id="L61">        this.columnName = columnName.toLowerCase();</span>
+<span class="fc" id="L62">        setKey(new ColumnNameKey(this.columnName));</span>
+<span class="fc" id="L63">    }</span>
+
+    public void setKey(ColumnKey key) {
+<span class="fc" id="L66">        this.key = key;</span>
+<span class="fc" id="L67">    }</span>
+
+    public String getExcelColumn() {
+<span class="fc" id="L70">        return columnIndexToExcelColumn(this.columnIndex);</span>
+    }
+
+    public int getColumnIndex() {
+<span class="fc" id="L74">        return this.columnIndex;</span>
+    }
+
+    public String getColumnName() {
+<span class="fc" id="L78">        return this.columnName;</span>
+    }
+
+    public Column nextColumn() {
+<span class="fc" id="L82">        return new Column(this.getColumnIndex()+1).setHeader(header);</span>
+    }
+
+    public Column nextLine() {
+<span class="fc" id="L86">        return new Column().setHeader(header);</span>
+    }
+
+    public String getColumnText() {
+<span class="fc" id="L90">        return</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">                (columnIndex == -1 ? &quot;&quot; : &quot; index &quot;+columnIndex+&quot; (&quot;+getExcelColumn()+&quot;)&quot;) +</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">                (columnName == null ? &quot;&quot; : &quot; name \&quot;&quot;+columnName+&quot;\&quot;&quot;);</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        if (!(obj instanceof Column)) {</span>
+<span class="nc" id="L98">            return false;</span>
+        }
+<span class="fc" id="L100">        return this.key.equals(((Column)obj).key);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L105">        return this.key.hashCode();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L110">        return this.key.toString();</span>
+    }
+
+    @Override
+    public int compareTo(Column column) {
+<span class="fc" id="L115">        return this.key.compareTo(column.key);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

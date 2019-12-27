@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SymbolMapping.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.token</a> &gt; <span class="el_source">SymbolMapping.java</span></div><h1>SymbolMapping.java</h1><pre class="source lang-java linenums">package org.csveed.token;
+
+import static org.csveed.token.EncounteredSymbol.END_OF_FILE_SYMBOL;
+import static org.csveed.token.EncounteredSymbol.EOL_SYMBOL;
+import static org.csveed.token.EncounteredSymbol.EOL_SYMBOL_TRASH;
+import static org.csveed.token.EncounteredSymbol.ESCAPE_SYMBOL;
+import static org.csveed.token.EncounteredSymbol.OTHER_SYMBOL;
+import static org.csveed.token.EncounteredSymbol.QUOTE_SYMBOL;
+
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class SymbolMapping {
+
+<span class="fc" id="L20">    private static final Logger LOG = LoggerFactory.getLogger(SymbolMapping.class);</span>
+
+<span class="fc" id="L22">    private Map&lt;EncounteredSymbol, char[]&gt; symbolToChars = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L23">    private Map&lt;Character, EncounteredSymbol&gt; charToSymbol = new TreeMap&lt;&gt;();</span>
+
+    private Character escapeCharacter;
+
+    private Character quoteCharacter;
+
+    private boolean settingsLogged;
+
+<span class="fc" id="L31">    private int startLine = 1;</span>
+
+<span class="fc" id="L33">    private boolean skipCommentLines = true;</span>
+
+    // When multiple EOL characters have been given,
+    // only the first one encountered will be accepted.
+    private char acceptedEndOfLine;
+
+<span class="fc" id="L39">    public SymbolMapping() {</span>
+<span class="fc" id="L40">        initDefaultMapping();</span>
+<span class="fc" id="L41">    }</span>
+
+    public void initDefaultMapping() {
+<span class="fc" id="L44">        addMapping(EncounteredSymbol.ESCAPE_SYMBOL, '&quot;');</span>
+<span class="fc" id="L45">        addMapping(EncounteredSymbol.QUOTE_SYMBOL, '&quot;');</span>
+<span class="fc" id="L46">        addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, ';');</span>
+<span class="fc" id="L47">        addMapping(EncounteredSymbol.EOL_SYMBOL, new char[] { '\r', '\n' } );</span>
+<span class="fc" id="L48">        addMapping(EncounteredSymbol.SPACE_SYMBOL, ' ');</span>
+<span class="fc" id="L49">        addMapping(EncounteredSymbol.COMMENT_SYMBOL, '#');</span>
+<span class="fc" id="L50">    }</span>
+
+    public char getFirstMappedCharacter(EncounteredSymbol encounteredSymbol) {
+<span class="fc" id="L53">        char[] mappedCharacters = getMappedCharacters(encounteredSymbol);</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        return mappedCharacters == null ? 0 : mappedCharacters[0];</span>
+    }
+
+    public char[] getMappedCharacters(EncounteredSymbol encounteredSymbol) {
+<span class="fc" id="L58">        return symbolToChars.get(encounteredSymbol);</span>
+    }
+
+    public void addMapping(EncounteredSymbol symbol, Character character) {
+<span class="fc" id="L62">        addMapping(symbol, new char[] { character } );</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (symbol.isCheckForSimilarEscapeAndQuote()) {</span>
+<span class="fc" id="L64">            storeCharacterForLaterComparison(symbol, character);</span>
+        }
+<span class="fc" id="L66">    }</span>
+
+    public void addMapping(EncounteredSymbol symbol, char[] characters) {
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        while (charToSymbol.values().remove(symbol));</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (Character character : characters) {</span>
+<span class="fc" id="L71">            charToSymbol.put(character, symbol);</span>
+        }
+<span class="fc" id="L73">        symbolToChars.put(symbol, characters);</span>
+<span class="fc" id="L74">    }</span>
+
+    public void logSettings() {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (settingsLogged) {</span>
+<span class="fc" id="L78">            return;</span>
+        }
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        LOG.info(&quot;- CSV config / skip comment lines? {}&quot;, isSkipCommentLines() ? &quot;yes&quot; : &quot;no&quot;);</span>
+<span class="fc" id="L81">        LOG.info(&quot;- CSV config / start line: {}&quot;, startLine);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (EncounteredSymbol symbol : symbolToChars.keySet()) {</span>
+<span class="fc" id="L83">            char[] characters = symbolToChars.get(symbol);</span>
+<span class="fc" id="L84">            LOG.info(&quot;- CSV config / Characters for {} {}&quot;, symbol, charactersToString(characters));</span>
+<span class="fc" id="L85">        }</span>
+<span class="fc" id="L86">        settingsLogged = true;</span>
+<span class="fc" id="L87">    }</span>
+
+    private String charactersToString(char[] characters) {
+<span class="fc" id="L90">        StringBuilder returnString = new StringBuilder();</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (char currentChar : characters) {</span>
+<span class="fc" id="L92">            returnString.append(charToPrintable(currentChar));</span>
+<span class="fc" id="L93">            returnString.append(&quot; &quot;);</span>
+        }
+<span class="fc" id="L95">        return returnString.toString();</span>
+    }
+
+    private String charToPrintable(char character) {
+<span class="fc bfc" id="L99" title="All 4 branches covered.">        switch(character) {</span>
+<span class="fc" id="L100">            case '\t' : return &quot;\\t&quot;;</span>
+<span class="fc" id="L101">            case '\n' : return &quot;\\n&quot;;</span>
+<span class="fc" id="L102">            case '\r' : return &quot;\\r&quot;;</span>
+<span class="fc" id="L103">            default: return Character.toString(character);</span>
+        }
+    }
+
+    private void storeCharacterForLaterComparison(EncounteredSymbol symbol, Character character) {
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (symbol == ESCAPE_SYMBOL) {</span>
+<span class="fc" id="L109">            escapeCharacter = character;</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        } else if (symbol == QUOTE_SYMBOL) {</span>
+<span class="fc" id="L111">            quoteCharacter = character;</span>
+        }
+<span class="fc" id="L113">    }</span>
+
+    public boolean isSameCharactersForEscapeAndQuote() {
+<span class="pc bpc" id="L116" title="2 of 6 branches missed.">        return escapeCharacter != null &amp;&amp; quoteCharacter != null &amp;&amp; escapeCharacter.equals(quoteCharacter);</span>
+    }
+
+    public EncounteredSymbol find(int character, ParseState parseState) {
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (character == -1) {</span>
+<span class="fc" id="L121">            return END_OF_FILE_SYMBOL;</span>
+        }
+<span class="fc" id="L123">        EncounteredSymbol symbol = charToSymbol.get((char)character);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (symbol == null) {</span>
+<span class="fc" id="L125">            return OTHER_SYMBOL;</span>
+        }
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (symbol == EOL_SYMBOL) {</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">            if (acceptedEndOfLine == 0) {</span>
+<span class="fc" id="L129">                LOG.info(&quot;- Triggering EOL character: {}&quot;, character);</span>
+<span class="fc" id="L130">                acceptedEndOfLine = (char)character;</span>
+            }
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            if (acceptedEndOfLine != character) {</span>
+<span class="fc" id="L133">                symbol = EOL_SYMBOL_TRASH;</span>
+            }
+        }
+<span class="fc bfc" id="L136" title="All 4 branches covered.">        if (symbol.isCheckForSimilarEscapeAndQuote() &amp;&amp; isSameCharactersForEscapeAndQuote()) {</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">            return parseState.isUpgradeQuoteToEscape() ? ESCAPE_SYMBOL : QUOTE_SYMBOL;</span>
+        }
+<span class="fc" id="L139">        return symbol;</span>
+    }
+
+    public int getStartLine() {
+<span class="fc" id="L143">        return startLine;</span>
+    }
+
+    public void setStartLine(int startLine) {
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (startLine == 0) {</span>
+<span class="fc" id="L148">            throw new CsvException(new GeneralError(&quot;Row cannot be set at 0. Rows are 1-based&quot;));</span>
+        }
+<span class="fc" id="L150">        this.startLine = startLine;</span>
+<span class="fc" id="L151">    }</span>
+
+    public boolean isSkipCommentLines() {
+<span class="fc" id="L154">        return skipCommentLines;</span>
+    }
+
+    public void setSkipCommentLines(boolean skipCommentLines) {
+<span class="fc" id="L158">        this.skipCommentLines = skipCommentLines;</span>
+<span class="fc" id="L159">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

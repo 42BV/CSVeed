@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultConverters.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean.conversion</a> &gt; <span class="el_source">DefaultConverters.java</span></div><h1>DefaultConverters.java</h1><pre class="source lang-java linenums">package org.csveed.bean.conversion;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.text.NumberFormat;
+import java.util.Currency;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.regex.Pattern;
+
+public class DefaultConverters {
+
+<span class="fc" id="L16">    private Map&lt;Class&lt;?&gt;, Converter&gt; converters = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L18">    public DefaultConverters() {</span>
+<span class="fc" id="L19">        registerConverters();</span>
+<span class="fc" id="L20">    }</span>
+
+    public Converter getConverter(Class clazz) {
+<span class="fc" id="L23">        return converters.get(clazz);</span>
+    }
+
+    protected void registerConverters() {
+<span class="fc" id="L27">        addConverter(Charset.class, new CharsetConverter());</span>
+<span class="fc" id="L28">        addConverter(Currency.class, new CurrencyConverter());</span>
+<span class="fc" id="L29">        addConverter(Pattern.class, new PatternConverter());</span>
+<span class="fc" id="L30">        addConverter(TimeZone.class, new TimeZoneConverter());</span>
+<span class="fc" id="L31">        addConverter(byte[].class, new ByteArrayConverter());</span>
+<span class="fc" id="L32">        addConverter(char[].class, new CharArrayConverter());</span>
+<span class="fc" id="L33">        addConverter(char.class, new CharacterConverter(false));</span>
+<span class="fc" id="L34">        addConverter(Character.class, new CharacterConverter(true));</span>
+<span class="fc" id="L35">        addConverter(boolean.class, new CustomBooleanConverter(false));</span>
+<span class="fc" id="L36">        addConverter(Boolean.class, new CustomBooleanConverter(true));</span>
+<span class="fc" id="L37">        addConverter(byte.class, new CustomNumberConverter(Byte.class, NumberFormat.getNumberInstance(Locale.US), false));</span>
+<span class="fc" id="L38">        addConverter(Byte.class, new CustomNumberConverter(Byte.class, NumberFormat.getNumberInstance(Locale.US), true));</span>
+<span class="fc" id="L39">        addConverter(short.class, new CustomNumberConverter(Short.class, NumberFormat.getNumberInstance(Locale.US), false));</span>
+<span class="fc" id="L40">        addConverter(Short.class, new CustomNumberConverter(Short.class, NumberFormat.getNumberInstance(Locale.US), true));</span>
+<span class="fc" id="L41">        addConverter(int.class, new CustomNumberConverter(Integer.class, NumberFormat.getNumberInstance(Locale.US), false));</span>
+<span class="fc" id="L42">        addConverter(Integer.class, new CustomNumberConverter(Integer.class, NumberFormat.getNumberInstance(Locale.US), true));</span>
+<span class="fc" id="L43">        addConverter(long.class, new CustomNumberConverter(Long.class, NumberFormat.getNumberInstance(Locale.US), false));</span>
+<span class="fc" id="L44">        addConverter(Long.class, new CustomNumberConverter(Long.class, NumberFormat.getNumberInstance(Locale.US), true));</span>
+<span class="fc" id="L45">        addConverter(float.class, new CustomNumberConverter(Float.class, NumberFormat.getNumberInstance(Locale.US), false));</span>
+<span class="fc" id="L46">        addConverter(Float.class, new CustomNumberConverter(Float.class, NumberFormat.getNumberInstance(Locale.US), true));</span>
+<span class="fc" id="L47">        addConverter(double.class, new CustomNumberConverter(Double.class, NumberFormat.getNumberInstance(Locale.US), false));</span>
+<span class="fc" id="L48">        addConverter(Double.class, new CustomNumberConverter(Double.class, NumberFormat.getNumberInstance(Locale.US), true));</span>
+<span class="fc" id="L49">        addConverter(BigDecimal.class, new CustomNumberConverter(BigDecimal.class, NumberFormat.getNumberInstance(Locale.US), true));</span>
+<span class="fc" id="L50">        addConverter(BigInteger.class, new CustomNumberConverter(BigInteger.class, true));</span>
+<span class="fc" id="L51">        addConverter(String.class, new StringConverter());</span>
+<span class="fc" id="L52">    }</span>
+
+    protected void addConverter(Class clazz, Converter converter) {
+<span class="fc" id="L55">        converters.put(clazz, converter);</span>
+<span class="fc" id="L56">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

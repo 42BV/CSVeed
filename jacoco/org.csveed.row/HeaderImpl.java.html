@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HeaderImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.row</a> &gt; <span class="el_source">HeaderImpl.java</span></div><h1>HeaderImpl.java</h1><pre class="source lang-java linenums">package org.csveed.row;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.csveed.api.Header;
+import org.csveed.common.Column;
+import org.csveed.report.CsvException;
+import org.csveed.report.GeneralError;
+import org.csveed.report.RowReport;
+
+public class HeaderImpl implements Header {
+
+    private Line header;
+<span class="fc" id="L16">    private Map&lt;Column, String&gt; indexToName = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L17">    private Map&lt;String, Column&gt; nameToIndex = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L19">    public HeaderImpl(Line row) {</span>
+<span class="fc" id="L20">        this.header = row;</span>
+<span class="fc" id="L21">        Column currentColumn = new Column();</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        for (String headerCell : header) {</span>
+<span class="fc" id="L23">            this.indexToName.put(currentColumn, headerCell);</span>
+<span class="fc" id="L24">            this.nameToIndex.put(headerCell.toLowerCase(), currentColumn);</span>
+<span class="fc" id="L25">            currentColumn = currentColumn.nextColumn();</span>
+<span class="fc" id="L26">        }</span>
+<span class="fc" id="L27">    }</span>
+
+    @Override
+    public int size() {
+<span class="fc" id="L31">        return header.size();</span>
+    }
+
+    @Override
+    public String getName(int columnIndex) {
+<span class="fc" id="L36">        Column column = new Column(columnIndex);</span>
+<span class="fc" id="L37">        String name = this.indexToName.get(column);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (name == null) {</span>
+<span class="fc" id="L39">            throw new CsvException(new GeneralError(&quot;No column name found for index &quot;+column.getColumnIndex()));</span>
+        }
+<span class="fc" id="L41">        return name;</span>
+    }
+
+    @Override
+    public int getIndex(String columnName) {
+<span class="fc" id="L46">        Column column = this.nameToIndex.get(columnName.toLowerCase());</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (column == null) {</span>
+<span class="fc" id="L48">            throw new CsvException(new GeneralError(&quot;No column index found for name &quot;+columnName));</span>
+        }
+<span class="fc" id="L50">        return column.getColumnIndex();</span>
+    }
+
+    @Override
+    public Iterator&lt;String&gt; iterator() {
+<span class="fc" id="L55">        return header.iterator();</span>
+    }
+
+    @Override
+    public RowReport reportOnEndOfLine() {
+<span class="fc" id="L60">        return header.reportOnEndOfLine();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
