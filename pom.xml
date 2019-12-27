@@ -11,8 +11,8 @@
 
     <groupId>org.csveed</groupId>
     <artifactId>csveed</artifactId>
-    <version>0.6.0</version>
-    <packaging>jar</packaging>
+    <version>0.7.0-SNAPSHOT</version>
+
     <name>CSVeed</name>
     <description>Java toolkit for mapping CSV-to-Bean mapping and vice versa</description>
     <inceptionYear>2013</inceptionYear>
