@@ -11,7 +11,7 @@
 
     <groupId>com.github.hazendaz</groupId>
     <artifactId>csveed</artifactId>
-    <version>0.7.1-SNAPSHOT</version>
+    <version>0.7.1</version>
 
     <name>CSVeed</name>
     <description>Java toolkit for mapping CSV-to-Bean mapping and vice versa.  Redirection to Introduction in 5 seconds!</description>
@@ -35,7 +35,7 @@
         <url>https://github.com/robert-bor/CSVeed</url>
         <connection>scm:git:https://github.com/robert-bor/CSVeed</connection>
         <developerConnection>scm:git:https://github.com/robert-bor/CSVeed</developerConnection>
-        <tag>HEAD</tag>
+        <tag>csveed-0.7.1</tag>
     </scm>
     <issueManagement>
         <system>GitHub Issue Management</system>
