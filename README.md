@@ -1,7 +1,7 @@
 CSVeed
 ======
 
-[![Build Status](https://travis-ci.org/robert-bor/CSVeed.svg?branch=master)](https://travis-ci.org/robert-bor/CSVeed)
+[![Java CI](https://github.com/hazendaz/CSVeed/workflows/Java%20CI/badge.svg)](https://github.com/hazendaz/CSVeed/actions?query=workflow%3A%22Java+CI%22)
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed)
 [![Apache 2](http://img.shields.io/badge/license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -15,7 +15,7 @@ simply add the following dependency:
         <dependency>
             <groupId>com.github.hazendaz</groupId>
             <artifactId>csveed</artifactId>
-            <version>0.7.0</version>
+            <version>0.7.1</version>
         </dependency>
 ```
 
@@ -26,7 +26,7 @@ previous SLF4J logger configured and you want to get up and running quickly, use
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>2.0.0-alpha1</version>
+            <version>2.0.0-alpha5</version>
         </dependency>
 ```
 
