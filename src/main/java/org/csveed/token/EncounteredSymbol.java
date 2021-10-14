@@ -8,6 +8,7 @@ public enum EncounteredSymbol {
     EOL_SYMBOL,
     EOL_SYMBOL_TRASH(false, true),
     OTHER_SYMBOL,
+    BOM_SYMBOL(false, true),
     END_OF_FILE_SYMBOL,
     COMMENT_SYMBOL;
 
