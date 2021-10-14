@@ -69,9 +69,15 @@ public class SymbolMappingTest {
     }
 
     @Test
+    public void bomSymbol() {
+        SymbolMapping mapping = new SymbolMapping();
+        mapping.addMapping(EncounteredSymbol.BOM_SYMBOL, '\uFEFF');
+        assertEquals(EncounteredSymbol.BOM_SYMBOL, mapping.find('\uFEFF', ParseState.START_OF_LINE));
+    }
+
+    @Test
     public void cannotFind() {
         SymbolMapping mapping = new SymbolMapping();
         assertEquals(EncounteredSymbol.OTHER_SYMBOL, mapping.find('A', ParseState.FINISHED));
     }
-
 }

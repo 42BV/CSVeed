@@ -244,6 +244,21 @@ public class BeanReaderTest {
     }
 
     @Test
+    public void nameMatchingWithBom() {
+        Reader reader = new StringReader(
+                "\uFEFFstreet;CITY;postal code;ignore this\n"+
+                        "\"Some street\";\"Some city\";\"Some postal code\";\"Some ignoring\""
+        );
+        BeanReader<BeanWithNameMatching> beanReader = new BeanReaderImpl<>(reader, BeanWithNameMatching.class);
+        List<BeanWithNameMatching> beans = beanReader.readBeans();
+        assertEquals(1, beans.size());
+        BeanWithNameMatching bean = beans.get(0);
+        assertEquals("Some street", bean.getLine1());
+        assertEquals("Some city", bean.getLine2());
+        assertEquals("Some postal code", bean.getLine3());
+    }
+
+    @Test
     public void indexMatching() {
         Reader reader = new StringReader(
             "\"line-1\";\"line0\";\"line1\";\"line2\";\"line3\""

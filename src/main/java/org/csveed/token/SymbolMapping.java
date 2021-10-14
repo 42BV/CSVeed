@@ -46,6 +46,7 @@ public class SymbolMapping {
         addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, ';');
         addMapping(EncounteredSymbol.EOL_SYMBOL, new char[] { '\r', '\n' } );
         addMapping(EncounteredSymbol.SPACE_SYMBOL, ' ');
+        addMapping(EncounteredSymbol.BOM_SYMBOL, '\uFEFF');
         addMapping(EncounteredSymbol.COMMENT_SYMBOL, '#');
     }
 
