@@ -9,7 +9,7 @@
         <relativePath />
     </parent>
 
-    <groupId>com.github.hazendaz</groupId>
+    <groupId>org.csveed</groupId>
     <artifactId>csveed</artifactId>
     <version>0.7.2-SNAPSHOT</version>
 
@@ -20,7 +20,7 @@
 
     <organization>
         <name>42 BV</name>
-        <url>http://blog.42.nl/</url>
+        <url>https://42.nl/</url>
     </organization>
 
     <licenses>
@@ -32,18 +32,18 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/robert-bor/CSVeed</url>
-        <connection>scm:git:https://github.com/robert-bor/CSVeed</connection>
-        <developerConnection>scm:git:https://github.com/robert-bor/CSVeed</developerConnection>
+        <url>https://github.com/42BV/CSVeed</url>
+        <connection>scm:git:https://github.com/42BV/CSVeed</connection>
+        <developerConnection>scm:git:https://github.com/42BV/CSVeed</developerConnection>
         <tag>HEAD</tag>
     </scm>
     <issueManagement>
         <system>GitHub Issue Management</system>
-        <url>https://github.com/robert-bor/CSVeed/issues</url>
+        <url>https://github.com/42BV/CSVeed/issues</url>
     </issueManagement>
     <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/robert-bor/CSVeed</url>
+        <system>GitHub Actions</system>
+        <url>https://travis-ci.org/42BV/CSVeed</url>
     </ciManagement>
     <distributionManagement>
         <site>

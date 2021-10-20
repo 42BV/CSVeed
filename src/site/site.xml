@@ -22,11 +22,11 @@
     xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd">
     <bannerLeft>
         <src>/images/csveed.png</src>
-        <href>http://github.com/robert-bor/csveed</href>
+        <href>http://github.com/42BV/csveed</href>
     </bannerLeft>
     <bannerRight>
         <src>/images/csveed.png</src>
-        <href>http://github.com/robert-bor/csveed</href>
+        <href>http://github.com/42BV/csveed</href>
     </bannerRight>
     <skin>
         <groupId>org.apache.maven.skins</groupId>
@@ -44,7 +44,7 @@
             <![CDATA[<meta http-equiv="refresh" content="5; url = http://csveed.org/csveed.html" />]]>
         </head>
         <links>
-            <item name="Csveed" href="http://github.com/robert-bor/csveed" />
+            <item name="Csveed" href="http://github.com/42BV/csveed" />
         </links>
         <breadcrumbs>
             <item name="Csveed" href="csveed.html"/>

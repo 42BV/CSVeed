@@ -32,7 +32,7 @@ public class BeanWriterTest {
         }
     }
 
-    // https://github.com/robert-bor/CSVeed/issues/46
+    // https://github.com/42BV/CSVeed/issues/46
     @Test
     public void bug46ReportedByJnash67() throws IOException {
         try (StringWriter writer = new StringWriter()) {

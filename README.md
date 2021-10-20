@@ -55,7 +55,7 @@ No time to waste, so here we go. Let us assume you have a Java Bean you want to 
 ```
 
 Note that the Date property has been annotated with @CsvDate, one of the
-[CSVeed annotations](https://github.com/robert-bor/CSVeed/wiki/Annotations). This allows CSVeed to convert the
+[CSVeed annotations](https://github.com/42BV/CSVeed/wiki/Annotations). This allows CSVeed to convert the
 CSV text value into a java.util.Date using the date format in the annotation.
 
 ```java
@@ -97,7 +97,7 @@ It's that simple to get up and running. You could also opt to declare your instr
         }
 ```
 
-Be sure to check out the [WIKI](https://github.com/robert-bor/CSVeed/wiki) for more information on CSVeed.
+Be sure to check out the [WIKI](https://github.com/42BV/CSVeed/wiki) for more information on CSVeed.
 
 License
 -------
