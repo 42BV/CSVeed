@@ -1,11 +1,11 @@
 CSVeed
 ======
 
-[![Java CI](https://github.com/hazendaz/CSVeed/workflows/Java%20CI/badge.svg)](https://github.com/hazendaz/CSVeed/actions?query=workflow%3A%22Java+CI%22)
-[![Maven central](https://maven-badges.herokuapp.com/maven-central/com.github.hazendaz/csveed/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.hazendaz/csveed)
+[![Java CI](https://github.com/hazendaz/CSVeed/workflows/Java%20CI/badge.svg)](https://github.com/42BV/CSVeed/actions?query=workflow%3A%22Java+CI%22)
+[![Maven central](https://maven-badges.herokuapp.com/maven-central/com.github.hazendaz/csveed/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed)
 [![Apache 2](http://img.shields.io/badge/license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-Be sure to check the project site at [csveed.org](http://csveed.org).
+Be sure to check the project site at [csveed.org](https://csveed.org).
 
 CSVeed is a Java library for reading [Comma Separated Value (CSV)](http://tools.ietf.org/html/rfc4180)
 files and exposing those either as Rows or Java Beans. In order to use CSVeed in your project,
@@ -13,9 +13,9 @@ simply add the following dependency:
 
 ```xml
         <dependency>
-            <groupId>com.github.hazendaz</groupId>
+            <groupId>org.csveed</groupId>
             <artifactId>csveed</artifactId>
-            <version>0.7.1</version>
+            <version>0.7.2</version>
         </dependency>
 ```
 
