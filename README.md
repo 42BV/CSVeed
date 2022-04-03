@@ -15,7 +15,7 @@ simply add the following dependency:
         <dependency>
             <groupId>org.csveed</groupId>
             <artifactId>csveed</artifactId>
-            <version>0.7.2</version>
+            <version>0.7.3</version>
         </dependency>
 ```
 
