@@ -25,7 +25,7 @@
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> verified;
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>      <strong class="jxr_keyword">private</strong> <a name="DefaultConverters" href="../../../org/csveed/bean/conversion/DefaultCo<a name="DefaultConverters" href="../../../org/csveed/bean/conversion/DefaultConverters.html#DefaultConverters">DefaultConverters</a>aultConverters">DefaultConverters</a> defaultConverters = <strong class="jxr_keyword">new</strong> <a name="DefaultConverters" href="../../../org/csveed/bean/conversion/DefaultConverters.html#DefaultConverters">DefaultConverters</a>();
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>      <strong class="jxr_keyword">private</strong> <a name="DefaultConverters" href="../../../org/csveed/bean/conversion/DefaultConverters.html#DefaultConverters">DefaultConverters</a> defaultConverters = <strong class="jxr_keyword">new</strong> <a name="DefaultConverters" href="../../../org/csveed/bean/conversion/DefaultConverters.html#DefaultConverters">DefaultConverters</a>();
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <a name="BeanProperty" href="../../../org/csveed/bean/BeanProperty.html#BeanProperty">BeanProperty</a> getBeanProperty(<a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a> currentColumn);
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  
@@ -48,7 +48,7 @@
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>      <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">abstract</strong> <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a> getColumn(<a name="Row" href="../../../org/csveed/api/Row.html#Row">Row</a> row);
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">public</strong> T convert(T bean, <a name="Row" href="../../../org/csveed/api/Row.html#Row">Row</a> row, <strong class="jxr_keyword">int</strong> lineNumber, <a name="DynamicColumn" href="../../../org/csveed/bean/DynamicColumn.html#DynamicColumn">DynamicColumn</a> currentDynamicColumn) {
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>          <a name="BeanWrapper" href="../../../org/csveed/bean/conversion/Bea<a name="BeanWrapper" href="../../../org/csveed/bean/conversion/BeanWrapper.html#BeanWrapper">BeanWrapper</a>ml#BeanWrapper">BeanWrapper</a> beanWrapper = <strong class="jxr_keyword">new</strong> <a name="BeanWrapper" href="../../../org/csveed/bean/conversion/BeanWrapper.html#BeanWrapper">BeanWrapper</a>(defaultConverters, bean);
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          <a name="BeanWrapper" href="../../../org/csveed/bean/conversion/BeanWrapper.html#BeanWrapper">BeanWrapper</a> beanWrapper = <strong class="jxr_keyword">new</strong> <a name="BeanWrapper" href="../../../org/csveed/bean/conversion/BeanWrapper.html#BeanWrapper">BeanWrapper</a>(defaultConverters, bean);
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>          <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a> currentColumn = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>          <strong class="jxr_keyword">for</strong> (String cell : row) {
@@ -106,6 +106,6 @@
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2013&#x2013;2019 <a href="http://blog.42.nl/">42 BV</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2013&#x2013;2022 <a href="https://42.nl/">42 BV</a>. All rights reserved.</div>
 </body>
 </html>

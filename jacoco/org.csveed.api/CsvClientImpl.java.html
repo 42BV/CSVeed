@@ -271,7 +271,7 @@ public class CsvClientImpl&lt;T&gt; implements CsvClient&lt;T&gt; {
     private BeanInstructions getBeanInstructions() {
 <span class="pc bpc" id="L272" title="1 of 2 branches missed.">        if (this.beanInstructions == null) {</span>
 <span class="nc" id="L273">            throw new CsvException(new GeneralError(</span>
-<span class="nc" id="L274">                    &quot;BeanInstructions have not been initialized. Make sure to pass BeanInstructions or the bean class&quot; +</span>
+                    &quot;BeanInstructions have not been initialized. Make sure to pass BeanInstructions or the bean class&quot; +
                     &quot; to CsvClient.&quot;
             ));
         }
@@ -281,7 +281,7 @@ public class CsvClientImpl&lt;T&gt; implements CsvClient&lt;T&gt; {
     private BeanReader&lt;T&gt; getBeanReader() {
 <span class="fc bfc" id="L282" title="All 2 branches covered.">        if (this.beanReader == null) {</span>
 <span class="fc" id="L283">            throw new CsvException(new GeneralError(</span>
-<span class="fc" id="L284">                    &quot;BeanReader has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvClient.&quot;</span>
+                    &quot;BeanReader has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvClient.&quot;
             ));
         }
 <span class="fc" id="L287">        return this.beanReader;</span>
@@ -290,7 +290,7 @@ public class CsvClientImpl&lt;T&gt; implements CsvClient&lt;T&gt; {
     private BeanWriter&lt;T&gt; getBeanWriter() {
 <span class="pc bpc" id="L291" title="1 of 2 branches missed.">        if (this.beanWriter == null) {</span>
 <span class="nc" id="L292">            throw new CsvException(new GeneralError(</span>
-<span class="nc" id="L293">                    &quot;BeanWriter has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvClient.&quot;</span>
+                    &quot;BeanWriter has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvClient.&quot;
             ));
         }
 <span class="fc" id="L296">        return this.beanWriter;</span>
@@ -299,7 +299,7 @@ public class CsvClientImpl&lt;T&gt; implements CsvClient&lt;T&gt; {
     private RowReader getRowReader() {
 <span class="pc bpc" id="L300" title="1 of 2 branches missed.">        if (this.rowReader == null) {</span>
 <span class="nc" id="L301">            throw new CsvException(new GeneralError(</span>
-<span class="nc" id="L302">                    &quot;RowReader has not been initialized. Make sure to pass a Reader to the constructor.&quot;));</span>
+                    &quot;RowReader has not been initialized. Make sure to pass a Reader to the constructor.&quot;));
         }
 <span class="fc" id="L304">        return this.rowReader;</span>
     }
@@ -307,10 +307,10 @@ public class CsvClientImpl&lt;T&gt; implements CsvClient&lt;T&gt; {
     public RowWriter getRowWriter() {
 <span class="pc bpc" id="L308" title="1 of 2 branches missed.">        if (this.rowWriter == null) {</span>
 <span class="nc" id="L309">            throw new CsvException(new GeneralError(</span>
-<span class="nc" id="L310">                    &quot;RowWriter has not been initialized. Make sure to pass a Writer to the constructor.&quot;));</span>
+                    &quot;RowWriter has not been initialized. Make sure to pass a Writer to the constructor.&quot;));
         }
 <span class="fc" id="L312">        return rowWriter;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

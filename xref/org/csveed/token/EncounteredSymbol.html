@@ -16,37 +16,38 @@
 <a class="jxr_linenumber" name="L8" href="#L8">8</a>       EOL_SYMBOL,
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>       EOL_SYMBOL_TRASH(false, <strong class="jxr_keyword">true</strong>),
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>      OTHER_SYMBOL,
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>      END_OF_FILE_SYMBOL,
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>      COMMENT_SYMBOL;
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> checkForSimilarEscapeAndQuote = false;
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> trash = false;
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>  
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>      <strong class="jxr_keyword">private</strong> <a name="EncounteredSymbol" href="../../../org/csveed/token/EncounteredSymbol.html#EncounteredSymbol">EncounteredSymbol</a>() {
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>          <strong class="jxr_keyword">this</strong>(false, false);
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>      }
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>      <strong class="jxr_keyword">private</strong> <a name="EncounteredSymbol" href="../../../org/csveed/token/EncounteredSymbol.html#EncounteredSymbol">EncounteredSymbol</a>(<strong class="jxr_keyword">boolean</strong> checkForSimilarEscapeAndQuote) {
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>          <strong class="jxr_keyword">this</strong>(checkForSimilarEscapeAndQuote, false);
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>      }
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>      <strong class="jxr_keyword">private</strong> <a name="EncounteredSymbol" href="../../../org/csveed/token/EncounteredSymbol.html#EncounteredSymbol">EncounteredSymbol</a>(<strong class="jxr_keyword">boolean</strong> checkForSimilarEscapeAndQuote, <strong class="jxr_keyword">boolean</strong> trash) {
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>          <strong class="jxr_keyword">this</strong>.checkForSimilarEscapeAndQuote = checkForSimilarEscapeAndQuote;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>          <strong class="jxr_keyword">this</strong>.trash = trash;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>      }
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isCheckForSimilarEscapeAndQuote() {
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.checkForSimilarEscapeAndQuote;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>      }
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isTrash() {
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.trash;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      }
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  }
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>      BOM_SYMBOL(false, <strong class="jxr_keyword">true</strong>),
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>      END_OF_FILE_SYMBOL,
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>      COMMENT_SYMBOL;
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> checkForSimilarEscapeAndQuote = false;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> trash = false;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>      <strong class="jxr_keyword">private</strong> <a name="EncounteredSymbol" href="../../../org/csveed/token/EncounteredSymbol.html#EncounteredSymbol">EncounteredSymbol</a>() {
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>          <strong class="jxr_keyword">this</strong>(false, false);
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>      }
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>      <strong class="jxr_keyword">private</strong> <a name="EncounteredSymbol" href="../../../org/csveed/token/EncounteredSymbol.html#EncounteredSymbol">EncounteredSymbol</a>(<strong class="jxr_keyword">boolean</strong> checkForSimilarEscapeAndQuote) {
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>          <strong class="jxr_keyword">this</strong>(checkForSimilarEscapeAndQuote, false);
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      }
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">private</strong> <a name="EncounteredSymbol" href="../../../org/csveed/token/EncounteredSymbol.html#EncounteredSymbol">EncounteredSymbol</a>(<strong class="jxr_keyword">boolean</strong> checkForSimilarEscapeAndQuote, <strong class="jxr_keyword">boolean</strong> trash) {
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          <strong class="jxr_keyword">this</strong>.checkForSimilarEscapeAndQuote = checkForSimilarEscapeAndQuote;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>          <strong class="jxr_keyword">this</strong>.trash = trash;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      }
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isCheckForSimilarEscapeAndQuote() {
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.checkForSimilarEscapeAndQuote;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      }
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isTrash() {
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.trash;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      }
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2013&#x2013;2019 <a href="http://blog.42.nl/">42 BV</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2013&#x2013;2022 <a href="https://42.nl/">42 BV</a>. All rights reserved.</div>
 </body>
 </html>

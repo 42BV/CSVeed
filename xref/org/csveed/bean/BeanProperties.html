@@ -79,7 +79,7 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>      @SuppressWarnings(<span class="jxr_string">"unchecked"</span>)
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> addProperty(PropertyDescriptor propertyDescriptor, Field field) {
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <a name="BeanProperty" href="../../../org/csveed/bean/BeanProperty.ht<a name="BeanProperty" href="../../../org/csveed/bean/BeanProperty.html#BeanProperty">BeanProperty</a>rty">BeanProperty</a> beanProperty = <strong class="jxr_keyword">new</strong> <a name="BeanProperty" href="../../../org/csveed/bean/BeanProperty.html#BeanProperty">BeanProperty</a>();
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <a name="BeanProperty" href="../../../org/csveed/bean/BeanProperty.html#BeanProperty">BeanProperty</a> beanProperty = <strong class="jxr_keyword">new</strong> <a name="BeanProperty" href="../../../org/csveed/bean/BeanProperty.html#BeanProperty">BeanProperty</a>();
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>          beanProperty.setPropertyDescriptor(propertyDescriptor);
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          beanProperty.setField(field);
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">if</strong> (Enum.<strong class="jxr_keyword">class</strong>.isAssignableFrom(propertyDescriptor.getPropertyType())) {
@@ -112,7 +112,7 @@
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>                     <span class="jxr_string">"Property "</span>+beanClass.getName()+<span class="jxr_string">"."</span>+propertyName+<span class="jxr_string">" is not a java.lang.Number"</span>
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>             ));
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>         }
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         <a name="CustomNumberConverter" href="../../../org/csveed/bean/conversion/C<a name="CustomNumberConverter" href="../../../org/csveed/bean/conversion/CustomNumberConverter.html#CustomNumberConverter">CustomNumberConverter</a>html#CustomNumberConverter">CustomNumberConverter</a> converter = <strong class="jxr_keyword">new</strong> <a name="CustomNumberConverter" href="../../../org/csveed/bean/conversion/CustomNumberConverter.html#CustomNumberConverter">CustomNumberConverter</a>(numberClass, NumberFormat.getNumberInstance(locale), <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>         <a name="CustomNumberConverter" href="../../../org/csveed/bean/conversion/CustomNumberConverter.html#CustomNumberConverter">CustomNumberConverter</a> converter = <strong class="jxr_keyword">new</strong> <a name="CustomNumberConverter" href="../../../org/csveed/bean/conversion/CustomNumberConverter.html#CustomNumberConverter">CustomNumberConverter</a>(numberClass, NumberFormat.getNumberInstance(locale), <strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>         setConverter(propertyName, converter);
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>     }
 <a class="jxr_linenumber" name="L110" href="#L110">110</a> 
@@ -203,6 +203,6 @@
 <a class="jxr_linenumber" name="L195" href="#L195">195</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2013&#x2013;2019 <a href="http://blog.42.nl/">42 BV</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2013&#x2013;2022 <a href="https://42.nl/">42 BV</a>. All rights reserved.</div>
 </body>
 </html>

@@ -33,7 +33,7 @@ import org.csveed.common.Column;
 
 <span class="fc bfc" id="L34" title="All 2 branches covered.">        for (BeanProperty beanProperty : beanInstructions.getProperties()) {</span>
 <span class="fc" id="L35">            checkForAnnotations(beanProperty);</span>
-        }
+<span class="fc" id="L36">        }</span>
 
 <span class="fc" id="L38">        return this.beanInstructions;</span>
     }
@@ -73,7 +73,7 @@ import org.csveed.common.Column;
 <span class="fc" id="L73">            locale = new Locale(annotation.language());</span>
 <span class="pc bpc" id="L74" title="1 of 2 branches missed.">        } else if (annotation.variant().isEmpty()) {</span>
 <span class="fc" id="L75">            locale = new Locale(annotation.language(), annotation.country());</span>
-<span class="fc" id="L76">        } else {</span>
+        } else {
 <span class="nc" id="L77">            locale = new Locale(annotation.language(), annotation.country(), annotation.variant());</span>
         }
 <span class="fc" id="L79">        this.beanInstructions.setLocalizedNumber(propertyName, locale);</span>
@@ -103,9 +103,9 @@ import org.csveed.common.Column;
     private void parseCsvConverter(String propertyName, CsvConverter csvConverter) {
         try {
 <span class="fc" id="L105">            this.beanInstructions.setConverter(propertyName, csvConverter.converter().newInstance());</span>
-<span class="pc" id="L106">        } catch (Exception err) {</span>
+<span class="nc" id="L106">        } catch (Exception err) {</span>
 <span class="nc" id="L107">            throw new RuntimeException(err);</span>
-        }
+<span class="fc" id="L108">        }</span>
 <span class="fc" id="L109">    }</span>
 
     private String parseCsvCell(String propertyName, CsvCell csvCell) {
@@ -116,4 +116,4 @@ import org.csveed.common.Column;
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -47,9 +47,9 @@ public class BeanProperties implements Iterable&lt;BeanProperty&gt; {
         final BeanInfo beanInfo;
         try {
 <span class="fc" id="L49">            beanInfo = Introspector.getBeanInfo(beanClass);</span>
-<span class="pc" id="L50">        } catch (IntrospectionException err) {</span>
+<span class="nc" id="L50">        } catch (IntrospectionException err) {</span>
 <span class="nc" id="L51">            throw new RuntimeException(err);</span>
-        }
+<span class="fc" id="L52">        }</span>
 
 <span class="fc" id="L54">        PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();</span>
 
@@ -164,7 +164,7 @@ public class BeanProperties implements Iterable&lt;BeanProperty&gt; {
 <span class="fc bfc" id="L164" title="All 2 branches covered.">            if (beanProperty.getPropertyName().equals(propertyName)) {</span>
 <span class="fc" id="L165">                return beanProperty;</span>
             }
-        }
+<span class="fc" id="L167">        }</span>
 <span class="nc" id="L168">        throw new CsvException(new GeneralError(</span>
 <span class="nc" id="L169">                &quot;Property does not exist: &quot;+ beanClass.getName()+&quot;.&quot;+propertyName</span>
         ));
@@ -193,4 +193,4 @@ public class BeanProperties implements Iterable&lt;BeanProperty&gt; {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

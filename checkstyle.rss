@@ -23,11 +23,11 @@ under the License.
     <link>http://csveed.org</link>
     <description>CSVeed - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2013 - 2019 42 BV</copyright>
+    <copyright>&#169;2013 - 2022 42 BV</copyright>
     <item>
-      <title>File: 73,
+      <title>File: 83,
              Errors: 0,
-             Warnings: 2828,
+             Warnings: 3142,
              Infos: 0
       </title>
             <link>http://csveed.org/checkstyle.html</link>
@@ -52,7 +52,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  27
+                  30
                 </td>
                 <td>
                   0
@@ -66,7 +66,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  71
+                  77
                 </td>
                 <td>
                   0
@@ -74,245 +74,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowReader.java">org/csveed/row/RowReader.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanInstructionsImpl.java">org/csveed/bean/BeanInstructionsImpl.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  151
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanProperty.java">org/csveed/bean/BeanProperty.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  72
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CustomNumberConverter.java">org/csveed/bean/conversion/CustomNumberConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  40
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.SymbolMapping.java">org/csveed/token/SymbolMapping.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  119
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.common.Column.java">org/csveed/common/Column.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  95
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowInstructionsImpl.java">org/csveed/row/RowInstructionsImpl.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  78
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvFile.java">org/csveed/annotations/CsvFile.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  12
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CharArrayConverter.java">org/csveed/bean/conversion/CharArrayConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.DateConverter.java">org/csveed/bean/conversion/DateConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  31
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.AbstractConverter.java">org/csveed/bean/conversion/AbstractConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  10
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.ParseStateMachine.java">org/csveed/token/ParseStateMachine.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  215
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.RowPart.java">org/csveed/report/RowPart.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  12
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.ConversionUtil.java">org/csveed/bean/conversion/ConversionUtil.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  33
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.api.CsvClient.java">org/csveed/api/CsvClient.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  48
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.HeaderImpl.java">org/csveed/row/HeaderImpl.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  40
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.ColumnIndexMapper.java">org/csveed/bean/ColumnIndexMapper.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  15
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvDate.java">org/csveed/annotations/CsvDate.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvHeaderValue.java">org/csveed/annotations/CsvHeaderValue.java</a>
                 </td>
                 <td>
                   0
@@ -326,27 +88,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.ColumnNameMapper.java">org/csveed/bean/ColumnNameMapper.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowReader.java">org/csveed/row/RowReader.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  19
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.Line.java">org/csveed/row/Line.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
+                  18
                 </td>
                 <td>
                   0
@@ -354,27 +102,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.CsvException.java">org/csveed/report/CsvException.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanInstructionsImpl.java">org/csveed/bean/BeanInstructionsImpl.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  27
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.EnumConverter.java">org/csveed/bean/conversion/EnumConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  11
+                  153
                 </td>
                 <td>
                   0
@@ -382,27 +116,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.GeneralError.java">org/csveed/report/GeneralError.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.package-info.java">org/csveed/annotations/package-info.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  12
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.StringConverter.java">org/csveed/bean/conversion/StringConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
                 </td>
                 <td>
                   0
@@ -410,245 +130,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.NoConverterFoundException.java">org/csveed/bean/conversion/NoConverterFoundException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanWriterImpl.java">org/csveed/bean/BeanWriterImpl.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  47
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvConverter.java">org/csveed/annotations/CsvConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.ConversionException.java">org/csveed/bean/conversion/ConversionException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  12
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.Converter.java">org/csveed/bean/conversion/Converter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  5
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowReaderImpl.java">org/csveed/row/RowReaderImpl.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  106
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.RowError.java">org/csveed/report/RowError.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  23
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.TimeZoneConverter.java">org/csveed/bean/conversion/TimeZoneConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.api.CsvClientImpl.java">org/csveed/api/CsvClientImpl.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  194
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.AbstractMapper.java">org/csveed/bean/AbstractMapper.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  65
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.common.ColumnIndexKey.java">org/csveed/common/ColumnIndexKey.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  27
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CustomBooleanConverter.java">org/csveed/bean/conversion/CustomBooleanConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  49
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.CellPositionInRow.java">org/csveed/row/CellPositionInRow.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  14
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowWriterImpl.java">org/csveed/row/RowWriterImpl.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  99
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanReaderImpl.java">org/csveed/bean/BeanReaderImpl.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  90
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.DefaultConverters.java">org/csveed/bean/conversion/DefaultConverters.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  50
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.DynamicColumn.java">org/csveed/bean/DynamicColumn.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  31
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.RowReport.java">org/csveed/report/RowReport.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanProperty.java">org/csveed/bean/BeanProperty.java</a>
                 </td>
                 <td>
                   0
@@ -662,27 +144,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowImpl.java">org/csveed/row/RowImpl.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CustomNumberConverter.java">org/csveed/bean/conversion/CustomNumberConverter.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  42
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanInstructions.java">org/csveed/bean/BeanInstructions.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  37
+                  43
                 </td>
                 <td>
                   0
@@ -690,27 +158,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CurrencyConverter.java">org/csveed/bean/conversion/CurrencyConverter.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.SymbolMapping.java">org/csveed/token/SymbolMapping.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  9
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvCell.java">org/csveed/annotations/CsvCell.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  6
+                  134
                 </td>
                 <td>
                   0
@@ -718,27 +172,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanWriter.java">org/csveed/bean/BeanWriter.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.common.Column.java">org/csveed/common/Column.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  8
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.ByteArrayConverter.java">org/csveed/bean/conversion/ByteArrayConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
+                  100
                 </td>
                 <td>
                   0
@@ -746,27 +186,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.api.Row.java">org/csveed/api/Row.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowInstructionsImpl.java">org/csveed/row/RowInstructionsImpl.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  8
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvLocalizedNumber.java">org/csveed/annotations/CsvLocalizedNumber.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  6
+                  80
                 </td>
                 <td>
                   0
@@ -774,27 +200,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanParser.java">org/csveed/bean/BeanParser.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvFile.java">org/csveed/annotations/CsvFile.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  73
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.BeanPropertyConversionException.java">org/csveed/bean/conversion/BeanPropertyConversionException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
+                  27
                 </td>
                 <td>
                   0
@@ -802,203 +214,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.EncounteredSymbol.java">org/csveed/token/EncounteredSymbol.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  18
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CharsetConverter.java">org/csveed/bean/conversion/CharsetConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  12
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.common.ColumnKey.java">org/csveed/common/ColumnKey.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  7
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanProperties.java">org/csveed/bean/BeanProperties.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  143
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.EasyAbstractConverter.java">org/csveed/bean/conversion/EasyAbstractConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  6
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CharacterConverter.java">org/csveed/bean/conversion/CharacterConverter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  28
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.common.ColumnExcel.java">org/csveed/common/ColumnExcel.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  12
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowInstructions.java">org/csveed/row/RowInstructions.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  18
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowWriter.java">org/csveed/row/RowWriter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  13
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.ParseException.java">org/csveed/token/ParseException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  32
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.TokenState.java">org/csveed/token/TokenState.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  9
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.CsvError.java">org/csveed/report/CsvError.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  5
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.BeanWrapper.java">org/csveed/bean/conversion/BeanWrapper.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  40
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.NumberUtils.java">org/csveed/bean/conversion/NumberUtils.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  114
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanReader.java">org/csveed/bean/BeanReader.java</a>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CharArrayConverter.java">org/csveed/bean/conversion/CharArrayConverter.java</a>
                 </td>
                 <td>
                   0
@@ -1012,13 +228,937 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.DateConverter.java">org/csveed/bean/conversion/DateConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  33
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.AbstractConverter.java">org/csveed/bean/conversion/AbstractConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  11
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.ParseStateMachine.java">org/csveed/token/ParseStateMachine.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  244
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.RowPart.java">org/csveed/report/RowPart.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  13
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.ConversionUtil.java">org/csveed/bean/conversion/ConversionUtil.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  36
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.api.CsvClient.java">org/csveed/api/CsvClient.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  84
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.HeaderImpl.java">org/csveed/row/HeaderImpl.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  43
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.ColumnIndexMapper.java">org/csveed/bean/ColumnIndexMapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  17
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvDate.java">org/csveed/annotations/CsvDate.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.ColumnNameMapper.java">org/csveed/bean/ColumnNameMapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  21
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.Line.java">org/csveed/row/Line.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.CsvException.java">org/csveed/report/CsvException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  29
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.EnumConverter.java">org/csveed/bean/conversion/EnumConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  13
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.GeneralError.java">org/csveed/report/GeneralError.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  13
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.StringConverter.java">org/csveed/bean/conversion/StringConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.NoConverterFoundException.java">org/csveed/bean/conversion/NoConverterFoundException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanWriterImpl.java">org/csveed/bean/BeanWriterImpl.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  49
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.api.package-info.java">org/csveed/api/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvConverter.java">org/csveed/annotations/CsvConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.ConversionException.java">org/csveed/bean/conversion/ConversionException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  13
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.Converter.java">org/csveed/bean/conversion/Converter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  6
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowReaderImpl.java">org/csveed/row/RowReaderImpl.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  109
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.RowError.java">org/csveed/report/RowError.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  25
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.TimeZoneConverter.java">org/csveed/bean/conversion/TimeZoneConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.api.CsvClientImpl.java">org/csveed/api/CsvClientImpl.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  199
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.AbstractMapper.java">org/csveed/bean/AbstractMapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  69
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.common.ColumnIndexKey.java">org/csveed/common/ColumnIndexKey.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  30
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CustomBooleanConverter.java">org/csveed/bean/conversion/CustomBooleanConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  51
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.CellPositionInRow.java">org/csveed/row/CellPositionInRow.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  15
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowWriterImpl.java">org/csveed/row/RowWriterImpl.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  101
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.package-info.java">org/csveed/row/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanReaderImpl.java">org/csveed/bean/BeanReaderImpl.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  95
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.DefaultConverters.java">org/csveed/bean/conversion/DefaultConverters.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  51
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.package-info.java">org/csveed/bean/conversion/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.DynamicColumn.java">org/csveed/bean/DynamicColumn.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  34
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.package-info.java">org/csveed/bean/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.RowReport.java">org/csveed/report/RowReport.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  82
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.package-info.java">org/csveed/token/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowImpl.java">org/csveed/row/RowImpl.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  45
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanInstructions.java">org/csveed/bean/BeanInstructions.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  41
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CurrencyConverter.java">org/csveed/bean/conversion/CurrencyConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvCell.java">org/csveed/annotations/CsvCell.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanWriter.java">org/csveed/bean/BeanWriter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  11
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.ByteArrayConverter.java">org/csveed/bean/conversion/ByteArrayConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvHeaderName.java">org/csveed/annotations/CsvHeaderName.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.api.Row.java">org/csveed/api/Row.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  17
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvLocalizedNumber.java">org/csveed/annotations/CsvLocalizedNumber.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanParser.java">org/csveed/bean/BeanParser.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  81
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.BeanPropertyConversionException.java">org/csveed/bean/conversion/BeanPropertyConversionException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.EncounteredSymbol.java">org/csveed/token/EncounteredSymbol.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  19
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CharsetConverter.java">org/csveed/bean/conversion/CharsetConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  13
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.common.ColumnKey.java">org/csveed/common/ColumnKey.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  8
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.annotations.CsvIgnore.java">org/csveed/annotations/CsvIgnore.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanProperties.java">org/csveed/bean/BeanProperties.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  152
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.EasyAbstractConverter.java">org/csveed/bean/conversion/EasyAbstractConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  7
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.package-info.java">org/csveed/report/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.CharacterConverter.java">org/csveed/bean/conversion/CharacterConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  29
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.common.ColumnExcel.java">org/csveed/common/ColumnExcel.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  13
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowInstructions.java">org/csveed/row/RowInstructions.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  36
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.row.RowWriter.java">org/csveed/row/RowWriter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  22
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.ParseException.java">org/csveed/token/ParseException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  34
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.token.TokenState.java">org/csveed/token/TokenState.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.report.CsvError.java">org/csveed/report/CsvError.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.BeanWrapper.java">org/csveed/bean/conversion/BeanWrapper.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  44
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.conversion.NumberUtils.java">org/csveed/bean/conversion/NumberUtils.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  118
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://csveed.org/checkstyle.html#org.csveed.bean.BeanReader.java">org/csveed/bean/BeanReader.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  18
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://csveed.org/checkstyle.html#org.csveed.report.AbstractCsvError.java">org/csveed/report/AbstractCsvError.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  12
+                  13
                 </td>
                 <td>
                   0
@@ -1032,7 +1172,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  14
+                  15
                 </td>
                 <td>
                   0
@@ -1046,7 +1186,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  9
+                  14
                 </td>
                 <td>
                   0
@@ -1060,7 +1200,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  49
+                  50
                 </td>
                 <td>
                   0

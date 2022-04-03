@@ -53,7 +53,7 @@ public class BeanReaderImpl&lt;T&gt; implements BeanReader&lt;T&gt; {
 <span class="fc bfc" id="L53" title="All 2 branches covered.">            if (bean != null) {</span>
 <span class="fc" id="L54">                beans.add(bean);</span>
             }
-        }
+<span class="fc" id="L56">        }</span>
 <span class="fc" id="L57">        return beans;</span>
     }
 
@@ -115,7 +115,7 @@ public class BeanReaderImpl&lt;T&gt; implements BeanReader&lt;T&gt; {
 <span class="fc" id="L115">        } catch (Exception err) {</span>
 <span class="fc" id="L116">            throw new CsvException(new GeneralError(</span>
 <span class="fc" id="L117">                    &quot;Unable to instantiate the bean class &quot; + this.getBeanClass().getName() +</span>
-<span class="fc" id="L118">                            &quot;. Does it have a no-arg public constructor?&quot;</span>
+                            &quot;. Does it have a no-arg public constructor?&quot;
                     ));
         }
     }
@@ -132,7 +132,7 @@ public class BeanReaderImpl&lt;T&gt; implements BeanReader&lt;T&gt; {
 <span class="nc" id="L132">        } catch (Exception e) {</span>
 <span class="nc" id="L133">            logger.trace(&quot;&quot;, e);</span>
 <span class="nc" id="L134">            throw new CsvException(new GeneralError(</span>
-<span class="nc" id="L135">                    &quot;Unable to instantiate the mapping strategy&quot;</span>
+                    &quot;Unable to instantiate the mapping strategy&quot;
                     ));
         }
     }
@@ -143,4 +143,4 @@ public class BeanReaderImpl&lt;T&gt; implements BeanReader&lt;T&gt; {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

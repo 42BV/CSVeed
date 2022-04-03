@@ -26,7 +26,7 @@
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>      <strong class="jxr_keyword">public</strong> <a name="HeaderImpl" href="../../../org/csveed/row/HeaderImpl.html#HeaderImpl">HeaderImpl</a>(<a name="Line" href="../../../org/csveed/row/Line.html#Line">Line</a> row) {
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>          <strong class="jxr_keyword">this</strong>.header = row;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>          <a name="Column" href="../../../org/csveed/common/Column.html#Co<a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a>Column</a> currentColumn = <strong class="jxr_keyword">new</strong> <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a>();
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>          <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a> currentColumn = <strong class="jxr_keyword">new</strong> <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a>();
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>          <strong class="jxr_keyword">for</strong> (String headerCell : header) {
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>              <strong class="jxr_keyword">this</strong>.indexToName.put(currentColumn, headerCell);
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>              <strong class="jxr_keyword">this</strong>.nameToIndex.put(headerCell.toLowerCase(), currentColumn);
@@ -41,7 +41,7 @@
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>      @Override
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">public</strong> String getName(<strong class="jxr_keyword">int</strong> columnIndex) {
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>          <a name="Column" href="../../../org/csveed/common/Column.<a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a>olumn">Column</a> column = <strong class="jxr_keyword">new</strong> <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a>(columnIndex);
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a> column = <strong class="jxr_keyword">new</strong> <a name="Column" href="../../../org/csveed/common/Column.html#Column">Column</a>(columnIndex);
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>          String name = <strong class="jxr_keyword">this</strong>.indexToName.get(column);
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>          <strong class="jxr_keyword">if</strong> (name == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="CsvException" href="../../../org/csveed/report/CsvException.html#CsvException">CsvException</a>(<strong class="jxr_keyword">new</strong> <a name="GeneralError" href="../../../org/csveed/report/GeneralError.html#GeneralError">GeneralError</a>(<span class="jxr_string">"No column name found for index "</span>+column.getColumnIndex()));
@@ -71,6 +71,6 @@
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2013&#x2013;2019 <a href="http://blog.42.nl/">42 BV</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2013&#x2013;2022 <a href="https://42.nl/">42 BV</a>. All rights reserved.</div>
 </body>
 </html>

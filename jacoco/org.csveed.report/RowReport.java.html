@@ -58,7 +58,7 @@ public class RowReport {
 <span class="fc" id="L58">        StringBuilder line = new StringBuilder();</span>
 <span class="fc bfc" id="L59" title="All 2 branches covered.">        for (RowPart token : parts) {</span>
 <span class="fc" id="L60">            line.append(token.getToken());</span>
-        }
+<span class="fc" id="L61">        }</span>
 <span class="fc" id="L62">        return line.toString();</span>
     }
 
@@ -69,10 +69,10 @@ public class RowReport {
 <span class="fc bfc" id="L69" title="All 2 branches covered.">            if (token.isHighlight()) {</span>
 <span class="fc" id="L70">                line.append(printUnderscoredPart(token));</span>
 <span class="fc" id="L71">                placedMarkers = true;</span>
-<span class="fc" id="L72">            } else {</span>
+            } else {
 <span class="fc" id="L73">                line.append(printEmptyPart(token));</span>
             }
-        }
+<span class="fc" id="L75">        }</span>
 <span class="fc bfc" id="L76" title="All 2 branches covered.">        if (!placedMarkers) { // Essentially only at the end-of-line</span>
 <span class="fc" id="L77">            line.append('^');</span>
         }
@@ -92,7 +92,7 @@ public class RowReport {
 <span class="fc bfc" id="L92" title="All 2 branches covered.">        for (int i = 0; i &lt; token.getToken().length(); i++) {</span>
 <span class="fc bfc" id="L93" title="All 4 branches covered.">            if (i == 0 || i == token.getToken().length() - 1) {</span>
 <span class="fc" id="L94">                linePart.append('^');</span>
-<span class="fc" id="L95">            } else {</span>
+            } else {
 <span class="fc" id="L96">                linePart.append('-');</span>
             }
         }
@@ -100,4 +100,4 @@ public class RowReport {
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

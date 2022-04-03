@@ -8,33 +8,34 @@
 <span class="fc" id="L8">    EOL_SYMBOL,</span>
 <span class="fc" id="L9">    EOL_SYMBOL_TRASH(false, true),</span>
 <span class="fc" id="L10">    OTHER_SYMBOL,</span>
-<span class="fc" id="L11">    END_OF_FILE_SYMBOL,</span>
-<span class="fc" id="L12">    COMMENT_SYMBOL;</span>
+<span class="fc" id="L11">    BOM_SYMBOL(false, true),</span>
+<span class="fc" id="L12">    END_OF_FILE_SYMBOL,</span>
+<span class="fc" id="L13">    COMMENT_SYMBOL;</span>
 
-<span class="fc" id="L14">    private boolean checkForSimilarEscapeAndQuote = false;</span>
+<span class="fc" id="L15">    private boolean checkForSimilarEscapeAndQuote = false;</span>
 
-<span class="fc" id="L16">    private boolean trash = false;</span>
+<span class="fc" id="L17">    private boolean trash = false;</span>
 
     private EncounteredSymbol() {
-<span class="fc" id="L19">        this(false, false);</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L20">        this(false, false);</span>
+<span class="fc" id="L21">    }</span>
 
     private EncounteredSymbol(boolean checkForSimilarEscapeAndQuote) {
-<span class="fc" id="L23">        this(checkForSimilarEscapeAndQuote, false);</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L24">        this(checkForSimilarEscapeAndQuote, false);</span>
+<span class="fc" id="L25">    }</span>
 
-<span class="fc" id="L26">    private EncounteredSymbol(boolean checkForSimilarEscapeAndQuote, boolean trash) {</span>
-<span class="fc" id="L27">        this.checkForSimilarEscapeAndQuote = checkForSimilarEscapeAndQuote;</span>
-<span class="fc" id="L28">        this.trash = trash;</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L27">    private EncounteredSymbol(boolean checkForSimilarEscapeAndQuote, boolean trash) {</span>
+<span class="fc" id="L28">        this.checkForSimilarEscapeAndQuote = checkForSimilarEscapeAndQuote;</span>
+<span class="fc" id="L29">        this.trash = trash;</span>
+<span class="fc" id="L30">    }</span>
 
     public boolean isCheckForSimilarEscapeAndQuote() {
-<span class="fc" id="L32">        return this.checkForSimilarEscapeAndQuote;</span>
+<span class="fc" id="L33">        return this.checkForSimilarEscapeAndQuote;</span>
     }
 
     public boolean isTrash() {
-<span class="fc" id="L36">        return this.trash;</span>
+<span class="fc" id="L37">        return this.trash;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

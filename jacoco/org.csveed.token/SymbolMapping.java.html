@@ -46,116 +46,117 @@ public class SymbolMapping {
 <span class="fc" id="L46">        addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, ';');</span>
 <span class="fc" id="L47">        addMapping(EncounteredSymbol.EOL_SYMBOL, new char[] { '\r', '\n' } );</span>
 <span class="fc" id="L48">        addMapping(EncounteredSymbol.SPACE_SYMBOL, ' ');</span>
-<span class="fc" id="L49">        addMapping(EncounteredSymbol.COMMENT_SYMBOL, '#');</span>
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L49">        addMapping(EncounteredSymbol.BOM_SYMBOL, '\uFEFF');</span>
+<span class="fc" id="L50">        addMapping(EncounteredSymbol.COMMENT_SYMBOL, '#');</span>
+<span class="fc" id="L51">    }</span>
 
     public char getFirstMappedCharacter(EncounteredSymbol encounteredSymbol) {
-<span class="fc" id="L53">        char[] mappedCharacters = getMappedCharacters(encounteredSymbol);</span>
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        return mappedCharacters == null ? 0 : mappedCharacters[0];</span>
+<span class="fc" id="L54">        char[] mappedCharacters = getMappedCharacters(encounteredSymbol);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        return mappedCharacters == null ? 0 : mappedCharacters[0];</span>
     }
 
     public char[] getMappedCharacters(EncounteredSymbol encounteredSymbol) {
-<span class="fc" id="L58">        return symbolToChars.get(encounteredSymbol);</span>
+<span class="fc" id="L59">        return symbolToChars.get(encounteredSymbol);</span>
     }
 
     public void addMapping(EncounteredSymbol symbol, Character character) {
-<span class="fc" id="L62">        addMapping(symbol, new char[] { character } );</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (symbol.isCheckForSimilarEscapeAndQuote()) {</span>
-<span class="fc" id="L64">            storeCharacterForLaterComparison(symbol, character);</span>
+<span class="fc" id="L63">        addMapping(symbol, new char[] { character } );</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (symbol.isCheckForSimilarEscapeAndQuote()) {</span>
+<span class="fc" id="L65">            storeCharacterForLaterComparison(symbol, character);</span>
         }
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L67">    }</span>
 
     public void addMapping(EncounteredSymbol symbol, char[] characters) {
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        while (charToSymbol.values().remove(symbol));</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (Character character : characters) {</span>
-<span class="fc" id="L71">            charToSymbol.put(character, symbol);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        while (charToSymbol.values().remove(symbol));</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        for (Character character : characters) {</span>
+<span class="fc" id="L72">            charToSymbol.put(character, symbol);</span>
         }
-<span class="fc" id="L73">        symbolToChars.put(symbol, characters);</span>
-<span class="fc" id="L74">    }</span>
+<span class="fc" id="L74">        symbolToChars.put(symbol, characters);</span>
+<span class="fc" id="L75">    }</span>
 
     public void logSettings() {
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (settingsLogged) {</span>
-<span class="fc" id="L78">            return;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (settingsLogged) {</span>
+<span class="fc" id="L79">            return;</span>
         }
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        LOG.info(&quot;- CSV config / skip comment lines? {}&quot;, isSkipCommentLines() ? &quot;yes&quot; : &quot;no&quot;);</span>
-<span class="fc" id="L81">        LOG.info(&quot;- CSV config / start line: {}&quot;, startLine);</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (EncounteredSymbol symbol : symbolToChars.keySet()) {</span>
-<span class="fc" id="L83">            char[] characters = symbolToChars.get(symbol);</span>
-<span class="fc" id="L84">            LOG.info(&quot;- CSV config / Characters for {} {}&quot;, symbol, charactersToString(characters));</span>
-        }
-<span class="fc" id="L86">        settingsLogged = true;</span>
-<span class="fc" id="L87">    }</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        LOG.info(&quot;- CSV config / skip comment lines? {}&quot;, isSkipCommentLines() ? &quot;yes&quot; : &quot;no&quot;);</span>
+<span class="fc" id="L82">        LOG.info(&quot;- CSV config / start line: {}&quot;, startLine);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        for (EncounteredSymbol symbol : symbolToChars.keySet()) {</span>
+<span class="fc" id="L84">            char[] characters = symbolToChars.get(symbol);</span>
+<span class="fc" id="L85">            LOG.info(&quot;- CSV config / Characters for {} {}&quot;, symbol, charactersToString(characters));</span>
+<span class="fc" id="L86">        }</span>
+<span class="fc" id="L87">        settingsLogged = true;</span>
+<span class="fc" id="L88">    }</span>
 
     private String charactersToString(char[] characters) {
-<span class="fc" id="L90">        StringBuilder returnString = new StringBuilder();</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (char currentChar : characters) {</span>
-<span class="fc" id="L92">            returnString.append(charToPrintable(currentChar));</span>
-<span class="fc" id="L93">            returnString.append(&quot; &quot;);</span>
+<span class="fc" id="L91">        StringBuilder returnString = new StringBuilder();</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        for (char currentChar : characters) {</span>
+<span class="fc" id="L93">            returnString.append(charToPrintable(currentChar));</span>
+<span class="fc" id="L94">            returnString.append(&quot; &quot;);</span>
         }
-<span class="fc" id="L95">        return returnString.toString();</span>
+<span class="fc" id="L96">        return returnString.toString();</span>
     }
 
     private String charToPrintable(char character) {
-<span class="fc bfc" id="L99" title="All 4 branches covered.">        switch(character) {</span>
-<span class="fc" id="L100">            case '\t' : return &quot;\\t&quot;;</span>
-<span class="fc" id="L101">            case '\n' : return &quot;\\n&quot;;</span>
-<span class="fc" id="L102">            case '\r' : return &quot;\\r&quot;;</span>
-<span class="fc" id="L103">            default: return Character.toString(character);</span>
+<span class="fc bfc" id="L100" title="All 4 branches covered.">        switch(character) {</span>
+<span class="fc" id="L101">            case '\t' : return &quot;\\t&quot;;</span>
+<span class="fc" id="L102">            case '\n' : return &quot;\\n&quot;;</span>
+<span class="fc" id="L103">            case '\r' : return &quot;\\r&quot;;</span>
+<span class="fc" id="L104">            default: return Character.toString(character);</span>
         }
     }
 
     private void storeCharacterForLaterComparison(EncounteredSymbol symbol, Character character) {
-<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (symbol == ESCAPE_SYMBOL) {</span>
-<span class="fc" id="L109">            escapeCharacter = character;</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        } else if (symbol == QUOTE_SYMBOL) {</span>
-<span class="fc" id="L111">            quoteCharacter = character;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (symbol == ESCAPE_SYMBOL) {</span>
+<span class="fc" id="L110">            escapeCharacter = character;</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        } else if (symbol == QUOTE_SYMBOL) {</span>
+<span class="fc" id="L112">            quoteCharacter = character;</span>
         }
-<span class="fc" id="L113">    }</span>
+<span class="fc" id="L114">    }</span>
 
     public boolean isSameCharactersForEscapeAndQuote() {
-<span class="pc bpc" id="L116" title="2 of 6 branches missed.">        return escapeCharacter != null &amp;&amp; quoteCharacter != null &amp;&amp; escapeCharacter.equals(quoteCharacter);</span>
+<span class="pc bpc" id="L117" title="2 of 6 branches missed.">        return escapeCharacter != null &amp;&amp; quoteCharacter != null &amp;&amp; escapeCharacter.equals(quoteCharacter);</span>
     }
 
     public EncounteredSymbol find(int character, ParseState parseState) {
-<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (character == -1) {</span>
-<span class="fc" id="L121">            return END_OF_FILE_SYMBOL;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (character == -1) {</span>
+<span class="fc" id="L122">            return END_OF_FILE_SYMBOL;</span>
         }
-<span class="fc" id="L123">        EncounteredSymbol symbol = charToSymbol.get((char)character);</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (symbol == null) {</span>
-<span class="fc" id="L125">            return OTHER_SYMBOL;</span>
+<span class="fc" id="L124">        EncounteredSymbol symbol = charToSymbol.get((char)character);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (symbol == null) {</span>
+<span class="fc" id="L126">            return OTHER_SYMBOL;</span>
         }
-<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (symbol == EOL_SYMBOL) {</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">            if (acceptedEndOfLine == 0) {</span>
-<span class="fc" id="L129">                LOG.info(&quot;- Triggering EOL character: {}&quot;, character);</span>
-<span class="fc" id="L130">                acceptedEndOfLine = (char)character;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (symbol == EOL_SYMBOL) {</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            if (acceptedEndOfLine == 0) {</span>
+<span class="fc" id="L130">                LOG.info(&quot;- Triggering EOL character: {}&quot;, character);</span>
+<span class="fc" id="L131">                acceptedEndOfLine = (char)character;</span>
             }
-<span class="fc bfc" id="L132" title="All 2 branches covered.">            if (acceptedEndOfLine != character) {</span>
-<span class="fc" id="L133">                symbol = EOL_SYMBOL_TRASH;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            if (acceptedEndOfLine != character) {</span>
+<span class="fc" id="L134">                symbol = EOL_SYMBOL_TRASH;</span>
             }
         }
-<span class="fc bfc" id="L136" title="All 4 branches covered.">        if (symbol.isCheckForSimilarEscapeAndQuote() &amp;&amp; isSameCharactersForEscapeAndQuote()) {</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">            return parseState.isUpgradeQuoteToEscape() ? ESCAPE_SYMBOL : QUOTE_SYMBOL;</span>
+<span class="fc bfc" id="L137" title="All 4 branches covered.">        if (symbol.isCheckForSimilarEscapeAndQuote() &amp;&amp; isSameCharactersForEscapeAndQuote()) {</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">            return parseState.isUpgradeQuoteToEscape() ? ESCAPE_SYMBOL : QUOTE_SYMBOL;</span>
         }
-<span class="fc" id="L139">        return symbol;</span>
+<span class="fc" id="L140">        return symbol;</span>
     }
 
     public int getStartLine() {
-<span class="fc" id="L143">        return startLine;</span>
+<span class="fc" id="L144">        return startLine;</span>
     }
 
     public void setStartLine(int startLine) {
-<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (startLine == 0) {</span>
-<span class="fc" id="L148">            throw new CsvException(new GeneralError(&quot;Row cannot be set at 0. Rows are 1-based&quot;));</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (startLine == 0) {</span>
+<span class="fc" id="L149">            throw new CsvException(new GeneralError(&quot;Row cannot be set at 0. Rows are 1-based&quot;));</span>
         }
-<span class="fc" id="L150">        this.startLine = startLine;</span>
-<span class="fc" id="L151">    }</span>
+<span class="fc" id="L151">        this.startLine = startLine;</span>
+<span class="fc" id="L152">    }</span>
 
     public boolean isSkipCommentLines() {
-<span class="fc" id="L154">        return skipCommentLines;</span>
+<span class="fc" id="L155">        return skipCommentLines;</span>
     }
 
     public void setSkipCommentLines(boolean skipCommentLines) {
-<span class="fc" id="L158">        this.skipCommentLines = skipCommentLines;</span>
-<span class="fc" id="L159">    }</span>
+<span class="fc" id="L159">        this.skipCommentLines = skipCommentLines;</span>
+<span class="fc" id="L160">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

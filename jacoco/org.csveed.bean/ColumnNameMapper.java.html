@@ -31,11 +31,11 @@ import org.slf4j.LoggerFactory;
 <span class="fc" id="L31">        } catch (CsvException e) {</span>
 <span class="fc" id="L32">            logger.trace(&quot;&quot;, e);</span>
 <span class="fc" id="L33">            throw new CsvException(new RowError(</span>
-<span class="fc" id="L34">                    &quot;The header row does not contain column \&quot;&quot; + key + &quot;\&quot;. Originally mapped to property \&quot;&quot; +</span>
+                    &quot;The header row does not contain column \&quot;&quot; + key + &quot;\&quot;. Originally mapped to property \&quot;&quot; +
 <span class="fc" id="L35">                            getBeanProperty(key).getPropertyName() + &quot;\&quot;&quot;,</span>
 <span class="fc" id="L36">                    header.reportOnEndOfLine(), 0</span>
                     ));
-        }
+<span class="fc" id="L38">        }</span>
 <span class="fc" id="L39">    }</span>
 
     @Override
@@ -44,4 +44,4 @@ import org.slf4j.LoggerFactory;
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -77,14 +77,20 @@
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      }
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      @Test
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> cannotFind() {
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> bomSymbol() {
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          SymbolMapping mapping = <strong class="jxr_keyword">new</strong> SymbolMapping();
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          assertEquals(EncounteredSymbol.OTHER_SYMBOL, mapping.find('A', ParseState.FINISHED));
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      }
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  }
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          mapping.addMapping(EncounteredSymbol.BOM_SYMBOL, '\uFEFF');
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          assertEquals(EncounteredSymbol.BOM_SYMBOL, mapping.find('\uFEFF', ParseState.START_OF_LINE));
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      }
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>      @Test
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> cannotFind() {
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          SymbolMapping mapping = <strong class="jxr_keyword">new</strong> SymbolMapping();
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          assertEquals(EncounteredSymbol.OTHER_SYMBOL, mapping.find('A', ParseState.FINISHED));
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>      }
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2013&#x2013;2019 <a href="http://blog.42.nl/">42 BV</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2013&#x2013;2022 <a href="https://42.nl/">42 BV</a>. All rights reserved.</div>
 </body>
 </html>
