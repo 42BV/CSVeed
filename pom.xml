@@ -61,8 +61,8 @@
     </developers>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>8</java.version>
+        <java.release.version>8</java.release.version>
 
         <junit.version>5.8.2</junit.version>
         <slf4j.version>1.7.36</slf4j.version>
