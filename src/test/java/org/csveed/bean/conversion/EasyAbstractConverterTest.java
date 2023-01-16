@@ -15,7 +15,7 @@ public class EasyAbstractConverterTest {
             }
         };
         Coordinate coords = converter.fromString("11/38");
-        assertEquals((Integer)11, coords.getX());
-        assertEquals((Integer)38, coords.getY());
+        assertEquals((Integer) 11, coords.getX());
+        assertEquals((Integer) 38, coords.getY());
     }
 }

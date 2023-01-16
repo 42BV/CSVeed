@@ -13,7 +13,7 @@ public class ColumnNameKey extends ColumnKey {
         if (!sameKeyType(columnKey)) {
             return keyTypeCompare(columnKey);
         }
-        return this.columnName.compareTo(((ColumnNameKey)columnKey).columnName);
+        return this.columnName.compareTo(((ColumnNameKey) columnKey).columnName);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class ColumnNameKey extends ColumnKey {
         if (!(obj instanceof ColumnNameKey)) {
             return false;
         }
-        return compareTo((ColumnNameKey)obj) == 0;
+        return compareTo((ColumnNameKey) obj) == 0;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ColumnNameKey extends ColumnKey {
 
     @Override
     public String toString() {
-        return "Column Name: "+columnName;
+        return "Column Name: " + columnName;
     }
 
     @Override

@@ -11,7 +11,7 @@ import org.csveed.test.model.BeanWithMultipleStrings;
 import org.junit.jupiter.api.Test;
 
 public class BeanWriterTest {
-    
+
     @Test
     public void writeBeans() throws IOException {
         try (StringWriter writer = new StringWriter()) {
@@ -19,16 +19,15 @@ public class BeanWriterTest {
             beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
             beans.add(createBean("row 2, cell 3", "row 2, cell 2", "row 2, cell 1"));
             beans.add(createBean("row 3, cell 3", "row 3, cell 2", "row 3, cell 1"));
-            BeanWriter<BeanWithMultipleStrings> beanWriter =
-                    new BeanWriterImpl<>(writer, BeanWithMultipleStrings.class);
+            BeanWriter<BeanWithMultipleStrings> beanWriter = new BeanWriterImpl<>(writer,
+                    BeanWithMultipleStrings.class);
             beanWriter.writeBeans(beans);
-        
+
             assertEquals(
-                "\"gamma\";\"beta\";\"alpha\"\r\n"+
-                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
-                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
-                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
-                writer.getBuffer().toString());
+                    "\"gamma\";\"beta\";\"alpha\"\r\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"
+                            + "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"
+                            + "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
+                    writer.getBuffer().toString());
         }
     }
 
@@ -45,16 +44,14 @@ public class BeanWriterTest {
             bi.mapColumnNameToProperty("Aap", "gamma");
             bi.mapColumnNameToProperty("Noot", "beta");
             bi.mapColumnNameToProperty("Mies", "alpha");
-            BeanWriter<BeanWithMultipleStrings> beanWriter =
-                new BeanWriterImpl<>(writer, bi);
+            BeanWriter<BeanWithMultipleStrings> beanWriter = new BeanWriterImpl<>(writer, bi);
             beanWriter.writeBeans(beans);
-        
+
             assertEquals(
-                "\"Aap\";\"Noot\";\"Mies\"\r\n"+
-                "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"+
-                "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"+
-                "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
-                writer.getBuffer().toString());
+                    "\"Aap\";\"Noot\";\"Mies\"\r\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\r\n"
+                            + "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\r\n"
+                            + "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"\r\n",
+                    writer.getBuffer().toString());
         }
     }
 

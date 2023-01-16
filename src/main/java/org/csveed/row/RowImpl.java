@@ -41,7 +41,7 @@ public class RowImpl implements Row {
 
     @Override
     public String get(String columnName) {
-        return line.get(header.getIndex(columnName)-1);
+        return line.get(header.getIndex(columnName) - 1);
     }
 
     @Override
@@ -61,13 +61,14 @@ public class RowImpl implements Row {
 
     @Override
     public String get(int columnIndex) {
-        return line.get(columnIndex-1);
+        return line.get(columnIndex - 1);
     }
 
     /**
-    * Returns an iterator over the individual cells of a Row
-    * @return iterator over the cells in String format
-    */
+     * Returns an iterator over the individual cells of a Row
+     *
+     * @return iterator over the cells in String format
+     */
     @Override
     public Iterator<String> iterator() {
         return line.iterator();

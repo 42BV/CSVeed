@@ -13,10 +13,11 @@ import org.csveed.token.ParseException;
 import org.csveed.token.ParseStateMachine;
 
 /**
-* Builds up a List of cells (String) per read row. Note that this class is stateful, so it
-* can support a per-row parse approach as well.
-* @author Robert Bor
-*/
+ * Builds up a List of cells (String) per read row. Note that this class is stateful, so it can support a per-row parse
+ * approach as well.
+ *
+ * @author Robert Bor
+ */
 public class RowReaderImpl implements RowReader {
 
     private ParseStateMachine stateMachine = new ParseStateMachine();
@@ -93,10 +94,8 @@ public class RowReaderImpl implements RowReader {
             maxNumberOfColumns = header == null ? unmappedLine.size() : header.size();
         }
         if (unmappedLine.size() != maxNumberOfColumns) {
-            throw new CsvException(new RowError(
-                    "The expected number of columns is " + maxNumberOfColumns + ", whereas it was " + unmappedLine.size(),
-                    unmappedLine.reportOnEndOfLine(), getCurrentLine()
-                    ));
+            throw new CsvException(new RowError("The expected number of columns is " + maxNumberOfColumns
+                    + ", whereas it was " + unmappedLine.size(), unmappedLine.reportOnEndOfLine(), getCurrentLine()));
         }
     }
 

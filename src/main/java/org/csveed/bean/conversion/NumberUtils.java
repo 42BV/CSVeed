@@ -52,14 +52,14 @@ public abstract class NumberUtils {
             // (see BigDecimal javadoc for details)
             return (T) new BigDecimal(number.toString());
         } else {
-            throw new IllegalArgumentException("Could not convert number [" + number + "] of type [" +
-                    number.getClass().getName() + "] to unknown target class [" + targetClass.getName() + "]");
+            throw new IllegalArgumentException("Could not convert number [" + number + "] of type ["
+                    + number.getClass().getName() + "] to unknown target class [" + targetClass.getName() + "]");
         }
     }
 
     private static void raiseOverflowException(Number number, Class targetClass) {
-        throw new IllegalArgumentException("Could not convert number [" + number + "] of type [" +
-                number.getClass().getName() + "] to target class [" + targetClass.getName() + "]: overflow");
+        throw new IllegalArgumentException("Could not convert number [" + number + "] of type ["
+                + number.getClass().getName() + "] to target class [" + targetClass.getName() + "]: overflow");
     }
 
     @SuppressWarnings("unchecked")

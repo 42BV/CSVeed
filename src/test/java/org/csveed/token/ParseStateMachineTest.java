@@ -66,7 +66,7 @@ public class ParseStateMachineTest {
     public void illegalState() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         machine.offerSymbol(-1);
-        assertThrows(ParseException.class, () ->  {
+        assertThrows(ParseException.class, () -> {
             machine.offerSymbol(-1);
         });
     }
@@ -74,7 +74,7 @@ public class ParseStateMachineTest {
     @Test
     public void illegalCharactersAfterQuotedContent() {
         ParseStateMachine machine = new ParseStateMachine();
-        assertThrows(ParseException.class, () ->  {
+        assertThrows(ParseException.class, () -> {
             feedStateMachine(machine, "    \"alpha\"  ; \"beta\"   x; \"gamma\" ");
         });
     }
@@ -106,7 +106,7 @@ public class ParseStateMachineTest {
     @Test
     public void cellNotFinished() {
         ParseStateMachine machine = new ParseStateMachine();
-        assertThrows(ParseException.class, () ->  {
+        assertThrows(ParseException.class, () -> {
             feedStateMachine(machine, "\"alpha\";\"beta\";\"ga");
         });
     }
@@ -114,7 +114,7 @@ public class ParseStateMachineTest {
     @Test
     public void doubleQuotesAfterFieldInfoStarted() {
         ParseStateMachine machine = new ParseStateMachine();
-        assertThrows(ParseException.class, () ->  {
+        assertThrows(ParseException.class, () -> {
             feedStateMachine(machine, "some text and... \"double quote\"... WAT?;\"beta\";\"ga\"");
         });
     }

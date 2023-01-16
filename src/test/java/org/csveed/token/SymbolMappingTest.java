@@ -12,7 +12,7 @@ public class SymbolMappingTest {
     @Test
     public void setRowAtZero() {
         SymbolMapping mapping = new SymbolMapping();
-        assertThrows(CsvException.class, () ->  {
+        assertThrows(CsvException.class, () -> {
             mapping.setStartLine(0);
         });
     }

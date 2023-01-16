@@ -31,7 +31,7 @@ public class BeanParserTest {
     @Test
     public void wrongAnnotation() {
         BeanParser beanParser = new BeanParser();
-        assertThrows(CsvException.class, () ->  {
+        assertThrows(CsvException.class, () -> {
             beanParser.getBeanInstructions(BeanWithWrongAnnotation.class);
         });
     }

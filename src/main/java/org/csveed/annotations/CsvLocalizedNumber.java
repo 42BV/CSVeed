@@ -6,30 +6,34 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
-* Makes sure that a specific Locale is used to convert numbers. If no Locale is required, no annotation
-* needs to be set, because the right converter will be picked up automatically. If you still wish to
-* apply a custom converter, use {@link CsvConverter}.
-* @author Robert Bor
-*/
+ * Makes sure that a specific Locale is used to convert numbers. If no Locale is required, no annotation needs to be
+ * set, because the right converter will be picked up automatically. If you still wish to apply a custom converter, use
+ * {@link CsvConverter}.
+ *
+ * @author Robert Bor
+ */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CsvLocalizedNumber {
 
     /**
-    * Language used to construct Locale
-    * @return language
-    */
+     * Language used to construct Locale
+     *
+     * @return language
+     */
     String language();
 
     /**
-    * Country used to construct Locale
-    * @return country
-    */
+     * Country used to construct Locale
+     *
+     * @return country
+     */
     String country() default "";
 
     /**
-    * Variant used to construct Locale
-    * @return variant
-    */
+     * Variant used to construct Locale
+     *
+     * @return variant
+     */
     String variant() default "";
 }

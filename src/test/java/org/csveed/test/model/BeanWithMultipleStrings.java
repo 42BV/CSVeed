@@ -1,9 +1,9 @@
 package org.csveed.test.model;
 
 /**
-* Note how gamma, beta and alpha are printed in reverse order. This is done on purpose to test whether the
-* declaration order is taken into account
-*/
+ * Note how gamma, beta and alpha are printed in reverse order. This is done on purpose to test whether the declaration
+ * order is taken into account
+ */
 public class BeanWithMultipleStrings {
 
     private String gamma;

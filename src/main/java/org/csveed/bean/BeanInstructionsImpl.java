@@ -50,13 +50,16 @@ public class BeanInstructionsImpl implements BeanInstructions {
         List<String> lineParts = new ArrayList<>();
         lineParts.add("- CSV config");
         if (mappingStrategy.equals(ColumnIndexMapper.class)) {
-            lineParts.add("Column index " + property.getColumnIndex() + " -> property [" + property.getPropertyName() + "]");
+            lineParts.add(
+                    "Column index " + property.getColumnIndex() + " -> property [" + property.getPropertyName() + "]");
         } else if (mappingStrategy.equals(ColumnNameMapper.class)) {
-            lineParts.add("Column name [" + property.getColumnName() + "] -> property [" + property.getPropertyName() + "]");
+            lineParts.add(
+                    "Column name [" + property.getColumnName() + "] -> property [" + property.getPropertyName() + "]");
         }
         lineParts.add("Required: " + (property.isRequired() ? "yes" : "no"));
         if (property.getConverter() != null) {
-            lineParts.add("Converter: " + property.getConverter().getClass().getSimpleName() + " for " + property.getPropertyType());
+            lineParts.add("Converter: " + property.getConverter().getClass().getSimpleName() + " for "
+                    + property.getPropertyType());
         }
 
         StringBuilder logLine = new StringBuilder();

@@ -24,9 +24,8 @@ public class ColumnIndexMapper<T> extends AbstractMapper<T> {
     protected void checkKey(Header header, Column key) {
         if (key.getColumnIndex() > header.size()) {
             throw new CsvException(new GeneralError(
-                    "Column with index " + key + " does not exist in file with " + header.size() + " columns. " +
-                            "Originally mapped to property \"" + getBeanProperty(key).getPropertyName() + "\""
-                    ));
+                    "Column with index " + key + " does not exist in file with " + header.size() + " columns. "
+                            + "Originally mapped to property \"" + getBeanProperty(key).getPropertyName() + "\""));
         }
     }
 

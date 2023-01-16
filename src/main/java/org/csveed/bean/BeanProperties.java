@@ -55,7 +55,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
 
         // Note that we use getDeclaredFields here instead of the PropertyDescriptor order. The order we now
         // use is guaranteed to be the declaration order from JDK 6+, which is exactly what we need.
-        for(Field field : beanClass.getDeclaredFields()) {
+        for (Field field : beanClass.getDeclaredFields()) {
             PropertyDescriptor propertyDescriptor = getPropertyDescriptor(propertyDescriptors, field);
             if (propertyDescriptor == null || propertyDescriptor.getWriteMethod() == null) {
                 LOG.info("Skipping {}.{}", beanClass.getName(), field.getName());
@@ -63,7 +63,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
             }
             addProperty(propertyDescriptor, field);
         }
-        
+
         if (beanClass.getSuperclass() != null) {
             parseBean(beanClass.getSuperclass());
         }
@@ -101,10 +101,10 @@ public class BeanProperties implements Iterable<BeanProperty> {
         Class<? extends Number> numberClass = get(propertyName).getNumberClass();
         if (numberClass == null) {
             throw new CsvException(new GeneralError(
-                    "Property "+beanClass.getName()+"."+propertyName+" is not a java.lang.Number"
-            ));
+                    "Property " + beanClass.getName() + "." + propertyName + " is not a java.lang.Number"));
         }
-        CustomNumberConverter converter = new CustomNumberConverter(numberClass, NumberFormat.getNumberInstance(locale), true);
+        CustomNumberConverter converter = new CustomNumberConverter(numberClass, NumberFormat.getNumberInstance(locale),
+                true);
         setConverter(propertyName, converter);
     }
 
@@ -113,11 +113,13 @@ public class BeanProperties implements Iterable<BeanProperty> {
     }
 
     protected void removeFromColumnIndex(BeanProperty property) {
-        while (indexToProperty.values().remove(property));
+        while (indexToProperty.values().remove(property))
+            ;
     }
 
     protected void removeFromColumnName(BeanProperty property) {
-        while (nameToProperty.values().remove(property));
+        while (nameToProperty.values().remove(property))
+            ;
     }
 
     public void ignoreProperty(String propertyName) {
@@ -165,9 +167,8 @@ public class BeanProperties implements Iterable<BeanProperty> {
                 return beanProperty;
             }
         }
-        throw new CsvException(new GeneralError(
-                "Property does not exist: "+ beanClass.getName()+"."+propertyName
-        ));
+        throw new CsvException(
+                new GeneralError("Property does not exist: " + beanClass.getName() + "." + propertyName));
     }
 
     public BeanProperty fromIndex(Column column) {
@@ -181,7 +182,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
     @SuppressWarnings("unchecked")
     @Override
     public Iterator<BeanProperty> iterator() {
-        return ((List<BeanProperty>)((ArrayList<BeanProperty>)this.properties).clone()).iterator();
+        return ((List<BeanProperty>) ((ArrayList<BeanProperty>) this.properties).clone()).iterator();
     }
 
     public Set<Column> columnIndexKeys() {

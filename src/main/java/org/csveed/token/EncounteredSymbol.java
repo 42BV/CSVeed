@@ -1,16 +1,8 @@
 package org.csveed.token;
 
 public enum EncounteredSymbol {
-    SPACE_SYMBOL,
-    SEPARATOR_SYMBOL,
-    QUOTE_SYMBOL(true),
-    ESCAPE_SYMBOL(true),
-    EOL_SYMBOL,
-    EOL_SYMBOL_TRASH(false, true),
-    OTHER_SYMBOL,
-    BOM_SYMBOL(false, true),
-    END_OF_FILE_SYMBOL,
-    COMMENT_SYMBOL;
+    SPACE_SYMBOL, SEPARATOR_SYMBOL, QUOTE_SYMBOL(true), ESCAPE_SYMBOL(true), EOL_SYMBOL, EOL_SYMBOL_TRASH(false, true),
+    OTHER_SYMBOL, BOM_SYMBOL(false, true), END_OF_FILE_SYMBOL, COMMENT_SYMBOL;
 
     private boolean checkForSimilarEscapeAndQuote = false;
 

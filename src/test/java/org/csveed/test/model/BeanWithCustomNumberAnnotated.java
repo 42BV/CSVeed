@@ -4,7 +4,7 @@ import org.csveed.annotations.CsvLocalizedNumber;
 
 public class BeanWithCustomNumberAnnotated {
 
-    @CsvLocalizedNumber(language = "de", country="DE")
+    @CsvLocalizedNumber(language = "de", country = "DE")
     private Double number;
 
     public Double getNumber() {

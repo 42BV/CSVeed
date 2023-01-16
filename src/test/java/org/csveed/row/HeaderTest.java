@@ -12,7 +12,7 @@ public class HeaderTest {
     @Test
     public void getNonExistingColumnName() {
         Header header = new HeaderImpl(createLine("alpha"));
-        assertThrows(CsvException.class, () ->  {
+        assertThrows(CsvException.class, () -> {
             header.getIndex("does-not-exist");
         });
     }
@@ -20,7 +20,7 @@ public class HeaderTest {
     @Test
     public void getNonExistingColumnIndex() {
         Header header = new HeaderImpl(createLine("alpha"));
-        assertThrows(CsvException.class, () ->  {
+        assertThrows(CsvException.class, () -> {
             header.getName(13);
         });
     }

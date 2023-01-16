@@ -33,7 +33,9 @@ public class DynamicColumnTest {
         Column activeColumn = new Column(4);
         Column inactiveColumn = new Column(5);
         DynamicColumn dynamicColumn = new DynamicColumn(activeColumn);
-        assertTrue(dynamicColumn.isDynamicColumnActive(activeColumn), "Column "+activeColumn.getColumnIndex()+" must be active");
-        assertFalse(dynamicColumn.isDynamicColumnActive(inactiveColumn), "Column "+inactiveColumn.getColumnIndex()+" must be active");
+        assertTrue(dynamicColumn.isDynamicColumnActive(activeColumn),
+                "Column " + activeColumn.getColumnIndex() + " must be active");
+        assertFalse(dynamicColumn.isDynamicColumnActive(inactiveColumn),
+                "Column " + inactiveColumn.getColumnIndex() + " must be active");
     }
 }

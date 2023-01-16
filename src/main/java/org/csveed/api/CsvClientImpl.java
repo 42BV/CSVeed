@@ -31,7 +31,7 @@ public class CsvClientImpl<T> implements CsvClient<T> {
     private RowReader rowReader;
 
     private RowWriter rowWriter;
-    
+
     private final RowInstructions rowInstructions;
 
     private BeanInstructions beanInstructions;
@@ -46,7 +46,7 @@ public class CsvClientImpl<T> implements CsvClient<T> {
     }
 
     public CsvClientImpl(Writer writer, BeanInstructions beanInstructions) {
-        this.beanWriter= new BeanWriterImpl<>(writer, beanInstructions);
+        this.beanWriter = new BeanWriterImpl<>(writer, beanInstructions);
         this.rowWriter = getBeanWriter().getRowWriter();
         this.rowInstructions = getRowWriter().getRowInstructions();
         this.beanInstructions = beanInstructions;
@@ -56,7 +56,7 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         this.rowReader = new RowReaderImpl(reader);
         this.rowInstructions = getRowReader().getRowInstructions();
     }
-    
+
     public CsvClientImpl(Reader reader, Class<T> beanClass) {
         this(reader, new BeanParser().getBeanInstructions(beanClass));
     }
@@ -267,13 +267,12 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         getBeanInstructions().setHeaderValueToProperty(propertyName);
         return this;
     }
-    
+
     private BeanInstructions getBeanInstructions() {
         if (this.beanInstructions == null) {
             throw new CsvException(new GeneralError(
-                    "BeanInstructions have not been initialized. Make sure to pass BeanInstructions or the bean class" +
-                    " to CsvClient."
-            ));
+                    "BeanInstructions have not been initialized. Make sure to pass BeanInstructions or the bean class"
+                            + " to CsvClient."));
         }
         return this.beanInstructions;
     }
@@ -281,8 +280,7 @@ public class CsvClientImpl<T> implements CsvClient<T> {
     private BeanReader<T> getBeanReader() {
         if (this.beanReader == null) {
             throw new CsvException(new GeneralError(
-                    "BeanReader has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvClient."
-            ));
+                    "BeanReader has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvClient."));
         }
         return this.beanReader;
     }
@@ -290,8 +288,7 @@ public class CsvClientImpl<T> implements CsvClient<T> {
     private BeanWriter<T> getBeanWriter() {
         if (this.beanWriter == null) {
             throw new CsvException(new GeneralError(
-                    "BeanWriter has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvClient."
-            ));
+                    "BeanWriter has not been initialized. Make sure to pass BeanInstructions or the bean class to CsvClient."));
         }
         return this.beanWriter;
     }

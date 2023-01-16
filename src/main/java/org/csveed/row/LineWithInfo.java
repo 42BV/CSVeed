@@ -78,7 +78,7 @@ public class LineWithInfo implements Line {
         } else if (symbol == '\t') {
             return "\\t";
         } else {
-            return Character.toString((char)symbol);
+            return Character.toString((char) symbol);
         }
     }
 

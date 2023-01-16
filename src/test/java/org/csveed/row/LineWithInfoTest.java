@@ -43,7 +43,7 @@ public class LineWithInfoTest {
     @Test
     public void getReportOnColumnIndex0() {
         LineWithInfo row = addString(new LineWithInfo(), "Hello");
-        assertThrows(CsvException.class, () ->  {
+        assertThrows(CsvException.class, () -> {
             row.reportOnColumn(new Column(0));
         });
     }

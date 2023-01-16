@@ -2,10 +2,7 @@ package org.csveed.test.model;
 
 import org.csveed.annotations.CsvFile;
 
-@CsvFile(   escape='\\',
-            endOfLine = '\r',
-            separator = '\t',
-            quote = '\'')
+@CsvFile(escape = '\\', endOfLine = '\r', separator = '\t', quote = '\'')
 public class BeanWithAlienSettings {
 
     private String gamma;

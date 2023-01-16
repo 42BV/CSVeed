@@ -26,10 +26,7 @@ public class Coordinate {
         Pattern r = Pattern.compile("(\\d+)/(\\d+)");
         Matcher m = r.matcher(coordinateText);
         if (m.find()) {
-            return new Coordinate(
-                    Integer.parseInt(m.group(1)),
-                    Integer.parseInt(m.group(2))
-            );
+            return new Coordinate(Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)));
         }
         return null;
     }

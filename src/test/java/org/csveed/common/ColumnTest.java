@@ -35,7 +35,7 @@ public class ColumnTest {
 
     @Test
     public void wrongIndex() {
-        assertThrows(CsvException.class, () ->  {
+        assertThrows(CsvException.class, () -> {
             new Column(0);
         });
     }

@@ -1,9 +1,7 @@
 package org.csveed.token;
 
 public enum TokenState {
-    RESET,
-    START,
-    PROCESSING;
+    RESET, START, PROCESSING;
 
     public TokenState next() {
         return values()[(ordinal() + 1) % 3];

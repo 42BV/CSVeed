@@ -12,12 +12,13 @@ public class CustomNumberConverter extends AbstractConverter<Number> {
 
     private final boolean allowEmpty;
 
-    public CustomNumberConverter(Class<? extends Number> numberClass, boolean allowEmpty) throws IllegalArgumentException {
+    public CustomNumberConverter(Class<? extends Number> numberClass, boolean allowEmpty)
+            throws IllegalArgumentException {
         this(numberClass, null, allowEmpty);
     }
 
-    public CustomNumberConverter(Class<? extends Number> numberClass,
-                              NumberFormat numberFormat, boolean allowEmpty) throws IllegalArgumentException {
+    public CustomNumberConverter(Class<? extends Number> numberClass, NumberFormat numberFormat, boolean allowEmpty)
+            throws IllegalArgumentException {
         super(Number.class);
 
         if (numberClass == null || !Number.class.isAssignableFrom(numberClass)) {

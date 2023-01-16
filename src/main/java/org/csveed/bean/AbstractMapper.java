@@ -56,10 +56,10 @@ public abstract class AbstractMapper<T> {
                 continue;
             }
             if (beanProperty.isRequired() && (cell == null || cell.equals(""))) {
-                throw new CsvException(
-                        new RowError("Bean property \"" + beanProperty.getPropertyName() +
-                                "\" is required and may not be empty or null",
-                                row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
+                throw new CsvException(new RowError(
+                        "Bean property \"" + beanProperty.getPropertyName()
+                                + "\" is required and may not be empty or null",
+                        row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
             }
             setBeanProperty(row, lineNumber, beanWrapper, currentColumn, cell, beanProperty);
         }
@@ -80,14 +80,15 @@ public abstract class AbstractMapper<T> {
         }
     }
 
-    private void setBeanProperty(Row row, int lineNumber, BeanWrapper beanWrapper, Column currentColumn, String cell, BeanProperty beanProperty) {
+    private void setBeanProperty(Row row, int lineNumber, BeanWrapper beanWrapper, Column currentColumn, String cell,
+            BeanProperty beanProperty) {
         try {
             beanWrapper.setProperty(beanProperty, cell);
         } catch (ConversionException err) {
-            String message =
-                    err.getMessage() + " cell" + currentColumn.getColumnText() + " [" + cell + "] to " +
-                            beanProperty.getPropertyName() + ": " + err.getTypeDescription();
-            throw new CsvException(new RowError(message, row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
+            String message = err.getMessage() + " cell" + currentColumn.getColumnText() + " [" + cell + "] to "
+                    + beanProperty.getPropertyName() + ": " + err.getTypeDescription();
+            throw new CsvException(
+                    new RowError(message, row.reportOnColumn(currentColumn.getColumnIndex()), lineNumber));
         }
     }
 

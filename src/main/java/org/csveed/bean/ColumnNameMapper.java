@@ -30,11 +30,9 @@ public class ColumnNameMapper<T> extends AbstractMapper<T> {
             header.getIndex(key.getColumnName());
         } catch (CsvException e) {
             logger.trace("", e);
-            throw new CsvException(new RowError(
-                    "The header row does not contain column \"" + key + "\". Originally mapped to property \"" +
-                            getBeanProperty(key).getPropertyName() + "\"",
-                    header.reportOnEndOfLine(), 0
-                    ));
+            throw new CsvException(new RowError("The header row does not contain column \"" + key
+                    + "\". Originally mapped to property \"" + getBeanProperty(key).getPropertyName() + "\"",
+                    header.reportOnEndOfLine(), 0));
         }
     }
 

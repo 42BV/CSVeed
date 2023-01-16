@@ -113,10 +113,8 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         try {
             return this.getBeanClass().newInstance();
         } catch (Exception err) {
-            throw new CsvException(new GeneralError(
-                    "Unable to instantiate the bean class " + this.getBeanClass().getName() +
-                            ". Does it have a no-arg public constructor?"
-                    ));
+            throw new CsvException(new GeneralError("Unable to instantiate the bean class "
+                    + this.getBeanClass().getName() + ". Does it have a no-arg public constructor?"));
         }
     }
 
@@ -131,9 +129,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
             return this.beanInstructions.getMappingStrategy().newInstance();
         } catch (Exception e) {
             logger.trace("", e);
-            throw new CsvException(new GeneralError(
-                    "Unable to instantiate the mapping strategy"
-                    ));
+            throw new CsvException(new GeneralError("Unable to instantiate the mapping strategy"));
         }
     }
 

@@ -30,7 +30,8 @@ public class Column implements Comparable<Column> {
 
     public Column(int columnIndex) {
         if (columnIndex <= 0) {
-            throw new CsvException(new GeneralError("Column index cannot be set at 0 or lower. Column indexes are 1-based"));
+            throw new CsvException(
+                    new GeneralError("Column index cannot be set at 0 or lower. Column indexes are 1-based"));
         }
         setColumnIndex(columnIndex);
     }
@@ -79,7 +80,7 @@ public class Column implements Comparable<Column> {
     }
 
     public Column nextColumn() {
-        return new Column(this.getColumnIndex()+1).setHeader(header);
+        return new Column(this.getColumnIndex() + 1).setHeader(header);
     }
 
     public Column nextLine() {
@@ -87,9 +88,8 @@ public class Column implements Comparable<Column> {
     }
 
     public String getColumnText() {
-        return
-                (columnIndex == -1 ? "" : " index "+columnIndex+" ("+getExcelColumn()+")") +
-                (columnName == null ? "" : " name \""+columnName+"\"");
+        return (columnIndex == -1 ? "" : " index " + columnIndex + " (" + getExcelColumn() + ")")
+                + (columnName == null ? "" : " name \"" + columnName + "\"");
     }
 
     @Override
@@ -97,7 +97,7 @@ public class Column implements Comparable<Column> {
         if (!(obj instanceof Column)) {
             return false;
         }
-        return this.key.equals(((Column)obj).key);
+        return this.key.equals(((Column) obj).key);
     }
 
     @Override

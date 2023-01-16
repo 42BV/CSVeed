@@ -24,7 +24,7 @@ public class BeanProperty {
     @SuppressWarnings("unchecked")
     public Class<? extends Number> getNumberClass() {
         if (Number.class.isAssignableFrom(propertyDescriptor.getPropertyType())) {
-            return (Class<? extends Number>)propertyDescriptor.getPropertyType();
+            return (Class<? extends Number>) propertyDescriptor.getPropertyType();
         }
         return null;
     }
@@ -99,14 +99,13 @@ public class BeanProperty {
         if (!(obj instanceof BeanProperty)) {
             return false;
         }
-        BeanProperty other = (BeanProperty)obj;
+        BeanProperty other = (BeanProperty) obj;
         return getPropertyName().equals(other.getPropertyName());
     }
 
     public String getPropertyType() {
-        return getConverter() != null ?
-                getConverter().infoOnType() :
-                getPropertyDescriptor().getPropertyType().getName();
+        return getConverter() != null ? getConverter().infoOnType()
+                : getPropertyDescriptor().getPropertyType().getName();
     }
 
 }

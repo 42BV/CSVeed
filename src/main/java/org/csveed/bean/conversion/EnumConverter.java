@@ -11,7 +11,7 @@ public class EnumConverter<T extends Enum> extends AbstractConverter<T> {
 
     @Override
     public T fromString(String text) throws Exception {
-        return (T)Enum.valueOf(this.enumClass, text);
+        return (T) Enum.valueOf(this.enumClass, text);
     }
 
     @Override

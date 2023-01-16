@@ -36,7 +36,7 @@ public class HeaderImpl implements Header {
         Column column = new Column(columnIndex);
         String name = this.indexToName.get(column);
         if (name == null) {
-            throw new CsvException(new GeneralError("No column name found for index "+column.getColumnIndex()));
+            throw new CsvException(new GeneralError("No column name found for index " + column.getColumnIndex()));
         }
         return name;
     }
@@ -45,7 +45,7 @@ public class HeaderImpl implements Header {
     public int getIndex(String columnName) {
         Column column = this.nameToIndex.get(columnName.toLowerCase());
         if (column == null) {
-            throw new CsvException(new GeneralError("No column index found for name "+columnName));
+            throw new CsvException(new GeneralError("No column index found for name " + columnName));
         }
         return column.getColumnIndex();
     }
