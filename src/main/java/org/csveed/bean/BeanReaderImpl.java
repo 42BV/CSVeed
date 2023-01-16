@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.bean;
 
 import java.io.Reader;
@@ -113,10 +123,8 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         try {
             return this.getBeanClass().newInstance();
         } catch (Exception err) {
-            throw new CsvException(new GeneralError(
-                    "Unable to instantiate the bean class " + this.getBeanClass().getName() +
-                            ". Does it have a no-arg public constructor?"
-                    ));
+            throw new CsvException(new GeneralError("Unable to instantiate the bean class "
+                    + this.getBeanClass().getName() + ". Does it have a no-arg public constructor?"));
         }
     }
 
@@ -131,9 +139,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
             return this.beanInstructions.getMappingStrategy().newInstance();
         } catch (Exception e) {
             logger.trace("", e);
-            throw new CsvException(new GeneralError(
-                    "Unable to instantiate the mapping strategy"
-                    ));
+            throw new CsvException(new GeneralError("Unable to instantiate the mapping strategy"));
         }
     }
 

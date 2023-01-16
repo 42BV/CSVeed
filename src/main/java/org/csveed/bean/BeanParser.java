@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.bean;
 
 import java.lang.annotation.Annotation;
@@ -27,7 +37,7 @@ public class BeanParser {
         Annotation[] annotations = beanClass.getAnnotations();
         for (Annotation annotation : annotations) {
             if (annotation instanceof CsvFile) {
-                parseCsvFile((CsvFile)annotation);
+                parseCsvFile((CsvFile) annotation);
             }
         }
 
@@ -46,11 +56,11 @@ public class BeanParser {
         String columnName = propertyName;
         for (Annotation annotation : annotations) {
             if (annotation instanceof CsvCell) {
-                columnName = parseCsvCell(propertyName, (CsvCell)annotation);
+                columnName = parseCsvCell(propertyName, (CsvCell) annotation);
             } else if (annotation instanceof CsvConverter) {
-                parseCsvConverter(propertyName, (CsvConverter)annotation);
+                parseCsvConverter(propertyName, (CsvConverter) annotation);
             } else if (annotation instanceof CsvDate) {
-                parseCsvDate(propertyName, (CsvDate)annotation);
+                parseCsvDate(propertyName, (CsvDate) annotation);
             } else if (annotation instanceof CsvLocalizedNumber) {
                 parseCsvLocalizedNumber(propertyName, (CsvLocalizedNumber) annotation);
             } else if (annotation instanceof CsvHeaderName) {
@@ -81,19 +91,12 @@ public class BeanParser {
 
     private void parseCsvFile(CsvFile csvFile) {
 
-        this.beanInstructions
-            .setEscape(csvFile.escape())
-            .setQuote(csvFile.quote())
-            .setQuotingEnabled(csvFile.quotingEnabled())
-            .setSeparator(csvFile.separator())
-            .setComment(csvFile.comment())
-            .setEndOfLine(csvFile.endOfLine())
-            .setMapper(csvFile.mappingStrategy())
-            .setStartRow(csvFile.startRow())
-            .setUseHeader(csvFile.useHeader())
-            .skipEmptyLines(csvFile.skipEmptyLines())
-            .skipCommentLines(csvFile.skipCommentLines())
-            .setStartIndexDynamicColumns(csvFile.startIndexDynamicColumns());
+        this.beanInstructions.setEscape(csvFile.escape()).setQuote(csvFile.quote())
+                .setQuotingEnabled(csvFile.quotingEnabled()).setSeparator(csvFile.separator())
+                .setComment(csvFile.comment()).setEndOfLine(csvFile.endOfLine()).setMapper(csvFile.mappingStrategy())
+                .setStartRow(csvFile.startRow()).setUseHeader(csvFile.useHeader())
+                .skipEmptyLines(csvFile.skipEmptyLines()).skipCommentLines(csvFile.skipCommentLines())
+                .setStartIndexDynamicColumns(csvFile.startIndexDynamicColumns());
     }
 
     private void parseCsvDate(String propertyName, CsvDate csvDate) {
@@ -109,7 +112,8 @@ public class BeanParser {
     }
 
     private String parseCsvCell(String propertyName, CsvCell csvCell) {
-        String columnName = csvCell.columnName() == null || csvCell.columnName().isEmpty() ? propertyName : csvCell.columnName();
+        String columnName = csvCell.columnName() == null || csvCell.columnName().isEmpty() ? propertyName
+                : csvCell.columnName();
         this.beanInstructions.setRequired(propertyName, csvCell.required());
         currentColumn = csvCell.columnIndex() != -1 ? new Column(csvCell.columnIndex()) : currentColumn;
         return columnName;

@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.row;
 
 import java.io.IOException;
@@ -55,8 +65,9 @@ public class RowWriterImpl implements RowWriter {
     @Override
     public void writeRow(Row row) {
         if (rowInstructions.isUseHeader() && this.header == null) {
-            throw new CsvException(new GeneralError("Header has not been set for this table. Make sure to write it or configure " +
-                    "it to be not used: .setUseHeader(false)"));
+            throw new CsvException(
+                    new GeneralError("Header has not been set for this table. Make sure to write it or configure "
+                            + "it to be not used: .setUseHeader(false)"));
         }
         writeCells(row.iterator());
     }
@@ -85,8 +96,9 @@ public class RowWriterImpl implements RowWriter {
             while (cells.hasNext()) {
                 String cell = cells.next();
                 String nullSafeCell = cell != null ? cell : "";
-                String headerValue = header != null ?  header.getName(columnPosition) : "";
-                LOG.debug("Writing cell value [{}] in column position [{}], header value is [{}].", nullSafeCell, columnPosition, headerValue);
+                String headerValue = header != null ? header.getName(columnPosition) : "";
+                LOG.debug("Writing cell value [{}] in column position [{}], header value is [{}].", nullSafeCell,
+                        columnPosition, headerValue);
                 if (columnPosition != 1) {
                     writeSeparator();
                 }
@@ -98,7 +110,7 @@ public class RowWriterImpl implements RowWriter {
                 columnPosition++;
             }
             writeEOL();
-        } catch(IOException e){
+        } catch (IOException e) {
             LOG.trace("", e);
             throw new CsvException(new GeneralError("Error in writing to the writer: " + e.getMessage()));
         }
@@ -115,7 +127,7 @@ public class RowWriterImpl implements RowWriter {
     private void writeQuotedCell(String cell) throws IOException {
         writer.write(rowInstructions.getQuote());
         String searchString = Character.toString(rowInstructions.getQuote());
-        String replaceString = new String(new char[] { rowInstructions.getEscape(), rowInstructions.getQuote() } );
+        String replaceString = new String(new char[] { rowInstructions.getEscape(), rowInstructions.getQuote() });
         String replacedString = cell.replace(searchString, replaceString);
         writeCell(replacedString);
         writer.write(rowInstructions.getQuote());

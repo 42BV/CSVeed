@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.common;
 
 public class ColumnIndexKey extends ColumnKey {
@@ -13,7 +23,7 @@ public class ColumnIndexKey extends ColumnKey {
         if (!sameKeyType(columnKey)) {
             return keyTypeCompare(columnKey);
         }
-        return this.columnIndex.compareTo(((ColumnIndexKey)columnKey).columnIndex);
+        return this.columnIndex.compareTo(((ColumnIndexKey) columnKey).columnIndex);
     }
 
     @Override
@@ -21,7 +31,7 @@ public class ColumnIndexKey extends ColumnKey {
         if (!(obj instanceof ColumnIndexKey)) {
             return false;
         }
-        return compareTo((ColumnIndexKey)obj) == 0;
+        return compareTo((ColumnIndexKey) obj) == 0;
     }
 
     @Override
@@ -31,7 +41,7 @@ public class ColumnIndexKey extends ColumnKey {
 
     @Override
     public String toString() {
-        return "Column Index: "+columnIndex;
+        return "Column Index: " + columnIndex;
     }
 
     @Override

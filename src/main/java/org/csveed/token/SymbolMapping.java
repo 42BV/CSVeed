@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.token;
 
 import static org.csveed.token.EncounteredSymbol.END_OF_FILE_SYMBOL;
@@ -44,7 +54,7 @@ public class SymbolMapping {
         addMapping(EncounteredSymbol.ESCAPE_SYMBOL, '"');
         addMapping(EncounteredSymbol.QUOTE_SYMBOL, '"');
         addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, ';');
-        addMapping(EncounteredSymbol.EOL_SYMBOL, new char[] { '\r', '\n' } );
+        addMapping(EncounteredSymbol.EOL_SYMBOL, new char[] { '\r', '\n' });
         addMapping(EncounteredSymbol.SPACE_SYMBOL, ' ');
         addMapping(EncounteredSymbol.BOM_SYMBOL, '\uFEFF');
         addMapping(EncounteredSymbol.COMMENT_SYMBOL, '#');
@@ -60,14 +70,15 @@ public class SymbolMapping {
     }
 
     public void addMapping(EncounteredSymbol symbol, Character character) {
-        addMapping(symbol, new char[] { character } );
+        addMapping(symbol, new char[] { character });
         if (symbol.isCheckForSimilarEscapeAndQuote()) {
             storeCharacterForLaterComparison(symbol, character);
         }
     }
 
     public void addMapping(EncounteredSymbol symbol, char[] characters) {
-        while (charToSymbol.values().remove(symbol));
+        while (charToSymbol.values().remove(symbol))
+            ;
         for (Character character : characters) {
             charToSymbol.put(character, symbol);
         }
@@ -97,11 +108,15 @@ public class SymbolMapping {
     }
 
     private String charToPrintable(char character) {
-        switch(character) {
-            case '\t' : return "\\t";
-            case '\n' : return "\\n";
-            case '\r' : return "\\r";
-            default: return Character.toString(character);
+        switch (character) {
+            case '\t':
+                return "\\t";
+            case '\n':
+                return "\\n";
+            case '\r':
+                return "\\r";
+            default:
+                return Character.toString(character);
         }
     }
 
@@ -121,14 +136,14 @@ public class SymbolMapping {
         if (character == -1) {
             return END_OF_FILE_SYMBOL;
         }
-        EncounteredSymbol symbol = charToSymbol.get((char)character);
+        EncounteredSymbol symbol = charToSymbol.get((char) character);
         if (symbol == null) {
             return OTHER_SYMBOL;
         }
         if (symbol == EOL_SYMBOL) {
             if (acceptedEndOfLine == 0) {
                 LOG.info("- Triggering EOL character: {}", character);
-                acceptedEndOfLine = (char)character;
+                acceptedEndOfLine = (char) character;
             }
             if (acceptedEndOfLine != character) {
                 symbol = EOL_SYMBOL_TRASH;

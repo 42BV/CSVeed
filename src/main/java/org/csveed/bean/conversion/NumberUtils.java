@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.bean.conversion;
 
 import static org.csveed.bean.conversion.ConversionUtil.trimAllWhitespace;
@@ -52,14 +62,14 @@ public abstract class NumberUtils {
             // (see BigDecimal javadoc for details)
             return (T) new BigDecimal(number.toString());
         } else {
-            throw new IllegalArgumentException("Could not convert number [" + number + "] of type [" +
-                    number.getClass().getName() + "] to unknown target class [" + targetClass.getName() + "]");
+            throw new IllegalArgumentException("Could not convert number [" + number + "] of type ["
+                    + number.getClass().getName() + "] to unknown target class [" + targetClass.getName() + "]");
         }
     }
 
     private static void raiseOverflowException(Number number, Class targetClass) {
-        throw new IllegalArgumentException("Could not convert number [" + number + "] of type [" +
-                number.getClass().getName() + "] to target class [" + targetClass.getName() + "]: overflow");
+        throw new IllegalArgumentException("Could not convert number [" + number + "] of type ["
+                + number.getClass().getName() + "] to target class [" + targetClass.getName() + "]: overflow");
     }
 
     @SuppressWarnings("unchecked")

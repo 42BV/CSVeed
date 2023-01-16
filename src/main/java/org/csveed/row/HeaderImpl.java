@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.row;
 
 import java.util.HashMap;
@@ -36,7 +46,7 @@ public class HeaderImpl implements Header {
         Column column = new Column(columnIndex);
         String name = this.indexToName.get(column);
         if (name == null) {
-            throw new CsvException(new GeneralError("No column name found for index "+column.getColumnIndex()));
+            throw new CsvException(new GeneralError("No column name found for index " + column.getColumnIndex()));
         }
         return name;
     }
@@ -45,7 +55,7 @@ public class HeaderImpl implements Header {
     public int getIndex(String columnName) {
         Column column = this.nameToIndex.get(columnName.toLowerCase());
         if (column == null) {
-            throw new CsvException(new GeneralError("No column index found for name "+columnName));
+            throw new CsvException(new GeneralError("No column index found for name " + columnName));
         }
         return column.getColumnIndex();
     }

@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.bean.conversion;
 
 import static org.csveed.bean.conversion.ConversionUtil.hasLength;
@@ -42,13 +52,11 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
             return Boolean.TRUE;
         } else if (this.falseString != null && this.falseString.equalsIgnoreCase(input)) {
             return Boolean.FALSE;
-        } else if (this.trueString == null &&
-                (VALUE_TRUE.equalsIgnoreCase(input) || VALUE_ON.equalsIgnoreCase(input) ||
-                        VALUE_YES.equalsIgnoreCase(input) || VALUE_1.equals(input))) {
+        } else if (this.trueString == null && (VALUE_TRUE.equalsIgnoreCase(input) || VALUE_ON.equalsIgnoreCase(input)
+                || VALUE_YES.equalsIgnoreCase(input) || VALUE_1.equals(input))) {
             return Boolean.TRUE;
-        } else if (this.falseString == null &&
-                (VALUE_FALSE.equalsIgnoreCase(input) || VALUE_OFF.equalsIgnoreCase(input) ||
-                        VALUE_NO.equalsIgnoreCase(input) || VALUE_0.equals(input))) {
+        } else if (this.falseString == null && (VALUE_FALSE.equalsIgnoreCase(input) || VALUE_OFF.equalsIgnoreCase(input)
+                || VALUE_NO.equalsIgnoreCase(input) || VALUE_0.equals(input))) {
             return Boolean.FALSE;
         } else {
             throw new IllegalArgumentException("Invalid boolean value [" + text + "]");

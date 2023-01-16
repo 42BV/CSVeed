@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.bean;
 
 import java.beans.PropertyDescriptor;
@@ -24,7 +34,7 @@ public class BeanProperty {
     @SuppressWarnings("unchecked")
     public Class<? extends Number> getNumberClass() {
         if (Number.class.isAssignableFrom(propertyDescriptor.getPropertyType())) {
-            return (Class<? extends Number>)propertyDescriptor.getPropertyType();
+            return (Class<? extends Number>) propertyDescriptor.getPropertyType();
         }
         return null;
     }
@@ -99,14 +109,13 @@ public class BeanProperty {
         if (!(obj instanceof BeanProperty)) {
             return false;
         }
-        BeanProperty other = (BeanProperty)obj;
+        BeanProperty other = (BeanProperty) obj;
         return getPropertyName().equals(other.getPropertyName());
     }
 
     public String getPropertyType() {
-        return getConverter() != null ?
-                getConverter().infoOnType() :
-                getPropertyDescriptor().getPropertyType().getName();
+        return getConverter() != null ? getConverter().infoOnType()
+                : getPropertyDescriptor().getPropertyType().getName();
     }
 
 }

@@ -1,12 +1,21 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.bean;
 
 import org.csveed.common.Column;
 
 /**
  * <p>
- *     The concept of dynamic columns comes into play when a sheet contains columns that are not really part
- *     of the columns, but should have been separate rows. For example, let's say you have a table that looks
- *     like this:
+ * The concept of dynamic columns comes into play when a sheet contains columns that are not really part of the columns,
+ * but should have been separate rows. For example, let's say you have a table that looks like this:
  * </p>
  * <code>
  *     | name   | town   | jan 14 | jan 15 | jan 16 |
@@ -16,8 +25,7 @@ import org.csveed.common.Column;
  *     | Erik   | Sneek  |   1    |   0    |   9    |
  * </code>
  * <p>
- *     Let's say you want to compact this table into the following, normalized format:
- * <code>
+ * Let's say you want to compact this table into the following, normalized format: <code>
  *     | name   | town   | date   | visits |
  *     | Rob    | Leiden | jan 14 |   4    |
  *     | Rob    | Leiden | jan 15 |   1    |
@@ -33,14 +41,15 @@ import org.csveed.common.Column;
  *     | Erik   | Sneek  | jan 16 |   9    |
  * </code>
  * <p>
- *     In order to realize this goal, you need to make that startIndexDynamicColumns is set to 3 on @CsvFile.
- *     This will assume the columns starting with the third and all thereafter are dynamic. For every dynamic
- *     column, a new bean will be created. All static columns will be copied into every created bean.
+ * In order to realize this goal, you need to make that startIndexDynamicColumns is set to 3 on @CsvFile. This will
+ * assume the columns starting with the third and all thereafter are dynamic. For every dynamic column, a new bean will
+ * be created. All static columns will be copied into every created bean.
  * </p>
  * <p>
- *     The header name and the cell value can be copied into bean properties. In the example, the bean requires
- *     two fields date and visits. date must be annotated with @CsvHeaderName and visits with @CsvHeaderValue.
+ * The header name and the cell value can be copied into bean properties. In the example, the bean requires two fields
+ * date and visits. date must be annotated with @CsvHeaderName and visits with @CsvHeaderValue.
  * </p>
+ *
  * @author Robert Bor
  */
 public class DynamicColumn {

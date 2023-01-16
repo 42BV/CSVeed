@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.bean;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -33,7 +43,9 @@ public class DynamicColumnTest {
         Column activeColumn = new Column(4);
         Column inactiveColumn = new Column(5);
         DynamicColumn dynamicColumn = new DynamicColumn(activeColumn);
-        assertTrue(dynamicColumn.isDynamicColumnActive(activeColumn), "Column "+activeColumn.getColumnIndex()+" must be active");
-        assertFalse(dynamicColumn.isDynamicColumnActive(inactiveColumn), "Column "+inactiveColumn.getColumnIndex()+" must be active");
+        assertTrue(dynamicColumn.isDynamicColumnActive(activeColumn),
+                "Column " + activeColumn.getColumnIndex() + " must be active");
+        assertFalse(dynamicColumn.isDynamicColumnActive(inactiveColumn),
+                "Column " + inactiveColumn.getColumnIndex() + " must be active");
     }
 }

@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2011-2018 the original author or authors.
+    CSVeed (https://github.com/42BV/CSVeed)
 
-       This program is free software; you can redistribute it and/or
-       modify it under the terms of the GNU General Public License
-       as published by the Free Software Foundation; either version 2
-       of the License, or (at your option) any later version.
+    Copyright 2013-2023 CSVeed.
 
-       You may obtain a copy of the License at
-
-          https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
-
-       This program is distributed in the hope that it will be useful,
-       but WITHOUT ANY WARRANTY; without even the implied warranty of
-       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-       GNU General Public License for more details.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of The Apache Software License,
+    Version 2.0 which accompanies this distribution, and is available at
+    https://www.apache.org/licenses/LICENSE-2.0.txt
 
 -->
 <project name="${project.name}" xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -31,7 +24,7 @@
     <skin>
         <groupId>org.apache.maven.skins</groupId>
         <artifactId>maven-fluido-skin</artifactId>
-        <version>1.8</version>
+        <version>1.11.1</version>
     </skin>
     <custom>
         <fluidoSkin>

@@ -1,3 +1,13 @@
+/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 package org.csveed.bean;
 
 import java.util.ArrayList;
@@ -50,13 +60,16 @@ public class BeanInstructionsImpl implements BeanInstructions {
         List<String> lineParts = new ArrayList<>();
         lineParts.add("- CSV config");
         if (mappingStrategy.equals(ColumnIndexMapper.class)) {
-            lineParts.add("Column index " + property.getColumnIndex() + " -> property [" + property.getPropertyName() + "]");
+            lineParts.add(
+                    "Column index " + property.getColumnIndex() + " -> property [" + property.getPropertyName() + "]");
         } else if (mappingStrategy.equals(ColumnNameMapper.class)) {
-            lineParts.add("Column name [" + property.getColumnName() + "] -> property [" + property.getPropertyName() + "]");
+            lineParts.add(
+                    "Column name [" + property.getColumnName() + "] -> property [" + property.getPropertyName() + "]");
         }
         lineParts.add("Required: " + (property.isRequired() ? "yes" : "no"));
         if (property.getConverter() != null) {
-            lineParts.add("Converter: " + property.getConverter().getClass().getSimpleName() + " for " + property.getPropertyType());
+            lineParts.add("Converter: " + property.getConverter().getClass().getSimpleName() + " for "
+                    + property.getPropertyType());
         }
 
         StringBuilder logLine = new StringBuilder();
