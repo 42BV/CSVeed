@@ -33,7 +33,8 @@ public abstract class NumberUtils {
                 raiseOverflowException(number, targetClass);
             }
             return (T) Byte.valueOf(number.byteValue());
-        } else if (targetClass.equals(Short.class)) {
+        }
+        if (targetClass.equals(Short.class)) {
             long value = number.longValue();
             if (value < Short.MIN_VALUE || value > Short.MAX_VALUE) {
                 raiseOverflowException(number, targetClass);
@@ -82,7 +83,8 @@ public abstract class NumberUtils {
         }
         if (targetClass.equals(Short.class)) {
             return (T) (isHexNumber(trimmed) ? Short.decode(trimmed) : Short.valueOf(trimmed));
-        } else if (targetClass.equals(Integer.class)) {
+        }
+        if (targetClass.equals(Integer.class)) {
             return (T) (isHexNumber(trimmed) ? Integer.decode(trimmed) : Integer.valueOf(trimmed));
         } else if (targetClass.equals(Long.class)) {
             return (T) (isHexNumber(trimmed) ? Long.decode(trimmed) : Long.valueOf(trimmed));

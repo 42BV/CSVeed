@@ -32,7 +32,8 @@ public class CharacterConverter extends AbstractConverter<Character> {
         }
         if (text == null) {
             throw new IllegalArgumentException("null String cannot be converted to char type");
-        } else if (isUnicodeCharacterSequence(text)) {
+        }
+        if (isUnicodeCharacterSequence(text)) {
             int code = Integer.parseInt(text.substring(UNICODE_PREFIX.length()), 16);
             return (char) code;
         } else if (text.length() != 1) {

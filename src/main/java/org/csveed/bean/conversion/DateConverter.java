@@ -44,12 +44,11 @@ public class DateConverter extends AbstractConverter<Date> {
         if (text != null && this.exactDateLength >= 0 && text.length() != this.exactDateLength) {
             throw new IllegalArgumentException(
                     "Could not parse date: it is not exactly" + this.exactDateLength + "characters long");
-        } else {
-            try {
-                return this.dateFormat.parse(text);
-            } catch (ParseException ex) {
-                throw new IllegalArgumentException("Could not parse date: " + ex.getMessage(), ex);
-            }
+        }
+        try {
+            return this.dateFormat.parse(text);
+        } catch (ParseException ex) {
+            throw new IllegalArgumentException("Could not parse date: " + ex.getMessage(), ex);
         }
     }
 

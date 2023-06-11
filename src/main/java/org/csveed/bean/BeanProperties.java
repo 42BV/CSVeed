@@ -124,13 +124,13 @@ public class BeanProperties implements Iterable<BeanProperty> {
 
     protected void removeFromColumnIndex(BeanProperty property) {
         while (indexToProperty.values().remove(property)) {
-            ;
+
         }
     }
 
     protected void removeFromColumnName(BeanProperty property) {
         while (nameToProperty.values().remove(property)) {
-            ;
+
         }
     }
 

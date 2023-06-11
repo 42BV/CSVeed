@@ -51,7 +51,8 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
         }
         if (this.trueString != null && this.trueString.equalsIgnoreCase(input)) {
             return Boolean.TRUE;
-        } else if (this.falseString != null && this.falseString.equalsIgnoreCase(input)) {
+        }
+        if (this.falseString != null && this.falseString.equalsIgnoreCase(input)) {
             return Boolean.FALSE;
         } else if (this.trueString == null && (VALUE_TRUE.equalsIgnoreCase(input) || VALUE_ON.equalsIgnoreCase(input)
                 || VALUE_YES.equalsIgnoreCase(input) || VALUE_1.equals(input))) {
@@ -71,9 +72,8 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
         }
         if (Boolean.FALSE.equals(value)) {
             return this.falseString != null ? this.falseString : VALUE_FALSE;
-        } else {
-            return "";
         }
+        return "";
     }
 
 }

@@ -46,9 +46,8 @@ public class CustomNumberConverter extends AbstractConverter<Number> {
         }
         if (this.numberFormat != null) {
             return determineValue(NumberUtils.parseNumber(text, this.numberClass, this.numberFormat));
-        } else {
-            return determineValue(NumberUtils.parseNumber(text, this.numberClass));
         }
+        return determineValue(NumberUtils.parseNumber(text, this.numberClass));
     }
 
     public Number determineValue(Object value) {
