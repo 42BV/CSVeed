@@ -111,7 +111,8 @@ public class LineWithInfoTest {
 
     protected LineWithInfo addString(LineWithInfo row, String text) {
         row.markStartOfColumn();
-        for (char character : text.toCharArray()) {
+        for (int i = 0; i < text.length(); i++) {
+            char character = text.charAt(i);
             row.addCharacter(character);
         }
         row.addCell(text);
