@@ -10,6 +10,8 @@
  */
 package org.csveed.common;
 
+import java.util.Locale;
+
 import org.csveed.api.Header;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
@@ -69,7 +71,7 @@ public class Column implements Comparable<Column> {
     }
 
     public void setColumnName(String columnName) {
-        this.columnName = columnName.toLowerCase();
+        this.columnName = columnName.toLowerCase(Locale.getDefault());
         setKey(new ColumnNameKey(this.columnName));
     }
 

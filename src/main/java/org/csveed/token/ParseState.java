@@ -23,27 +23,27 @@ public enum ParseState {
     /**
      * When in this state, encountered symbols must be made part of the token
      */
-    private boolean tokenize;
+    private final boolean tokenize;
 
     /**
      * When in this state, reading of the line is done
      */
-    private boolean lineFinished;
+    private final boolean lineFinished;
 
     /**
      * When in this state, the token may be popped
      */
-    private boolean popToken;
+    private final boolean popToken;
 
     /**
      * When a quote character is encountered here, this state MAY trigger an upgrade of the encountered symbol
      */
-    private boolean upgradeQuoteToEscape;
+    private final boolean upgradeQuoteToEscape;
 
     /**
      * When in this state, ignore the entire line
      */
-    private boolean ignore;
+    private final boolean ignore;
 
     private ParseState(final boolean tokenize, final boolean lineFinished, final boolean popToken,
             final boolean upgradeQuoteToEscape, final boolean ignore) {

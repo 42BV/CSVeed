@@ -10,6 +10,8 @@
  */
 package org.csveed.common;
 
+import java.util.Locale;
+
 public class ColumnExcel extends Column {
 
     public ColumnExcel(String columnExcel) {
@@ -17,9 +19,10 @@ public class ColumnExcel extends Column {
     }
 
     private static int excelColumnToColumnIndex(String excelColumn) {
-        excelColumn = excelColumn.toUpperCase();
+        excelColumn = excelColumn.toUpperCase(Locale.getDefault());
         int sum = 0;
-        for (char currentChar : excelColumn.toCharArray()) {
+        for (int i = 0; i < excelColumn.length(); i++) {
+            char currentChar = excelColumn.charAt(i);
             sum *= 26;
             sum += currentChar - 'A' + 1;
         }

@@ -169,7 +169,11 @@ public class ParseStateMachine {
                         if (symbolMapping.isSkipCommentLines()) {
                             return COMMENT_LINE;
                         }
-                } // Fallthrough intentional
+                        // fall through
+                    default:
+                        // fall through
+                }
+                // fall through
             case SEPARATOR:
                 switch (symbol) {
                     case SPACE_SYMBOL:

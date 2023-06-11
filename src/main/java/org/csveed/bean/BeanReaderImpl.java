@@ -121,7 +121,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
 
     private T instantiateBean() {
         try {
-            return this.getBeanClass().newInstance();
+            return this.getBeanClass().getDeclaredConstructor().newInstance();
         } catch (Exception err) {
             throw new CsvException(new GeneralError("Unable to instantiate the bean class "
                     + this.getBeanClass().getName() + ". Does it have a no-arg public constructor?"));
@@ -136,7 +136,7 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
     @SuppressWarnings("unchecked")
     public AbstractMapper<T> createMappingStrategy() {
         try {
-            return this.beanInstructions.getMappingStrategy().newInstance();
+            return this.beanInstructions.getMappingStrategy().getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             logger.trace("", e);
             throw new CsvException(new GeneralError("Unable to instantiate the mapping strategy"));

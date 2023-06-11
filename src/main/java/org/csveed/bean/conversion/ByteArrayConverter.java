@@ -10,6 +10,8 @@
  */
 package org.csveed.bean.conversion;
 
+import java.nio.charset.Charset;
+
 public class ByteArrayConverter extends AbstractConverter<byte[]> {
 
     public ByteArrayConverter() {
@@ -18,11 +20,11 @@ public class ByteArrayConverter extends AbstractConverter<byte[]> {
 
     @Override
     public byte[] fromString(String text) throws Exception {
-        return text != null ? text.getBytes() : null;
+        return text != null ? text.getBytes(Charset.defaultCharset()) : null;
     }
 
     @Override
     public String toString(byte[] value) throws Exception {
-        return value != null ? new String(value) : "";
+        return value != null ? new String(value, Charset.defaultCharset()) : "";
     }
 }
