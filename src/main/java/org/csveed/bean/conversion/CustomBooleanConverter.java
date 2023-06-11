@@ -54,15 +54,16 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
         }
         if (this.falseString != null && this.falseString.equalsIgnoreCase(input)) {
             return Boolean.FALSE;
-        } else if (this.trueString == null && (VALUE_TRUE.equalsIgnoreCase(input) || VALUE_ON.equalsIgnoreCase(input)
+        }
+        if (this.trueString == null && (VALUE_TRUE.equalsIgnoreCase(input) || VALUE_ON.equalsIgnoreCase(input)
                 || VALUE_YES.equalsIgnoreCase(input) || VALUE_1.equals(input))) {
             return Boolean.TRUE;
-        } else if (this.falseString == null && (VALUE_FALSE.equalsIgnoreCase(input) || VALUE_OFF.equalsIgnoreCase(input)
+        }
+        if (this.falseString == null && (VALUE_FALSE.equalsIgnoreCase(input) || VALUE_OFF.equalsIgnoreCase(input)
                 || VALUE_NO.equalsIgnoreCase(input) || VALUE_0.equals(input))) {
             return Boolean.FALSE;
-        } else {
-            throw new IllegalArgumentException("Invalid boolean value [" + text + "]");
         }
+        throw new IllegalArgumentException("Invalid boolean value [" + text + "]");
     }
 
     @Override

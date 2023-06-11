@@ -40,33 +40,38 @@ public abstract class NumberUtils {
                 raiseOverflowException(number, targetClass);
             }
             return (T) Short.valueOf(number.shortValue());
-        } else if (targetClass.equals(Integer.class)) {
+        }
+        if (targetClass.equals(Integer.class)) {
             long value = number.longValue();
             if (value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
                 raiseOverflowException(number, targetClass);
             }
             return (T) Integer.valueOf(number.intValue());
-        } else if (targetClass.equals(Long.class)) {
+        }
+        if (targetClass.equals(Long.class)) {
             return (T) Long.valueOf(number.longValue());
-        } else if (targetClass.equals(BigInteger.class)) {
+        }
+        if (targetClass.equals(BigInteger.class)) {
             if (number instanceof BigDecimal) {
                 // do not lose precision - use BigDecimal's own conversion
                 return (T) ((BigDecimal) number).toBigInteger();
             }
             // original value is not a Big* number - use standard long conversion
             return (T) BigInteger.valueOf(number.longValue());
-        } else if (targetClass.equals(Float.class)) {
+        }
+        if (targetClass.equals(Float.class)) {
             return (T) Float.valueOf(number.floatValue());
-        } else if (targetClass.equals(Double.class)) {
+        }
+        if (targetClass.equals(Double.class)) {
             return (T) Double.valueOf(number.doubleValue());
-        } else if (targetClass.equals(BigDecimal.class)) {
+        }
+        if (targetClass.equals(BigDecimal.class)) {
             // always use BigDecimal(String) here to avoid unpredictability of BigDecimal(double)
             // (see BigDecimal javadoc for details)
             return (T) new BigDecimal(number.toString());
-        } else {
-            throw new IllegalArgumentException("Could not convert number [" + number + "] of type ["
-                    + number.getClass().getName() + "] to unknown target class [" + targetClass.getName() + "]");
         }
+        throw new IllegalArgumentException("Could not convert number [" + number + "] of type ["
+                + number.getClass().getName() + "] to unknown target class [" + targetClass.getName() + "]");
     }
 
     private static void raiseOverflowException(Number number, Class targetClass) {
@@ -86,20 +91,24 @@ public abstract class NumberUtils {
         }
         if (targetClass.equals(Integer.class)) {
             return (T) (isHexNumber(trimmed) ? Integer.decode(trimmed) : Integer.valueOf(trimmed));
-        } else if (targetClass.equals(Long.class)) {
-            return (T) (isHexNumber(trimmed) ? Long.decode(trimmed) : Long.valueOf(trimmed));
-        } else if (targetClass.equals(BigInteger.class)) {
-            return (T) (isHexNumber(trimmed) ? decodeBigInteger(trimmed) : new BigInteger(trimmed));
-        } else if (targetClass.equals(Float.class)) {
-            return (T) Float.valueOf(trimmed);
-        } else if (targetClass.equals(Double.class)) {
-            return (T) Double.valueOf(trimmed);
-        } else if (targetClass.equals(BigDecimal.class) || targetClass.equals(Number.class)) {
-            return (T) new BigDecimal(trimmed);
-        } else {
-            throw new IllegalArgumentException(
-                    "Cannot convert String [" + text + "] to target class [" + targetClass.getName() + "]");
         }
+        if (targetClass.equals(Long.class)) {
+            return (T) (isHexNumber(trimmed) ? Long.decode(trimmed) : Long.valueOf(trimmed));
+        }
+        if (targetClass.equals(BigInteger.class)) {
+            return (T) (isHexNumber(trimmed) ? decodeBigInteger(trimmed) : new BigInteger(trimmed));
+        }
+        if (targetClass.equals(Float.class)) {
+            return (T) Float.valueOf(trimmed);
+        }
+        if (targetClass.equals(Double.class)) {
+            return (T) Double.valueOf(trimmed);
+        }
+        if (targetClass.equals(BigDecimal.class) || targetClass.equals(Number.class)) {
+            return (T) new BigDecimal(trimmed);
+        }
+        throw new IllegalArgumentException(
+                "Cannot convert String [" + text + "] to target class [" + targetClass.getName() + "]");
     }
 
     public static <T extends Number> T parseNumber(String text, Class<T> targetClass, NumberFormat numberFormat) {

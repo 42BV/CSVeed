@@ -36,12 +36,12 @@ public class CharacterConverter extends AbstractConverter<Character> {
         if (isUnicodeCharacterSequence(text)) {
             int code = Integer.parseInt(text.substring(UNICODE_PREFIX.length()), 16);
             return (char) code;
-        } else if (text.length() != 1) {
+        }
+        if (text.length() != 1) {
             throw new IllegalArgumentException(
                     "String [" + text + "] with length " + text.length() + " cannot be converted to char type");
-        } else {
-            return text.charAt(0);
         }
+        return text.charAt(0);
     }
 
     @Override
