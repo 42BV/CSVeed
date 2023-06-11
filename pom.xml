@@ -108,5 +108,20 @@
 
     <build>
         <defaultGoal>install</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <licenseSets>
+                        <licenseSet>
+                            <excludes combine.children="append">
+                                <exclude>**/CNAME</exclude>
+                            </excludes>
+                        </licenseSet>
+                    </licenseSets>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
