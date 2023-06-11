@@ -130,7 +130,8 @@ public class ParseStateMachineTest {
     }
 
     protected void feedStateMachine(ParseStateMachine machine, String symbols) throws ParseException {
-        for (char symbol : symbols.toCharArray()) {
+        for (int i = 0; i < symbols.length(); i++) {
+            char symbol = symbols.charAt(i);
             machine.offerSymbol(symbol);
         }
         machine.offerSymbol(-1);

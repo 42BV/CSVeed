@@ -168,7 +168,7 @@ public class BeanProperties implements Iterable<BeanProperty> {
         BeanProperty property = get(propertyName);
         removeFromColumnName(property);
         property.setColumnName(columnName);
-        nameToProperty.put(new Column(columnName.toLowerCase()), property);
+        nameToProperty.put(new Column(columnName.toLowerCase(Locale.getDefault())), property);
     }
 
     protected BeanProperty get(String propertyName) {

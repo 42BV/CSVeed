@@ -105,7 +105,8 @@ public class BeanParser {
 
     private void parseCsvConverter(String propertyName, CsvConverter csvConverter) {
         try {
-            this.beanInstructions.setConverter(propertyName, csvConverter.converter().newInstance());
+            this.beanInstructions.setConverter(propertyName,
+                    csvConverter.converter().getDeclaredConstructor().newInstance());
         } catch (Exception err) {
             throw new RuntimeException(err);
         }

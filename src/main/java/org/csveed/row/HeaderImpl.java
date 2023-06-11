@@ -12,6 +12,7 @@ package org.csveed.row;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import org.csveed.api.Header;
@@ -31,7 +32,7 @@ public class HeaderImpl implements Header {
         Column currentColumn = new Column();
         for (String headerCell : header) {
             this.indexToName.put(currentColumn, headerCell);
-            this.nameToIndex.put(headerCell.toLowerCase(), currentColumn);
+            this.nameToIndex.put(headerCell.toLowerCase(Locale.getDefault()), currentColumn);
             currentColumn = currentColumn.nextColumn();
         }
     }
@@ -53,7 +54,7 @@ public class HeaderImpl implements Header {
 
     @Override
     public int getIndex(String columnName) {
-        Column column = this.nameToIndex.get(columnName.toLowerCase());
+        Column column = this.nameToIndex.get(columnName.toLowerCase(Locale.getDefault()));
         if (column == null) {
             throw new CsvException(new GeneralError("No column index found for name " + columnName));
         }
