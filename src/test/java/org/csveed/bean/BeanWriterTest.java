@@ -20,8 +20,17 @@ import java.util.List;
 import org.csveed.test.model.BeanWithMultipleStrings;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class BeanWriterTest.
+ */
 public class BeanWriterTest {
 
+    /**
+     * Write beans.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
     public void writeBeans() throws IOException {
         try (StringWriter writer = new StringWriter()) {
@@ -41,6 +50,12 @@ public class BeanWriterTest {
         }
     }
 
+    /**
+     * Bug 46 reported by jnash 67.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     // https://github.com/42BV/CSVeed/issues/46
     @Test
     public void bug46ReportedByJnash67() throws IOException {
@@ -65,6 +80,18 @@ public class BeanWriterTest {
         }
     }
 
+    /**
+     * Creates the bean.
+     *
+     * @param alpha
+     *            the alpha
+     * @param beta
+     *            the beta
+     * @param gamma
+     *            the gamma
+     *
+     * @return the bean with multiple strings
+     */
     private BeanWithMultipleStrings createBean(String alpha, String beta, String gamma) {
         BeanWithMultipleStrings bean = new BeanWithMultipleStrings();
         bean.setAlpha(alpha);

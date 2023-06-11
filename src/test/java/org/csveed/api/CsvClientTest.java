@@ -34,8 +34,17 @@ import org.csveed.test.model.BeanWithCustomNumber;
 import org.csveed.test.model.BeanWithMultipleStrings;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class CsvClientTest.
+ */
 public class CsvClientTest {
 
+    /**
+     * Write beans based on class.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
     public void writeBeansBasedOnClass() throws IOException {
         try (StringWriter writer = new StringWriter()) {
@@ -54,6 +63,12 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Write beans based on instructions.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
     public void writeBeansBasedOnInstructions() throws IOException {
         try (StringWriter writer = new StringWriter()) {
@@ -73,6 +88,18 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Creates the bean.
+     *
+     * @param alpha
+     *            the alpha
+     * @param beta
+     *            the beta
+     * @param gamma
+     *            the gamma
+     *
+     * @return the bean with multiple strings
+     */
     private BeanWithMultipleStrings createBean(String alpha, String beta, String gamma) {
         BeanWithMultipleStrings bean = new BeanWithMultipleStrings();
         bean.setAlpha(alpha);
@@ -81,6 +108,12 @@ public class CsvClientTest {
         return bean;
     }
 
+    /**
+     * Read and write rows.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
     public void readAndWriteRows() throws IOException {
         Reader reader = new StringReader(
@@ -101,6 +134,12 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Write row.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
     public void writeRow() throws IOException {
         try (StringWriter writer = new StringWriter()) {
@@ -111,16 +150,37 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Write rows LF.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
     public void writeRowsLF() throws IOException {
         writeRows("\n");
     }
 
+    /**
+     * Write rows CRLF.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
     public void writeRowsCRLF() throws IOException {
         writeRows("\r\n");
     }
 
+    /**
+     * Write rows.
+     *
+     * @param lineTerminators
+     *            the line terminators
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     private void writeRows(String lineTerminators) throws IOException {
         try (StringWriter writer = new StringWriter()) {
             CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(writer).setUseHeader(false)
@@ -135,6 +195,9 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Windows CRLF 0 x 0 d 0 x 0 a.
+     */
     @Test
     public void windowsCRLF0x0d0x0a() {
         char[] file = { 'n', 'a', 'm', 'e', 0x0d, 0x0a, 'A', 'l', 'p', 'h', 'a', 0x0d, 0x0a, 'B', 'e', 't', 'a', 0x0d,
@@ -146,6 +209,9 @@ public class CsvClientTest {
         assertEquals(3, beans.size());
     }
 
+    /**
+     * Do not skip comment line must cause column check to fail.
+     */
     @Test
     public void doNotSkipCommentLineMustCauseColumnCheckToFail() {
         Reader reader = new StringReader("name;name 2;name 3\n" + "# ignore me!\n");
@@ -155,6 +221,9 @@ public class CsvClientTest {
         });
     }
 
+    /**
+     * Custom comments.
+     */
     @Test
     public void customComments() {
         Reader reader = new StringReader("name\n" + "% ignore me!\n" + "some name\n");
@@ -163,6 +232,9 @@ public class CsvClientTest {
         assertEquals(1, beans.size());
     }
 
+    /**
+     * Call bean method on non bean reader facade.
+     */
     @Test
     public void callBeanMethodOnNonBeanReaderFacade() {
         Reader reader = new StringReader("");
@@ -172,6 +244,9 @@ public class CsvClientTest {
         });
     }
 
+    /**
+     * Custom number conversion.
+     */
     @Test
     public void customNumberConversion() {
         Reader reader = new StringReader("money\n" + "11.398,22");
@@ -181,16 +256,28 @@ public class CsvClientTest {
         assertEquals(Double.valueOf(11398.22), bean.getNumber());
     }
 
+    /**
+     * Read lines LF.
+     */
     @Test
     public void readLinesLF() {
         readLines("\n");
     }
 
+    /**
+     * Read lines CRLF.
+     */
     @Test
     public void readLinesCRLF() {
         readLines("\r\n");
     }
 
+    /**
+     * Read lines.
+     *
+     * @param lineTerminators
+     *            the line terminators
+     */
     private void readLines(String lineTerminators) {
         Reader reader = new StringReader("text,year,number,date,lines,year and month" + lineTerminators
                 + "'a bit of text',1983,42.42,1972-01-13,'line 1',2013-04" + lineTerminators
@@ -213,6 +300,9 @@ public class CsvClientTest {
         assertEquals(3, beans.size());
     }
 
+    /**
+     * Multiple header reads.
+     */
     @Test
     public void multipleHeaderReads() {
         Reader reader = new StringReader("text;year;number;date;lines;year and month\n"
@@ -225,6 +315,9 @@ public class CsvClientTest {
         assertNotNull(csvClient.readHeader());
     }
 
+    /**
+     * Required field.
+     */
     @Test
     public void requiredField() {
         Reader reader = new StringReader("alpha;beta;gamma\n" + "\"l1c1\";\"l1c2\";\"l1c3\"\n"
@@ -236,6 +329,9 @@ public class CsvClientTest {
         });
     }
 
+    /**
+     * Start at later line.
+     */
     @Test
     public void startAtLaterLine() {
         Reader reader = new StringReader("-- ignore line 1\n" + "-- ignore line 2\n" + "-- ignore line 3\n"
@@ -250,6 +346,9 @@ public class CsvClientTest {
         assertEquals(8, csvClient.getCurrentLine());
     }
 
+    /**
+     * Comment lines not skipped.
+     */
     @Test
     public void commentLinesNotSkipped() {
         Reader reader = new StringReader("Issue ID;Submitter\n" + "#1;Bill\n" + "#2;Mary\n" + "#3;Jane\n" + "#4;Will");
@@ -258,6 +357,12 @@ public class CsvClientTest {
         assertEquals(4, rows.size());
     }
 
+    /**
+     * Header not written for otherwise empty csv.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
     public void headerNotWrittenForOtherwiseEmptyCsv() throws IOException {
         try (StringWriter writer = new StringWriter()) {
@@ -267,6 +372,12 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Write header based on bean properties.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
     public void writeHeaderBasedOnBeanProperties() throws IOException {
         try (StringWriter writer = new StringWriter()) {

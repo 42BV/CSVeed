@@ -24,8 +24,17 @@ import org.csveed.test.model.BeanSimple;
 import org.csveed.test.model.BeanVariousNotAnnotated;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class BeanPropertyTest.
+ */
 public class BeanPropertyTest {
 
+    /**
+     * Construct.
+     *
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @Test
     public void construct() throws IntrospectionException {
         BeanProperty property = new BeanProperty();
@@ -43,6 +52,12 @@ public class BeanPropertyTest {
         assertTrue(property.isRequired());
     }
 
+    /**
+     * Number class.
+     *
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @Test
     public void numberClass() throws IntrospectionException {
         BeanProperty property = new BeanProperty();
@@ -50,6 +65,12 @@ public class BeanPropertyTest {
         assertNotNull(property.getNumberClass());
     }
 
+    /**
+     * Not A number class.
+     *
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @Test
     public void notANumberClass() throws IntrospectionException {
         BeanProperty property = new BeanProperty();

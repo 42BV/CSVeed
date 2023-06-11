@@ -14,8 +14,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class EasyAbstractConverterTest.
+ */
 public class EasyAbstractConverterTest {
 
+    /**
+     * Test easy abstract converter.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
     public void testEasyAbstractConverter() throws Exception {
         Converter<Coordinate> converter = new EasyAbstractConverter<Coordinate>(Coordinate.class) {

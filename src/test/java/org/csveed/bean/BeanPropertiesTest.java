@@ -16,8 +16,14 @@ import org.csveed.report.CsvException;
 import org.csveed.test.model.BeanSimple;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class BeanPropertiesTest.
+ */
 public class BeanPropertiesTest {
 
+    /**
+     * Map at column index 0.
+     */
     @Test
     public void mapAtColumnIndex0() {
         BeanProperties properties = new BeanProperties(BeanSimple.class);

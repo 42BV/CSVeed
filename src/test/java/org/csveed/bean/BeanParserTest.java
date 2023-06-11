@@ -21,8 +21,14 @@ import org.csveed.test.model.BeanWithWrongAnnotation;
 import org.csveed.test.model.BeanWithoutGettersAndSetters;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class BeanParserTest.
+ */
 public class BeanParserTest {
 
+    /**
+     * No getters and setters.
+     */
     @Test
     public void noGettersAndSetters() {
         BeanParser beanParser = new BeanParser();
@@ -30,6 +36,9 @@ public class BeanParserTest {
         assertNull(instructions.getProperties().fromName(new Column("a")));
     }
 
+    /**
+     * Case insensitivity.
+     */
     @Test
     public void caseInsensitivity() {
         BeanParser beanParser = new BeanParser();
@@ -38,6 +47,9 @@ public class BeanParserTest {
         assertNotNull(instructions.getProperties().fromName(new Column("takethis1")));
     }
 
+    /**
+     * Wrong annotation.
+     */
     @Test
     public void wrongAnnotation() {
         BeanParser beanParser = new BeanParser();

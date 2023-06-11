@@ -17,8 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.csveed.report.CsvException;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class SymbolMappingTest.
+ */
 public class SymbolMappingTest {
 
+    /**
+     * Sets the row at zero.
+     */
     @Test
     public void setRowAtZero() {
         SymbolMapping mapping = new SymbolMapping();
@@ -27,6 +33,9 @@ public class SymbolMappingTest {
         });
     }
 
+    /**
+     * Adds the mapping must empty delete mapping.
+     */
     @Test
     public void addMappingMustEmptyDeleteMapping() {
         SymbolMapping mapping = new SymbolMapping();
@@ -35,6 +44,9 @@ public class SymbolMappingTest {
         assertNotSame(EncounteredSymbol.QUOTE_SYMBOL, mapping.find('"', ParseState.START_OF_LINE));
     }
 
+    /**
+     * End of line windows.
+     */
     @Test
     public void endOfLineWindows() {
         SymbolMapping mapping = new SymbolMapping();
@@ -44,6 +56,9 @@ public class SymbolMappingTest {
         assertEquals(EncounteredSymbol.EOL_SYMBOL_TRASH, mapping.find(0x0a, ParseState.START_OF_LINE));
     }
 
+    /**
+     * Similar escape and quote.
+     */
     @Test
     public void similarEscapeAndQuote() {
         SymbolMapping mapping = new SymbolMapping();
@@ -53,6 +68,9 @@ public class SymbolMappingTest {
         assertEquals(EncounteredSymbol.QUOTE_SYMBOL, mapping.find('"', ParseState.OUTSIDE_BEFORE_FIELD));
     }
 
+    /**
+     * Dissimilar escape and quote.
+     */
     @Test
     public void dissimilarEscapeAndQuote() {
         SymbolMapping mapping = new SymbolMapping();
@@ -64,6 +82,9 @@ public class SymbolMappingTest {
         assertEquals(EncounteredSymbol.QUOTE_SYMBOL, mapping.find('"', ParseState.INSIDE_QUOTED_FIELD));
     }
 
+    /**
+     * Eol carriage return.
+     */
     @Test
     public void eolCarriageReturn() {
         SymbolMapping mapping = new SymbolMapping();
@@ -71,6 +92,9 @@ public class SymbolMappingTest {
         assertEquals(EncounteredSymbol.EOL_SYMBOL, mapping.find('\r', ParseState.ESCAPING));
     }
 
+    /**
+     * Eol line feed.
+     */
     @Test
     public void eolLineFeed() {
         SymbolMapping mapping = new SymbolMapping();
@@ -78,6 +102,9 @@ public class SymbolMappingTest {
         assertEquals(EncounteredSymbol.EOL_SYMBOL, mapping.find('\n', ParseState.INSIDE_FIELD));
     }
 
+    /**
+     * Bom symbol.
+     */
     @Test
     public void bomSymbol() {
         SymbolMapping mapping = new SymbolMapping();
@@ -85,6 +112,9 @@ public class SymbolMappingTest {
         assertEquals(EncounteredSymbol.BOM_SYMBOL, mapping.find('\uFEFF', ParseState.START_OF_LINE));
     }
 
+    /**
+     * Cannot find.
+     */
     @Test
     public void cannotFind() {
         SymbolMapping mapping = new SymbolMapping();

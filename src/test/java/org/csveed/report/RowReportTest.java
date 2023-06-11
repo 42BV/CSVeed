@@ -16,8 +16,14 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class RowReportTest.
+ */
 public class RowReportTest {
 
+    /**
+     * Relevant block at start.
+     */
     @Test
     public void relevantBlockAtStart() {
         RowReport report = new RowReport("0123456789", 0, 4);
@@ -26,6 +32,9 @@ public class RowReportTest {
         assertEquals("456789", report.tokenize().get(1).getToken());
     }
 
+    /**
+     * Relevant block in middle.
+     */
     @Test
     public void relevantBlockInMiddle() {
         RowReport report = new RowReport("0123456789", 3, 6);
@@ -35,6 +44,9 @@ public class RowReportTest {
         assertEquals("6789", report.tokenize().get(2).getToken());
     }
 
+    /**
+     * Relevant block at end.
+     */
     @Test
     public void relevantBlockAtEnd() {
         RowReport report = new RowReport("0123456789", 7, 10);
@@ -43,6 +55,9 @@ public class RowReportTest {
         assertEquals("789", report.tokenize().get(1).getToken());
     }
 
+    /**
+     * Too small to notice.
+     */
     @Test
     public void tooSmallToNotice() {
         RowReport report = new RowReport("0123456789", 7, 7);
@@ -52,6 +67,9 @@ public class RowReportTest {
         assertEquals("89", report.tokenize().get(2).getToken());
     }
 
+    /**
+     * Only at the end.
+     */
     @Test
     public void onlyAtTheEnd() {
         RowReport report = new RowReport("0123456789", 10, 10);

@@ -25,8 +25,14 @@ import org.csveed.report.CsvException;
 import org.csveed.report.RowReport;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class RowReaderTest.
+ */
 public class RowReaderTest {
 
+    /**
+     * Column indexes same one based approach.
+     */
     @Test
     public void columnIndexesSameOneBasedApproach() {
         Reader reader = new StringReader(
@@ -37,6 +43,9 @@ public class RowReaderTest {
         assertEquals("row 1, cell 1", row.get(1));
     }
 
+    /**
+     * Gets the by column name.
+     */
     @Test
     public void getByColumnName() {
         Reader reader = new StringReader(
@@ -46,6 +55,9 @@ public class RowReaderTest {
         assertEquals("row 1, cell 2", row.get("beta"));
     }
 
+    /**
+     * Empty lines.
+     */
     @Test
     public void emptyLines() {
         Reader reader = new StringReader(
@@ -55,6 +67,9 @@ public class RowReaderTest {
         assertEquals(2, lineReader.readRows().size());
     }
 
+    /**
+     * Do not skip empty lines.
+     */
     @Test
     public void doNotSkipEmptyLines() {
         Reader reader = new StringReader("alpha\n" + "\n" + "word\n" + "\n" + "\n");
@@ -62,6 +77,9 @@ public class RowReaderTest {
         assertEquals(5, lineReader.readRows().size());
     }
 
+    /**
+     * Gets the column index at 0.
+     */
     @Test
     public void getColumnIndexAt0() {
         Reader reader = new StringReader("alpha;beta;gamma");
@@ -72,6 +90,9 @@ public class RowReaderTest {
         });
     }
 
+    /**
+     * Comment line.
+     */
     @Test
     public void commentLine() {
         Reader reader = new StringReader("# lots of text\n" + "# bla...\n" + "# more bla...\n" + "alpha;beta;gamma\n"
@@ -83,6 +104,9 @@ public class RowReaderTest {
         assertEquals("alpha", header.getName(1));
     }
 
+    /**
+     * Dissimilar number of columns.
+     */
     @Test
     public void dissimilarNumberOfColumns() {
         Reader reader = new StringReader("\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
@@ -93,6 +117,9 @@ public class RowReaderTest {
         });
     }
 
+    /**
+     * Read unmapped.
+     */
     @Test
     public void readUnmapped() {
         Reader reader = new StringReader(
@@ -104,6 +131,9 @@ public class RowReaderTest {
         assertEquals(3, rows.size());
     }
 
+    /**
+     * Non content before lines.
+     */
     @Test
     public void nonContentBeforeLines() {
         Reader reader = new StringReader("# line 1\n" + "# line 2\n" + "# line 3\n" + "alpha;beta;gamma\n"
@@ -115,6 +145,9 @@ public class RowReaderTest {
         assertEquals(2, rows.size());
     }
 
+    /**
+     * Rough ride.
+     */
     @Test
     public void roughRide() {
         Reader reader = new StringReader(
@@ -131,6 +164,9 @@ public class RowReaderTest {
         assertEquals("1\n2\n3\n\"regels\"", cells.get(6));
     }
 
+    /**
+     * Double quotes as escape.
+     */
     @Test
     public void doubleQuotesAsEscape() {
         Reader reader = new StringReader(
@@ -139,6 +175,9 @@ public class RowReaderTest {
         checkEscapedStrings(lineReader.readRows());
     }
 
+    /**
+     * Back slashes as escape.
+     */
     @Test
     public void backSlashesAsEscape() {
         Reader reader = new StringReader(
@@ -148,6 +187,12 @@ public class RowReaderTest {
         checkEscapedStrings(lineReader.readRows());
     }
 
+    /**
+     * Check escaped strings.
+     *
+     * @param lines
+     *            the lines
+     */
     private void checkEscapedStrings(List<Row> lines) {
         Row row = lines.get(0);
         assertEquals("\"very literal\"", row.get(1));
@@ -157,6 +202,9 @@ public class RowReaderTest {
         assertEquals("first this, \"then that\"", row.get(2));
     }
 
+    /**
+     * Read all lines.
+     */
     @Test
     public void readAllLines() {
         Reader reader = new StringReader(";;;\n;;;\n;;;\n");
@@ -165,6 +213,9 @@ public class RowReaderTest {
         assertEquals(3, allLines.size());
     }
 
+    /**
+     * All numbers.
+     */
     @Test
     public void allNumbers() {
         Reader reader = new StringReader("17.51;23.19;-100.23;");
@@ -177,6 +228,9 @@ public class RowReaderTest {
         assertEquals("", row.get(3));
     }
 
+    /**
+     * Spaces before and after.
+     */
     @Test
     public void spacesBeforeAndAfter() {
         Reader reader = new StringReader("    \"alpha\"  ; \"beta\"   ; \"gamma\" ");
@@ -188,6 +242,9 @@ public class RowReaderTest {
         assertEquals("gamma", row.get(2));
     }
 
+    /**
+     * Space without quotes fields.
+     */
     @Test
     public void spaceWithoutQuotesFields() {
         Reader reader = new StringReader("    alpha one  ; beta   ; gamma ");
@@ -199,6 +256,9 @@ public class RowReaderTest {
         assertEquals("gamma", row.get(2));
     }
 
+    /**
+     * Report simple.
+     */
     @Test
     public void reportSimple() {
         Reader reader = new StringReader("17.51;23.19;-100.23");
@@ -209,6 +269,9 @@ public class RowReaderTest {
         assertEquals("            ^-----^     ", report.getPrintableLines().get(1));
     }
 
+    /**
+     * Report escaping and quotes.
+     */
     @Test
     public void reportEscapingAndQuotes() {
         Reader reader = new StringReader(
@@ -226,6 +289,9 @@ public class RowReaderTest {
                 report.getPrintableLines().get(1));
     }
 
+    /**
+     * Read header.
+     */
     @Test
     public void readHeader() {
         Reader reader = new StringReader("alpha;beta;gamma");
@@ -235,6 +301,9 @@ public class RowReaderTest {
         assertEquals(3, header.size());
     }
 
+    /**
+     * Read header second line.
+     */
     @Test
     public void readHeaderSecondLine() {
         Reader reader = new StringReader("alpha;beta;gamma\nalpha2;beta2");
@@ -244,6 +313,9 @@ public class RowReaderTest {
         assertEquals(2, header.size());
     }
 
+    /**
+     * Read header without use header.
+     */
     @Test
     public void readHeaderWithoutUseHeader() {
         Reader reader = new StringReader("alpha;beta;gamma");

@@ -23,26 +23,41 @@ import org.csveed.row.HeaderImpl;
 import org.csveed.row.LineWithInfo;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class ColumnTest.
+ */
 public class ColumnTest {
 
+    /**
+     * Excel column to column index.
+     */
     @Test
     public void excelColumnToColumnIndex() {
         Column excel = new ColumnExcel("AH");
         assertEquals(34, excel.getColumnIndex());
     }
 
+    /**
+     * Largest possible index.
+     */
     @Test
     public void largestPossibleIndex() {
         Column excel = new ColumnExcel("ZZ");
         assertEquals(702, excel.getColumnIndex());
     }
 
+    /**
+     * Column index to excel column.
+     */
     @Test
     public void columnIndexToExcelColumn() {
         Column excel = new Column(34);
         assertEquals("AH", excel.getExcelColumn());
     }
 
+    /**
+     * Wrong index.
+     */
     @Test
     public void wrongIndex() {
         assertThrows(CsvException.class, () -> {
@@ -50,23 +65,35 @@ public class ColumnTest {
         });
     }
 
+    /**
+     * Next column.
+     */
     @Test
     public void nextColumn() {
         Column column = new Column(3);
         assertEquals(4, column.nextColumn().getColumnIndex());
     }
 
+    /**
+     * Reset.
+     */
     @Test
     public void reset() {
         Column column = new Column(3);
         assertEquals(Column.FIRST_COLUMN_INDEX, column.nextLine().getColumnIndex());
     }
 
+    /**
+     * Equals.
+     */
     @Test
     public void equals() {
         assertEquals(new Column(3), new Column(3));
     }
 
+    /**
+     * Tree map.
+     */
     @Test
     public void treeMap() {
         Map<Column, String> map = new TreeMap<>();
@@ -79,6 +106,9 @@ public class ColumnTest {
         assertNotNull(map.get(searchColumn));
     }
 
+    /**
+     * Tree map with column index.
+     */
     @Test
     public void treeMapWithColumnIndex() {
         Map<Column, String> map = new TreeMap<>();

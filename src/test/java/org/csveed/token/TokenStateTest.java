@@ -14,8 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class TokenStateTest.
+ */
 public class TokenStateTest {
 
+    /**
+     * Next state.
+     */
     @Test
     public void nextState() {
         assertEquals(TokenState.RESET, TokenState.PROCESSING.next());

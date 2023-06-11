@@ -17,8 +17,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class ParseStateMachineTest.
+ */
 public class ParseStateMachineTest {
 
+    /**
+     * Columns.
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     @Test
     public void columns() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
@@ -29,6 +38,12 @@ public class ParseStateMachineTest {
         assertEquals(3, machine.getCurrentColumn());
     }
 
+    /**
+     * Windows cr lf.
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     @Test
     public void windowsCrLf() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
@@ -43,6 +58,12 @@ public class ParseStateMachineTest {
         assertEquals(3, machine.getCurrentLine());
     }
 
+    /**
+     * Comment line.
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     @Test
     public void commentLine() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
@@ -53,6 +74,12 @@ public class ParseStateMachineTest {
         assertEquals("", machine.offerSymbol(';'));
     }
 
+    /**
+     * Simple test.
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     @Test
     public void simpleTest() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
@@ -62,6 +89,12 @@ public class ParseStateMachineTest {
         assertEquals("a", machine.offerSymbol(-1));
     }
 
+    /**
+     * Empty columns.
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     @Test
     public void emptyColumns() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
@@ -72,6 +105,12 @@ public class ParseStateMachineTest {
         assertEquals("", machine.offerSymbol(-1));
     }
 
+    /**
+     * Illegal state.
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     @Test
     public void illegalState() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
@@ -81,6 +120,9 @@ public class ParseStateMachineTest {
         });
     }
 
+    /**
+     * Illegal characters after quoted content.
+     */
     @Test
     public void illegalCharactersAfterQuotedContent() {
         ParseStateMachine machine = new ParseStateMachine();
@@ -89,6 +131,12 @@ public class ParseStateMachineTest {
         });
     }
 
+    /**
+     * Before field with EOL.
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     @Test
     public void beforeFieldWithEOL() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
@@ -97,6 +145,12 @@ public class ParseStateMachineTest {
         assertTrue(machine.isLineFinished());
     }
 
+    /**
+     * Before field with EOF.
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     @Test
     public void beforeFieldWithEOF() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
@@ -106,6 +160,12 @@ public class ParseStateMachineTest {
         assertTrue(machine.isFinished());
     }
 
+    /**
+     * Before field with separator.
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     @Test
     public void beforeFieldWithSeparator() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
@@ -113,6 +173,9 @@ public class ParseStateMachineTest {
         assertEquals("", machine.offerSymbol(';'));
     }
 
+    /**
+     * Cell not finished.
+     */
     @Test
     public void cellNotFinished() {
         ParseStateMachine machine = new ParseStateMachine();
@@ -121,6 +184,9 @@ public class ParseStateMachineTest {
         });
     }
 
+    /**
+     * Double quotes after field info started.
+     */
     @Test
     public void doubleQuotesAfterFieldInfoStarted() {
         ParseStateMachine machine = new ParseStateMachine();
@@ -129,6 +195,17 @@ public class ParseStateMachineTest {
         });
     }
 
+    /**
+     * Feed state machine.
+     *
+     * @param machine
+     *            the machine
+     * @param symbols
+     *            the symbols
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     protected void feedStateMachine(ParseStateMachine machine, String symbols) throws ParseException {
         for (int i = 0; i < symbols.length(); i++) {
             char symbol = symbols.charAt(i);

@@ -16,8 +16,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.csveed.common.Column;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class DynamicColumnTest.
+ */
 public class DynamicColumnTest {
 
+    /**
+     * Advance and reset.
+     */
     @Test
     public void advanceAndReset() {
         int startColumn = 5;
@@ -31,6 +37,9 @@ public class DynamicColumnTest {
         assertTrue(column.atFirstDynamicColumn(), "Must be at first dynamic column now");
     }
 
+    /**
+     * We have no dynamic columns.
+     */
     @Test
     public void weHaveNoDynamicColumns() {
         DynamicColumn column = new DynamicColumn(null);
@@ -38,6 +47,9 @@ public class DynamicColumnTest {
         assertTrue(column.atFirstDynamicColumn(), "Must be at first dynamic column now"); // always the case if empty
     }
 
+    /**
+     * Active dynamic columns.
+     */
     @Test
     public void activeDynamicColumns() {
         Column activeColumn = new Column(4);

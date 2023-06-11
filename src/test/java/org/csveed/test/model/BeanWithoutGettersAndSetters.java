@@ -10,6 +10,9 @@
  */
 package org.csveed.test.model;
 
+/**
+ * The Class BeanWithoutGettersAndSetters.
+ */
 @SuppressWarnings("unused")
 public class BeanWithoutGettersAndSetters {
 

@@ -17,8 +17,14 @@ import org.csveed.api.Header;
 import org.csveed.report.CsvException;
 import org.junit.jupiter.api.Test;
 
+/**
+ * The Class HeaderTest.
+ */
 public class HeaderTest {
 
+    /**
+     * Gets the non existing column name.
+     */
     @Test
     public void getNonExistingColumnName() {
         Header header = new HeaderImpl(createLine("alpha"));
@@ -27,6 +33,9 @@ public class HeaderTest {
         });
     }
 
+    /**
+     * Gets the non existing column index.
+     */
     @Test
     public void getNonExistingColumnIndex() {
         Header header = new HeaderImpl(createLine("alpha"));
@@ -35,6 +44,9 @@ public class HeaderTest {
         });
     }
 
+    /**
+     * To lower case.
+     */
     @Test
     public void toLowerCase() {
         Header header = new HeaderImpl(createLine("Alpha"));
@@ -42,6 +54,14 @@ public class HeaderTest {
         assertEquals(1, header.getIndex("Alpha"));
     }
 
+    /**
+     * Creates the line.
+     *
+     * @param cell
+     *            the cell
+     *
+     * @return the line with info
+     */
     protected LineWithInfo createLine(String cell) {
         LineWithInfo line = new LineWithInfo();
         line.addCell(cell);
