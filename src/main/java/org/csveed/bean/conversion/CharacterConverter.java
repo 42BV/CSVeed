@@ -29,7 +29,8 @@ public class CharacterConverter extends AbstractConverter<Character> {
     public Character fromString(String text) throws Exception {
         if (this.allowEmpty && !hasLength(text)) {
             return null;
-        } else if (text == null) {
+        }
+        if (text == null) {
             throw new IllegalArgumentException("null String cannot be converted to char type");
         } else if (isUnicodeCharacterSequence(text)) {
             int code = Integer.parseInt(text.substring(UNICODE_PREFIX.length()), 16);

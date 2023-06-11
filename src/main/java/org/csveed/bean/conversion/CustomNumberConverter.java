@@ -43,7 +43,8 @@ public class CustomNumberConverter extends AbstractConverter<Number> {
     public Number fromString(String text) throws Exception {
         if (this.allowEmpty && !hasText(text)) {
             return null;
-        } else if (this.numberFormat != null) {
+        }
+        if (this.numberFormat != null) {
             return determineValue(NumberUtils.parseNumber(text, this.numberClass, this.numberFormat));
         } else {
             return determineValue(NumberUtils.parseNumber(text, this.numberClass));

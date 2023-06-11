@@ -18,15 +18,15 @@ public enum EncounteredSymbol {
 
     private final boolean trash;
 
-    private EncounteredSymbol() {
+    EncounteredSymbol() {
         this(false, false);
     }
 
-    private EncounteredSymbol(boolean checkForSimilarEscapeAndQuote) {
+    EncounteredSymbol(boolean checkForSimilarEscapeAndQuote) {
         this(checkForSimilarEscapeAndQuote, false);
     }
 
-    private EncounteredSymbol(boolean checkForSimilarEscapeAndQuote, boolean trash) {
+    EncounteredSymbol(boolean checkForSimilarEscapeAndQuote, boolean trash) {
         this.checkForSimilarEscapeAndQuote = checkForSimilarEscapeAndQuote;
         this.trash = trash;
     }

@@ -43,7 +43,7 @@ public class CsvException extends RuntimeException {
         boolean first = true;
         for (String line : getError().getPrintableLines()) {
             if (!first) {
-                errorMessage.append(System.getProperty("line.separator"));
+                errorMessage.append(System.lineSeparator());
             }
             errorMessage.append(line);
             first = false;
