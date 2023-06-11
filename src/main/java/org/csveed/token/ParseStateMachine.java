@@ -10,7 +10,20 @@
  */
 package org.csveed.token;
 
-import static org.csveed.token.ParseState.*;
+import static org.csveed.token.ParseState.COMMENT_LINE;
+import static org.csveed.token.ParseState.COMMENT_LINE_FINISHED;
+import static org.csveed.token.ParseState.ESCAPING;
+import static org.csveed.token.ParseState.FINISHED;
+import static org.csveed.token.ParseState.FIRST_CHAR_INSIDE_QUOTED_FIELD;
+import static org.csveed.token.ParseState.INSIDE_FIELD;
+import static org.csveed.token.ParseState.INSIDE_QUOTED_FIELD;
+import static org.csveed.token.ParseState.LINE_FINISHED;
+import static org.csveed.token.ParseState.OUTSIDE_AFTER_FIELD;
+import static org.csveed.token.ParseState.OUTSIDE_BEFORE_FIELD;
+import static org.csveed.token.ParseState.SEPARATOR;
+import static org.csveed.token.ParseState.SKIP_LINE;
+import static org.csveed.token.ParseState.SKIP_LINE_FINISHED;
+import static org.csveed.token.ParseState.START_OF_LINE;
 
 import org.csveed.common.Column;
 import org.slf4j.Logger;

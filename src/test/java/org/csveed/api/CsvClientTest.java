@@ -137,8 +137,8 @@ public class CsvClientTest {
 
     @Test
     public void windowsCRLF0x0d0x0a() {
-        char[] file = new char[] { 'n', 'a', 'm', 'e', 0x0d, 0x0a, 'A', 'l', 'p', 'h', 'a', 0x0d, 0x0a, 'B', 'e', 't',
-                'a', 0x0d, 0x0a, 'G', 'a', 'm', 'm', 'a' };
+        char[] file = { 'n', 'a', 'm', 'e', 0x0d, 0x0a, 'A', 'l', 'p', 'h', 'a', 0x0d, 0x0a, 'B', 'e', 't', 'a', 0x0d,
+                0x0a, 'G', 'a', 'm', 'm', 'a' };
         String fileText = new String(file);
         Reader reader = new StringReader(fileText);
         CsvClient<BeanSimple> csvClient = new CsvClientImpl<>(reader, BeanSimple.class);

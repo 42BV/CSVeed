@@ -20,7 +20,21 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.csveed.report.CsvException;
-import org.csveed.test.model.*;
+import org.csveed.test.model.BeanCommodity;
+import org.csveed.test.model.BeanLotsOfIgnores;
+import org.csveed.test.model.BeanSimple;
+import org.csveed.test.model.BeanWithAlienSettings;
+import org.csveed.test.model.BeanWithConverter;
+import org.csveed.test.model.BeanWithCustomIndexes;
+import org.csveed.test.model.BeanWithCustomNumberAnnotated;
+import org.csveed.test.model.BeanWithEnum;
+import org.csveed.test.model.BeanWithEnumAndMore;
+import org.csveed.test.model.BeanWithMultipleStrings;
+import org.csveed.test.model.BeanWithNameMatching;
+import org.csveed.test.model.BeanWithNonStandardObject;
+import org.csveed.test.model.BeanWithVariousTypes;
+import org.csveed.test.model.BeanWithoutHeader;
+import org.csveed.test.model.BeanWithoutNoArgPublicConstructor;
 import org.csveed.token.ParseState;
 import org.junit.jupiter.api.Test;
 
@@ -164,13 +178,9 @@ public class BeanReaderTest {
 
     @Test
     public void errorInDate() {
+        // Month and day in reverse order
         Reader reader = new StringReader(
-                "text;year;number;date;year and month\n" + "\"a bit of text\";1984;42.42;1972-13-01;2013-04\n" // Month
-                                                                                                               // and
-                                                                                                               // day in
-                                                                                                               // reverse
-                                                                                                               // order
-        );
+                "text;year;number;date;year and month\n\"a bit of text\";1984;42.42;1972-13-01;2013-04\n");
         BeanReader<BeanWithVariousTypes> beanReader = new BeanReaderImpl<>(reader, BeanWithVariousTypes.class);
         assertThrows(CsvException.class, () -> {
             beanReader.readBeans();

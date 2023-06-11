@@ -45,7 +45,7 @@ public enum ParseState {
      */
     private final boolean ignore;
 
-    private ParseState(final boolean tokenize, final boolean lineFinished, final boolean popToken,
+    ParseState(final boolean tokenize, final boolean lineFinished, final boolean popToken,
             final boolean upgradeQuoteToEscape, final boolean ignore) {
         this.tokenize = tokenize;
         this.lineFinished = lineFinished;
