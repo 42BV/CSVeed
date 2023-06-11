@@ -4,11 +4,11 @@ CSVeed
 [![Java CI](https://github.com/42BV/CSVeed/workflows/Java%20CI/badge.svg)](https://github.com/42BV/CSVeed/actions?query=workflow%3A%22Java+CI%22)
 [![Coverage Status](https://coveralls.io/repos/github/42BV/CSVeed/badge.svg?branch=master)](https://coveralls.io/github/42BV/CSVeed?branch=master)
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed)
-[![Apache 2](http://img.shields.io/badge/license-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Apache 2](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Be sure to check the project site at [csveed.org](http://csveed.org).
 
-CSVeed is a Java library for reading [Comma Separated Value (CSV)](http://tools.ietf.org/html/rfc4180)
+CSVeed is a Java library for reading [Comma Separated Value (CSV)](https://tools.ietf.org/html/rfc4180)
 files and exposing those either as Rows or Java Beans. In order to use CSVeed in your project,
 simply add the following dependency:
 
@@ -20,14 +20,14 @@ simply add the following dependency:
         </dependency>
 ```
 
-For optimal usage, make sure you have a [SLF4J](http://www.slf4j.org/manual.html) configured. If you have no
+For optimal usage, make sure you have a [SLF4J](https://www.slf4j.org/manual.html) configured. If you have no
 previous SLF4J logger configured and you want to get up and running quickly, use this:
 
 ```xml
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>2.0.6</version>
+            <version>2.0.7</version>
         </dependency>
 ```
 
@@ -106,7 +106,7 @@ License
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-	http://www.apache.org/licenses/LICENSE-2.0
+    https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
