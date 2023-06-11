@@ -19,13 +19,13 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class BeanInstructionsImplTest.
  */
-public class BeanInstructionsImplTest {
+class BeanInstructionsImplTest {
 
     /**
      * Property name is null.
      */
     @Test
-    public void propertyNameIsNull() {
+    void propertyNameIsNull() {
         BeanInstructions instructions = new BeanInstructionsImpl(BeanSimple.class);
         assertNull(instructions.getProperties().fromName(new Column("definitelyNotHere")));
     }

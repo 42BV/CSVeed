@@ -26,13 +26,13 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class ColumnTest.
  */
-public class ColumnTest {
+class ColumnTest {
 
     /**
      * Excel column to column index.
      */
     @Test
-    public void excelColumnToColumnIndex() {
+    void excelColumnToColumnIndex() {
         Column excel = new ColumnExcel("AH");
         assertEquals(34, excel.getColumnIndex());
     }
@@ -41,7 +41,7 @@ public class ColumnTest {
      * Largest possible index.
      */
     @Test
-    public void largestPossibleIndex() {
+    void largestPossibleIndex() {
         Column excel = new ColumnExcel("ZZ");
         assertEquals(702, excel.getColumnIndex());
     }
@@ -50,7 +50,7 @@ public class ColumnTest {
      * Column index to excel column.
      */
     @Test
-    public void columnIndexToExcelColumn() {
+    void columnIndexToExcelColumn() {
         Column excel = new Column(34);
         assertEquals("AH", excel.getExcelColumn());
     }
@@ -59,7 +59,7 @@ public class ColumnTest {
      * Wrong index.
      */
     @Test
-    public void wrongIndex() {
+    void wrongIndex() {
         assertThrows(CsvException.class, () -> {
             new Column(0);
         });
@@ -69,7 +69,7 @@ public class ColumnTest {
      * Next column.
      */
     @Test
-    public void nextColumn() {
+    void nextColumn() {
         Column column = new Column(3);
         assertEquals(4, column.nextColumn().getColumnIndex());
     }
@@ -78,7 +78,7 @@ public class ColumnTest {
      * Reset.
      */
     @Test
-    public void reset() {
+    void reset() {
         Column column = new Column(3);
         assertEquals(Column.FIRST_COLUMN_INDEX, column.nextLine().getColumnIndex());
     }
@@ -87,7 +87,7 @@ public class ColumnTest {
      * Equals.
      */
     @Test
-    public void equals() {
+    void equals() {
         assertEquals(new Column(3), new Column(3));
     }
 
@@ -95,7 +95,7 @@ public class ColumnTest {
      * Tree map.
      */
     @Test
-    public void treeMap() {
+    void treeMap() {
         Map<Column, String> map = new TreeMap<>();
         Column storeColumn = new Column("name");
         map.put(storeColumn, "alpha");
@@ -110,7 +110,7 @@ public class ColumnTest {
      * Tree map with column index.
      */
     @Test
-    public void treeMapWithColumnIndex() {
+    void treeMapWithColumnIndex() {
         Map<Column, String> map = new TreeMap<>();
         map.put(new Column(1), "alpha");
         map.put(new Column(2), "beta");

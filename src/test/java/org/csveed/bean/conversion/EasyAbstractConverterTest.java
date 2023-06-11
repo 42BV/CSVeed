@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class EasyAbstractConverterTest.
  */
-public class EasyAbstractConverterTest {
+class EasyAbstractConverterTest {
 
     /**
      * Test easy abstract converter.
@@ -26,7 +26,7 @@ public class EasyAbstractConverterTest {
      *             the exception
      */
     @Test
-    public void testEasyAbstractConverter() throws Exception {
+    void testEasyAbstractConverter() throws Exception {
         Converter<Coordinate> converter = new EasyAbstractConverter<Coordinate>(Coordinate.class) {
             @Override
             public Coordinate fromString(String text) throws Exception {

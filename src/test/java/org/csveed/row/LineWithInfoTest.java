@@ -22,13 +22,13 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class LineWithInfoTest.
  */
-public class LineWithInfoTest {
+class LineWithInfoTest {
 
     /**
      * Cell is null.
      */
     @Test
-    public void cellIsNull() {
+    void cellIsNull() {
         LineWithInfo row = new LineWithInfo();
         row.addCell(null);
         assertEquals(0, row.getCellPosition(new Column()).getStart());
@@ -39,7 +39,7 @@ public class LineWithInfoTest {
      * Cell is empty.
      */
     @Test
-    public void cellIsEmpty() {
+    void cellIsEmpty() {
         LineWithInfo row = new LineWithInfo();
         row.addCell("");
         assertEquals(0, row.getCellPosition(new Column()).getStart());
@@ -50,7 +50,7 @@ public class LineWithInfoTest {
      * Convert characters.
      */
     @Test
-    public void convertCharacters() {
+    void convertCharacters() {
         LineWithInfo row = new LineWithInfo();
         assertEquals("\\b", row.convertToPrintable('\b'));
         assertEquals("\\f", row.convertToPrintable('\f'));
@@ -60,7 +60,7 @@ public class LineWithInfoTest {
      * Non existing cell.
      */
     @Test
-    public void nonExistingCell() {
+    void nonExistingCell() {
         LineWithInfo row = new LineWithInfo();
         assertNull(row.reportOnColumn(new Column()));
     }
@@ -69,7 +69,7 @@ public class LineWithInfoTest {
      * Gets the report on column index 0.
      */
     @Test
-    public void getReportOnColumnIndex0() {
+    void getReportOnColumnIndex0() {
         LineWithInfo row = addString(new LineWithInfo(), "Hello");
         assertThrows(CsvException.class, () -> {
             row.reportOnColumn(new Column(0));
@@ -80,7 +80,7 @@ public class LineWithInfoTest {
      * Simple word.
      */
     @Test
-    public void simpleWord() {
+    void simpleWord() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Hello");
         RowReport report = row.reportOnColumn(new Column());
@@ -93,7 +93,7 @@ public class LineWithInfoTest {
      * Couple of words.
      */
     @Test
-    public void coupleOfWords() {
+    void coupleOfWords() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Alpha");
         row.addCharacter(';');
@@ -110,7 +110,7 @@ public class LineWithInfoTest {
      * Various non printables.
      */
     @Test
-    public void variousNonPrintables() {
+    void variousNonPrintables() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Alpha");
         row.addCharacter('\t');
@@ -127,7 +127,7 @@ public class LineWithInfoTest {
      * Report on end of line.
      */
     @Test
-    public void reportOnEndOfLine() {
+    void reportOnEndOfLine() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Alpha");
         row.addCharacter('\t');

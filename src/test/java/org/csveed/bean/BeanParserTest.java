@@ -24,13 +24,13 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class BeanParserTest.
  */
-public class BeanParserTest {
+class BeanParserTest {
 
     /**
      * No getters and setters.
      */
     @Test
-    public void noGettersAndSetters() {
+    void noGettersAndSetters() {
         BeanParser beanParser = new BeanParser();
         BeanInstructions instructions = beanParser.getBeanInstructions(BeanWithoutGettersAndSetters.class);
         assertNull(instructions.getProperties().fromName(new Column("a")));
@@ -40,7 +40,7 @@ public class BeanParserTest {
      * Case insensitivity.
      */
     @Test
-    public void caseInsensitivity() {
+    void caseInsensitivity() {
         BeanParser beanParser = new BeanParser();
         BeanInstructions instructions = beanParser.getBeanInstructions(BeanLotsOfIgnores.class);
         assertNotNull(instructions.getProperties().fromName(new Column("takeThis1")));
@@ -51,7 +51,7 @@ public class BeanParserTest {
      * Wrong annotation.
      */
     @Test
-    public void wrongAnnotation() {
+    void wrongAnnotation() {
         BeanParser beanParser = new BeanParser();
         assertThrows(CsvException.class, () -> {
             beanParser.getBeanInstructions(BeanWithWrongAnnotation.class);

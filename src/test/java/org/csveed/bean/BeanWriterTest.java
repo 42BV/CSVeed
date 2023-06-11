@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class BeanWriterTest.
  */
-public class BeanWriterTest {
+class BeanWriterTest {
 
     /**
      * Write beans.
@@ -32,7 +32,7 @@ public class BeanWriterTest {
      *             Signals that an I/O exception has occurred.
      */
     @Test
-    public void writeBeans() throws IOException {
+    void writeBeans() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             List<BeanWithMultipleStrings> beans = new ArrayList<>();
             beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
@@ -58,7 +58,7 @@ public class BeanWriterTest {
      */
     // https://github.com/42BV/CSVeed/issues/46
     @Test
-    public void bug46ReportedByJnash67() throws IOException {
+    void bug46ReportedByJnash67() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             List<BeanWithMultipleStrings> beans = new ArrayList<>();
             beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));

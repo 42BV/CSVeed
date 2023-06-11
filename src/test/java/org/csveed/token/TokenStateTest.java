@@ -17,13 +17,13 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class TokenStateTest.
  */
-public class TokenStateTest {
+class TokenStateTest {
 
     /**
      * Next state.
      */
     @Test
-    public void nextState() {
+    void nextState() {
         assertEquals(TokenState.RESET, TokenState.PROCESSING.next());
         assertEquals(TokenState.START, TokenState.RESET.next());
         assertEquals(TokenState.PROCESSING, TokenState.START.next());

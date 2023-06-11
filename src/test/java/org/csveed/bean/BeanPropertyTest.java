@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class BeanPropertyTest.
  */
-public class BeanPropertyTest {
+class BeanPropertyTest {
 
     /**
      * Construct.
@@ -36,7 +36,7 @@ public class BeanPropertyTest {
      *             the introspection exception
      */
     @Test
-    public void construct() throws IntrospectionException {
+    void construct() throws IntrospectionException {
         BeanProperty property = new BeanProperty();
         Converter<BeanSimple> converter = new BeanSimpleConverter();
         PropertyDescriptor propertyDescriptor = new PropertyDescriptor("name", BeanSimple.class);
@@ -59,7 +59,7 @@ public class BeanPropertyTest {
      *             the introspection exception
      */
     @Test
-    public void numberClass() throws IntrospectionException {
+    void numberClass() throws IntrospectionException {
         BeanProperty property = new BeanProperty();
         property.setPropertyDescriptor(new PropertyDescriptor("number", BeanVariousNotAnnotated.class));
         assertNotNull(property.getNumberClass());
@@ -72,7 +72,7 @@ public class BeanPropertyTest {
      *             the introspection exception
      */
     @Test
-    public void notANumberClass() throws IntrospectionException {
+    void notANumberClass() throws IntrospectionException {
         BeanProperty property = new BeanProperty();
         property.setPropertyDescriptor(new PropertyDescriptor("name", BeanSimple.class));
         assertNull(property.getNumberClass());

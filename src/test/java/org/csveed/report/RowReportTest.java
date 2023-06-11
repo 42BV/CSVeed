@@ -19,13 +19,13 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class RowReportTest.
  */
-public class RowReportTest {
+class RowReportTest {
 
     /**
      * Relevant block at start.
      */
     @Test
-    public void relevantBlockAtStart() {
+    void relevantBlockAtStart() {
         RowReport report = new RowReport("0123456789", 0, 4);
         assertEquals(2, report.tokenize().size());
         assertEquals("0123", report.tokenize().get(0).getToken());
@@ -36,7 +36,7 @@ public class RowReportTest {
      * Relevant block in middle.
      */
     @Test
-    public void relevantBlockInMiddle() {
+    void relevantBlockInMiddle() {
         RowReport report = new RowReport("0123456789", 3, 6);
         assertEquals(3, report.tokenize().size());
         assertEquals("012", report.tokenize().get(0).getToken());
@@ -48,7 +48,7 @@ public class RowReportTest {
      * Relevant block at end.
      */
     @Test
-    public void relevantBlockAtEnd() {
+    void relevantBlockAtEnd() {
         RowReport report = new RowReport("0123456789", 7, 10);
         assertEquals(2, report.tokenize().size());
         assertEquals("0123456", report.tokenize().get(0).getToken());
@@ -59,7 +59,7 @@ public class RowReportTest {
      * Too small to notice.
      */
     @Test
-    public void tooSmallToNotice() {
+    void tooSmallToNotice() {
         RowReport report = new RowReport("0123456789", 7, 7);
         assertEquals(3, report.tokenize().size());
         assertEquals("0123456", report.tokenize().get(0).getToken());
@@ -71,7 +71,7 @@ public class RowReportTest {
      * Only at the end.
      */
     @Test
-    public void onlyAtTheEnd() {
+    void onlyAtTheEnd() {
         RowReport report = new RowReport("0123456789", 10, 10);
         List<String> lines = report.getPrintableLines();
         assertEquals("          ^", lines.get(1));

@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class EnumConverterTest.
  */
-public class EnumConverterTest {
+class EnumConverterTest {
 
     /**
      * Convert to enum.
@@ -27,7 +27,7 @@ public class EnumConverterTest {
      *             the exception
      */
     @Test
-    public void convertToEnum() throws Exception {
+    void convertToEnum() throws Exception {
         EnumConverter<ParseState> converter = new EnumConverter<>(ParseState.class);
         assertEquals(ParseState.SKIP_LINE, converter.fromString("SKIP_LINE"));
     }
@@ -39,7 +39,7 @@ public class EnumConverterTest {
      *             the exception
      */
     @Test
-    public void convertFromEnum() throws Exception {
+    void convertFromEnum() throws Exception {
         EnumConverter<ParseState> converter = new EnumConverter<>(ParseState.class);
         assertEquals("SKIP_LINE", converter.toString(ParseState.SKIP_LINE));
     }

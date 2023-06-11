@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class RowWriterTest.
  */
-public class RowWriterTest {
+class RowWriterTest {
 
     /**
      * Read and write.
@@ -35,7 +35,7 @@ public class RowWriterTest {
      *             Signals that an I/O exception has occurred.
      */
     @Test
-    public void readAndWrite() throws IOException {
+    void readAndWrite() throws IOException {
         // First read...
         Reader reader = new StringReader(
                 "alpha;beta;gamma\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
@@ -63,7 +63,7 @@ public class RowWriterTest {
      *             Signals that an I/O exception has occurred.
      */
     @Test
-    public void writeMultipleRows() throws IOException {
+    void writeMultipleRows() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             RowWriter rowWriter = new RowWriterImpl(writer);
             rowWriter.writeHeader(new String[] { "desc1", "desc2", "desc3" });
@@ -84,7 +84,7 @@ public class RowWriterTest {
      *             Signals that an I/O exception has occurred.
      */
     @Test
-    public void writeRowWithEscapeCharacters() throws IOException {
+    void writeRowWithEscapeCharacters() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             RowInstructions instructions = new RowInstructionsImpl().setUseHeader(false).setEscape('\\');
             RowWriter rowWriter = new RowWriterImpl(writer, instructions);
@@ -101,7 +101,7 @@ public class RowWriterTest {
      *             Signals that an I/O exception has occurred.
      */
     @Test
-    public void writeRow() throws IOException {
+    void writeRow() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             RowInstructions instructions = new RowInstructionsImpl().setUseHeader(false);
             RowWriter rowWriter = new RowWriterImpl(writer, instructions);
@@ -118,7 +118,7 @@ public class RowWriterTest {
      *             Signals that an I/O exception has occurred.
      */
     @Test
-    public void writeRowWithoutQuoting() throws IOException {
+    void writeRowWithoutQuoting() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             RowInstructions instructions = new RowInstructionsImpl().setUseHeader(false).setQuotingEnabled(false);
             RowWriter rowWriter = new RowWriterImpl(writer, instructions);
@@ -135,7 +135,7 @@ public class RowWriterTest {
      *             Signals that an I/O exception has occurred.
      */
     @Test
-    public void writeRowWithoutQuotingAndEscaping() throws IOException {
+    void writeRowWithoutQuotingAndEscaping() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             RowInstructions instructions = new RowInstructionsImpl().setUseHeader(false).setQuotingEnabled(false);
             RowWriter rowWriter = new RowWriterImpl(writer, instructions);
@@ -152,7 +152,7 @@ public class RowWriterTest {
      *             Signals that an I/O exception has occurred.
      */
     @Test
-    public void writeRowWithNullValue() throws IOException {
+    void writeRowWithNullValue() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             RowInstructions instructions = new RowInstructionsImpl().setUseHeader(false);
             RowWriter rowWriter = new RowWriterImpl(writer, instructions);
@@ -169,7 +169,7 @@ public class RowWriterTest {
      *             Signals that an I/O exception has occurred.
      */
     @Test
-    public void writeRowAndHeader() throws IOException {
+    void writeRowAndHeader() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             RowWriter rowWriter = new RowWriterImpl(writer);
             rowWriter.writeHeader(new String[] { "desc1", "desc2", "desc3" });
@@ -184,7 +184,7 @@ public class RowWriterTest {
      * No header written.
      */
     @Test
-    public void noHeaderWritten() {
+    void noHeaderWritten() {
         RowWriter rowWriter = new RowWriterImpl(new StringWriter());
         assertThrows(CsvException.class, () -> {
             rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" });

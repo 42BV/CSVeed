@@ -28,13 +28,13 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class RowReaderTest.
  */
-public class RowReaderTest {
+class RowReaderTest {
 
     /**
      * Column indexes same one based approach.
      */
     @Test
-    public void columnIndexesSameOneBasedApproach() {
+    void columnIndexesSameOneBasedApproach() {
         Reader reader = new StringReader(
                 "alpha;beta;gamma\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
@@ -47,7 +47,7 @@ public class RowReaderTest {
      * Gets the by column name.
      */
     @Test
-    public void getByColumnName() {
+    void getByColumnName() {
         Reader reader = new StringReader(
                 "alpha;beta;gamma\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
@@ -59,7 +59,7 @@ public class RowReaderTest {
      * Empty lines.
      */
     @Test
-    public void emptyLines() {
+    void emptyLines() {
         Reader reader = new StringReader(
                 "\n" + "\n" + "\n" + "alpha;beta;gamma\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
                         + "\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"");
@@ -71,7 +71,7 @@ public class RowReaderTest {
      * Do not skip empty lines.
      */
     @Test
-    public void doNotSkipEmptyLines() {
+    void doNotSkipEmptyLines() {
         Reader reader = new StringReader("alpha\n" + "\n" + "word\n" + "\n" + "\n");
         RowReaderImpl lineReader = new RowReaderImpl(reader, new RowInstructionsImpl().skipEmptyLines(false));
         assertEquals(5, lineReader.readRows().size());
@@ -81,7 +81,7 @@ public class RowReaderTest {
      * Gets the column index at 0.
      */
     @Test
-    public void getColumnIndexAt0() {
+    void getColumnIndexAt0() {
         Reader reader = new StringReader("alpha;beta;gamma");
         RowReaderImpl rowReader = new RowReaderImpl(reader);
         Header header = rowReader.getHeader();
@@ -94,7 +94,7 @@ public class RowReaderTest {
      * Comment line.
      */
     @Test
-    public void commentLine() {
+    void commentLine() {
         Reader reader = new StringReader("# lots of text\n" + "# bla...\n" + "# more bla...\n" + "alpha;beta;gamma\n"
                 + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n" + "# this line must be ignored!\n"
                 + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"");
@@ -108,7 +108,7 @@ public class RowReaderTest {
      * Dissimilar number of columns.
      */
     @Test
-    public void dissimilarNumberOfColumns() {
+    void dissimilarNumberOfColumns() {
         Reader reader = new StringReader("\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
                 + "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n" + "\"row 3, cell 1\";\"row 3, cell 2\"");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
@@ -121,7 +121,7 @@ public class RowReaderTest {
      * Read unmapped.
      */
     @Test
-    public void readUnmapped() {
+    void readUnmapped() {
         Reader reader = new StringReader(
                 "alpha;beta;gamma\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
                         + "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"
@@ -135,7 +135,7 @@ public class RowReaderTest {
      * Non content before lines.
      */
     @Test
-    public void nonContentBeforeLines() {
+    void nonContentBeforeLines() {
         Reader reader = new StringReader("# line 1\n" + "# line 2\n" + "# line 3\n" + "alpha;beta;gamma\n"
                 + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
                 + "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n");
@@ -149,7 +149,7 @@ public class RowReaderTest {
      * Rough ride.
      */
     @Test
-    public void roughRide() {
+    void roughRide() {
         Reader reader = new StringReader(
                 "\"alpha\";\"\";;\"beta\";gamma;\"een \"\"echte\"\" test\";\"1\n2\n3\n\"\"regels\"\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
@@ -168,7 +168,7 @@ public class RowReaderTest {
      * Double quotes as escape.
      */
     @Test
-    public void doubleQuotesAsEscape() {
+    void doubleQuotesAsEscape() {
         Reader reader = new StringReader(
                 "\"\"\"very literal\"\"\";\"a\"\"b\"\"c\"\n\"abc\";\"first this, \"\"then that\"\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(reader, new RowInstructionsImpl().setUseHeader(false));
@@ -179,7 +179,7 @@ public class RowReaderTest {
      * Back slashes as escape.
      */
     @Test
-    public void backSlashesAsEscape() {
+    void backSlashesAsEscape() {
         Reader reader = new StringReader(
                 "\"\\\"very literal\\\"\";\"a\\\"b\\\"c\"\n\"abc\";\"first this, \\\"then that\\\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(reader,
@@ -206,7 +206,7 @@ public class RowReaderTest {
      * Read all lines.
      */
     @Test
-    public void readAllLines() {
+    void readAllLines() {
         Reader reader = new StringReader(";;;\n;;;\n;;;\n");
         RowReaderImpl lineReader = new RowReaderImpl(reader, new RowInstructionsImpl().setUseHeader(false));
         List<Row> allLines = lineReader.readRows();
@@ -217,7 +217,7 @@ public class RowReaderTest {
      * All numbers.
      */
     @Test
-    public void allNumbers() {
+    void allNumbers() {
         Reader reader = new StringReader("17.51;23.19;-100.23;");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
@@ -232,7 +232,7 @@ public class RowReaderTest {
      * Spaces before and after.
      */
     @Test
-    public void spacesBeforeAndAfter() {
+    void spacesBeforeAndAfter() {
         Reader reader = new StringReader("    \"alpha\"  ; \"beta\"   ; \"gamma\" ");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
@@ -246,7 +246,7 @@ public class RowReaderTest {
      * Space without quotes fields.
      */
     @Test
-    public void spaceWithoutQuotesFields() {
+    void spaceWithoutQuotesFields() {
         Reader reader = new StringReader("    alpha one  ; beta   ; gamma ");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
@@ -260,7 +260,7 @@ public class RowReaderTest {
      * Report simple.
      */
     @Test
-    public void reportSimple() {
+    void reportSimple() {
         Reader reader = new StringReader("17.51;23.19;-100.23");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
         Line row = lineReader.readBareLine();
@@ -273,7 +273,7 @@ public class RowReaderTest {
      * Report escaping and quotes.
      */
     @Test
-    public void reportEscapingAndQuotes() {
+    void reportEscapingAndQuotes() {
         Reader reader = new StringReader(
                 "\"alpha\";\"\";;\"b\te\tt\ta\";gamma;\"een \"\"echte\"\" test\";\"1\n2\n3\n\"\"regels\"\"\"");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
@@ -293,7 +293,7 @@ public class RowReaderTest {
      * Read header.
      */
     @Test
-    public void readHeader() {
+    void readHeader() {
         Reader reader = new StringReader("alpha;beta;gamma");
         RowReader rowReader = new RowReaderImpl(reader);
         Header header = rowReader.readHeader();
@@ -305,7 +305,7 @@ public class RowReaderTest {
      * Read header second line.
      */
     @Test
-    public void readHeaderSecondLine() {
+    void readHeaderSecondLine() {
         Reader reader = new StringReader("alpha;beta;gamma\nalpha2;beta2");
         RowReader rowReader = new RowReaderImpl(reader, new RowInstructionsImpl().setStartRow(2));
         Header header = rowReader.readHeader();
@@ -317,7 +317,7 @@ public class RowReaderTest {
      * Read header without use header.
      */
     @Test
-    public void readHeaderWithoutUseHeader() {
+    void readHeaderWithoutUseHeader() {
         Reader reader = new StringReader("alpha;beta;gamma");
         RowReader rowReader = new RowReaderImpl(reader, new RowInstructionsImpl().setUseHeader(false));
         Header header = rowReader.readHeader();

@@ -20,13 +20,13 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class HeaderTest.
  */
-public class HeaderTest {
+class HeaderTest {
 
     /**
      * Gets the non existing column name.
      */
     @Test
-    public void getNonExistingColumnName() {
+    void getNonExistingColumnName() {
         Header header = new HeaderImpl(createLine("alpha"));
         assertThrows(CsvException.class, () -> {
             header.getIndex("does-not-exist");
@@ -37,7 +37,7 @@ public class HeaderTest {
      * Gets the non existing column index.
      */
     @Test
-    public void getNonExistingColumnIndex() {
+    void getNonExistingColumnIndex() {
         Header header = new HeaderImpl(createLine("alpha"));
         assertThrows(CsvException.class, () -> {
             header.getName(13);
@@ -48,7 +48,7 @@ public class HeaderTest {
      * To lower case.
      */
     @Test
-    public void toLowerCase() {
+    void toLowerCase() {
         Header header = new HeaderImpl(createLine("Alpha"));
         assertEquals("Alpha", header.getName(1));
         assertEquals(1, header.getIndex("Alpha"));

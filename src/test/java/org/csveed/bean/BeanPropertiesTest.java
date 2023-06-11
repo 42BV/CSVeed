@@ -19,13 +19,13 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class BeanPropertiesTest.
  */
-public class BeanPropertiesTest {
+class BeanPropertiesTest {
 
     /**
      * Map at column index 0.
      */
     @Test
-    public void mapAtColumnIndex0() {
+    void mapAtColumnIndex0() {
         BeanProperties properties = new BeanProperties(BeanSimple.class);
         assertThrows(CsvException.class, () -> {
             properties.mapIndexToProperty(0, "name");

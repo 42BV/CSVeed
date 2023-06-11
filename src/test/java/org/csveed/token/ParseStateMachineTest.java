@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 /**
  * The Class ParseStateMachineTest.
  */
-public class ParseStateMachineTest {
+class ParseStateMachineTest {
 
     /**
      * Columns.
@@ -29,7 +29,7 @@ public class ParseStateMachineTest {
      *             the parse exception
      */
     @Test
-    public void columns() throws ParseException {
+    void columns() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         assertEquals(1, machine.getCurrentColumn());
         machine.offerSymbol(';');
@@ -45,7 +45,7 @@ public class ParseStateMachineTest {
      *             the parse exception
      */
     @Test
-    public void windowsCrLf() throws ParseException {
+    void windowsCrLf() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         machine.offerSymbol(';');
         machine.offerSymbol(0x0d);
@@ -65,7 +65,7 @@ public class ParseStateMachineTest {
      *             the parse exception
      */
     @Test
-    public void commentLine() throws ParseException {
+    void commentLine() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         assertNull(machine.offerSymbol('#'));
         assertNull(machine.offerSymbol('-'));
@@ -81,7 +81,7 @@ public class ParseStateMachineTest {
      *             the parse exception
      */
     @Test
-    public void simpleTest() throws ParseException {
+    void simpleTest() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         assertNull(machine.offerSymbol('"'));
         assertNull(machine.offerSymbol('a'));
@@ -96,7 +96,7 @@ public class ParseStateMachineTest {
      *             the parse exception
      */
     @Test
-    public void emptyColumns() throws ParseException {
+    void emptyColumns() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         assertEquals("", machine.offerSymbol(';'));
         assertEquals("", machine.offerSymbol(';'));
@@ -112,7 +112,7 @@ public class ParseStateMachineTest {
      *             the parse exception
      */
     @Test
-    public void illegalState() throws ParseException {
+    void illegalState() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         machine.offerSymbol(-1);
         assertThrows(ParseException.class, () -> {
@@ -124,7 +124,7 @@ public class ParseStateMachineTest {
      * Illegal characters after quoted content.
      */
     @Test
-    public void illegalCharactersAfterQuotedContent() {
+    void illegalCharactersAfterQuotedContent() {
         ParseStateMachine machine = new ParseStateMachine();
         assertThrows(ParseException.class, () -> {
             feedStateMachine(machine, "    \"alpha\"  ; \"beta\"   x; \"gamma\" ");
@@ -138,7 +138,7 @@ public class ParseStateMachineTest {
      *             the parse exception
      */
     @Test
-    public void beforeFieldWithEOL() throws ParseException {
+    void beforeFieldWithEOL() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         machine.offerSymbol(' ');
         machine.offerSymbol('\n');
@@ -152,7 +152,7 @@ public class ParseStateMachineTest {
      *             the parse exception
      */
     @Test
-    public void beforeFieldWithEOF() throws ParseException {
+    void beforeFieldWithEOF() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         machine.offerSymbol(' ');
         machine.offerSymbol(-1);
@@ -167,7 +167,7 @@ public class ParseStateMachineTest {
      *             the parse exception
      */
     @Test
-    public void beforeFieldWithSeparator() throws ParseException {
+    void beforeFieldWithSeparator() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         assertNull(machine.offerSymbol(' '));
         assertEquals("", machine.offerSymbol(';'));
@@ -177,7 +177,7 @@ public class ParseStateMachineTest {
      * Cell not finished.
      */
     @Test
-    public void cellNotFinished() {
+    void cellNotFinished() {
         ParseStateMachine machine = new ParseStateMachine();
         assertThrows(ParseException.class, () -> {
             feedStateMachine(machine, "\"alpha\";\"beta\";\"ga");
@@ -188,7 +188,7 @@ public class ParseStateMachineTest {
      * Double quotes after field info started.
      */
     @Test
-    public void doubleQuotesAfterFieldInfoStarted() {
+    void doubleQuotesAfterFieldInfoStarted() {
         ParseStateMachine machine = new ParseStateMachine();
         assertThrows(ParseException.class, () -> {
             feedStateMachine(machine, "some text and... \"double quote\"... WAT?;\"beta\";\"ga\"");
