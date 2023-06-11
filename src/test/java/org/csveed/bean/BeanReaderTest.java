@@ -38,10 +38,16 @@ import org.csveed.test.model.BeanWithoutNoArgPublicConstructor;
 import org.csveed.token.ParseState;
 import org.junit.jupiter.api.Test;
 
-public class BeanReaderTest {
+/**
+ * The Class BeanReaderTest.
+ */
+class BeanReaderTest {
 
+    /**
+     * Dynamic columns.
+     */
     @Test
-    public void dynamicColumns() {
+    void dynamicColumns() {
         Reader reader = new StringReader(
                 "commodity;language;14-01;14-02;14-03\n" + "corn;NL;1;2;3\n" + "corn;BE;4;5;6\n");
         BeanReader<BeanCommodity> beanReader = new BeanReaderImpl<>(reader, BeanCommodity.class);
@@ -55,6 +61,20 @@ public class BeanReaderTest {
         assertBeanCommodity(commodities.get(5), "corn", "BE", "14-03", 6);
     }
 
+    /**
+     * Assert bean commodity.
+     *
+     * @param beanCommodity
+     *            the bean commodity
+     * @param expectedCommodity
+     *            the expected commodity
+     * @param expectedLanguage
+     *            the expected language
+     * @param expectedDay
+     *            the expected day
+     * @param expectedAmount
+     *            the expected amount
+     */
     protected void assertBeanCommodity(BeanCommodity beanCommodity, String expectedCommodity, String expectedLanguage,
             String expectedDay, int expectedAmount) {
         assertEquals(expectedCommodity, beanCommodity.getCommodity());
@@ -63,8 +83,11 @@ public class BeanReaderTest {
         assertEquals(expectedAmount, beanCommodity.getAmount());
     }
 
+    /**
+     * Enum may be null.
+     */
     @Test
-    public void enumMayBeNull() {
+    void enumMayBeNull() {
         Reader reader = new StringReader(
                 "name;parseState\n" + "alpha;\"FIRST_CHAR_INSIDE_QUOTED_FIELD\"\n" + "beta;\n");
         BeanReader<BeanWithEnumAndMore> beanReader = new BeanReaderImpl<>(reader, BeanWithEnumAndMore.class);
@@ -73,16 +96,22 @@ public class BeanReaderTest {
         assertEquals(null, beans.get(1).getParseState());
     }
 
+    /**
+     * Convert to enum.
+     */
     @Test
-    public void convertToEnum() {
+    void convertToEnum() {
         Reader reader = new StringReader("parseState\n" + "\"FIRST_CHAR_INSIDE_QUOTED_FIELD\"");
         BeanReader<BeanWithEnum> beanReader = new BeanReaderImpl<>(reader, BeanWithEnum.class);
         BeanWithEnum bean = beanReader.readBean();
         assertEquals(ParseState.FIRST_CHAR_INSIDE_QUOTED_FIELD, bean.getParseState());
     }
 
+    /**
+     * Missing converter.
+     */
     @Test
-    public void missingConverter() {
+    void missingConverter() {
         Reader reader = new StringReader("alpha\n" + "\"row 1, cell 1\"");
         BeanReader<BeanWithNonStandardObject> beanReader = new BeanReaderImpl<>(reader,
                 BeanWithNonStandardObject.class);
@@ -91,26 +120,41 @@ public class BeanReaderTest {
         });
     }
 
+    /**
+     * Illegal column index mapping too low.
+     */
     @Test
-    public void illegalColumnIndexMappingTooLow() {
+    void illegalColumnIndexMappingTooLow() {
         assertThrows(CsvException.class, () -> {
             new BeanInstructionsImpl(BeanWithMultipleStrings.class).setMapper(ColumnIndexMapper.class)
                     .mapColumnIndexToProperty(-1, "alpha");
         });
     }
 
+    /**
+     * Illegal column index mapping too high.
+     */
     @Test
-    public void illegalColumnIndexMappingTooHigh() {
+    void illegalColumnIndexMappingTooHigh() {
         checkIllegalMapping(new BeanInstructionsImpl(BeanWithMultipleStrings.class).setMapper(ColumnIndexMapper.class)
                 .mapColumnIndexToProperty(99, "alpha"));
     }
 
+    /**
+     * Illegal column name.
+     */
     @Test
-    public void illegalColumnName() {
+    void illegalColumnName() {
         checkIllegalMapping(new BeanInstructionsImpl(BeanWithMultipleStrings.class).setMapper(ColumnNameMapper.class)
                 .mapColumnNameToProperty("Alphabetical", "alpha"));
     }
 
+    /**
+     * Check illegal mapping.
+     *
+     * @param beanInstructions
+     *            the bean instructions
+     */
     protected void checkIllegalMapping(BeanInstructions beanInstructions) {
         Reader reader = new StringReader(
                 "alpha;beta;gamma\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"");
@@ -120,8 +164,11 @@ public class BeanReaderTest {
         });
     }
 
+    /**
+     * Custom number conversion.
+     */
     @Test
-    public void customNumberConversion() {
+    void customNumberConversion() {
         Reader reader = new StringReader("money\n" + "11.398,22");
         BeanReader<BeanWithCustomNumberAnnotated> beanReader = new BeanReaderImpl<>(reader,
                 BeanWithCustomNumberAnnotated.class);
@@ -129,8 +176,11 @@ public class BeanReaderTest {
         assertEquals(Double.valueOf(11398.22), bean.getNumber());
     }
 
+    /**
+     * Gets the beans manual mapping.
+     */
     @Test
-    public void getBeansManualMapping() {
+    void getBeansManualMapping() {
         Reader reader = new StringReader("a;c;b\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
                 + "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"
                 + "\"row 3, cell 1\";\"row 3, cell 2\";\"row 3, cell 3\"");
@@ -146,8 +196,11 @@ public class BeanReaderTest {
         assertEquals("row 1, cell 3", bean.getBeta());
     }
 
+    /**
+     * Gets the beans.
+     */
     @Test
-    public void getBeans() {
+    void getBeans() {
         Reader reader = new StringReader(
                 "alpha;beta;gamma\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
                         + "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n"
@@ -161,8 +214,11 @@ public class BeanReaderTest {
         assertEquals("row 1, cell 3", bean.getAlpha());
     }
 
+    /**
+     * Tab separated.
+     */
     @Test
-    public void tabSeparated() {
+    void tabSeparated() {
         Reader reader = new StringReader(
                 "alpha\tbeta\tgamma\r" + "'\\'row\\' 1, cell 1'\t'row 1, cell 2'\t'row 1, cell 3'\r"
                         + "'\\'row\\' 2, cell 1'\t'row 2, cell 2'\t'row 2, cell 3'\r"
@@ -176,8 +232,11 @@ public class BeanReaderTest {
         assertEquals("row 1, cell 3", bean.getAlpha());
     }
 
+    /**
+     * Error in date.
+     */
     @Test
-    public void errorInDate() {
+    void errorInDate() {
         // Month and day in reverse order
         Reader reader = new StringReader(
                 "text;year;number;date;year and month\n\"a bit of text\";1984;42.42;1972-13-01;2013-04\n");
@@ -187,8 +246,11 @@ public class BeanReaderTest {
         });
     }
 
+    /**
+     * Various data types.
+     */
     @Test
-    public void variousDataTypes() {
+    void variousDataTypes() {
         Reader reader = new StringReader(
                 "text;year;number;date;year and month\n" + "\"a bit of text\";1984;42.42;1972-01-13;2013-04\n");
         BeanReader<BeanWithVariousTypes> beanReader = new BeanReaderImpl<>(reader, BeanWithVariousTypes.class);
@@ -204,16 +266,22 @@ public class BeanReaderTest {
         assertEquals("2013-04", formatter.format(bean.getYearMonth()));
     }
 
+    /**
+     * No header.
+     */
     @Test
-    public void noHeader() {
+    void noHeader() {
         Reader reader = new StringReader("\"a bit of text\";1984;42.42;1972-01-13;2013-04\n");
         BeanReader<BeanWithoutHeader> beanReader = new BeanReaderImpl<>(reader, BeanWithoutHeader.class);
         List<BeanWithoutHeader> beans = beanReader.readBeans();
         assertEquals(1, beans.size());
     }
 
+    /**
+     * Name matching.
+     */
     @Test
-    public void nameMatching() {
+    void nameMatching() {
         Reader reader = new StringReader("street;CITY;postal code;ignore this\n"
                 + "\"Some street\";\"Some city\";\"Some postal code\";\"Some ignoring\"");
         BeanReader<BeanWithNameMatching> beanReader = new BeanReaderImpl<>(reader, BeanWithNameMatching.class);
@@ -225,8 +293,11 @@ public class BeanReaderTest {
         assertEquals("Some postal code", bean.getLine3());
     }
 
+    /**
+     * Name matching with bom.
+     */
     @Test
-    public void nameMatchingWithBom() {
+    void nameMatchingWithBom() {
         Reader reader = new StringReader("\uFEFFstreet;CITY;postal code;ignore this\n"
                 + "\"Some street\";\"Some city\";\"Some postal code\";\"Some ignoring\"");
         BeanReader<BeanWithNameMatching> beanReader = new BeanReaderImpl<>(reader, BeanWithNameMatching.class);
@@ -238,8 +309,11 @@ public class BeanReaderTest {
         assertEquals("Some postal code", bean.getLine3());
     }
 
+    /**
+     * Index matching.
+     */
     @Test
-    public void indexMatching() {
+    void indexMatching() {
         Reader reader = new StringReader("\"line-1\";\"line0\";\"line1\";\"line2\";\"line3\"");
         BeanReader<BeanWithCustomIndexes> beanReader = new BeanReaderImpl<>(reader, BeanWithCustomIndexes.class);
         BeanWithCustomIndexes bean = beanReader.readBean();
@@ -249,8 +323,11 @@ public class BeanReaderTest {
         assertEquals("line3", bean.getLine3());
     }
 
+    /**
+     * Number of ignores.
+     */
     @Test
-    public void numberOfIgnores() {
+    void numberOfIgnores() {
         Reader reader = new StringReader("14;28;42");
         BeanReader<BeanLotsOfIgnores> beanReader = new BeanReaderImpl<>(reader, BeanLotsOfIgnores.class);
         BeanLotsOfIgnores bean = beanReader.readBean();
@@ -261,16 +338,22 @@ public class BeanReaderTest {
         assertNull(bean.getLeaveThat1());
     }
 
+    /**
+     * Custom property editor.
+     */
     @Test
-    public void customPropertyEditor() {
+    void customPropertyEditor() {
         Reader reader = new StringReader("\"some text\"");
         BeanReader<BeanWithConverter> beanReader = new BeanReaderImpl<>(reader, BeanWithConverter.class);
         BeanWithConverter bean = beanReader.readBean();
         assertEquals("some text", bean.getBean().getName());
     }
 
+    /**
+     * Illegal token.
+     */
     @Test
-    public void illegalToken() {
+    void illegalToken() {
         Reader reader = new StringReader("\"alpha\";\"beta\";\"gamma\"a\n");
         BeanReader<BeanSimple> beanReader = new BeanReaderImpl<>(reader, BeanSimple.class);
         assertThrows(CsvException.class, () -> {
@@ -278,8 +361,11 @@ public class BeanReaderTest {
         });
     }
 
+    /**
+     * Bean mapping error.
+     */
     @Test
-    public void beanMappingError() {
+    void beanMappingError() {
         Reader reader = new StringReader("text;year;number;date;year and month\n"
                 + "\"a bit of text\";UNEXPECTED TEXT!!!;42.42;1972-01-13;2013-04\n");
         BeanReader<BeanWithVariousTypes> beanReader = new BeanReaderImpl<>(reader, BeanWithVariousTypes.class);
@@ -288,8 +374,11 @@ public class BeanReaderTest {
         });
     }
 
+    /**
+     * Cannot convert to non standard object.
+     */
     @Test
-    public void cannotConvertToNonStandardObject() {
+    void cannotConvertToNonStandardObject() {
         Reader reader = new StringReader("\"can I convert this to a simple bean?\"");
         BeanReader<BeanWithNonStandardObject> beanReader = new BeanReaderImpl<>(reader,
                 BeanWithNonStandardObject.class);
@@ -298,8 +387,11 @@ public class BeanReaderTest {
         });
     }
 
+    /**
+     * Non instantiable bean.
+     */
     @Test
-    public void nonInstantiableBean() {
+    void nonInstantiableBean() {
         Reader reader = new StringReader("\"can I convert this to a simple bean?\"");
         BeanReader<BeanWithoutNoArgPublicConstructor> beanReader = new BeanReaderImpl<>(reader,
                 BeanWithoutNoArgPublicConstructor.class);

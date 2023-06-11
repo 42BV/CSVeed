@@ -20,10 +20,19 @@ import java.util.List;
 import org.csveed.test.model.BeanWithMultipleStrings;
 import org.junit.jupiter.api.Test;
 
-public class BeanWriterTest {
+/**
+ * The Class BeanWriterTest.
+ */
+class BeanWriterTest {
 
+    /**
+     * Write beans.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
-    public void writeBeans() throws IOException {
+    void writeBeans() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             List<BeanWithMultipleStrings> beans = new ArrayList<>();
             beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
@@ -41,9 +50,15 @@ public class BeanWriterTest {
         }
     }
 
+    /**
+     * Bug 46 reported by jnash 67.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     // https://github.com/42BV/CSVeed/issues/46
     @Test
-    public void bug46ReportedByJnash67() throws IOException {
+    void bug46ReportedByJnash67() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             List<BeanWithMultipleStrings> beans = new ArrayList<>();
             beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
@@ -65,6 +80,18 @@ public class BeanWriterTest {
         }
     }
 
+    /**
+     * Creates the bean.
+     *
+     * @param alpha
+     *            the alpha
+     * @param beta
+     *            the beta
+     * @param gamma
+     *            the gamma
+     *
+     * @return the bean with multiple strings
+     */
     private BeanWithMultipleStrings createBean(String alpha, String beta, String gamma) {
         BeanWithMultipleStrings bean = new BeanWithMultipleStrings();
         bean.setAlpha(alpha);

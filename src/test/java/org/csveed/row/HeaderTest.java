@@ -17,31 +17,51 @@ import org.csveed.api.Header;
 import org.csveed.report.CsvException;
 import org.junit.jupiter.api.Test;
 
-public class HeaderTest {
+/**
+ * The Class HeaderTest.
+ */
+class HeaderTest {
 
+    /**
+     * Gets the non existing column name.
+     */
     @Test
-    public void getNonExistingColumnName() {
+    void getNonExistingColumnName() {
         Header header = new HeaderImpl(createLine("alpha"));
         assertThrows(CsvException.class, () -> {
             header.getIndex("does-not-exist");
         });
     }
 
+    /**
+     * Gets the non existing column index.
+     */
     @Test
-    public void getNonExistingColumnIndex() {
+    void getNonExistingColumnIndex() {
         Header header = new HeaderImpl(createLine("alpha"));
         assertThrows(CsvException.class, () -> {
             header.getName(13);
         });
     }
 
+    /**
+     * To lower case.
+     */
     @Test
-    public void toLowerCase() {
+    void toLowerCase() {
         Header header = new HeaderImpl(createLine("Alpha"));
         assertEquals("Alpha", header.getName(1));
         assertEquals(1, header.getIndex("Alpha"));
     }
 
+    /**
+     * Creates the line.
+     *
+     * @param cell
+     *            the cell
+     *
+     * @return the line with info
+     */
     protected LineWithInfo createLine(String cell) {
         LineWithInfo line = new LineWithInfo();
         line.addCell(cell);

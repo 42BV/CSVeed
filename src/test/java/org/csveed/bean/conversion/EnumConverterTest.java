@@ -15,16 +15,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.csveed.token.ParseState;
 import org.junit.jupiter.api.Test;
 
-public class EnumConverterTest {
+/**
+ * The Class EnumConverterTest.
+ */
+class EnumConverterTest {
 
+    /**
+     * Convert to enum.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
-    public void convertToEnum() throws Exception {
+    void convertToEnum() throws Exception {
         EnumConverter<ParseState> converter = new EnumConverter<>(ParseState.class);
         assertEquals(ParseState.SKIP_LINE, converter.fromString("SKIP_LINE"));
     }
 
+    /**
+     * Convert from enum.
+     *
+     * @throws Exception
+     *             the exception
+     */
     @Test
-    public void convertFromEnum() throws Exception {
+    void convertFromEnum() throws Exception {
         EnumConverter<ParseState> converter = new EnumConverter<>(ParseState.class);
         assertEquals("SKIP_LINE", converter.toString(ParseState.SKIP_LINE));
     }

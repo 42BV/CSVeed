@@ -13,8 +13,14 @@ package org.csveed.test.converters;
 import org.csveed.bean.conversion.AbstractConverter;
 import org.csveed.test.model.BeanSimple;
 
+/**
+ * The Class BeanSimpleConverter.
+ */
 public class BeanSimpleConverter extends AbstractConverter<BeanSimple> {
 
+    /**
+     * Instantiates a new bean simple converter.
+     */
     public BeanSimpleConverter() {
         super(BeanSimple.class);
     }

@@ -14,17 +14,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class ColumnKeyTest {
+/**
+ * The Class ColumnKeyTest.
+ */
+class ColumnKeyTest {
 
+    /**
+     * Column name key equals.
+     */
     @Test
-    public void columnNameKeyEquals() {
+    void columnNameKeyEquals() {
         ColumnNameKey key1 = new ColumnNameKey("alpha");
         ColumnNameKey key2 = new ColumnNameKey("alpha");
         assertEquals(key1, key2);
     }
 
+    /**
+     * Key 1 less than key 2.
+     */
     @Test
-    public void key1LessThanKey2() {
+    void key1LessThanKey2() {
         ColumnNameKey key1 = new ColumnNameKey("alpha");
         ColumnNameKey key2 = new ColumnNameKey("beta");
         assertEquals(-1, key1.compareTo(key2));

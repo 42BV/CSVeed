@@ -16,10 +16,16 @@ import org.csveed.common.Column;
 import org.csveed.test.model.BeanSimple;
 import org.junit.jupiter.api.Test;
 
-public class BeanInstructionsImplTest {
+/**
+ * The Class BeanInstructionsImplTest.
+ */
+class BeanInstructionsImplTest {
 
+    /**
+     * Property name is null.
+     */
     @Test
-    public void propertyNameIsNull() {
+    void propertyNameIsNull() {
         BeanInstructions instructions = new BeanInstructionsImpl(BeanSimple.class);
         assertNull(instructions.getProperties().fromName(new Column("definitelyNotHere")));
     }

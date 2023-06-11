@@ -34,10 +34,19 @@ import org.csveed.test.model.BeanWithCustomNumber;
 import org.csveed.test.model.BeanWithMultipleStrings;
 import org.junit.jupiter.api.Test;
 
-public class CsvClientTest {
+/**
+ * The Class CsvClientTest.
+ */
+class CsvClientTest {
 
+    /**
+     * Write beans based on class.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
-    public void writeBeansBasedOnClass() throws IOException {
+    void writeBeansBasedOnClass() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             List<BeanWithMultipleStrings> beans = new ArrayList<>();
             beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
@@ -54,8 +63,14 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Write beans based on instructions.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
-    public void writeBeansBasedOnInstructions() throws IOException {
+    void writeBeansBasedOnInstructions() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             List<BeanWithMultipleStrings> beans = new ArrayList<>();
             beans.add(createBean("row 1, cell 3", "row 1, cell 2", "row 1, cell 1"));
@@ -73,6 +88,18 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Creates the bean.
+     *
+     * @param alpha
+     *            the alpha
+     * @param beta
+     *            the beta
+     * @param gamma
+     *            the gamma
+     *
+     * @return the bean with multiple strings
+     */
     private BeanWithMultipleStrings createBean(String alpha, String beta, String gamma) {
         BeanWithMultipleStrings bean = new BeanWithMultipleStrings();
         bean.setAlpha(alpha);
@@ -81,8 +108,14 @@ public class CsvClientTest {
         return bean;
     }
 
+    /**
+     * Read and write rows.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
-    public void readAndWriteRows() throws IOException {
+    void readAndWriteRows() throws IOException {
         Reader reader = new StringReader(
                 "alpha;beta;gamma\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
                         + "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n");
@@ -101,8 +134,14 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Write row.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
-    public void writeRow() throws IOException {
+    void writeRow() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(writer).setUseHeader(false);
             csvClient.writeRow(new String[] { "alpha", "beta", "gamma" });
@@ -111,16 +150,37 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Write rows LF.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
-    public void writeRowsLF() throws IOException {
+    void writeRowsLF() throws IOException {
         writeRows("\n");
     }
 
+    /**
+     * Write rows CRLF.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
-    public void writeRowsCRLF() throws IOException {
+    void writeRowsCRLF() throws IOException {
         writeRows("\r\n");
     }
 
+    /**
+     * Write rows.
+     *
+     * @param lineTerminators
+     *            the line terminators
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     private void writeRows(String lineTerminators) throws IOException {
         try (StringWriter writer = new StringWriter()) {
             CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(writer).setUseHeader(false)
@@ -135,8 +195,11 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Windows CRLF 0 x 0 d 0 x 0 a.
+     */
     @Test
-    public void windowsCRLF0x0d0x0a() {
+    void windowsCRLF0x0d0x0a() {
         char[] file = { 'n', 'a', 'm', 'e', 0x0d, 0x0a, 'A', 'l', 'p', 'h', 'a', 0x0d, 0x0a, 'B', 'e', 't', 'a', 0x0d,
                 0x0a, 'G', 'a', 'm', 'm', 'a' };
         String fileText = new String(file);
@@ -146,8 +209,11 @@ public class CsvClientTest {
         assertEquals(3, beans.size());
     }
 
+    /**
+     * Do not skip comment line must cause column check to fail.
+     */
     @Test
-    public void doNotSkipCommentLineMustCauseColumnCheckToFail() {
+    void doNotSkipCommentLineMustCauseColumnCheckToFail() {
         Reader reader = new StringReader("name;name 2;name 3\n" + "# ignore me!\n");
         CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(reader).skipCommentLines(false);
         assertThrows(CsvException.class, () -> {
@@ -155,16 +221,22 @@ public class CsvClientTest {
         });
     }
 
+    /**
+     * Custom comments.
+     */
     @Test
-    public void customComments() {
+    void customComments() {
         Reader reader = new StringReader("name\n" + "% ignore me!\n" + "some name\n");
         CsvClient<BeanCustomComments> csvClient = new CsvClientImpl<>(reader, BeanCustomComments.class);
         List<BeanCustomComments> beans = csvClient.readBeans();
         assertEquals(1, beans.size());
     }
 
+    /**
+     * Call bean method on non bean reader facade.
+     */
     @Test
-    public void callBeanMethodOnNonBeanReaderFacade() {
+    void callBeanMethodOnNonBeanReaderFacade() {
         Reader reader = new StringReader("");
         CsvClient<StringWriter> csvClient = new CsvClientImpl<>(reader);
         assertThrows(CsvException.class, () -> {
@@ -172,8 +244,11 @@ public class CsvClientTest {
         });
     }
 
+    /**
+     * Custom number conversion.
+     */
     @Test
-    public void customNumberConversion() {
+    void customNumberConversion() {
         Reader reader = new StringReader("money\n" + "11.398,22");
         CsvClient<BeanWithCustomNumber> beanReader = new CsvClientImpl<>(reader, BeanWithCustomNumber.class)
                 .setLocalizedNumber("number", Locale.GERMANY);
@@ -181,16 +256,28 @@ public class CsvClientTest {
         assertEquals(Double.valueOf(11398.22), bean.getNumber());
     }
 
+    /**
+     * Read lines LF.
+     */
     @Test
-    public void readLinesLF() {
+    void readLinesLF() {
         readLines("\n");
     }
 
+    /**
+     * Read lines CRLF.
+     */
     @Test
-    public void readLinesCRLF() {
+    void readLinesCRLF() {
         readLines("\r\n");
     }
 
+    /**
+     * Read lines.
+     *
+     * @param lineTerminators
+     *            the line terminators
+     */
     private void readLines(String lineTerminators) {
         Reader reader = new StringReader("text,year,number,date,lines,year and month" + lineTerminators
                 + "'a bit of text',1983,42.42,1972-01-13,'line 1',2013-04" + lineTerminators
@@ -213,8 +300,11 @@ public class CsvClientTest {
         assertEquals(3, beans.size());
     }
 
+    /**
+     * Multiple header reads.
+     */
     @Test
-    public void multipleHeaderReads() {
+    void multipleHeaderReads() {
         Reader reader = new StringReader("text;year;number;date;lines;year and month\n"
                 + "\"a bit of text\";1983;42.42;1972-01-13;\"line 1\";2013-04\n"
                 + "\"more text\";1984;42.42;1972-01-14;\"line 1\nline 2\";2014-04\n"
@@ -225,8 +315,11 @@ public class CsvClientTest {
         assertNotNull(csvClient.readHeader());
     }
 
+    /**
+     * Required field.
+     */
     @Test
-    public void requiredField() {
+    void requiredField() {
         Reader reader = new StringReader("alpha;beta;gamma\n" + "\"l1c1\";\"l1c2\";\"l1c3\"\n"
                 + "\"l2c1\";\"l2c2\";\"l2c3\"\n" + "\"l3c1\";\"l3c2\";");
         CsvClient<BeanWithMultipleStrings> csvClient = new CsvClientImpl<>(reader, BeanWithMultipleStrings.class)
@@ -236,8 +329,11 @@ public class CsvClientTest {
         });
     }
 
+    /**
+     * Start at later line.
+     */
     @Test
-    public void startAtLaterLine() {
+    void startAtLaterLine() {
         Reader reader = new StringReader("-- ignore line 1\n" + "-- ignore line 2\n" + "-- ignore line 3\n"
                 + "text;year;number;date;lines;year and month\n"
                 + "\"a bit of text\";1983;42.42;1972-01-13;\"line 1\";2013-04\n"
@@ -250,16 +346,25 @@ public class CsvClientTest {
         assertEquals(8, csvClient.getCurrentLine());
     }
 
+    /**
+     * Comment lines not skipped.
+     */
     @Test
-    public void commentLinesNotSkipped() {
+    void commentLinesNotSkipped() {
         Reader reader = new StringReader("Issue ID;Submitter\n" + "#1;Bill\n" + "#2;Mary\n" + "#3;Jane\n" + "#4;Will");
         CsvClient<BeanSimple> csvClient = new CsvClientImpl<>(reader, BeanSimple.class).skipCommentLines(false);
         List<Row> rows = csvClient.readRows();
         assertEquals(4, rows.size());
     }
 
+    /**
+     * Header not written for otherwise empty csv.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
-    public void headerNotWrittenForOtherwiseEmptyCsv() throws IOException {
+    void headerNotWrittenForOtherwiseEmptyCsv() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             new CsvClientImpl<>(writer, BeanWithMultipleStrings.class);
 
@@ -267,8 +372,14 @@ public class CsvClientTest {
         }
     }
 
+    /**
+     * Write header based on bean properties.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     @Test
-    public void writeHeaderBasedOnBeanProperties() throws IOException {
+    void writeHeaderBasedOnBeanProperties() throws IOException {
         try (StringWriter writer = new StringWriter()) {
             CsvClient<BeanWithMultipleStrings> client = new CsvClientImpl<>(writer, BeanWithMultipleStrings.class);
             client.writeHeader();

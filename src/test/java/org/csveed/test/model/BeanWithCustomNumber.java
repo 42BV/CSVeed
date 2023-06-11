@@ -10,14 +10,29 @@
  */
 package org.csveed.test.model;
 
+/**
+ * The Class BeanWithCustomNumber.
+ */
 public class BeanWithCustomNumber {
 
+    /** The number. */
     private Double number;
 
+    /**
+     * Gets the number.
+     *
+     * @return the number
+     */
     public Double getNumber() {
         return number;
     }
 
+    /**
+     * Sets the number.
+     *
+     * @param number
+     *            the new number
+     */
     public void setNumber(Double number) {
         this.number = number;
     }

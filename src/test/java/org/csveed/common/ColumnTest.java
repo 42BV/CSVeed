@@ -23,52 +23,79 @@ import org.csveed.row.HeaderImpl;
 import org.csveed.row.LineWithInfo;
 import org.junit.jupiter.api.Test;
 
-public class ColumnTest {
+/**
+ * The Class ColumnTest.
+ */
+class ColumnTest {
 
+    /**
+     * Excel column to column index.
+     */
     @Test
-    public void excelColumnToColumnIndex() {
+    void excelColumnToColumnIndex() {
         Column excel = new ColumnExcel("AH");
         assertEquals(34, excel.getColumnIndex());
     }
 
+    /**
+     * Largest possible index.
+     */
     @Test
-    public void largestPossibleIndex() {
+    void largestPossibleIndex() {
         Column excel = new ColumnExcel("ZZ");
         assertEquals(702, excel.getColumnIndex());
     }
 
+    /**
+     * Column index to excel column.
+     */
     @Test
-    public void columnIndexToExcelColumn() {
+    void columnIndexToExcelColumn() {
         Column excel = new Column(34);
         assertEquals("AH", excel.getExcelColumn());
     }
 
+    /**
+     * Wrong index.
+     */
     @Test
-    public void wrongIndex() {
+    void wrongIndex() {
         assertThrows(CsvException.class, () -> {
             new Column(0);
         });
     }
 
+    /**
+     * Next column.
+     */
     @Test
-    public void nextColumn() {
+    void nextColumn() {
         Column column = new Column(3);
         assertEquals(4, column.nextColumn().getColumnIndex());
     }
 
+    /**
+     * Reset.
+     */
     @Test
-    public void reset() {
+    void reset() {
         Column column = new Column(3);
         assertEquals(Column.FIRST_COLUMN_INDEX, column.nextLine().getColumnIndex());
     }
 
+    /**
+     * Equals.
+     */
     @Test
-    public void equals() {
+    void equals() {
         assertEquals(new Column(3), new Column(3));
     }
 
+    /**
+     * Tree map.
+     */
     @Test
-    public void treeMap() {
+    void treeMap() {
         Map<Column, String> map = new TreeMap<>();
         Column storeColumn = new Column("name");
         map.put(storeColumn, "alpha");
@@ -79,8 +106,11 @@ public class ColumnTest {
         assertNotNull(map.get(searchColumn));
     }
 
+    /**
+     * Tree map with column index.
+     */
     @Test
-    public void treeMapWithColumnIndex() {
+    void treeMapWithColumnIndex() {
         Map<Column, String> map = new TreeMap<>();
         map.put(new Column(1), "alpha");
         map.put(new Column(2), "beta");

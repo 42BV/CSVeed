@@ -24,10 +24,19 @@ import org.csveed.test.model.BeanSimple;
 import org.csveed.test.model.BeanVariousNotAnnotated;
 import org.junit.jupiter.api.Test;
 
-public class BeanPropertyTest {
+/**
+ * The Class BeanPropertyTest.
+ */
+class BeanPropertyTest {
 
+    /**
+     * Construct.
+     *
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @Test
-    public void construct() throws IntrospectionException {
+    void construct() throws IntrospectionException {
         BeanProperty property = new BeanProperty();
         Converter<BeanSimple> converter = new BeanSimpleConverter();
         PropertyDescriptor propertyDescriptor = new PropertyDescriptor("name", BeanSimple.class);
@@ -43,15 +52,27 @@ public class BeanPropertyTest {
         assertTrue(property.isRequired());
     }
 
+    /**
+     * Number class.
+     *
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @Test
-    public void numberClass() throws IntrospectionException {
+    void numberClass() throws IntrospectionException {
         BeanProperty property = new BeanProperty();
         property.setPropertyDescriptor(new PropertyDescriptor("number", BeanVariousNotAnnotated.class));
         assertNotNull(property.getNumberClass());
     }
 
+    /**
+     * Not A number class.
+     *
+     * @throws IntrospectionException
+     *             the introspection exception
+     */
     @Test
-    public void notANumberClass() throws IntrospectionException {
+    void notANumberClass() throws IntrospectionException {
         BeanProperty property = new BeanProperty();
         property.setPropertyDescriptor(new PropertyDescriptor("name", BeanSimple.class));
         assertNull(property.getNumberClass());

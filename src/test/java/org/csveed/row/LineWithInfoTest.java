@@ -19,47 +19,68 @@ import org.csveed.report.CsvException;
 import org.csveed.report.RowReport;
 import org.junit.jupiter.api.Test;
 
-public class LineWithInfoTest {
+/**
+ * The Class LineWithInfoTest.
+ */
+class LineWithInfoTest {
 
+    /**
+     * Cell is null.
+     */
     @Test
-    public void cellIsNull() {
+    void cellIsNull() {
         LineWithInfo row = new LineWithInfo();
         row.addCell(null);
         assertEquals(0, row.getCellPosition(new Column()).getStart());
         assertEquals(0, row.getCellPosition(new Column()).getEnd());
     }
 
+    /**
+     * Cell is empty.
+     */
     @Test
-    public void cellIsEmpty() {
+    void cellIsEmpty() {
         LineWithInfo row = new LineWithInfo();
         row.addCell("");
         assertEquals(0, row.getCellPosition(new Column()).getStart());
         assertEquals(0, row.getCellPosition(new Column()).getEnd());
     }
 
+    /**
+     * Convert characters.
+     */
     @Test
-    public void convertCharacters() {
+    void convertCharacters() {
         LineWithInfo row = new LineWithInfo();
         assertEquals("\\b", row.convertToPrintable('\b'));
         assertEquals("\\f", row.convertToPrintable('\f'));
     }
 
+    /**
+     * Non existing cell.
+     */
     @Test
-    public void nonExistingCell() {
+    void nonExistingCell() {
         LineWithInfo row = new LineWithInfo();
         assertNull(row.reportOnColumn(new Column()));
     }
 
+    /**
+     * Gets the report on column index 0.
+     */
     @Test
-    public void getReportOnColumnIndex0() {
+    void getReportOnColumnIndex0() {
         LineWithInfo row = addString(new LineWithInfo(), "Hello");
         assertThrows(CsvException.class, () -> {
             row.reportOnColumn(new Column(0));
         });
     }
 
+    /**
+     * Simple word.
+     */
     @Test
-    public void simpleWord() {
+    void simpleWord() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Hello");
         RowReport report = row.reportOnColumn(new Column());
@@ -68,8 +89,11 @@ public class LineWithInfoTest {
         assertEquals(5, report.getEnd());
     }
 
+    /**
+     * Couple of words.
+     */
     @Test
-    public void coupleOfWords() {
+    void coupleOfWords() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Alpha");
         row.addCharacter(';');
@@ -82,8 +106,11 @@ public class LineWithInfoTest {
         assertEquals(16, report.getEnd());
     }
 
+    /**
+     * Various non printables.
+     */
     @Test
-    public void variousNonPrintables() {
+    void variousNonPrintables() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Alpha");
         row.addCharacter('\t');
@@ -96,8 +123,11 @@ public class LineWithInfoTest {
         assertEquals(18, report.getEnd());
     }
 
+    /**
+     * Report on end of line.
+     */
     @Test
-    public void reportOnEndOfLine() {
+    void reportOnEndOfLine() {
         LineWithInfo row = new LineWithInfo();
         row = addString(row, "Alpha");
         row.addCharacter('\t');
@@ -109,6 +139,16 @@ public class LineWithInfoTest {
         assertEquals(12, report.getEnd());
     }
 
+    /**
+     * Adds the string.
+     *
+     * @param row
+     *            the row
+     * @param text
+     *            the text
+     *
+     * @return the line with info
+     */
     protected LineWithInfo addString(LineWithInfo row, String text) {
         row.markStartOfColumn();
         for (int i = 0; i < text.length(); i++) {
