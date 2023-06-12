@@ -16,11 +16,11 @@ public abstract class ConversionException extends Exception {
 
     private String typeDescription;
 
-    public ConversionException(String message, Class clazz) {
+    protected ConversionException(String message, Class clazz) {
         this(message, clazz.getName(), null);
     }
 
-    public ConversionException(String message, String typeDescription, Throwable exception) {
+    protected ConversionException(String message, String typeDescription, Throwable exception) {
         super(message, exception);
         this.typeDescription = typeDescription;
     }

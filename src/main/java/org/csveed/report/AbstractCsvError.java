@@ -17,7 +17,7 @@ public abstract class AbstractCsvError implements CsvError {
 
     private String message;
 
-    public AbstractCsvError(String message) {
+    protected AbstractCsvError(String message) {
         this.message = message;
     }
 

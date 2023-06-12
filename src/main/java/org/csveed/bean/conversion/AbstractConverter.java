@@ -14,7 +14,7 @@ public abstract class AbstractConverter<K> implements Converter<K> {
 
     private Class<K> clazz;
 
-    public AbstractConverter(Class<K> clazz) {
+    protected AbstractConverter(Class<K> clazz) {
         this.clazz = clazz;
     }
 

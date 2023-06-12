@@ -78,7 +78,7 @@ public class SymbolMapping {
 
     public void addMapping(EncounteredSymbol symbol, char[] characters) {
         while (charToSymbol.values().remove(symbol)) {
-
+            // Looping until all symbols removed
         }
         for (Character character : characters) {
             charToSymbol.put(character, symbol);
@@ -92,9 +92,11 @@ public class SymbolMapping {
         }
         LOG.info("- CSV config / skip comment lines? {}", isSkipCommentLines() ? "yes" : "no");
         LOG.info("- CSV config / start line: {}", startLine);
-        for (EncounteredSymbol symbol : symbolToChars.keySet()) {
-            char[] characters = symbolToChars.get(symbol);
-            LOG.info("- CSV config / Characters for {} {}", symbol, charactersToString(characters));
+        for (Map.Entry<EncounteredSymbol, char[]> entry : symbolToChars.entrySet()) {
+            char[] characters = entry.getValue();
+            if (LOG.isInfoEnabled()) {
+                LOG.info("- CSV config / Characters for {} {}", entry.getKey(), charactersToString(characters));
+            }
         }
         settingsLogged = true;
     }
