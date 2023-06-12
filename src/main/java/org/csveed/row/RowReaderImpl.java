@@ -96,7 +96,8 @@ public class RowReaderImpl implements RowReader {
         if (unmappedLine == null) {
             return null;
         }
-        return header = new HeaderImpl(unmappedLine);
+        header = new HeaderImpl(unmappedLine);
+        return header;
     }
 
     private void checkNumberOfColumns(Line unmappedLine) {
