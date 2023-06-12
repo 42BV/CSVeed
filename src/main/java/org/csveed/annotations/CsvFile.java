@@ -66,7 +66,7 @@ public @interface CsvFile {
 
     /**
      * All lines starting with this symbol (must be at the first encountered position) will be considered comments,
-     * which are ignored by the parser
+     * which are ignored by the parser.
      *
      * @return comment symbol
      */

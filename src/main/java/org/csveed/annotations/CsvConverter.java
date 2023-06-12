@@ -27,7 +27,7 @@ import org.csveed.bean.conversion.Converter;
 public @interface CsvConverter {
 
     /**
-     * The Converter to use for the field
+     * The Converter to use for the field.
      *
      * @return PropertyEditor
      */

@@ -46,7 +46,7 @@ public interface CsvError {
     int getLineNumber();
 
     /**
-     * Returns the original error message
+     * Returns the original error message.
      *
      * @return error message
      */

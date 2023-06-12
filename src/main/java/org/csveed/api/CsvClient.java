@@ -31,15 +31,15 @@ import org.csveed.bean.conversion.Converter;
  * implementation with your own configuration settings</li>
  * </ul>
  *
+ * @author Robert Bor
+ *
  * @param <T>
  *            the bean class into which the rows are converted
- *
- * @author Robert Bor
  */
 public interface CsvClient<T> {
 
     /**
-     * Writes a collection of Beans to the table
+     * Writes a collection of Beans to the table.
      *
      * @param beans
      *            beans to write to the table
@@ -47,7 +47,7 @@ public interface CsvClient<T> {
     void writeBeans(Collection<T> beans);
 
     /**
-     * Writes a single Bean to the table
+     * Writes a single Bean to the table.
      *
      * @param bean
      *            bean to write to the table
@@ -55,7 +55,7 @@ public interface CsvClient<T> {
     void writeBean(T bean);
 
     /**
-     * Writes a single row to the table
+     * Writes a single row to the table.
      *
      * @param row
      *            single row
@@ -63,7 +63,7 @@ public interface CsvClient<T> {
     void writeRow(Row row);
 
     /**
-     * Writes a single row (consisting of String cells) to the table
+     * Writes a single row (consisting of String cells) to the table.
      *
      * @param row
      *            single row
@@ -73,7 +73,7 @@ public interface CsvClient<T> {
     Row writeRow(String[] row);
 
     /**
-     * Writes a collection of rows to the table
+     * Writes a collection of rows to the table.
      *
      * @param rows
      *            collections of rows
@@ -81,7 +81,7 @@ public interface CsvClient<T> {
     void writeRows(Collection<Row> rows);
 
     /**
-     * Writes a two-dimensional array of cells (rows with cells) to the table
+     * Writes a two-dimensional array of cells (rows with cells) to the table.
      *
      * @param rows
      *            two-dimensional array of cells
@@ -89,7 +89,7 @@ public interface CsvClient<T> {
     void writeRows(String[][] rows);
 
     /**
-     * Writes the header to the table
+     * Writes the header to the table.
      *
      * @param header
      *            the header row
@@ -99,7 +99,7 @@ public interface CsvClient<T> {
     Header writeHeader(String[] header);
 
     /**
-     * Writes the header to the table
+     * Writes the header to the table.
      *
      * @param header
      *            the header row
@@ -107,7 +107,7 @@ public interface CsvClient<T> {
     void writeHeader(Header header);
 
     /**
-     * Writes a header based on the bean properties to the table
+     * Writes a header based on the bean properties to the table.
      */
     void writeHeader();
 
@@ -155,7 +155,7 @@ public interface CsvClient<T> {
     int getCurrentLine();
 
     /**
-     * States whether the Reader is done with the file
+     * States whether the Reader is done with the file.
      *
      * @return true if file is finished
      */
@@ -397,7 +397,7 @@ public interface CsvClient<T> {
     CsvClient<T> mapColumnNameToProperty(String columnName, String propertyName);
 
     /**
-     * Determines what property will receive the header name in the currently active dynamic column
+     * Determines what property will receive the header name in the currently active dynamic column.
      *
      * @param propertyName
      *            property in which the active dynamic header name must be stored
@@ -407,7 +407,7 @@ public interface CsvClient<T> {
     CsvClient<T> setHeaderNameToProperty(String propertyName);
 
     /**
-     * Determines what property will receive the cell value in the currently active dynamic column
+     * Determines what property will receive the cell value in the currently active dynamic column.
      *
      * @param propertyName
      *            property in which the active dynamic column value must be stored
