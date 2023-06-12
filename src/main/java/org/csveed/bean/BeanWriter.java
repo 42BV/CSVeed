@@ -16,6 +16,9 @@ import org.csveed.row.RowWriter;
 
 /**
  * Class for writing Beans.
+ *
+ * @param <T>
+ *            the generic type
  */
 public interface BeanWriter<T> {
 
