@@ -28,9 +28,7 @@ class HeaderTest {
     @Test
     void getNonExistingColumnName() {
         Header header = new HeaderImpl(createLine("alpha"));
-        assertThrows(CsvException.class, () -> {
-            header.getIndex("does-not-exist");
-        });
+        assertThrows(CsvException.class, () -> header.getIndex("does-not-exist"));
     }
 
     /**
@@ -39,9 +37,7 @@ class HeaderTest {
     @Test
     void getNonExistingColumnIndex() {
         Header header = new HeaderImpl(createLine("alpha"));
-        assertThrows(CsvException.class, () -> {
-            header.getName(13);
-        });
+        assertThrows(CsvException.class, () -> header.getName(13));
     }
 
     /**

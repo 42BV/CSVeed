@@ -115,9 +115,7 @@ class BeanReaderTest {
         Reader reader = new StringReader("alpha\n" + "\"row 1, cell 1\"");
         BeanReader<BeanWithNonStandardObject> beanReader = new BeanReaderImpl<>(reader,
                 BeanWithNonStandardObject.class);
-        assertThrows(CsvException.class, () -> {
-            beanReader.readBean();
-        });
+        assertThrows(CsvException.class, () -> beanReader.readBean());
     }
 
     /**
@@ -125,10 +123,8 @@ class BeanReaderTest {
      */
     @Test
     void illegalColumnIndexMappingTooLow() {
-        assertThrows(CsvException.class, () -> {
-            new BeanInstructionsImpl(BeanWithMultipleStrings.class).setMapper(ColumnIndexMapper.class)
-                    .mapColumnIndexToProperty(-1, "alpha");
-        });
+        assertThrows(CsvException.class, () -> new BeanInstructionsImpl(BeanWithMultipleStrings.class)
+                .setMapper(ColumnIndexMapper.class).mapColumnIndexToProperty(-1, "alpha"));
     }
 
     /**
@@ -159,9 +155,7 @@ class BeanReaderTest {
         Reader reader = new StringReader(
                 "alpha;beta;gamma\n" + "\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"");
         BeanReader<BeanWithMultipleStrings> beanReader = new BeanReaderImpl<>(reader, beanInstructions);
-        assertThrows(CsvException.class, () -> {
-            beanReader.readBean();
-        });
+        assertThrows(CsvException.class, () -> beanReader.readBean());
     }
 
     /**
@@ -241,9 +235,7 @@ class BeanReaderTest {
         Reader reader = new StringReader(
                 "text;year;number;date;year and month\n\"a bit of text\";1984;42.42;1972-13-01;2013-04\n");
         BeanReader<BeanWithVariousTypes> beanReader = new BeanReaderImpl<>(reader, BeanWithVariousTypes.class);
-        assertThrows(CsvException.class, () -> {
-            beanReader.readBeans();
-        });
+        assertThrows(CsvException.class, () -> beanReader.readBeans());
     }
 
     /**
@@ -356,9 +348,7 @@ class BeanReaderTest {
     void illegalToken() {
         Reader reader = new StringReader("\"alpha\";\"beta\";\"gamma\"a\n");
         BeanReader<BeanSimple> beanReader = new BeanReaderImpl<>(reader, BeanSimple.class);
-        assertThrows(CsvException.class, () -> {
-            beanReader.readBeans();
-        });
+        assertThrows(CsvException.class, () -> beanReader.readBeans());
     }
 
     /**
@@ -369,9 +359,7 @@ class BeanReaderTest {
         Reader reader = new StringReader("text;year;number;date;year and month\n"
                 + "\"a bit of text\";UNEXPECTED TEXT!!!;42.42;1972-01-13;2013-04\n");
         BeanReader<BeanWithVariousTypes> beanReader = new BeanReaderImpl<>(reader, BeanWithVariousTypes.class);
-        assertThrows(CsvException.class, () -> {
-            beanReader.readBeans();
-        });
+        assertThrows(CsvException.class, () -> beanReader.readBeans());
     }
 
     /**
@@ -382,9 +370,7 @@ class BeanReaderTest {
         Reader reader = new StringReader("\"can I convert this to a simple bean?\"");
         BeanReader<BeanWithNonStandardObject> beanReader = new BeanReaderImpl<>(reader,
                 BeanWithNonStandardObject.class);
-        assertThrows(CsvException.class, () -> {
-            beanReader.readBeans();
-        });
+        assertThrows(CsvException.class, () -> beanReader.readBeans());
     }
 
     /**
@@ -395,9 +381,7 @@ class BeanReaderTest {
         Reader reader = new StringReader("\"can I convert this to a simple bean?\"");
         BeanReader<BeanWithoutNoArgPublicConstructor> beanReader = new BeanReaderImpl<>(reader,
                 BeanWithoutNoArgPublicConstructor.class);
-        assertThrows(CsvException.class, () -> {
-            beanReader.readBeans();
-        });
+        assertThrows(CsvException.class, () -> beanReader.readBeans());
     }
 
 }

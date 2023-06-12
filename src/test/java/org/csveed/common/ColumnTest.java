@@ -60,9 +60,7 @@ class ColumnTest {
      */
     @Test
     void wrongIndex() {
-        assertThrows(CsvException.class, () -> {
-            new Column(0);
-        });
+        assertThrows(CsvException.class, () -> new Column(0));
     }
 
     /**

@@ -27,8 +27,6 @@ class BeanPropertiesTest {
     @Test
     void mapAtColumnIndex0() {
         BeanProperties properties = new BeanProperties(BeanSimple.class);
-        assertThrows(CsvException.class, () -> {
-            properties.mapIndexToProperty(0, "name");
-        });
+        assertThrows(CsvException.class, () -> properties.mapIndexToProperty(0, "name"));
     }
 }

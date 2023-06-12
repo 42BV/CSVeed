@@ -216,9 +216,7 @@ class CsvClientTest {
     void doNotSkipCommentLineMustCauseColumnCheckToFail() {
         Reader reader = new StringReader("name;name 2;name 3\n" + "# ignore me!\n");
         CsvClient<StringWriter> csvClient = new CsvClientImpl<StringWriter>(reader).skipCommentLines(false);
-        assertThrows(CsvException.class, () -> {
-            csvClient.readRows();
-        });
+        assertThrows(CsvException.class, () -> csvClient.readRows());
     }
 
     /**
@@ -239,9 +237,7 @@ class CsvClientTest {
     void callBeanMethodOnNonBeanReaderFacade() {
         Reader reader = new StringReader("");
         CsvClient<StringWriter> csvClient = new CsvClientImpl<>(reader);
-        assertThrows(CsvException.class, () -> {
-            csvClient.readBean();
-        });
+        assertThrows(CsvException.class, () -> csvClient.readBean());
     }
 
     /**
@@ -324,9 +320,7 @@ class CsvClientTest {
                 + "\"l2c1\";\"l2c2\";\"l2c3\"\n" + "\"l3c1\";\"l3c2\";");
         CsvClient<BeanWithMultipleStrings> csvClient = new CsvClientImpl<>(reader, BeanWithMultipleStrings.class)
                 .setMapper(ColumnNameMapper.class).setRequired("gamma", true);
-        assertThrows(CsvException.class, () -> {
-            csvClient.readBeans();
-        });
+        assertThrows(CsvException.class, () -> csvClient.readBeans());
     }
 
     /**

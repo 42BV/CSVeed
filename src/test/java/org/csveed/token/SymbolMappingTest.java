@@ -28,9 +28,7 @@ class SymbolMappingTest {
     @Test
     void setRowAtZero() {
         SymbolMapping mapping = new SymbolMapping();
-        assertThrows(CsvException.class, () -> {
-            mapping.setStartLine(0);
-        });
+        assertThrows(CsvException.class, () -> mapping.setStartLine(0));
     }
 
     /**

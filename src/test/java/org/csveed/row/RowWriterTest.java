@@ -186,9 +186,7 @@ class RowWriterTest {
     @Test
     void noHeaderWritten() {
         RowWriter rowWriter = new RowWriterImpl(new StringWriter());
-        assertThrows(CsvException.class, () -> {
-            rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" });
-        });
+        assertThrows(CsvException.class, () -> rowWriter.writeRow(new String[] { "alpha", "beta", "gamma" }));
     }
 
 }

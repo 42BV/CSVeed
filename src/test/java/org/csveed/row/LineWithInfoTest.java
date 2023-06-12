@@ -71,9 +71,7 @@ class LineWithInfoTest {
     @Test
     void getReportOnColumnIndex0() {
         LineWithInfo row = addString(new LineWithInfo(), "Hello");
-        assertThrows(CsvException.class, () -> {
-            row.reportOnColumn(new Column(0));
-        });
+        assertThrows(CsvException.class, () -> row.reportOnColumn(new Column(0)));
     }
 
     /**
