@@ -92,9 +92,11 @@ public class SymbolMapping {
         }
         LOG.info("- CSV config / skip comment lines? {}", isSkipCommentLines() ? "yes" : "no");
         LOG.info("- CSV config / start line: {}", startLine);
-        for (Map.Entry<EncounteredSymbol,char[]> entry : symbolToChars.entrySet()) {
+        for (Map.Entry<EncounteredSymbol, char[]> entry : symbolToChars.entrySet()) {
             char[] characters = entry.getValue();
-            LOG.info("- CSV config / Characters for {} {}", entry.getKey(), charactersToString(characters));
+            if (LOG.isInfoEnabled()) {
+                LOG.info("- CSV config / Characters for {} {}", entry.getKey(), charactersToString(characters));
+            }
         }
         settingsLogged = true;
     }
