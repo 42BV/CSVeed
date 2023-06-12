@@ -23,6 +23,12 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
     /** The Constant VALUE_FALSE. */
     public static final String VALUE_FALSE = "false";
 
+    /** The Constant VALUE_SHORT_TRUE. */
+    public static final String VALUE_SHORT_TRUE = "T";
+
+    /** The Constant VALUE_SHORT_FALSE. */
+    public static final String VALUE_SHORT_FALSE = "F";
+
     /** The Constant VALUE_ON. */
     public static final String VALUE_ON = "on";
 
@@ -34,6 +40,12 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
 
     /** The Constant VALUE_NO. */
     public static final String VALUE_NO = "no";
+
+    /** The Constant VALUE_SHORT_YES. */
+    public static final String VALUE_SHORT_YES = "Y";
+
+    /** The Constant VALUE_SHORT_NO. */
+    public static final String VALUE_SHORT_NO = "N";
 
     /** The Constant VALUE_1. */
     public static final String VALUE_1 = "1";
@@ -89,12 +101,15 @@ public class CustomBooleanConverter extends AbstractConverter<Boolean> {
         if (this.falseString != null && this.falseString.equalsIgnoreCase(input)) {
             return Boolean.FALSE;
         }
-        if (this.trueString == null && (VALUE_TRUE.equalsIgnoreCase(input) || VALUE_ON.equalsIgnoreCase(input)
-                || VALUE_YES.equalsIgnoreCase(input) || VALUE_1.equals(input))) {
+        if (this.trueString == null && (VALUE_TRUE.equalsIgnoreCase(input) || VALUE_SHORT_TRUE.equalsIgnoreCase(input)
+                || VALUE_ON.equalsIgnoreCase(input) || VALUE_YES.equalsIgnoreCase(input)
+                || VALUE_SHORT_YES.equalsIgnoreCase(input) || VALUE_1.equals(input))) {
             return Boolean.TRUE;
         }
-        if (this.falseString == null && (VALUE_FALSE.equalsIgnoreCase(input) || VALUE_OFF.equalsIgnoreCase(input)
-                || VALUE_NO.equalsIgnoreCase(input) || VALUE_0.equals(input))) {
+        if (this.falseString == null
+                && (VALUE_FALSE.equalsIgnoreCase(input) || VALUE_SHORT_FALSE.equalsIgnoreCase(input)
+                        || VALUE_OFF.equalsIgnoreCase(input) || VALUE_NO.equalsIgnoreCase(input)
+                        || VALUE_SHORT_NO.equalsIgnoreCase(input) || VALUE_0.equals(input))) {
             return Boolean.FALSE;
         }
         throw new IllegalArgumentException("Invalid boolean value [" + text + "]");
