@@ -21,20 +21,56 @@ import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.report.RowError;
 
+/**
+ * The Class AbstractMapper.
+ *
+ * @param <T>
+ *            the generic type
+ */
 public abstract class AbstractMapper<T> {
 
+    /** The bean instructions. */
     protected BeanInstructions beanInstructions;
 
+    /** The verified. */
     private boolean verified;
 
+    /** The default converters. */
     private DefaultConverters defaultConverters = new DefaultConverters();
 
+    /**
+     * Gets the bean property.
+     *
+     * @param currentColumn
+     *            the current column
+     *
+     * @return the bean property
+     */
     public abstract BeanProperty getBeanProperty(Column currentColumn);
 
+    /**
+     * Keys.
+     *
+     * @return the sets the
+     */
     protected abstract Set<Column> keys();
 
+    /**
+     * Check key.
+     *
+     * @param header
+     *            the header
+     * @param key
+     *            the key
+     */
     protected abstract void checkKey(Header header, Column key);
 
+    /**
+     * Verify header.
+     *
+     * @param header
+     *            the header
+     */
     public void verifyHeader(Header header) {
         if (verified) {
             return;
@@ -47,8 +83,30 @@ public abstract class AbstractMapper<T> {
         verified = true;
     }
 
+    /**
+     * Gets the column.
+     *
+     * @param row
+     *            the row
+     *
+     * @return the column
+     */
     protected abstract Column getColumn(Row row);
 
+    /**
+     * Convert.
+     *
+     * @param bean
+     *            the bean
+     * @param row
+     *            the row
+     * @param lineNumber
+     *            the line number
+     * @param currentDynamicColumn
+     *            the current dynamic column
+     *
+     * @return the t
+     */
     public T convert(T bean, Row row, int lineNumber, DynamicColumn currentDynamicColumn) {
         BeanWrapper beanWrapper = new BeanWrapper(defaultConverters, bean);
 
@@ -76,6 +134,18 @@ public abstract class AbstractMapper<T> {
         return bean;
     }
 
+    /**
+     * Sets the dynamic column properties.
+     *
+     * @param row
+     *            the row
+     * @param lineNumber
+     *            the line number
+     * @param beanWrapper
+     *            the bean wrapper
+     * @param currentColumn
+     *            the current column
+     */
     private void setDynamicColumnProperties(Row row, int lineNumber, BeanWrapper beanWrapper, Column currentColumn) {
         BeanProperty headerNameProperty = beanInstructions.getProperties().getHeaderNameProperty();
         if (headerNameProperty != null) {
@@ -90,6 +160,22 @@ public abstract class AbstractMapper<T> {
         }
     }
 
+    /**
+     * Sets the bean property.
+     *
+     * @param row
+     *            the row
+     * @param lineNumber
+     *            the line number
+     * @param beanWrapper
+     *            the bean wrapper
+     * @param currentColumn
+     *            the current column
+     * @param cell
+     *            the cell
+     * @param beanProperty
+     *            the bean property
+     */
     private void setBeanProperty(Row row, int lineNumber, BeanWrapper beanWrapper, Column currentColumn, String cell,
             BeanProperty beanProperty) {
         try {
@@ -102,6 +188,12 @@ public abstract class AbstractMapper<T> {
         }
     }
 
+    /**
+     * Sets the bean instructions.
+     *
+     * @param beanInstructions
+     *            the new bean instructions
+     */
     public void setBeanInstructions(BeanInstructions beanInstructions) {
         this.beanInstructions = beanInstructions;
     }

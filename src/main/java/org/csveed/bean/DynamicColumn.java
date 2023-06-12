@@ -54,33 +54,66 @@ import org.csveed.common.Column;
  */
 public class DynamicColumn {
 
+    /** The start column. */
     private Column startColumn;
 
+    /** The current column. */
     private Column currentColumn;
 
+    /**
+     * Instantiates a new dynamic column.
+     *
+     * @param configuredStartColumn
+     *            the configured start column
+     */
     public DynamicColumn(Column configuredStartColumn) {
         this.startColumn = configuredStartColumn == null ? null : new Column(configuredStartColumn);
         this.currentColumn = configuredStartColumn == null ? null : new Column(configuredStartColumn);
     }
 
+    /**
+     * Check for reset.
+     *
+     * @param numberOfColumns
+     *            the number of columns
+     */
     public void checkForReset(int numberOfColumns) {
         if (lastDynamicColumnPassed(numberOfColumns)) {
             reset();
         }
     }
 
+    /**
+     * Reset.
+     */
     protected void reset() {
         this.currentColumn = new Column(this.startColumn);
     }
 
+    /**
+     * Last dynamic column passed.
+     *
+     * @param numberOfColumns
+     *            the number of columns
+     *
+     * @return true, if successful
+     */
     protected boolean lastDynamicColumnPassed(int numberOfColumns) {
         return this.currentColumn != null && this.currentColumn.getColumnIndex() > numberOfColumns;
     }
 
+    /**
+     * At first dynamic column.
+     *
+     * @return true, if successful
+     */
     public boolean atFirstDynamicColumn() {
         return this.startColumn == null || this.startColumn.equals(this.currentColumn);
     }
 
+    /**
+     * Advance dynamic column.
+     */
     public void advanceDynamicColumn() {
         if (currentColumn == null) {
             return;
@@ -88,6 +121,14 @@ public class DynamicColumn {
         this.currentColumn = currentColumn.nextColumn();
     }
 
+    /**
+     * Checks if is dynamic column active.
+     *
+     * @param currentColumn
+     *            the current column
+     *
+     * @return true, if is dynamic column active
+     */
     public boolean isDynamicColumnActive(Column currentColumn) {
         return this.currentColumn != null && this.currentColumn.getColumnIndex() == currentColumn.getColumnIndex();
     }

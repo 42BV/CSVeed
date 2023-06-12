@@ -15,6 +15,9 @@ import java.util.Collection;
 import org.csveed.api.Header;
 import org.csveed.api.Row;
 
+/**
+ * The Interface RowWriter.
+ */
 public interface RowWriter {
 
     /**

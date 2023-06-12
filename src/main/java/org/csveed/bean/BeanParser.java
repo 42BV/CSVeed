@@ -24,12 +24,25 @@ import org.csveed.annotations.CsvIgnore;
 import org.csveed.annotations.CsvLocalizedNumber;
 import org.csveed.common.Column;
 
+/**
+ * The Class BeanParser.
+ */
 public class BeanParser {
 
+    /** The bean instructions. */
     private BeanInstructions beanInstructions;
 
+    /** The current column. */
     private Column currentColumn = new Column();
 
+    /**
+     * Gets the bean instructions.
+     *
+     * @param beanClass
+     *            the bean class
+     *
+     * @return the bean instructions
+     */
     public BeanInstructions getBeanInstructions(Class beanClass) {
 
         this.beanInstructions = new BeanInstructionsImpl(beanClass);
@@ -48,6 +61,12 @@ public class BeanParser {
         return this.beanInstructions;
     }
 
+    /**
+     * Check for annotations.
+     *
+     * @param beanProperty
+     *            the bean property
+     */
     public void checkForAnnotations(BeanProperty beanProperty) {
 
         Field currentField = beanProperty.getField();
@@ -77,6 +96,14 @@ public class BeanParser {
         currentColumn = currentColumn.nextColumn();
     }
 
+    /**
+     * Parses the csv localized number.
+     *
+     * @param propertyName
+     *            the property name
+     * @param annotation
+     *            the annotation
+     */
     private void parseCsvLocalizedNumber(String propertyName, CsvLocalizedNumber annotation) {
         final Locale locale;
         if (annotation.country().isEmpty()) {
@@ -89,6 +116,12 @@ public class BeanParser {
         this.beanInstructions.setLocalizedNumber(propertyName, locale);
     }
 
+    /**
+     * Parses the csv file.
+     *
+     * @param csvFile
+     *            the csv file
+     */
     private void parseCsvFile(CsvFile csvFile) {
 
         this.beanInstructions.setEscape(csvFile.escape()).setQuote(csvFile.quote())
@@ -99,10 +132,26 @@ public class BeanParser {
                 .setStartIndexDynamicColumns(csvFile.startIndexDynamicColumns());
     }
 
+    /**
+     * Parses the csv date.
+     *
+     * @param propertyName
+     *            the property name
+     * @param csvDate
+     *            the csv date
+     */
     private void parseCsvDate(String propertyName, CsvDate csvDate) {
         this.beanInstructions.setDate(propertyName, csvDate.format());
     }
 
+    /**
+     * Parses the csv converter.
+     *
+     * @param propertyName
+     *            the property name
+     * @param csvConverter
+     *            the csv converter
+     */
     private void parseCsvConverter(String propertyName, CsvConverter csvConverter) {
         try {
             this.beanInstructions.setConverter(propertyName,
@@ -112,6 +161,16 @@ public class BeanParser {
         }
     }
 
+    /**
+     * Parses the csv cell.
+     *
+     * @param propertyName
+     *            the property name
+     * @param csvCell
+     *            the csv cell
+     *
+     * @return the string
+     */
     private String parseCsvCell(String propertyName, CsvCell csvCell) {
         String columnName = csvCell.columnName() == null || csvCell.columnName().isEmpty() ? propertyName
                 : csvCell.columnName();

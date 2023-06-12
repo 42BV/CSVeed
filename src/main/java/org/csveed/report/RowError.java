@@ -12,18 +12,38 @@ package org.csveed.report;
 
 import java.util.List;
 
+/**
+ * The Class RowError.
+ */
 public class RowError extends AbstractCsvError {
 
+    /** The report. */
     private RowReport report;
 
+    /** The line number. */
     private int lineNumber;
 
+    /**
+     * Instantiates a new row error.
+     *
+     * @param message
+     *            the message
+     * @param report
+     *            the report
+     * @param lineNumber
+     *            the line number
+     */
     public RowError(String message, RowReport report, int lineNumber) {
         super(message);
         this.report = report;
         this.lineNumber = lineNumber;
     }
 
+    /**
+     * Gets the report.
+     *
+     * @return the report
+     */
     public RowReport getReport() {
         return report;
     }

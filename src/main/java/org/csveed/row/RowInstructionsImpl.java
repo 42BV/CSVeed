@@ -15,20 +15,32 @@ import org.csveed.token.SymbolMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class RowInstructionsImpl.
+ */
 public class RowInstructionsImpl implements RowInstructions {
 
+    /** The Constant LOG. */
     private static final Logger LOG = LoggerFactory.getLogger(RowInstructionsImpl.class);
 
+    /** The symbol mapping. */
     private SymbolMapping symbolMapping = new SymbolMapping();
 
+    /** The use header. */
     private boolean useHeader = true;
 
+    /** The skip empty lines. */
     private boolean skipEmptyLines = true;
 
+    /** The settings logged. */
     private boolean settingsLogged;
 
+    /** The quote fields. */
     private boolean quoteFields = true;
 
+    /**
+     * Log settings.
+     */
     public void logSettings() {
         if (settingsLogged) {
             return;
@@ -38,10 +50,20 @@ public class RowInstructionsImpl implements RowInstructions {
         settingsLogged = true;
     }
 
+    /**
+     * Gets the symbol mapping.
+     *
+     * @return the symbol mapping
+     */
     public SymbolMapping getSymbolMapping() {
         return symbolMapping;
     }
 
+    /**
+     * Checks if is skip empty lines.
+     *
+     * @return true, if is skip empty lines
+     */
     public boolean isSkipEmptyLines() {
         return skipEmptyLines;
     }

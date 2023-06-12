@@ -10,8 +10,14 @@
  */
 package org.csveed.bean.conversion;
 
+/**
+ * The Class CharArrayConverter.
+ */
 public class CharArrayConverter extends AbstractConverter<char[]> {
 
+    /**
+     * Instantiates a new char array converter.
+     */
     public CharArrayConverter() {
         super(char[].class);
     }

@@ -12,30 +12,64 @@ package org.csveed.bean.conversion;
 
 import static org.csveed.bean.conversion.ConversionUtil.hasLength;
 
+/**
+ * The Class CustomBooleanConverter.
+ */
 public class CustomBooleanConverter extends AbstractConverter<Boolean> {
 
+    /** The Constant VALUE_TRUE. */
     public static final String VALUE_TRUE = "true";
+
+    /** The Constant VALUE_FALSE. */
     public static final String VALUE_FALSE = "false";
 
+    /** The Constant VALUE_ON. */
     public static final String VALUE_ON = "on";
+
+    /** The Constant VALUE_OFF. */
     public static final String VALUE_OFF = "off";
 
+    /** The Constant VALUE_YES. */
     public static final String VALUE_YES = "yes";
+
+    /** The Constant VALUE_NO. */
     public static final String VALUE_NO = "no";
 
+    /** The Constant VALUE_1. */
     public static final String VALUE_1 = "1";
+
+    /** The Constant VALUE_0. */
     public static final String VALUE_0 = "0";
 
+    /** The true string. */
     private final String trueString;
 
+    /** The false string. */
     private final String falseString;
 
+    /** The allow empty. */
     private final boolean allowEmpty;
 
+    /**
+     * Instantiates a new custom boolean converter.
+     *
+     * @param allowEmpty
+     *            the allow empty
+     */
     public CustomBooleanConverter(boolean allowEmpty) {
         this(null, null, allowEmpty);
     }
 
+    /**
+     * Instantiates a new custom boolean converter.
+     *
+     * @param trueString
+     *            the true string
+     * @param falseString
+     *            the false string
+     * @param allowEmpty
+     *            the allow empty
+     */
     public CustomBooleanConverter(String trueString, String falseString, boolean allowEmpty) {
         super(Boolean.class);
         this.trueString = trueString;

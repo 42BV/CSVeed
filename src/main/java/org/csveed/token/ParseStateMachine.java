@@ -38,40 +38,77 @@ import org.slf4j.LoggerFactory;
  */
 public class ParseStateMachine {
 
+    /** The Constant LOG. */
     private static final Logger LOG = LoggerFactory.getLogger(ParseStateMachine.class);
 
+    /** The state. */
     private ParseState state = START_OF_LINE;
 
+    /** The token. */
     private StringBuilder token = new StringBuilder();
 
+    /** The characters read. */
     private int charactersRead;
 
+    /** The symbol mapping. */
     private SymbolMapping symbolMapping = new SymbolMapping();
 
+    /** The token state. */
     private TokenState tokenState = TokenState.RESET;
 
+    /** The trim. */
     private boolean trim = true;
 
+    /** The trash. */
     private boolean trash;
 
+    /** The current column. */
     private Column currentColumn = new Column();
 
+    /** The current line. */
     private int currentLine = 1;
 
+    /** The new line. */
     private int newLine = currentLine;
 
+    /**
+     * Gets the current line.
+     *
+     * @return the current line
+     */
     public int getCurrentLine() {
         return this.currentLine;
     }
 
+    /**
+     * Gets the current column.
+     *
+     * @return the current column
+     */
     public int getCurrentColumn() {
         return this.currentColumn.getColumnIndex();
     }
 
+    /**
+     * Checks if is trash.
+     *
+     * @return true, if is trash
+     */
     public boolean isTrash() {
         return this.trash;
     }
 
+    /**
+     * Offer symbol.
+     *
+     * @param symbolCharacter
+     *            the symbol character
+     *
+     * @return the string
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     public String offerSymbol(int symbolCharacter) throws ParseException {
 
         this.trash = false;
@@ -135,26 +172,64 @@ public class ParseStateMachine {
         return returnToken;
     }
 
+    /**
+     * Checks if is token start.
+     *
+     * @return true, if is token start
+     */
     public boolean isTokenStart() {
         return tokenState.isStart();
     }
 
+    /**
+     * Checks if is line finished.
+     *
+     * @return true, if is line finished
+     */
     public boolean isLineFinished() {
         return state.isLineFinished();
     }
 
+    /**
+     * Checks if is finished.
+     *
+     * @return true, if is finished
+     */
     public boolean isFinished() {
         return state == FINISHED;
     }
 
+    /**
+     * Ignore line.
+     *
+     * @return true, if successful
+     */
     public boolean ignoreLine() {
         return state.isIgnore() || isEmptyLine();
     }
 
+    /**
+     * Checks if is empty line.
+     *
+     * @return true, if is empty line
+     */
     public boolean isEmptyLine() {
         return charactersRead == 0;
     }
 
+    /**
+     * Determine state.
+     *
+     * @param symbolCharacter
+     *            the symbol character
+     * @param symbol
+     *            the symbol
+     *
+     * @return the parses the state
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
     protected ParseState determineState(int symbolCharacter, EncounteredSymbol symbol) throws ParseException {
 
         switch (state) {
@@ -273,10 +348,21 @@ public class ParseStateMachine {
         }
     }
 
+    /**
+     * Sets the symbol mapping.
+     *
+     * @param symbolMapping
+     *            the new symbol mapping
+     */
     public void setSymbolMapping(SymbolMapping symbolMapping) {
         this.symbolMapping = symbolMapping;
     }
 
+    /**
+     * Gets the symbol mapping.
+     *
+     * @return the symbol mapping
+     */
     public SymbolMapping getSymbolMapping() {
         return this.symbolMapping;
     }

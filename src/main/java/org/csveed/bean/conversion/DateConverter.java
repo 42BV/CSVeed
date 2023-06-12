@@ -17,16 +17,31 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The Class DateConverter.
+ */
 public class DateConverter extends AbstractConverter<Date> {
 
+    /** The date format. */
     private final DateFormat dateFormat;
 
+    /** The allow empty. */
     private final boolean allowEmpty;
 
+    /** The exact date length. */
     private final int exactDateLength;
 
+    /** The format text. */
     private final String formatText;
 
+    /**
+     * Instantiates a new date converter.
+     *
+     * @param formatText
+     *            the format text
+     * @param allowEmpty
+     *            the allow empty
+     */
     public DateConverter(String formatText, boolean allowEmpty) {
         super(Date.class);
         this.formatText = formatText;

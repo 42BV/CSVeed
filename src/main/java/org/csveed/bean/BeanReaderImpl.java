@@ -23,30 +23,63 @@ import org.csveed.row.RowReaderImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class BeanReaderImpl.
+ *
+ * @param <T>
+ *            the generic type
+ */
 public class BeanReaderImpl<T> implements BeanReader<T> {
 
+    /** The Constant logger. */
     private static final Logger logger = LoggerFactory.getLogger(BeanReaderImpl.class);
 
+    /** The row reader. */
     private final RowReader rowReader;
 
+    /** The bean instructions. */
     private final BeanInstructions beanInstructions;
 
+    /** The mapper. */
     private AbstractMapper<T> mapper;
 
+    /** The current dynamic column. */
     private final DynamicColumn currentDynamicColumn;
 
+    /** The unmapped row. */
     private Row unmappedRow;
 
+    /**
+     * Instantiates a new bean reader impl.
+     *
+     * @param reader
+     *            the reader
+     * @param beanClass
+     *            the bean class
+     */
     public BeanReaderImpl(Reader reader, Class<T> beanClass) {
         this(reader, new BeanParser().getBeanInstructions(beanClass));
     }
 
+    /**
+     * Instantiates a new bean reader impl.
+     *
+     * @param reader
+     *            the reader
+     * @param beanInstructions
+     *            the bean instructions
+     */
     public BeanReaderImpl(Reader reader, BeanInstructions beanInstructions) {
         this.beanInstructions = beanInstructions;
         this.rowReader = new RowReaderImpl(reader, this.beanInstructions.getRowInstructions());
         this.currentDynamicColumn = new DynamicColumn(this.beanInstructions.getStartIndexDynamicColumns());
     }
 
+    /**
+     * Gets the mapper.
+     *
+     * @return the mapper
+     */
     public AbstractMapper<T> getMapper() {
         if (this.mapper == null) {
             this.mapper = this.createMappingStrategy();
@@ -88,10 +121,18 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return bean;
     }
 
+    /**
+     * Log settings.
+     */
     protected void logSettings() {
         this.beanInstructions.logSettings();
     }
 
+    /**
+     * Gets the header.
+     *
+     * @return the header
+     */
     protected Header getHeader() {
         if (this.beanInstructions.useHeader()) {
             return rowReader.getHeader();
@@ -119,6 +160,11 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         return this.rowReader;
     }
 
+    /**
+     * Instantiate bean.
+     *
+     * @return the t
+     */
     private T instantiateBean() {
         try {
             return this.getBeanClass().getDeclaredConstructor().newInstance();
@@ -128,11 +174,21 @@ public class BeanReaderImpl<T> implements BeanReader<T> {
         }
     }
 
+    /**
+     * Gets the bean class.
+     *
+     * @return the bean class
+     */
     @SuppressWarnings("unchecked")
     public Class<T> getBeanClass() {
         return this.beanInstructions.getBeanClass();
     }
 
+    /**
+     * Creates the mapping strategy.
+     *
+     * @return the abstract mapper
+     */
     @SuppressWarnings("unchecked")
     public AbstractMapper<T> createMappingStrategy() {
         try {

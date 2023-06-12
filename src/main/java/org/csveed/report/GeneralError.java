@@ -13,8 +13,17 @@ package org.csveed.report;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class GeneralError.
+ */
 public class GeneralError extends AbstractCsvError {
 
+    /**
+     * Instantiates a new general error.
+     *
+     * @param message
+     *            the message
+     */
     public GeneralError(String message) {
         super(message);
     }

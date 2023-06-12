@@ -24,24 +24,52 @@ import org.csveed.row.RowWriterImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class BeanWriterImpl.
+ *
+ * @param <T>
+ *            the generic type
+ */
 public class BeanWriterImpl<T> implements BeanWriter<T> {
 
+    /** The Constant logger. */
     private static final Logger logger = LoggerFactory.getLogger(BeanWriterImpl.class);
 
+    /** The row writer. */
     private final RowWriter rowWriter;
 
+    /** The bean instructions. */
     private final BeanInstructions beanInstructions;
 
+    /** The header written. */
     private boolean headerWritten;
 
+    /** The default converters. */
     private DefaultConverters defaultConverters = new DefaultConverters();
 
+    /** The header. */
     private HeaderImpl header;
 
+    /**
+     * Instantiates a new bean writer impl.
+     *
+     * @param writer
+     *            the writer
+     * @param beanClass
+     *            the bean class
+     */
     public BeanWriterImpl(Writer writer, Class<T> beanClass) {
         this(writer, new BeanParser().getBeanInstructions(beanClass));
     }
 
+    /**
+     * Instantiates a new bean writer impl.
+     *
+     * @param writer
+     *            the writer
+     * @param beanInstructions
+     *            the bean instructions
+     */
     public BeanWriterImpl(Writer writer, BeanInstructions beanInstructions) {
         this.beanInstructions = beanInstructions;
         this.rowWriter = new RowWriterImpl(writer, this.beanInstructions.getRowInstructions());

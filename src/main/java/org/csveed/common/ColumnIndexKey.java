@@ -10,10 +10,20 @@
  */
 package org.csveed.common;
 
+/**
+ * The Class ColumnIndexKey.
+ */
 public class ColumnIndexKey extends ColumnKey {
 
+    /** The column index. */
     private final Integer columnIndex;
 
+    /**
+     * Instantiates a new column index key.
+     *
+     * @param columnIndex
+     *            the column index
+     */
     public ColumnIndexKey(int columnIndex) {
         this.columnIndex = columnIndex;
     }

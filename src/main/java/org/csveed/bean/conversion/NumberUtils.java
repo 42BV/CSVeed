@@ -18,12 +18,33 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
+/**
+ * The Class NumberUtils.
+ */
 public abstract class NumberUtils {
 
+    /**
+     * Instantiates a new number utils.
+     */
     private NumberUtils() {
         // Do not allow instantiation of static utils class
     }
 
+    /**
+     * Convert number to target class.
+     *
+     * @param <T>
+     *            the generic type
+     * @param number
+     *            the number
+     * @param targetClass
+     *            the target class
+     *
+     * @return the t
+     *
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     */
     @SuppressWarnings("unchecked")
     public static <T extends Number> T convertNumberToTargetClass(Number number, Class<T> targetClass)
             throws IllegalArgumentException {
@@ -78,11 +99,31 @@ public abstract class NumberUtils {
                 + number.getClass().getName() + "] to unknown target class [" + targetClass.getName() + "]");
     }
 
+    /**
+     * Raise overflow exception.
+     *
+     * @param number
+     *            the number
+     * @param targetClass
+     *            the target class
+     */
     private static void raiseOverflowException(Number number, Class targetClass) {
         throw new IllegalArgumentException("Could not convert number [" + number + "] of type ["
                 + number.getClass().getName() + "] to target class [" + targetClass.getName() + "]: overflow");
     }
 
+    /**
+     * Parses the number.
+     *
+     * @param <T>
+     *            the generic type
+     * @param text
+     *            the text
+     * @param targetClass
+     *            the target class
+     *
+     * @return the t
+     */
     @SuppressWarnings("unchecked")
     public static <T extends Number> T parseNumber(String text, Class<T> targetClass) {
         String trimmed = trimAllWhitespace(text);
@@ -115,6 +156,20 @@ public abstract class NumberUtils {
                 "Cannot convert String [" + text + "] to target class [" + targetClass.getName() + "]");
     }
 
+    /**
+     * Parses the number.
+     *
+     * @param <T>
+     *            the generic type
+     * @param text
+     *            the text
+     * @param targetClass
+     *            the target class
+     * @param numberFormat
+     *            the number format
+     *
+     * @return the t
+     */
     public static <T extends Number> T parseNumber(String text, Class<T> targetClass, NumberFormat numberFormat) {
         if (numberFormat != null) {
             DecimalFormat decimalFormat = null;
@@ -140,11 +195,27 @@ public abstract class NumberUtils {
         return parseNumber(text, targetClass);
     }
 
+    /**
+     * Checks if is hex number.
+     *
+     * @param value
+     *            the value
+     *
+     * @return true, if is hex number
+     */
     private static boolean isHexNumber(String value) {
         int index = value.startsWith("-") ? 1 : 0;
         return value.startsWith("0x", index) || value.startsWith("0X", index) || value.startsWith("#", index);
     }
 
+    /**
+     * Decode big integer.
+     *
+     * @param value
+     *            the value
+     *
+     * @return the big integer
+     */
     private static BigInteger decodeBigInteger(String value) {
         int radix = 10;
         int index = 0;

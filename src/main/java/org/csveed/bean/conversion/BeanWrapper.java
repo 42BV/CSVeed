@@ -14,17 +14,41 @@ import java.lang.reflect.Method;
 
 import org.csveed.bean.BeanProperty;
 
+/**
+ * The Class BeanWrapper.
+ */
 public class BeanWrapper {
 
+    /** The default converters. */
     private DefaultConverters defaultConverters;
 
+    /** The bean. */
     private Object bean;
 
+    /**
+     * Instantiates a new bean wrapper.
+     *
+     * @param defaultConverters
+     *            the default converters
+     * @param bean
+     *            the bean
+     */
     public BeanWrapper(DefaultConverters defaultConverters, Object bean) {
         this.defaultConverters = defaultConverters;
         this.bean = bean;
     }
 
+    /**
+     * Gets the property.
+     *
+     * @param property
+     *            the property
+     *
+     * @return the property
+     *
+     * @throws ConversionException
+     *             the conversion exception
+     */
     public String getProperty(BeanProperty property) throws ConversionException {
         Method readMethod = property.getPropertyDescriptor().getReadMethod();
         Converter converter = getConverter(property);
@@ -39,6 +63,17 @@ public class BeanWrapper {
         }
     }
 
+    /**
+     * Sets the property.
+     *
+     * @param property
+     *            the property
+     * @param value
+     *            the value
+     *
+     * @throws ConversionException
+     *             the conversion exception
+     */
     public void setProperty(BeanProperty property, String value) throws ConversionException {
         Method writeMethod = property.getPropertyDescriptor().getWriteMethod();
         Converter converter = getConverter(property);
@@ -52,6 +87,14 @@ public class BeanWrapper {
         }
     }
 
+    /**
+     * Gets the converter.
+     *
+     * @param property
+     *            the property
+     *
+     * @return the converter
+     */
     protected Converter getConverter(BeanProperty property) {
         if (property.getConverter() != null) {
             return property.getConverter();
@@ -59,6 +102,14 @@ public class BeanWrapper {
         return defaultConverters.getConverter(getPropertyType(property));
     }
 
+    /**
+     * Gets the property type.
+     *
+     * @param property
+     *            the property
+     *
+     * @return the property type
+     */
     protected Class getPropertyType(BeanProperty property) {
         return property.getPropertyDescriptor().getPropertyType();
     }

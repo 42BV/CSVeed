@@ -21,20 +21,35 @@ import org.csveed.report.RowReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class LineWithInfo.
+ */
 public class LineWithInfo implements Line {
 
+    /** The Constant LOG. */
     private static final Logger LOG = LoggerFactory.getLogger(LineWithInfo.class);
 
+    /** The cells. */
     private List<String> cells = new ArrayList<>();
 
+    /** The original line. */
     private StringBuilder originalLine = new StringBuilder();
 
+    /** The cell positions. */
     private Map<Column, CellPositionInRow> cellPositions = new TreeMap<>();
 
+    /** The print length. */
     private int printLength;
 
+    /** The current column. */
     private Column currentColumn = new Column();
 
+    /**
+     * Adds the cell.
+     *
+     * @param cell
+     *            the cell
+     */
     public void addCell(String cell) {
         this.cells.add(cell);
         if (cell == null || "".equals(cell)) {
@@ -48,17 +63,31 @@ public class LineWithInfo implements Line {
         return cells.iterator();
     }
 
+    /**
+     * Mark start of column.
+     */
     public void markStartOfColumn() {
         LOG.debug("Start of column: {}", printLength);
         getCellPosition(currentColumn).setStart(printLength);
     }
 
+    /**
+     * Mark end of column.
+     */
     protected void markEndOfColumn() {
         LOG.debug("End of column: {}", printLength);
         getCellPosition(currentColumn).setEnd(printLength);
         currentColumn = currentColumn.nextColumn();
     }
 
+    /**
+     * Gets the cell position.
+     *
+     * @param column
+     *            the column
+     *
+     * @return the cell position
+     */
     protected CellPositionInRow getCellPosition(Column column) {
         CellPositionInRow cellPosition = cellPositions.get(column);
         if (cellPosition == null) {
@@ -68,12 +97,26 @@ public class LineWithInfo implements Line {
         return cellPosition;
     }
 
+    /**
+     * Adds the character.
+     *
+     * @param symbol
+     *            the symbol
+     */
     public void addCharacter(int symbol) {
         String printableChar = convertToPrintable(symbol);
         originalLine.append(printableChar);
         printLength += printableChar.length();
     }
 
+    /**
+     * Convert to printable.
+     *
+     * @param symbol
+     *            the symbol
+     *
+     * @return the string
+     */
     public String convertToPrintable(int symbol) {
         switch (symbol) {
             case -1:

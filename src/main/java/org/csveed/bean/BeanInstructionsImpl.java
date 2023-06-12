@@ -21,24 +21,41 @@ import org.csveed.row.RowInstructionsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class BeanInstructionsImpl.
+ */
 public class BeanInstructionsImpl implements BeanInstructions {
 
+    /** The Constant LOG. */
     private static final Logger LOG = LoggerFactory.getLogger(BeanInstructionsImpl.class);
 
+    /** The row instructions. */
     private RowInstructions rowInstructions = new RowInstructionsImpl();
 
+    /** The properties. */
     private BeanProperties properties;
 
+    /** The mapping strategy. */
     private Class<? extends AbstractMapper> mappingStrategy = ColumnIndexMapper.class;
 
+    /** The bean class. */
     private Class beanClass;
 
+    /** The settings logged. */
     private boolean settingsLogged;
 
+    /** The start index dynamic columns. */
     private Column startIndexDynamicColumns;
 
+    /** The use header. */
     private boolean useHeader = true;
 
+    /**
+     * Instantiates a new bean instructions impl.
+     *
+     * @param beanClass
+     *            the bean class
+     */
     public BeanInstructionsImpl(Class beanClass) {
         this.properties = new BeanProperties(beanClass);
         this.beanClass = beanClass;
@@ -56,6 +73,14 @@ public class BeanInstructionsImpl implements BeanInstructions {
         settingsLogged = true;
     }
 
+    /**
+     * Gets the property log line.
+     *
+     * @param property
+     *            the property
+     *
+     * @return the property log line
+     */
     protected String getPropertyLogLine(BeanProperty property) {
         List<String> lineParts = new ArrayList<>();
         lineParts.add("- CSV config");

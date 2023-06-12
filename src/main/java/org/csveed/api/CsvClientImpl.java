@@ -32,29 +32,63 @@ import org.csveed.row.RowReaderImpl;
 import org.csveed.row.RowWriter;
 import org.csveed.row.RowWriterImpl;
 
+/**
+ * The Class CsvClientImpl.
+ *
+ * @param <T>
+ *            the generic type
+ */
 public class CsvClientImpl<T> implements CsvClient<T> {
 
+    /** The bean reader. */
     private BeanReader<T> beanReader;
 
+    /** The bean writer. */
     private BeanWriter<T> beanWriter;
 
+    /** The row reader. */
     private RowReader rowReader;
 
+    /** The row writer. */
     private RowWriter rowWriter;
 
+    /** The row instructions. */
     private final RowInstructions rowInstructions;
 
+    /** The bean instructions. */
     private BeanInstructions beanInstructions;
 
+    /**
+     * Instantiates a new csv client impl.
+     *
+     * @param writer
+     *            the writer
+     */
     public CsvClientImpl(Writer writer) {
         this.rowWriter = new RowWriterImpl(writer);
         this.rowInstructions = getRowWriter().getRowInstructions();
     }
 
+    /**
+     * Instantiates a new csv client impl.
+     *
+     * @param writer
+     *            the writer
+     * @param beanClass
+     *            the bean class
+     */
     public CsvClientImpl(Writer writer, Class<T> beanClass) {
         this(writer, new BeanParser().getBeanInstructions(beanClass));
     }
 
+    /**
+     * Instantiates a new csv client impl.
+     *
+     * @param writer
+     *            the writer
+     * @param beanInstructions
+     *            the bean instructions
+     */
     public CsvClientImpl(Writer writer, BeanInstructions beanInstructions) {
         this.beanWriter = new BeanWriterImpl<>(writer, beanInstructions);
         this.rowWriter = getBeanWriter().getRowWriter();
@@ -62,15 +96,37 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         this.beanInstructions = beanInstructions;
     }
 
+    /**
+     * Instantiates a new csv client impl.
+     *
+     * @param reader
+     *            the reader
+     */
     public CsvClientImpl(Reader reader) {
         this.rowReader = new RowReaderImpl(reader);
         this.rowInstructions = getRowReader().getRowInstructions();
     }
 
+    /**
+     * Instantiates a new csv client impl.
+     *
+     * @param reader
+     *            the reader
+     * @param beanClass
+     *            the bean class
+     */
     public CsvClientImpl(Reader reader, Class<T> beanClass) {
         this(reader, new BeanParser().getBeanInstructions(beanClass));
     }
 
+    /**
+     * Instantiates a new csv client impl.
+     *
+     * @param reader
+     *            the reader
+     * @param beanInstructions
+     *            the bean instructions
+     */
     public CsvClientImpl(Reader reader, BeanInstructions beanInstructions) {
         this.beanReader = new BeanReaderImpl<>(reader, beanInstructions);
         this.rowReader = getBeanReader().getRowReader();
@@ -278,6 +334,11 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         return this;
     }
 
+    /**
+     * Gets the bean instructions.
+     *
+     * @return the bean instructions
+     */
     private BeanInstructions getBeanInstructions() {
         if (this.beanInstructions == null) {
             throw new CsvException(new GeneralError(
@@ -287,6 +348,11 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         return this.beanInstructions;
     }
 
+    /**
+     * Gets the bean reader.
+     *
+     * @return the bean reader
+     */
     private BeanReader<T> getBeanReader() {
         if (this.beanReader == null) {
             throw new CsvException(new GeneralError(
@@ -295,6 +361,11 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         return this.beanReader;
     }
 
+    /**
+     * Gets the bean writer.
+     *
+     * @return the bean writer
+     */
     private BeanWriter<T> getBeanWriter() {
         if (this.beanWriter == null) {
             throw new CsvException(new GeneralError(
@@ -303,6 +374,11 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         return this.beanWriter;
     }
 
+    /**
+     * Gets the row reader.
+     *
+     * @return the row reader
+     */
     private RowReader getRowReader() {
         if (this.rowReader == null) {
             throw new CsvException(new GeneralError(
@@ -311,6 +387,11 @@ public class CsvClientImpl<T> implements CsvClient<T> {
         return this.rowReader;
     }
 
+    /**
+     * Gets the row writer.
+     *
+     * @return the row writer
+     */
     public RowWriter getRowWriter() {
         if (this.rowWriter == null) {
             throw new CsvException(new GeneralError(

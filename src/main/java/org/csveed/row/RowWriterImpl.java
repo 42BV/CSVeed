@@ -22,20 +22,41 @@ import org.csveed.report.GeneralError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class RowWriterImpl.
+ */
 public class RowWriterImpl implements RowWriter {
 
+    /** The Constant LOG. */
     private static final Logger LOG = LoggerFactory.getLogger(RowWriterImpl.class);
 
+    /** The writer. */
     private final Writer writer;
 
+    /** The row instructions. */
     private RowInstructions rowInstructions;
 
+    /** The header. */
     private Header header;
 
+    /**
+     * Instantiates a new row writer impl.
+     *
+     * @param writer
+     *            the writer
+     */
     public RowWriterImpl(Writer writer) {
         this(writer, new RowInstructionsImpl());
     }
 
+    /**
+     * Instantiates a new row writer impl.
+     *
+     * @param writer
+     *            the writer
+     * @param rowInstructions
+     *            the row instructions
+     */
     public RowWriterImpl(Writer writer, RowInstructions rowInstructions) {
         this.writer = writer;
         this.rowInstructions = rowInstructions;
@@ -90,6 +111,12 @@ public class RowWriterImpl implements RowWriter {
         return this.rowInstructions;
     }
 
+    /**
+     * Write cells.
+     *
+     * @param cells
+     *            the cells
+     */
     private void writeCells(Iterator<String> cells) {
         int columnPosition = 1;
         try {
@@ -116,14 +143,35 @@ public class RowWriterImpl implements RowWriter {
         }
     }
 
+    /**
+     * Write EOL.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     private void writeEOL() throws IOException {
         writer.write(rowInstructions.getEndOfLine());
     }
 
+    /**
+     * Write separator.
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     private void writeSeparator() throws IOException {
         writer.write(rowInstructions.getSeparator());
     }
 
+    /**
+     * Write quoted cell.
+     *
+     * @param cell
+     *            the cell
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     private void writeQuotedCell(String cell) throws IOException {
         writer.write(rowInstructions.getQuote());
         String searchString = Character.toString(rowInstructions.getQuote());
@@ -133,10 +181,27 @@ public class RowWriterImpl implements RowWriter {
         writer.write(rowInstructions.getQuote());
     }
 
+    /**
+     * Write cell.
+     *
+     * @param cell
+     *            the cell
+     *
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
     private void writeCell(String cell) throws IOException {
         writer.write(cell);
     }
 
+    /**
+     * Convert to line.
+     *
+     * @param cells
+     *            the cells
+     *
+     * @return the line with info
+     */
     private LineWithInfo convertToLine(String[] cells) {
         LineWithInfo line = new LineWithInfo();
         for (String cell : cells) {

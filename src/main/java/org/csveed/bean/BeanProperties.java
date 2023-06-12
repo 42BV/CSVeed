@@ -34,25 +34,49 @@ import org.csveed.report.GeneralError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class BeanProperties.
+ */
 public class BeanProperties implements Iterable<BeanProperty> {
 
+    /** The Constant LOG. */
     private static final Logger LOG = LoggerFactory.getLogger(BeanProperties.class);
 
+    /** The properties. */
     private List<BeanProperty> properties = new ArrayList<>();
 
+    /** The index to property. */
     private Map<Column, BeanProperty> indexToProperty = new TreeMap<>();
+
+    /** The name to property. */
     private Map<Column, BeanProperty> nameToProperty = new TreeMap<>();
 
+    /** The bean class. */
     private Class beanClass;
 
+    /** The header value property. */
     private BeanProperty headerValueProperty;
+
+    /** The header name property. */
     private BeanProperty headerNameProperty;
 
+    /**
+     * Instantiates a new bean properties.
+     *
+     * @param beanClass
+     *            the bean class
+     */
     public BeanProperties(Class beanClass) {
         this.beanClass = beanClass;
         parseBean(beanClass);
     }
 
+    /**
+     * Parses the bean.
+     *
+     * @param beanClass
+     *            the bean class
+     */
     private void parseBean(Class beanClass) {
         final BeanInfo beanInfo;
         try {
@@ -79,6 +103,14 @@ public class BeanProperties implements Iterable<BeanProperty> {
         }
     }
 
+    /**
+     * Adds the property.
+     *
+     * @param propertyDescriptor
+     *            the property descriptor
+     * @param field
+     *            the field
+     */
     @SuppressWarnings("unchecked")
     private void addProperty(PropertyDescriptor propertyDescriptor, Field field) {
         BeanProperty beanProperty = new BeanProperty();
@@ -90,6 +122,16 @@ public class BeanProperties implements Iterable<BeanProperty> {
         this.properties.add(beanProperty);
     }
 
+    /**
+     * Gets the property descriptor.
+     *
+     * @param propertyDescriptors
+     *            the property descriptors
+     * @param field
+     *            the field
+     *
+     * @return the property descriptor
+     */
     private PropertyDescriptor getPropertyDescriptor(PropertyDescriptor[] propertyDescriptors, Field field) {
         for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
             if (field.getName().equals(propertyDescriptor.getName())) {
@@ -99,14 +141,38 @@ public class BeanProperties implements Iterable<BeanProperty> {
         return null;
     }
 
+    /**
+     * Sets the required.
+     *
+     * @param propertyName
+     *            the property name
+     * @param required
+     *            the required
+     */
     public void setRequired(String propertyName, boolean required) {
         get(propertyName).setRequired(required);
     }
 
+    /**
+     * Sets the date.
+     *
+     * @param propertyName
+     *            the property name
+     * @param formatText
+     *            the format text
+     */
     public void setDate(String propertyName, String formatText) {
         setConverter(propertyName, new DateConverter(formatText, true));
     }
 
+    /**
+     * Sets the localized number.
+     *
+     * @param propertyName
+     *            the property name
+     * @param locale
+     *            the locale
+     */
     public void setLocalizedNumber(String propertyName, Locale locale) {
         Class<? extends Number> numberClass = get(propertyName).getNumberClass();
         if (numberClass == null) {
@@ -118,22 +184,48 @@ public class BeanProperties implements Iterable<BeanProperty> {
         setConverter(propertyName, converter);
     }
 
+    /**
+     * Sets the converter.
+     *
+     * @param propertyName
+     *            the property name
+     * @param converter
+     *            the converter
+     */
     public void setConverter(String propertyName, Converter converter) {
         get(propertyName).setConverter(converter);
     }
 
+    /**
+     * Removes the from column index.
+     *
+     * @param property
+     *            the property
+     */
     protected void removeFromColumnIndex(BeanProperty property) {
         while (indexToProperty.values().remove(property)) {
 
         }
     }
 
+    /**
+     * Removes the from column name.
+     *
+     * @param property
+     *            the property
+     */
     protected void removeFromColumnName(BeanProperty property) {
         while (nameToProperty.values().remove(property)) {
 
         }
     }
 
+    /**
+     * Ignore property.
+     *
+     * @param propertyName
+     *            the property name
+     */
     public void ignoreProperty(String propertyName) {
         BeanProperty property = get(propertyName);
         properties.remove(property);
@@ -141,24 +233,54 @@ public class BeanProperties implements Iterable<BeanProperty> {
         removeFromColumnName(property);
     }
 
+    /**
+     * Sets the header value property.
+     *
+     * @param propertyName
+     *            the new header value property
+     */
     public void setHeaderValueProperty(String propertyName) {
         this.headerValueProperty = get(propertyName);
         this.headerValueProperty.setDynamicColumnProperty(true);
     }
 
+    /**
+     * Sets the header name property.
+     *
+     * @param propertyName
+     *            the new header name property
+     */
     public void setHeaderNameProperty(String propertyName) {
         this.headerNameProperty = get(propertyName);
         this.headerNameProperty.setDynamicColumnProperty(true);
     }
 
+    /**
+     * Gets the header value property.
+     *
+     * @return the header value property
+     */
     public BeanProperty getHeaderValueProperty() {
         return this.headerValueProperty;
     }
 
+    /**
+     * Gets the header name property.
+     *
+     * @return the header name property
+     */
     public BeanProperty getHeaderNameProperty() {
         return this.headerNameProperty;
     }
 
+    /**
+     * Map index to property.
+     *
+     * @param columnIndex
+     *            the column index
+     * @param propertyName
+     *            the property name
+     */
     public void mapIndexToProperty(int columnIndex, String propertyName) {
         BeanProperty property = get(propertyName);
         removeFromColumnIndex(property);
@@ -166,6 +288,14 @@ public class BeanProperties implements Iterable<BeanProperty> {
         indexToProperty.put(new Column(columnIndex), property);
     }
 
+    /**
+     * Map name to property.
+     *
+     * @param columnName
+     *            the column name
+     * @param propertyName
+     *            the property name
+     */
     public void mapNameToProperty(String columnName, String propertyName) {
         BeanProperty property = get(propertyName);
         removeFromColumnName(property);
@@ -173,6 +303,14 @@ public class BeanProperties implements Iterable<BeanProperty> {
         nameToProperty.put(new Column(columnName.toLowerCase(Locale.getDefault())), property);
     }
 
+    /**
+     * Gets the.
+     *
+     * @param propertyName
+     *            the property name
+     *
+     * @return the bean property
+     */
     protected BeanProperty get(String propertyName) {
         for (BeanProperty beanProperty : properties) {
             if (beanProperty.getPropertyName().equals(propertyName)) {
@@ -183,10 +321,26 @@ public class BeanProperties implements Iterable<BeanProperty> {
                 new GeneralError("Property does not exist: " + beanClass.getName() + "." + propertyName));
     }
 
+    /**
+     * From index.
+     *
+     * @param column
+     *            the column
+     *
+     * @return the bean property
+     */
     public BeanProperty fromIndex(Column column) {
         return indexToProperty.get(column);
     }
 
+    /**
+     * From name.
+     *
+     * @param column
+     *            the column
+     *
+     * @return the bean property
+     */
     public BeanProperty fromName(Column column) {
         return nameToProperty.get(column);
     }
@@ -197,10 +351,20 @@ public class BeanProperties implements Iterable<BeanProperty> {
         return ((List<BeanProperty>) ((ArrayList<BeanProperty>) this.properties).clone()).iterator();
     }
 
+    /**
+     * Column index keys.
+     *
+     * @return the sets the
+     */
     public Set<Column> columnIndexKeys() {
         return this.indexToProperty.keySet();
     }
 
+    /**
+     * Column name keys.
+     *
+     * @return the sets the
+     */
     public Set<Column> columnNameKeys() {
         return this.nameToProperty.keySet();
     }
