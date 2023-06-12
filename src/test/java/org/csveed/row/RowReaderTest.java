@@ -85,9 +85,7 @@ class RowReaderTest {
         Reader reader = new StringReader("alpha;beta;gamma");
         RowReaderImpl rowReader = new RowReaderImpl(reader);
         Header header = rowReader.getHeader();
-        assertThrows(CsvException.class, () -> {
-            assertEquals("alpha", header.getName(0));
-        });
+        assertThrows(CsvException.class, () -> header.getName(0));
     }
 
     /**
@@ -112,9 +110,7 @@ class RowReaderTest {
         Reader reader = new StringReader("\"row 1, cell 1\";\"row 1, cell 2\";\"row 1, cell 3\"\n"
                 + "\"row 2, cell 1\";\"row 2, cell 2\";\"row 2, cell 3\"\n" + "\"row 3, cell 1\";\"row 3, cell 2\"");
         RowReaderImpl lineReader = new RowReaderImpl(reader);
-        assertThrows(CsvException.class, () -> {
-            lineReader.readRows();
-        });
+        assertThrows(CsvException.class, () -> lineReader.readRows());
     }
 
     /**

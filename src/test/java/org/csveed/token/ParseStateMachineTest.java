@@ -115,9 +115,7 @@ class ParseStateMachineTest {
     void illegalState() throws ParseException {
         ParseStateMachine machine = new ParseStateMachine();
         machine.offerSymbol(-1);
-        assertThrows(ParseException.class, () -> {
-            machine.offerSymbol(-1);
-        });
+        assertThrows(ParseException.class, () -> machine.offerSymbol(-1));
     }
 
     /**
@@ -126,9 +124,8 @@ class ParseStateMachineTest {
     @Test
     void illegalCharactersAfterQuotedContent() {
         ParseStateMachine machine = new ParseStateMachine();
-        assertThrows(ParseException.class, () -> {
-            feedStateMachine(machine, "    \"alpha\"  ; \"beta\"   x; \"gamma\" ");
-        });
+        assertThrows(ParseException.class,
+                () -> feedStateMachine(machine, "    \"alpha\"  ; \"beta\"   x; \"gamma\" "));
     }
 
     /**
@@ -179,9 +176,7 @@ class ParseStateMachineTest {
     @Test
     void cellNotFinished() {
         ParseStateMachine machine = new ParseStateMachine();
-        assertThrows(ParseException.class, () -> {
-            feedStateMachine(machine, "\"alpha\";\"beta\";\"ga");
-        });
+        assertThrows(ParseException.class, () -> feedStateMachine(machine, "\"alpha\";\"beta\";\"ga"));
     }
 
     /**
@@ -190,9 +185,8 @@ class ParseStateMachineTest {
     @Test
     void doubleQuotesAfterFieldInfoStarted() {
         ParseStateMachine machine = new ParseStateMachine();
-        assertThrows(ParseException.class, () -> {
-            feedStateMachine(machine, "some text and... \"double quote\"... WAT?;\"beta\";\"ga\"");
-        });
+        assertThrows(ParseException.class,
+                () -> feedStateMachine(machine, "some text and... \"double quote\"... WAT?;\"beta\";\"ga\""));
     }
 
     /**
