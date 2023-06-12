@@ -177,16 +177,10 @@ public class ParseStateMachine {
                         return COMMENT_LINE;
                 }
             case START_OF_LINE:
-                switch (symbol) {
-                    case COMMENT_SYMBOL:
-                        if (symbolMapping.isSkipCommentLines()) {
-                            return COMMENT_LINE;
-                        }
-                        // fall through
-                    default:
-                        // fall through
+                if (EncounteredSymbol.COMMENT_SYMBOL.equals(symbol) && symbolMapping.isSkipCommentLines()) {
+                    return COMMENT_LINE;
                 }
-                // fall through
+                //$FALL-THROUGH$
             case SEPARATOR:
                 switch (symbol) {
                     case SPACE_SYMBOL:
