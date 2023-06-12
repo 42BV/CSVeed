@@ -20,29 +20,19 @@ public enum ParseState {
     SEPARATOR(false, false, true, false, false), LINE_FINISHED(false, true, true, false, false),
     FINISHED(false, true, true, false, false);
 
-    /**
-     * When in this state, encountered symbols must be made part of the token
-     */
+    /** When in this state, encountered symbols must be made part of the token. */
     private final boolean tokenize;
 
-    /**
-     * When in this state, reading of the line is done
-     */
+    /** When in this state, reading of the line is done. */
     private final boolean lineFinished;
 
-    /**
-     * When in this state, the token may be popped
-     */
+    /** When in this state, the token may be popped. */
     private final boolean popToken;
 
-    /**
-     * When a quote character is encountered here, this state MAY trigger an upgrade of the encountered symbol
-     */
+    /** When a quote character is encountered here, this state MAY trigger an upgrade of the encountered symbol. */
     private final boolean upgradeQuoteToEscape;
 
-    /**
-     * When in this state, ignore the entire line
-     */
+    /** When in this state, ignore the entire line. */
     private final boolean ignore;
 
     ParseState(final boolean tokenize, final boolean lineFinished, final boolean popToken,

@@ -273,7 +273,7 @@ public interface BeanInstructions {
     BeanInstructions mapColumnNameToProperty(String columnName, String propertyName);
 
     /**
-     * Determines what property will receive the header name in the currently active dynamic column
+     * Determines what property will receive the header name in the currently active dynamic column.
      *
      * @param propertyName
      *            property in which the active dynamic header name must be stored
@@ -283,7 +283,7 @@ public interface BeanInstructions {
     BeanInstructions setHeaderNameToProperty(String propertyName);
 
     /**
-     * Determines what property will receive the cell value in the currently active dynamic column
+     * Determines what property will receive the cell value in the currently active dynamic column.
      *
      * @param propertyName
      *            property in which the active dynamic column value must be stored
@@ -293,49 +293,49 @@ public interface BeanInstructions {
     BeanInstructions setHeaderValueToProperty(String propertyName);
 
     /**
-     * Returns the class of the bean on which processing is taking place
+     * Returns the class of the bean on which processing is taking place.
      *
      * @return class of the processed bean
      */
     Class getBeanClass();
 
     /**
-     * Returns the properties of the bean on which processing is taking place
+     * Returns the properties of the bean on which processing is taking place.
      *
      * @return the properties of the processed bean
      */
     BeanProperties getProperties();
 
     /**
-     * Returns the instructions for processing rows
+     * Returns the instructions for processing rows.
      *
      * @return the row instructions
      */
     RowInstructions getRowInstructions();
 
     /**
-     * States whether a header is used
+     * States whether a header is used.
      *
      * @return true if a header is used
      */
     boolean useHeader();
 
     /**
-     * The first column that counts as a dynamic column
+     * The first column that counts as a dynamic column.
      *
      * @return the first of the dynamic columns
      */
     Column getStartIndexDynamicColumns();
 
     /**
-     * The mapping strategy to use for processing the bean
+     * The mapping strategy to use for processing the bean.
      *
      * @return applied mapping strategy
      */
     Class<? extends AbstractMapper> getMappingStrategy();
 
     /**
-     * Logs all the settings
+     * Logs all the settings.
      */
     void logSettings();
 

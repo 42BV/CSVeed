@@ -26,10 +26,10 @@ import org.csveed.row.RowReader;
  * <li>Roll your own. Pass a {@link BeanInstructions} implementation with your own configuration settings</li>
  * </ul>
  *
+ * @author Robert Bor
+ *
  * @param <T>
  *            the bean class into which the rows are converted
- *
- * @author Robert Bor
  */
 public interface BeanReader<T> {
 
@@ -63,21 +63,21 @@ public interface BeanReader<T> {
     int getCurrentLine();
 
     /**
-     * States whether the Reader is done with the file
+     * States whether the Reader is done with the file.
      *
      * @return true if file is finished
      */
     boolean isFinished();
 
     /**
-     * Returns the underlying line reader for the bean reader
+     * Returns the underlying line reader for the bean reader.
      *
      * @return the underlying line reader
      */
     RowReader getRowReader();
 
     /**
-     * The set of instructions for dealing with beans
+     * The set of instructions for dealing with beans.
      *
      * @return bean instructions
      */

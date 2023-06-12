@@ -13,21 +13,21 @@ package org.csveed.api;
 import org.csveed.report.RowReport;
 
 /**
- * The original header of the CSV file
+ * The original header of the CSV file.
  *
  * @author Robert Bor
  */
 public interface Header extends Iterable<String> {
 
     /**
-     * Number of columns
+     * Number of columns.
      *
      * @return the number of columns
      */
     int size();
 
     /**
-     * Gets the name of the header column with passed index
+     * Gets the name of the header column with passed index.
      *
      * @param indexColumn
      *            column index to find the name for
@@ -37,7 +37,7 @@ public interface Header extends Iterable<String> {
     String getName(int indexColumn);
 
     /**
-     * Gets the index column of the first column with a certain name
+     * Gets the index column of the first column with a certain name.
      *
      * @param columnName
      *            column name to find the index for
@@ -47,7 +47,7 @@ public interface Header extends Iterable<String> {
     int getIndex(String columnName);
 
     /**
-     * Generate an error report on the header row
+     * Generate an error report on the header row.
      *
      * @return error report on the header row
      */

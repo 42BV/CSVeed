@@ -18,7 +18,7 @@ import org.csveed.api.Row;
 public interface RowWriter {
 
     /**
-     * Writes multiple rows with cells to the table
+     * Writes multiple rows with cells to the table.
      *
      * @param rows
      *            two-dimensional string array with rows and cells within
@@ -26,7 +26,7 @@ public interface RowWriter {
     void writeRows(String[][] rows);
 
     /**
-     * Writes multiples rows to the table
+     * Writes multiples rows to the table.
      *
      * @param rows
      *            collection of rows
@@ -34,7 +34,7 @@ public interface RowWriter {
     void writeRows(Collection<Row> rows);
 
     /**
-     * Writes the cells of a table row as an individual row
+     * Writes the cells of a table row as an individual row.
      *
      * @param cells
      *            the individual cells of the row
@@ -52,7 +52,7 @@ public interface RowWriter {
     void writeRow(Row row);
 
     /**
-     * Creates and sets the header of the table
+     * Creates and sets the header of the table.
      *
      * @param headerNames
      *            the individual cells of the header row
@@ -62,7 +62,7 @@ public interface RowWriter {
     Header writeHeader(String[] headerNames);
 
     /**
-     * Sets the header of the table
+     * Sets the header of the table.
      *
      * @param header
      *            the header row
@@ -70,7 +70,7 @@ public interface RowWriter {
     void writeHeader(Header header);
 
     /**
-     * The set of instructions for dealing with rows
+     * The set of instructions for dealing with rows.
      *
      * @return row instructions
      */

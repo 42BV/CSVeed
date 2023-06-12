@@ -45,7 +45,7 @@ public @interface CsvCell {
     String columnName() default "";
 
     /**
-     * If required is set, the parse process will generate an error if the value is null after deserialization
+     * If required is set, the parse process will generate an error if the value is null after deserialization.
      *
      * @return whether the field must be not null
      */

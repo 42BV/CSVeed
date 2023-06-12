@@ -45,7 +45,7 @@ public interface RowReader {
     int getCurrentLine();
 
     /**
-     * States whether the Reader is done with the file
+     * States whether the Reader is done with the file.
      *
      * @return true if file is finished
      */
@@ -66,7 +66,7 @@ public interface RowReader {
     Header getHeader();
 
     /**
-     * The set of instructions for dealing with rows
+     * The set of instructions for dealing with rows.
      *
      * @return row instructions
      */

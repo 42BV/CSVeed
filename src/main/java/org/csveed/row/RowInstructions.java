@@ -69,7 +69,7 @@ public interface RowInstructions {
     RowInstructions setEscape(char symbol);
 
     /**
-     * Returns the character that will be used when writing quote characters
+     * Returns the character that will be used when writing quote characters.
      *
      * @return character used to represent quote characters
      */
@@ -107,7 +107,7 @@ public interface RowInstructions {
     boolean getQuotingEnabled();
 
     /**
-     * Gets the character that will be used when writing separators
+     * Gets the character that will be used when writing separators.
      *
      * @return character used to represent separator characters
      */
@@ -138,7 +138,7 @@ public interface RowInstructions {
     RowInstructions setComment(char symbol);
 
     /**
-     * Gets the characters that will be used when writing End-of-line separators
+     * Gets the characters that will be used when writing End-of-line separators.
      *
      * @return the EOL characters
      */

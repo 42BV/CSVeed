@@ -11,12 +11,12 @@
 package org.csveed.bean.conversion;
 
 /**
- * Stateless converter from String to Object
+ * Stateless converter from String to Object.
+ *
+ * @author Robert Bor
  *
  * @param <K>
  *            the Object to convert the String to
- *
- * @author Robert Bor
  */
 public interface Converter<K> {
 
