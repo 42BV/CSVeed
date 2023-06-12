@@ -20,6 +20,10 @@ import java.text.ParseException;
 
 public abstract class NumberUtils {
 
+    private NumberUtils() {
+        // Do not allow instantiation of static utils class
+    }
+
     @SuppressWarnings("unchecked")
     public static <T extends Number> T convertNumberToTargetClass(Number number, Class<T> targetClass)
             throws IllegalArgumentException {

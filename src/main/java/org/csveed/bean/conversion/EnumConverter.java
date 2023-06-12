@@ -12,7 +12,7 @@ package org.csveed.bean.conversion;
 
 public class EnumConverter<T extends Enum> extends AbstractConverter<T> {
 
-    public Class<T> enumClass;
+    public final Class<T> enumClass;
 
     public EnumConverter(Class<T> enumClass) {
         super(enumClass);

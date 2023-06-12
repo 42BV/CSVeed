@@ -10,7 +10,11 @@
  */
 package org.csveed.bean.conversion;
 
-public class ConversionUtil {
+public final class ConversionUtil {
+
+    private ConversionUtil() {
+        // Prevent Instantiation of static utils class
+    }
 
     public static boolean hasLength(CharSequence str) {
         return str != null && str.length() > 0;

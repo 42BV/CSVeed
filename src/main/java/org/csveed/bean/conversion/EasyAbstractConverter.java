@@ -12,7 +12,7 @@ package org.csveed.bean.conversion;
 
 public abstract class EasyAbstractConverter<K> extends AbstractConverter<K> {
 
-    public EasyAbstractConverter(Class<K> clazz) {
+    protected EasyAbstractConverter(Class<K> clazz) {
         super(clazz);
     }
 
