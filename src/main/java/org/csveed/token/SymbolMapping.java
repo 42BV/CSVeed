@@ -78,7 +78,7 @@ public class SymbolMapping {
 
     public void addMapping(EncounteredSymbol symbol, char[] characters) {
         while (charToSymbol.values().remove(symbol)) {
-
+            // Looping until all symbols removed
         }
         for (Character character : characters) {
             charToSymbol.put(character, symbol);
