@@ -15,8 +15,6 @@ import java.util.List;
 /**
  * Report on an error, always including at the very least an error message. If the error can be pinpointed to a line or
  * cell, this information is included as well.
- *
- * @author Robert Bor
  */
 public interface CsvError {
 

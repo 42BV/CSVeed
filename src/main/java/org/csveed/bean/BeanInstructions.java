@@ -20,8 +20,6 @@ import org.csveed.row.RowInstructions;
 /**
  * These instructions are used to power the {@link BeanReader}. Note that the instructions are also used internally if
  * annotations are used.
- *
- * @author Robert Bor
  */
 public interface BeanInstructions {
 

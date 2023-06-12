@@ -17,8 +17,6 @@ import java.lang.annotation.Target;
 
 /**
  * Determines whether the field will receive the header name of the current dynamic column.
- *
- * @author Robert Bor
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

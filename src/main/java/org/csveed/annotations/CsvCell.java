@@ -19,8 +19,6 @@ import java.lang.annotation.Target;
  * Various settings for a BeanInstructionsImpl translating to a CSV cell. By default every field in a
  * BeanInstructionsImpl is expected to be a CsvCell, even if not so marked. Use @CsvIgnore to prevent a
  * BeanInstructionsImpl field from being taken into account for both serialization and deserialization.
- *
- * @author Robert Bor
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
