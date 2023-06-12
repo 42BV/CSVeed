@@ -25,8 +25,6 @@ import org.csveed.token.ParseStateMachine;
 /**
  * Builds up a List of cells (String) per read row. Note that this class is stateful, so it can support a per-row parse
  * approach as well.
- *
- * @author Robert Bor
  */
 public class RowReaderImpl implements RowReader {
 

@@ -13,8 +13,6 @@ package org.csveed.row;
 /**
  * These instructions are used to power the {@link RowReader}. Note that the instructions are also used internally if
  * annotations are used.
- *
- * @author Robert Bor
  */
 public interface RowInstructions {
 

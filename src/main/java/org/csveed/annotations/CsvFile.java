@@ -20,8 +20,6 @@ import org.csveed.bean.ColumnIndexMapper;
 
 /**
  * Various settings applying to the entire CSV file and BeanInstructions.
- *
- * @author Robert Bor
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

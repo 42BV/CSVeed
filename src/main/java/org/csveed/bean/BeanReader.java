@@ -26,8 +26,6 @@ import org.csveed.row.RowReader;
  * <li>Roll your own. Pass a {@link BeanInstructions} implementation with your own configuration settings</li>
  * </ul>
  *
- * @author Robert Bor
- *
  * @param <T>
  *            the bean class into which the rows are converted
  */

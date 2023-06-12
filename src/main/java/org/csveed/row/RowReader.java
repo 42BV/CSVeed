@@ -17,8 +17,6 @@ import org.csveed.api.Row;
 
 /**
  * LineReaders reads rows from the CSV file and returns those all at once, or one by one if desired.
- *
- * @author Robert Bor
  */
 public interface RowReader {
 

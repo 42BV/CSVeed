@@ -14,8 +14,6 @@ import org.csveed.report.RowReport;
 
 /**
  * The original header of the CSV file.
- *
- * @author Robert Bor
  */
 public interface Header extends Iterable<String> {
 

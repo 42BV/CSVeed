@@ -31,8 +31,6 @@ import org.csveed.bean.conversion.Converter;
  * implementation with your own configuration settings</li>
  * </ul>
  *
- * @author Robert Bor
- *
  * @param <T>
  *            the bean class into which the rows are converted
  */

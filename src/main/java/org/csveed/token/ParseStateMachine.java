@@ -33,8 +33,6 @@ import org.slf4j.LoggerFactory;
  * Yep, a state machine. Managing all kinds of booleans to form a pseudo-state doesn't work really well whereas a state
  * machine does. The state machine takes one character at a time, checks routes to the new state if necessary and holds
  * tokens, which it returns whenever a field-end ('popToken') has been found.
- *
- * @author Robert Bor
  */
 public class ParseStateMachine {
 

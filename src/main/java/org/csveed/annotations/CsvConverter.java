@@ -19,8 +19,6 @@ import org.csveed.bean.conversion.Converter;
 
 /**
  * Sets a custom converter for the field. The converter must be of type Converter.
- *
- * @author Robert Bor
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

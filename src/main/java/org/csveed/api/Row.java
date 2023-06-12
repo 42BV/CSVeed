@@ -15,8 +15,6 @@ import org.csveed.report.RowReport;
 /**
  * A Row is a line of content read from the CSV file. Note that a Row is never a Header. Rows can be iterated which
  * yields the individual cells as Strings.
- *
- * @author Robert Bor
  */
 public interface Row extends Iterable<String> {
 
