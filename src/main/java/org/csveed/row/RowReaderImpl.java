@@ -30,20 +30,39 @@ import org.csveed.token.ParseStateMachine;
  */
 public class RowReaderImpl implements RowReader {
 
+    /** The state machine. */
     private ParseStateMachine stateMachine = new ParseStateMachine();
 
+    /** The row instructions. */
     private RowInstructionsImpl rowInstructions;
 
+    /** The max number of columns. */
     private int maxNumberOfColumns = -1;
 
+    /** The header. */
     private HeaderImpl header;
 
+    /** The reader. */
     private Reader reader;
 
+    /**
+     * Instantiates a new row reader impl.
+     *
+     * @param reader
+     *            the reader
+     */
     public RowReaderImpl(Reader reader) {
         this(reader, new RowInstructionsImpl());
     }
 
+    /**
+     * Instantiates a new row reader impl.
+     *
+     * @param reader
+     *            the reader
+     * @param instructionsInterface
+     *            the instructions interface
+     */
     public RowReaderImpl(Reader reader, RowInstructions instructionsInterface) {
         this.reader = reader;
         this.rowInstructions = (RowInstructionsImpl) instructionsInterface;
@@ -83,6 +102,11 @@ public class RowReaderImpl implements RowReader {
         return header == null && rowInstructions.isUseHeader() ? readHeader() : header;
     }
 
+    /**
+     * Gets the max number of columns.
+     *
+     * @return the max number of columns
+     */
     public int getMaxNumberOfColumns() {
         return this.maxNumberOfColumns;
     }
@@ -100,6 +124,12 @@ public class RowReaderImpl implements RowReader {
         return header;
     }
 
+    /**
+     * Check number of columns.
+     *
+     * @param unmappedLine
+     *            the unmapped line
+     */
     private void checkNumberOfColumns(Line unmappedLine) {
         if (maxNumberOfColumns == -1) {
             maxNumberOfColumns = header == null ? unmappedLine.size() : header.size();
@@ -115,11 +145,19 @@ public class RowReaderImpl implements RowReader {
         return stateMachine.isFinished();
     }
 
+    /**
+     * Log settings.
+     */
     protected void logSettings() {
         rowInstructions.logSettings();
         this.stateMachine.getSymbolMapping().logSettings();
     }
 
+    /**
+     * Read bare line.
+     *
+     * @return the line
+     */
     protected Line readBareLine() {
         logSettings();
 

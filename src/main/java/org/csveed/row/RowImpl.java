@@ -19,12 +19,25 @@ import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
 
+/**
+ * The Class RowImpl.
+ */
 public class RowImpl implements Row {
 
+    /** The line. */
     private Line line;
 
+    /** The header. */
     private Header header;
 
+    /**
+     * Instantiates a new row impl.
+     *
+     * @param line
+     *            the line
+     * @param header
+     *            the header
+     */
     public RowImpl(Line line, Header header) {
         this.line = line;
         this.header = header;

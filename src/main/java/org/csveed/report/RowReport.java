@@ -13,32 +13,68 @@ package org.csveed.report;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class RowReport.
+ */
 public class RowReport {
 
+    /** The row. */
     private String row;
 
+    /** The start. */
     private int start;
 
+    /** The end. */
     private int end;
 
+    /**
+     * Instantiates a new row report.
+     *
+     * @param row
+     *            the row
+     * @param start
+     *            the start
+     * @param end
+     *            the end
+     */
     public RowReport(String row, int start, int end) {
         this.row = row;
         this.start = start;
         this.end = start == end && start < row.length() ? start + 1 : end;
     }
 
+    /**
+     * Gets the row.
+     *
+     * @return the row
+     */
     public String getRow() {
         return row;
     }
 
+    /**
+     * Gets the start.
+     *
+     * @return the start
+     */
     public int getStart() {
         return start;
     }
 
+    /**
+     * Gets the end.
+     *
+     * @return the end
+     */
     public int getEnd() {
         return end;
     }
 
+    /**
+     * Tokenize.
+     *
+     * @return the list
+     */
     public List<RowPart> tokenize() {
         List<RowPart> lines = new ArrayList<>();
         if (start > 0) {
@@ -53,6 +89,11 @@ public class RowReport {
         return lines;
     }
 
+    /**
+     * Gets the printable lines.
+     *
+     * @return the printable lines
+     */
     public List<String> getPrintableLines() {
         List<String> lines = new ArrayList<>();
 
@@ -64,6 +105,14 @@ public class RowReport {
         return lines;
     }
 
+    /**
+     * Creates the content line.
+     *
+     * @param parts
+     *            the parts
+     *
+     * @return the string
+     */
     private String createContentLine(List<RowPart> parts) {
         StringBuilder line = new StringBuilder();
         for (RowPart token : parts) {
@@ -72,6 +121,14 @@ public class RowReport {
         return line.toString();
     }
 
+    /**
+     * Creates the focus line.
+     *
+     * @param parts
+     *            the parts
+     *
+     * @return the string
+     */
     private String createFocusLine(List<RowPart> parts) {
         StringBuilder line = new StringBuilder();
         boolean placedMarkers = false;
@@ -89,6 +146,14 @@ public class RowReport {
         return line.toString();
     }
 
+    /**
+     * Prints the empty part.
+     *
+     * @param token
+     *            the token
+     *
+     * @return the string
+     */
     private String printEmptyPart(RowPart token) {
         StringBuilder linePart = new StringBuilder();
         for (int i = 0; i < token.getToken().length(); i++) {
@@ -97,6 +162,14 @@ public class RowReport {
         return linePart.toString();
     }
 
+    /**
+     * Prints the underscored part.
+     *
+     * @param token
+     *            the token
+     *
+     * @return the string
+     */
     private String printUnderscoredPart(RowPart token) {
         StringBuilder linePart = new StringBuilder();
         for (int i = 0; i < token.getToken().length(); i++) {

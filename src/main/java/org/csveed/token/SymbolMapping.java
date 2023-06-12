@@ -25,21 +25,33 @@ import org.csveed.report.GeneralError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class SymbolMapping.
+ */
 public class SymbolMapping {
 
+    /** The Constant LOG. */
     private static final Logger LOG = LoggerFactory.getLogger(SymbolMapping.class);
 
+    /** The symbol to chars. */
     private Map<EncounteredSymbol, char[]> symbolToChars = new TreeMap<>();
+
+    /** The char to symbol. */
     private Map<Character, EncounteredSymbol> charToSymbol = new TreeMap<>();
 
+    /** The escape character. */
     private Character escapeCharacter;
 
+    /** The quote character. */
     private Character quoteCharacter;
 
+    /** The settings logged. */
     private boolean settingsLogged;
 
+    /** The start line. */
     private int startLine = 1;
 
+    /** The skip comment lines. */
     private boolean skipCommentLines = true;
 
     /**
@@ -49,10 +61,16 @@ public class SymbolMapping {
      */
     private char acceptedEndOfLine;
 
+    /**
+     * Instantiates a new symbol mapping.
+     */
     public SymbolMapping() {
         initDefaultMapping();
     }
 
+    /**
+     * Inits the default mapping.
+     */
     public void initDefaultMapping() {
         addMapping(EncounteredSymbol.ESCAPE_SYMBOL, '"');
         addMapping(EncounteredSymbol.QUOTE_SYMBOL, '"');
@@ -63,15 +81,39 @@ public class SymbolMapping {
         addMapping(EncounteredSymbol.COMMENT_SYMBOL, '#');
     }
 
+    /**
+     * Gets the first mapped character.
+     *
+     * @param encounteredSymbol
+     *            the encountered symbol
+     *
+     * @return the first mapped character
+     */
     public char getFirstMappedCharacter(EncounteredSymbol encounteredSymbol) {
         char[] mappedCharacters = getMappedCharacters(encounteredSymbol);
         return mappedCharacters == null ? 0 : mappedCharacters[0];
     }
 
+    /**
+     * Gets the mapped characters.
+     *
+     * @param encounteredSymbol
+     *            the encountered symbol
+     *
+     * @return the mapped characters
+     */
     public char[] getMappedCharacters(EncounteredSymbol encounteredSymbol) {
         return symbolToChars.get(encounteredSymbol);
     }
 
+    /**
+     * Adds the mapping.
+     *
+     * @param symbol
+     *            the symbol
+     * @param character
+     *            the character
+     */
     public void addMapping(EncounteredSymbol symbol, Character character) {
         addMapping(symbol, new char[] { character });
         if (symbol.isCheckForSimilarEscapeAndQuote()) {
@@ -79,6 +121,14 @@ public class SymbolMapping {
         }
     }
 
+    /**
+     * Adds the mapping.
+     *
+     * @param symbol
+     *            the symbol
+     * @param characters
+     *            the characters
+     */
     public void addMapping(EncounteredSymbol symbol, char[] characters) {
         while (charToSymbol.values().remove(symbol)) {
             // Looping until all symbols removed
@@ -89,6 +139,9 @@ public class SymbolMapping {
         symbolToChars.put(symbol, characters);
     }
 
+    /**
+     * Log settings.
+     */
     public void logSettings() {
         if (settingsLogged) {
             return;
@@ -104,6 +157,14 @@ public class SymbolMapping {
         settingsLogged = true;
     }
 
+    /**
+     * Characters to string.
+     *
+     * @param characters
+     *            the characters
+     *
+     * @return the string
+     */
     private String charactersToString(char[] characters) {
         StringBuilder returnString = new StringBuilder();
         for (char currentChar : characters) {
@@ -113,6 +174,14 @@ public class SymbolMapping {
         return returnString.toString();
     }
 
+    /**
+     * Char to printable.
+     *
+     * @param character
+     *            the character
+     *
+     * @return the string
+     */
     private String charToPrintable(char character) {
         switch (character) {
             case '\t':
@@ -126,6 +195,14 @@ public class SymbolMapping {
         }
     }
 
+    /**
+     * Store character for later comparison.
+     *
+     * @param symbol
+     *            the symbol
+     * @param character
+     *            the character
+     */
     private void storeCharacterForLaterComparison(EncounteredSymbol symbol, Character character) {
         if (symbol == ESCAPE_SYMBOL) {
             escapeCharacter = character;
@@ -134,10 +211,25 @@ public class SymbolMapping {
         }
     }
 
+    /**
+     * Checks if is same characters for escape and quote.
+     *
+     * @return true, if is same characters for escape and quote
+     */
     public boolean isSameCharactersForEscapeAndQuote() {
         return escapeCharacter != null && quoteCharacter != null && escapeCharacter.equals(quoteCharacter);
     }
 
+    /**
+     * Find.
+     *
+     * @param character
+     *            the character
+     * @param parseState
+     *            the parse state
+     *
+     * @return the encountered symbol
+     */
     public EncounteredSymbol find(int character, ParseState parseState) {
         if (character == -1) {
             return END_OF_FILE_SYMBOL;
@@ -161,10 +253,21 @@ public class SymbolMapping {
         return symbol;
     }
 
+    /**
+     * Gets the start line.
+     *
+     * @return the start line
+     */
     public int getStartLine() {
         return startLine;
     }
 
+    /**
+     * Sets the start line.
+     *
+     * @param startLine
+     *            the new start line
+     */
     public void setStartLine(int startLine) {
         if (startLine == 0) {
             throw new CsvException(new GeneralError("Row cannot be set at 0. Rows are 1-based"));
@@ -172,10 +275,21 @@ public class SymbolMapping {
         this.startLine = startLine;
     }
 
+    /**
+     * Checks if is skip comment lines.
+     *
+     * @return true, if is skip comment lines
+     */
     public boolean isSkipCommentLines() {
         return skipCommentLines;
     }
 
+    /**
+     * Sets the skip comment lines.
+     *
+     * @param skipCommentLines
+     *            the new skip comment lines
+     */
     public void setSkipCommentLines(boolean skipCommentLines) {
         this.skipCommentLines = skipCommentLines;
     }

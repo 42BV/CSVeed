@@ -10,8 +10,14 @@
  */
 package org.csveed.bean.conversion;
 
+/**
+ * The Class StringConverter.
+ */
 public class StringConverter extends AbstractConverter<String> {
 
+    /**
+     * Instantiates a new string converter.
+     */
     public StringConverter() {
         super(String.class);
     }

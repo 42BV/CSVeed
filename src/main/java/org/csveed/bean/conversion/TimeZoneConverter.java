@@ -12,8 +12,14 @@ package org.csveed.bean.conversion;
 
 import java.util.TimeZone;
 
+/**
+ * The Class TimeZoneConverter.
+ */
 public class TimeZoneConverter extends AbstractConverter<TimeZone> {
 
+    /**
+     * Instantiates a new time zone converter.
+     */
     public TimeZoneConverter() {
         super(TimeZone.class);
     }

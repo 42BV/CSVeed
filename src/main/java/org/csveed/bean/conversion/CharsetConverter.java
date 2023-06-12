@@ -12,8 +12,14 @@ package org.csveed.bean.conversion;
 
 import java.nio.charset.Charset;
 
+/**
+ * The Class CharsetConverter.
+ */
 public class CharsetConverter extends AbstractConverter<Charset> {
 
+    /**
+     * Instantiates a new charset converter.
+     */
     public CharsetConverter() {
         super(Charset.class);
     }

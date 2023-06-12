@@ -21,18 +21,36 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
+/**
+ * The Class DefaultConverters.
+ */
 public class DefaultConverters {
 
+    /** The converters. */
     private Map<Class<?>, Converter> converters = new HashMap<>();
 
+    /**
+     * Instantiates a new default converters.
+     */
     public DefaultConverters() {
         registerConverters();
     }
 
+    /**
+     * Gets the converter.
+     *
+     * @param clazz
+     *            the clazz
+     *
+     * @return the converter
+     */
     public Converter getConverter(Class clazz) {
         return converters.get(clazz);
     }
 
+    /**
+     * Register converters.
+     */
     protected void registerConverters() {
         addConverter(Charset.class, new CharsetConverter());
         addConverter(Currency.class, new CurrencyConverter());
@@ -74,6 +92,14 @@ public class DefaultConverters {
         addConverter(String.class, new StringConverter());
     }
 
+    /**
+     * Adds the converter.
+     *
+     * @param clazz
+     *            the clazz
+     * @param converter
+     *            the converter
+     */
     protected void addConverter(Class clazz, Converter converter) {
         converters.put(clazz, converter);
     }

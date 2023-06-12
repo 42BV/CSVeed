@@ -18,6 +18,12 @@ import org.csveed.common.Column;
 import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 
+/**
+ * The Class ColumnIndexMapper.
+ *
+ * @param <T>
+ *            the generic type
+ */
 public class ColumnIndexMapper<T> extends AbstractMapper<T> {
 
     @Override

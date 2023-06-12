@@ -20,8 +20,15 @@ import org.csveed.report.RowError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class ColumnNameMapper.
+ *
+ * @param <T>
+ *            the generic type
+ */
 public class ColumnNameMapper<T> extends AbstractMapper<T> {
 
+    /** The Constant logger. */
     private static final Logger logger = LoggerFactory.getLogger(ColumnNameMapper.class);
 
     @Override

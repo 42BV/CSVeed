@@ -10,8 +10,20 @@
  */
 package org.csveed.bean.conversion;
 
+/**
+ * The Class EasyAbstractConverter.
+ *
+ * @param <K>
+ *            the key type
+ */
 public abstract class EasyAbstractConverter<K> extends AbstractConverter<K> {
 
+    /**
+     * Instantiates a new easy abstract converter.
+     *
+     * @param clazz
+     *            the clazz
+     */
     protected EasyAbstractConverter(Class<K> clazz) {
         super(clazz);
     }

@@ -12,8 +12,14 @@ package org.csveed.bean.conversion;
 
 import java.nio.charset.Charset;
 
+/**
+ * The Class ByteArrayConverter.
+ */
 public class ByteArrayConverter extends AbstractConverter<byte[]> {
 
+    /**
+     * Instantiates a new byte array converter.
+     */
     public ByteArrayConverter() {
         super(byte[].class);
     }

@@ -12,14 +12,26 @@ package org.csveed.bean.conversion;
 
 import static org.csveed.bean.conversion.ConversionUtil.hasLength;
 
+/**
+ * The Class CharacterConverter.
+ */
 public class CharacterConverter extends AbstractConverter<Character> {
 
+    /** The Constant UNICODE_PREFIX. */
     private static final String UNICODE_PREFIX = "\\u";
 
+    /** The Constant UNICODE_LENGTH. */
     private static final int UNICODE_LENGTH = 6;
 
+    /** The allow empty. */
     private final boolean allowEmpty;
 
+    /**
+     * Instantiates a new character converter.
+     *
+     * @param allowEmpty
+     *            the allow empty
+     */
     public CharacterConverter(boolean allowEmpty) {
         super(Character.class);
         this.allowEmpty = allowEmpty;
@@ -49,6 +61,14 @@ public class CharacterConverter extends AbstractConverter<Character> {
         return value != null ? value.toString() : "";
     }
 
+    /**
+     * Checks if is unicode character sequence.
+     *
+     * @param sequence
+     *            the sequence
+     *
+     * @return true, if is unicode character sequence
+     */
     private boolean isUnicodeCharacterSequence(String sequence) {
         return sequence.startsWith(UNICODE_PREFIX) && sequence.length() == UNICODE_LENGTH;
     }

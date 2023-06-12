@@ -21,12 +21,26 @@ import org.csveed.report.CsvException;
 import org.csveed.report.GeneralError;
 import org.csveed.report.RowReport;
 
+/**
+ * The Class HeaderImpl.
+ */
 public class HeaderImpl implements Header {
 
+    /** The header. */
     private Line header;
+
+    /** The index to name. */
     private Map<Column, String> indexToName = new HashMap<>();
+
+    /** The name to index. */
     private Map<String, Column> nameToIndex = new HashMap<>();
 
+    /**
+     * Instantiates a new header impl.
+     *
+     * @param row
+     *            the row
+     */
     public HeaderImpl(Line row) {
         this.header = row;
         Column currentColumn = new Column();

@@ -43,6 +43,11 @@ public interface BeanWriter<T> {
      */
     void writeHeader();
 
+    /**
+     * Gets the row writer.
+     *
+     * @return the row writer
+     */
     RowWriter getRowWriter();
 
 }

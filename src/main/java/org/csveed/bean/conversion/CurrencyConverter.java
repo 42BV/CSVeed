@@ -12,8 +12,14 @@ package org.csveed.bean.conversion;
 
 import java.util.Currency;
 
+/**
+ * The Class CurrencyConverter.
+ */
 public class CurrencyConverter extends AbstractConverter<Currency> {
 
+    /**
+     * Instantiates a new currency converter.
+     */
     public CurrencyConverter() {
         super(Currency.class);
     }

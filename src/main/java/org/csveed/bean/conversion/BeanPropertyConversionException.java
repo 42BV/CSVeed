@@ -10,10 +10,24 @@
  */
 package org.csveed.bean.conversion;
 
+/**
+ * The Class BeanPropertyConversionException.
+ */
 public class BeanPropertyConversionException extends ConversionException {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Instantiates a new bean property conversion exception.
+     *
+     * @param message
+     *            the message
+     * @param propertyDescription
+     *            the property description
+     * @param exception
+     *            the exception
+     */
     public BeanPropertyConversionException(String message, String propertyDescription, Throwable exception) {
         super(message, propertyDescription, exception);
     }

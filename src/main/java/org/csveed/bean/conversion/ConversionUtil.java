@@ -10,20 +10,50 @@
  */
 package org.csveed.bean.conversion;
 
+/**
+ * The Class ConversionUtil.
+ */
 public final class ConversionUtil {
 
+    /**
+     * Instantiates a new conversion util.
+     */
     private ConversionUtil() {
         // Prevent Instantiation of static utils class
     }
 
+    /**
+     * Checks for length.
+     *
+     * @param str
+     *            the str
+     *
+     * @return true, if successful
+     */
     public static boolean hasLength(CharSequence str) {
         return str != null && str.length() > 0;
     }
 
+    /**
+     * Checks for text.
+     *
+     * @param str
+     *            the str
+     *
+     * @return true, if successful
+     */
     public static boolean hasText(String str) {
         return hasText((CharSequence) str);
     }
 
+    /**
+     * Checks for text.
+     *
+     * @param str
+     *            the str
+     *
+     * @return true, if successful
+     */
     public static boolean hasText(CharSequence str) {
         if (!hasLength(str)) {
             return false;
@@ -37,6 +67,14 @@ public final class ConversionUtil {
         return false;
     }
 
+    /**
+     * Trim all whitespace.
+     *
+     * @param str
+     *            the str
+     *
+     * @return the string
+     */
     public static String trimAllWhitespace(String str) {
         if (!hasLength(str)) {
             return str;

@@ -10,10 +10,20 @@
  */
 package org.csveed.common;
 
+/**
+ * The Class ColumnNameKey.
+ */
 public class ColumnNameKey extends ColumnKey {
 
+    /** The column name. */
     private final String columnName;
 
+    /**
+     * Instantiates a new column name key.
+     *
+     * @param columnName
+     *            the column name
+     */
     public ColumnNameKey(String columnName) {
         this.columnName = columnName;
     }

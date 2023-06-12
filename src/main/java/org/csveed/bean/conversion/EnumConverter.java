@@ -10,10 +10,23 @@
  */
 package org.csveed.bean.conversion;
 
+/**
+ * The Class EnumConverter.
+ *
+ * @param <T>
+ *            the generic type
+ */
 public class EnumConverter<T extends Enum> extends AbstractConverter<T> {
 
+    /** The enum class. */
     public final Class<T> enumClass;
 
+    /**
+     * Instantiates a new enum converter.
+     *
+     * @param enumClass
+     *            the enum class
+     */
     public EnumConverter(Class<T> enumClass) {
         super(enumClass);
         this.enumClass = enumClass;

@@ -10,10 +10,23 @@
  */
 package org.csveed.bean.conversion;
 
+/**
+ * The Class AbstractConverter.
+ *
+ * @param <K>
+ *            the key type
+ */
 public abstract class AbstractConverter<K> implements Converter<K> {
 
+    /** The clazz. */
     private Class<K> clazz;
 
+    /**
+     * Instantiates a new abstract converter.
+     *
+     * @param clazz
+     *            the clazz
+     */
     protected AbstractConverter(Class<K> clazz) {
         this.clazz = clazz;
     }
