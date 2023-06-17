@@ -6,7 +6,7 @@ CSVeed
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed)
 [![Apache 2](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-Be sure to check the project site at [csveed.org](http://csveed.org).
+Be sure to check the project site at [csveed](https://42BV.github.io/CSVeed).
 
 CSVeed is a Java library for reading [Comma Separated Value (CSV)](https://tools.ietf.org/html/rfc4180)
 files and exposing those either as Rows or Java Beans. In order to use CSVeed in your project,

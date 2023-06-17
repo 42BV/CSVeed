@@ -12,14 +12,14 @@
 
 -->
 <project name="${project.name}" xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd">
     <bannerLeft>
         <src>/images/csveed.png</src>
-        <href>http://github.com/42BV/csveed</href>
+        <href>https://github.com/42BV/csveed</href>
     </bannerLeft>
     <bannerRight>
         <src>/images/csveed.png</src>
-        <href>http://github.com/42BV/csveed</href>
+        <href>https://github.com/42BV/csveed</href>
     </bannerRight>
     <skin>
         <groupId>org.apache.maven.skins</groupId>
@@ -34,10 +34,10 @@
     </custom>
     <body>
         <head>
-            <![CDATA[<meta http-equiv="refresh" content="5; url = http://csveed.org/csveed.html" />]]>
+            <![CDATA[<meta http-equiv="refresh" content="5; url = https://42BV.github.io/CSVeed/csveed.html" />]]>
         </head>
         <links>
-            <item name="Csveed" href="http://github.com/42BV/csveed" />
+            <item name="Csveed" href="https://github.com/42BV/csveed" />
         </links>
         <breadcrumbs>
             <item name="Csveed" href="csveed.html"/>
