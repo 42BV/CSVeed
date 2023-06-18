@@ -55,7 +55,7 @@
     </issueManagement>
     <ciManagement>
         <system>GitHub Actions</system>
-        <url>https://travis-ci.org/42BV/CSVeed</url>
+        <url>https://github.com/42BV/CSVeed/actions</url>
     </ciManagement>
     <distributionManagement>
         <site>
