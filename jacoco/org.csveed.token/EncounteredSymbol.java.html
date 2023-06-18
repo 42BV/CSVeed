@@ -1,41 +1,95 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EncounteredSymbol.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.token</a> &gt; <span class="el_source">EncounteredSymbol.java</span></div><h1>EncounteredSymbol.java</h1><pre class="source lang-java linenums">package org.csveed.token;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EncounteredSymbol.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.token</a> &gt; <span class="el_source">EncounteredSymbol.java</span></div><h1>EncounteredSymbol.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.token;
 
-<span class="fc" id="L3">public enum EncounteredSymbol {</span>
-<span class="fc" id="L4">    SPACE_SYMBOL,</span>
-<span class="fc" id="L5">    SEPARATOR_SYMBOL,</span>
-<span class="fc" id="L6">    QUOTE_SYMBOL(true),</span>
-<span class="fc" id="L7">    ESCAPE_SYMBOL(true),</span>
-<span class="fc" id="L8">    EOL_SYMBOL,</span>
-<span class="fc" id="L9">    EOL_SYMBOL_TRASH(false, true),</span>
-<span class="fc" id="L10">    OTHER_SYMBOL,</span>
-<span class="fc" id="L11">    BOM_SYMBOL(false, true),</span>
-<span class="fc" id="L12">    END_OF_FILE_SYMBOL,</span>
-<span class="fc" id="L13">    COMMENT_SYMBOL;</span>
+/**
+ * The Enum EncounteredSymbol.
+ */
+<span class="fc" id="L16">public enum EncounteredSymbol {</span>
 
-<span class="fc" id="L15">    private boolean checkForSimilarEscapeAndQuote = false;</span>
+    /** The space symbol. */
+<span class="fc" id="L19">    SPACE_SYMBOL,</span>
+    /** The separator symbol. */
+<span class="fc" id="L21">    SEPARATOR_SYMBOL,</span>
+    /** The quote symbol. */
+<span class="fc" id="L23">    QUOTE_SYMBOL(true),</span>
+    /** The escape symbol. */
+<span class="fc" id="L25">    ESCAPE_SYMBOL(true),</span>
+    /** The eol symbol. */
+<span class="fc" id="L27">    EOL_SYMBOL,</span>
+    /** The eol symbol trash. */
+<span class="fc" id="L29">    EOL_SYMBOL_TRASH(false, true),</span>
 
-<span class="fc" id="L17">    private boolean trash = false;</span>
+    /** The other symbol. */
+<span class="fc" id="L32">    OTHER_SYMBOL,</span>
+    /** The bom symbol. */
+<span class="fc" id="L34">    BOM_SYMBOL(false, true),</span>
+    /** The end of file symbol. */
+<span class="fc" id="L36">    END_OF_FILE_SYMBOL,</span>
+    /** The comment symbol. */
+<span class="fc" id="L38">    COMMENT_SYMBOL;</span>
 
-    private EncounteredSymbol() {
-<span class="fc" id="L20">        this(false, false);</span>
-<span class="fc" id="L21">    }</span>
+    /** The check for similar escape and quote. */
+    private final boolean checkForSimilarEscapeAndQuote;
 
-    private EncounteredSymbol(boolean checkForSimilarEscapeAndQuote) {
-<span class="fc" id="L24">        this(checkForSimilarEscapeAndQuote, false);</span>
-<span class="fc" id="L25">    }</span>
+    /** The trash. */
+    private final boolean trash;
 
-<span class="fc" id="L27">    private EncounteredSymbol(boolean checkForSimilarEscapeAndQuote, boolean trash) {</span>
-<span class="fc" id="L28">        this.checkForSimilarEscapeAndQuote = checkForSimilarEscapeAndQuote;</span>
-<span class="fc" id="L29">        this.trash = trash;</span>
-<span class="fc" id="L30">    }</span>
+    /**
+     * Instantiates a new encountered symbol.
+     */
+    EncounteredSymbol() {
+<span class="fc" id="L50">        this(false, false);</span>
+<span class="fc" id="L51">    }</span>
 
+    /**
+     * Instantiates a new encountered symbol.
+     *
+     * @param checkForSimilarEscapeAndQuote
+     *            the check for similar escape and quote
+     */
+    EncounteredSymbol(boolean checkForSimilarEscapeAndQuote) {
+<span class="fc" id="L60">        this(checkForSimilarEscapeAndQuote, false);</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Instantiates a new encountered symbol.
+     *
+     * @param checkForSimilarEscapeAndQuote
+     *            the check for similar escape and quote
+     * @param trash
+     *            the trash
+     */
+<span class="fc" id="L71">    EncounteredSymbol(boolean checkForSimilarEscapeAndQuote, boolean trash) {</span>
+<span class="fc" id="L72">        this.checkForSimilarEscapeAndQuote = checkForSimilarEscapeAndQuote;</span>
+<span class="fc" id="L73">        this.trash = trash;</span>
+<span class="fc" id="L74">    }</span>
+
+    /**
+     * Checks if is check for similar escape and quote.
+     *
+     * @return true, if is check for similar escape and quote
+     */
     public boolean isCheckForSimilarEscapeAndQuote() {
-<span class="fc" id="L33">        return this.checkForSimilarEscapeAndQuote;</span>
+<span class="fc" id="L82">        return this.checkForSimilarEscapeAndQuote;</span>
     }
 
+    /**
+     * Checks if is trash.
+     *
+     * @return true, if is trash
+     */
     public boolean isTrash() {
-<span class="fc" id="L37">        return this.trash;</span>
+<span class="fc" id="L91">        return this.trash;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

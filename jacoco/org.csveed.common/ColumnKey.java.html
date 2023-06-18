@@ -1,16 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColumnKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.common</a> &gt; <span class="el_source">ColumnKey.java</span></div><h1>ColumnKey.java</h1><pre class="source lang-java linenums">package org.csveed.common;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColumnKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.common</a> &gt; <span class="el_source">ColumnKey.java</span></div><h1>ColumnKey.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.common;
 
-<span class="fc" id="L3">public abstract class ColumnKey implements Comparable&lt;ColumnKey&gt; {</span>
+/**
+ * The Class ColumnKey.
+ */
+<span class="fc" id="L16">public abstract class ColumnKey implements Comparable&lt;ColumnKey&gt; {</span>
 
+    /**
+     * Gets the priority.
+     *
+     * @return the priority
+     */
     public abstract Integer getPriority();
 
+    /**
+     * Same key type.
+     *
+     * @param columnKey
+     *            the column key
+     *
+     * @return true, if successful
+     */
     public boolean sameKeyType(ColumnKey columnKey) {
-<span class="fc" id="L8">        return getPriority().equals(columnKey.getPriority());</span>
+<span class="fc" id="L34">        return getPriority().equals(columnKey.getPriority());</span>
     }
 
+    /**
+     * Key type compare.
+     *
+     * @param columnKey
+     *            the column key
+     *
+     * @return the int
+     */
     public int keyTypeCompare(ColumnKey columnKey) {
-<span class="nc" id="L12">        return getPriority().compareTo(columnKey.getPriority());</span>
+<span class="nc" id="L46">        return getPriority().compareTo(columnKey.getPriority());</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

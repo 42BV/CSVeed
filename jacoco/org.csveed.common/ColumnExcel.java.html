@@ -1,20 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColumnExcel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.common</a> &gt; <span class="el_source">ColumnExcel.java</span></div><h1>ColumnExcel.java</h1><pre class="source lang-java linenums">package org.csveed.common;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColumnExcel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.common</a> &gt; <span class="el_source">ColumnExcel.java</span></div><h1>ColumnExcel.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.common;
 
+import java.util.Locale;
+
+/**
+ * The Class ColumnExcel.
+ */
 public class ColumnExcel extends Column {
 
+    /**
+     * Instantiates a new column excel.
+     *
+     * @param columnExcel
+     *            the column excel
+     */
     public ColumnExcel(String columnExcel) {
-<span class="fc" id="L6">        super(excelColumnToColumnIndex(columnExcel));</span>
-<span class="fc" id="L7">    }</span>
+<span class="fc" id="L27">        super(excelColumnToColumnIndex(columnExcel));</span>
+<span class="fc" id="L28">    }</span>
 
+    /**
+     * Excel column to column index.
+     *
+     * @param excelColumn
+     *            the excel column
+     *
+     * @return the int
+     */
     private static int excelColumnToColumnIndex(String excelColumn) {
-<span class="fc" id="L10">        excelColumn = excelColumn.toUpperCase();</span>
-<span class="fc" id="L11">        int sum = 0;</span>
-<span class="fc bfc" id="L12" title="All 2 branches covered.">        for (char currentChar : excelColumn.toCharArray()) {</span>
-<span class="fc" id="L13">            sum *= 26;</span>
-<span class="fc" id="L14">            sum += currentChar - 'A' + 1;</span>
+<span class="fc" id="L39">        excelColumn = excelColumn.toUpperCase(Locale.getDefault());</span>
+<span class="fc" id="L40">        int sum = 0;</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (int i = 0; i &lt; excelColumn.length(); i++) {</span>
+<span class="fc" id="L42">            char currentChar = excelColumn.charAt(i);</span>
+<span class="fc" id="L43">            sum *= 26;</span>
+<span class="fc" id="L44">            sum += currentChar - 'A' + 1;</span>
         }
-<span class="fc" id="L16">        return sum;</span>
+<span class="fc" id="L46">        return sum;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

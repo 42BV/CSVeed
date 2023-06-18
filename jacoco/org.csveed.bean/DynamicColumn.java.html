@@ -1,12 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DynamicColumn.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean</a> &gt; <span class="el_source">DynamicColumn.java</span></div><h1>DynamicColumn.java</h1><pre class="source lang-java linenums">package org.csveed.bean;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DynamicColumn.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean</a> &gt; <span class="el_source">DynamicColumn.java</span></div><h1>DynamicColumn.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.bean;
 
 import org.csveed.common.Column;
 
 /**
  * &lt;p&gt;
- *     The concept of dynamic columns comes into play when a sheet contains columns that are not really part
- *     of the columns, but should have been separate rows. For example, let's say you have a table that looks
- *     like this:
+ * The concept of dynamic columns comes into play when a sheet contains columns that are not really part of the columns,
+ * but should have been separate rows. For example, let's say you have a table that looks like this:
  * &lt;/p&gt;
  * &lt;code&gt;
  *     | name   | town   | jan 14 | jan 15 | jan 16 |
@@ -16,8 +25,7 @@ import org.csveed.common.Column;
  *     | Erik   | Sneek  |   1    |   0    |   9    |
  * &lt;/code&gt;
  * &lt;p&gt;
- *     Let's say you want to compact this table into the following, normalized format:
- * &lt;code&gt;
+ * Let's say you want to compact this table into the following, normalized format: &lt;code&gt;
  *     | name   | town   | date   | visits |
  *     | Rob    | Leiden | jan 14 |   4    |
  *     | Rob    | Leiden | jan 15 |   1    |
@@ -33,55 +41,95 @@ import org.csveed.common.Column;
  *     | Erik   | Sneek  | jan 16 |   9    |
  * &lt;/code&gt;
  * &lt;p&gt;
- *     In order to realize this goal, you need to make that startIndexDynamicColumns is set to 3 on @CsvFile.
- *     This will assume the columns starting with the third and all thereafter are dynamic. For every dynamic
- *     column, a new bean will be created. All static columns will be copied into every created bean.
+ * In order to realize this goal, you need to make that startIndexDynamicColumns is set to 3 on @CsvFile. This will
+ * assume the columns starting with the third and all thereafter are dynamic. For every dynamic column, a new bean will
+ * be created. All static columns will be copied into every created bean.
  * &lt;/p&gt;
  * &lt;p&gt;
- *     The header name and the cell value can be copied into bean properties. In the example, the bean requires
- *     two fields date and visits. date must be annotated with @CsvHeaderName and visits with @CsvHeaderValue.
+ * The header name and the cell value can be copied into bean properties. In the example, the bean requires two fields
+ * date and visits. date must be annotated with @CsvHeaderName and visits with @CsvHeaderValue.
  * &lt;/p&gt;
- * @author Robert Bor
  */
 public class DynamicColumn {
 
+    /** The start column. */
     private Column startColumn;
 
+    /** The current column. */
     private Column currentColumn;
 
-<span class="fc" id="L52">    public DynamicColumn(Column configuredStartColumn) {</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">        this.startColumn = configuredStartColumn == null ? null : new Column(configuredStartColumn);</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        this.currentColumn = configuredStartColumn == null ? null : new Column(configuredStartColumn);</span>
-<span class="fc" id="L55">    }</span>
+    /**
+     * Instantiates a new dynamic column.
+     *
+     * @param configuredStartColumn
+     *            the configured start column
+     */
+<span class="fc" id="L67">    public DynamicColumn(Column configuredStartColumn) {</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        this.startColumn = configuredStartColumn == null ? null : new Column(configuredStartColumn);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        this.currentColumn = configuredStartColumn == null ? null : new Column(configuredStartColumn);</span>
+<span class="fc" id="L70">    }</span>
 
+    /**
+     * Check for reset.
+     *
+     * @param numberOfColumns
+     *            the number of columns
+     */
     public void checkForReset(int numberOfColumns) {
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (lastDynamicColumnPassed(numberOfColumns)) {</span>
-<span class="fc" id="L59">            reset();</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (lastDynamicColumnPassed(numberOfColumns)) {</span>
+<span class="fc" id="L80">            reset();</span>
         }
-<span class="fc" id="L61">    }</span>
+<span class="fc" id="L82">    }</span>
 
+    /**
+     * Reset.
+     */
     protected void reset() {
-<span class="fc" id="L64">        this.currentColumn = new Column(this.startColumn);</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L88">        this.currentColumn = new Column(this.startColumn);</span>
+<span class="fc" id="L89">    }</span>
 
+    /**
+     * Last dynamic column passed.
+     *
+     * @param numberOfColumns
+     *            the number of columns
+     *
+     * @return true, if successful
+     */
     protected boolean lastDynamicColumnPassed(int numberOfColumns) {
-<span class="fc bfc" id="L68" title="All 4 branches covered.">        return this.currentColumn != null &amp;&amp; this.currentColumn.getColumnIndex() &gt; numberOfColumns;</span>
+<span class="fc bfc" id="L100" title="All 4 branches covered.">        return this.currentColumn != null &amp;&amp; this.currentColumn.getColumnIndex() &gt; numberOfColumns;</span>
     }
 
+    /**
+     * At first dynamic column.
+     *
+     * @return true, if successful
+     */
     public boolean atFirstDynamicColumn() {
-<span class="fc bfc" id="L72" title="All 4 branches covered.">        return this.startColumn == null || this.startColumn.equals(this.currentColumn);</span>
+<span class="fc bfc" id="L109" title="All 4 branches covered.">        return this.startColumn == null || this.startColumn.equals(this.currentColumn);</span>
     }
 
+    /**
+     * Advance dynamic column.
+     */
     public void advanceDynamicColumn() {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (currentColumn == null) {</span>
-<span class="fc" id="L77">            return;</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (currentColumn == null) {</span>
+<span class="fc" id="L117">            return;</span>
         }
-<span class="fc" id="L79">        this.currentColumn = currentColumn.nextColumn();</span>
-<span class="fc" id="L80">    }</span>
+<span class="fc" id="L119">        this.currentColumn = currentColumn.nextColumn();</span>
+<span class="fc" id="L120">    }</span>
 
+    /**
+     * Checks if is dynamic column active.
+     *
+     * @param currentColumn
+     *            the current column
+     *
+     * @return true, if is dynamic column active
+     */
     public boolean isDynamicColumnActive(Column currentColumn) {
-<span class="fc bfc" id="L83" title="All 4 branches covered.">        return this.currentColumn != null &amp;&amp; this.currentColumn.getColumnIndex() == currentColumn.getColumnIndex();</span>
+<span class="fc bfc" id="L131" title="All 4 branches covered.">        return this.currentColumn != null &amp;&amp; this.currentColumn.getColumnIndex() == currentColumn.getColumnIndex();</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

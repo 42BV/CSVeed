@@ -1,4 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColumnNameMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean</a> &gt; <span class="el_source">ColumnNameMapper.java</span></div><h1>ColumnNameMapper.java</h1><pre class="source lang-java linenums">package org.csveed.bean;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColumnNameMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean</a> &gt; <span class="el_source">ColumnNameMapper.java</span></div><h1>ColumnNameMapper.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.bean;
 
 import java.util.Set;
 
@@ -10,38 +20,43 @@ import org.csveed.report.RowError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-<span class="fc" id="L13">public class ColumnNameMapper&lt;T&gt; extends AbstractMapper&lt;T&gt; {</span>
+/**
+ * The Class ColumnNameMapper.
+ *
+ * @param &lt;T&gt;
+ *            the generic type
+ */
+<span class="fc" id="L29">public class ColumnNameMapper&lt;T&gt; extends AbstractMapper&lt;T&gt; {</span>
 
-<span class="fc" id="L15">    private static final Logger logger = LoggerFactory.getLogger(ColumnNameMapper.class);</span>
+    /** The Constant logger. */
+<span class="fc" id="L32">    private static final Logger logger = LoggerFactory.getLogger(ColumnNameMapper.class);</span>
 
     @Override
     protected Set&lt;Column&gt; keys() {
-<span class="fc" id="L19">        return beanInstructions.getProperties().columnNameKeys();</span>
+<span class="fc" id="L36">        return beanInstructions.getProperties().columnNameKeys();</span>
     }
 
     @Override
     public BeanProperty getBeanProperty(Column column) {
-<span class="fc" id="L24">        return beanInstructions.getProperties().fromName(column);</span>
+<span class="fc" id="L41">        return beanInstructions.getProperties().fromName(column);</span>
     }
 
     @Override
     protected void checkKey(Header header, Column key) {
         try {
-<span class="fc" id="L30">            header.getIndex(key.getColumnName());</span>
-<span class="fc" id="L31">        } catch (CsvException e) {</span>
-<span class="fc" id="L32">            logger.trace(&quot;&quot;, e);</span>
-<span class="fc" id="L33">            throw new CsvException(new RowError(</span>
-                    &quot;The header row does not contain column \&quot;&quot; + key + &quot;\&quot;. Originally mapped to property \&quot;&quot; +
-<span class="fc" id="L35">                            getBeanProperty(key).getPropertyName() + &quot;\&quot;&quot;,</span>
-<span class="fc" id="L36">                    header.reportOnEndOfLine(), 0</span>
-                    ));
-<span class="fc" id="L38">        }</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L47">            header.getIndex(key.getColumnName());</span>
+<span class="fc" id="L48">        } catch (CsvException e) {</span>
+<span class="fc" id="L49">            logger.trace(&quot;&quot;, e);</span>
+<span class="fc" id="L50">            throw new CsvException(new RowError(&quot;The header row does not contain column \&quot;&quot; + key</span>
+<span class="fc" id="L51">                    + &quot;\&quot;. Originally mapped to property \&quot;&quot; + getBeanProperty(key).getPropertyName() + &quot;\&quot;&quot;,</span>
+<span class="fc" id="L52">                    header.reportOnEndOfLine(), 0));</span>
+<span class="fc" id="L53">        }</span>
+<span class="fc" id="L54">    }</span>
 
     @Override
     protected Column getColumn(Row row) {
-<span class="fc" id="L43">        return new Column().setHeader(row.getHeader());</span>
+<span class="fc" id="L58">        return new Column().setHeader(row.getHeader());</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

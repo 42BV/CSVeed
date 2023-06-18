@@ -1,61 +1,110 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomNumberConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean.conversion</a> &gt; <span class="el_source">CustomNumberConverter.java</span></div><h1>CustomNumberConverter.java</h1><pre class="source lang-java linenums">package org.csveed.bean.conversion;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomNumberConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean.conversion</a> &gt; <span class="el_source">CustomNumberConverter.java</span></div><h1>CustomNumberConverter.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.bean.conversion;
 
 import static org.csveed.bean.conversion.ConversionUtil.hasText;
 
 import java.text.NumberFormat;
 
+/**
+ * The Class CustomNumberConverter.
+ */
 public class CustomNumberConverter extends AbstractConverter&lt;Number&gt; {
 
+    /** The number class. */
     private final Class&lt;? extends Number&gt; numberClass;
 
+    /** The number format. */
     private final NumberFormat numberFormat;
 
+    /** The allow empty. */
     private final boolean allowEmpty;
 
-    public CustomNumberConverter(Class&lt;? extends Number&gt; numberClass, boolean allowEmpty) throws IllegalArgumentException {
-<span class="fc" id="L16">        this(numberClass, null, allowEmpty);</span>
-<span class="fc" id="L17">    }</span>
+    /**
+     * Instantiates a new custom number converter.
+     *
+     * @param numberClass
+     *            the number class
+     * @param allowEmpty
+     *            the allow empty
+     *
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     */
+    public CustomNumberConverter(Class&lt;? extends Number&gt; numberClass, boolean allowEmpty)
+            throws IllegalArgumentException {
+<span class="fc" id="L44">        this(numberClass, null, allowEmpty);</span>
+<span class="fc" id="L45">    }</span>
 
-    public CustomNumberConverter(Class&lt;? extends Number&gt; numberClass,
-                              NumberFormat numberFormat, boolean allowEmpty) throws IllegalArgumentException {
-<span class="fc" id="L21">        super(Number.class);</span>
+    /**
+     * Instantiates a new custom number converter.
+     *
+     * @param numberClass
+     *            the number class
+     * @param numberFormat
+     *            the number format
+     * @param allowEmpty
+     *            the allow empty
+     *
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     */
+    public CustomNumberConverter(Class&lt;? extends Number&gt; numberClass, NumberFormat numberFormat, boolean allowEmpty)
+            throws IllegalArgumentException {
+<span class="fc" id="L62">        super(Number.class);</span>
 
-<span class="pc bpc" id="L23" title="2 of 4 branches missed.">        if (numberClass == null || !Number.class.isAssignableFrom(numberClass)) {</span>
-<span class="nc" id="L24">            throw new IllegalArgumentException(&quot;Property class must be a subclass of Number&quot;);</span>
+<span class="pc bpc" id="L64" title="2 of 4 branches missed.">        if (numberClass == null || !Number.class.isAssignableFrom(numberClass)) {</span>
+<span class="nc" id="L65">            throw new IllegalArgumentException(&quot;Property class must be a subclass of Number&quot;);</span>
         }
-<span class="fc" id="L26">        this.numberClass = numberClass;</span>
-<span class="fc" id="L27">        this.numberFormat = numberFormat;</span>
-<span class="fc" id="L28">        this.allowEmpty = allowEmpty;</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L67">        this.numberClass = numberClass;</span>
+<span class="fc" id="L68">        this.numberFormat = numberFormat;</span>
+<span class="fc" id="L69">        this.allowEmpty = allowEmpty;</span>
+<span class="fc" id="L70">    }</span>
 
     @Override
     public Number fromString(String text) throws Exception {
-<span class="pc bpc" id="L33" title="1 of 4 branches missed.">        if (this.allowEmpty &amp;&amp; !hasText(text)) {</span>
-<span class="nc" id="L34">            return null;</span>
-<span class="fc bfc" id="L35" title="All 2 branches covered.">        } else if (this.numberFormat != null) {</span>
-<span class="fc" id="L36">            return determineValue(NumberUtils.parseNumber(text, this.numberClass, this.numberFormat));</span>
-        } else {
-<span class="fc" id="L38">            return determineValue(NumberUtils.parseNumber(text, this.numberClass));</span>
+<span class="pc bpc" id="L74" title="1 of 4 branches missed.">        if (this.allowEmpty &amp;&amp; !hasText(text)) {</span>
+<span class="nc" id="L75">            return null;</span>
         }
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (this.numberFormat != null) {</span>
+<span class="fc" id="L78">            return determineValue(NumberUtils.parseNumber(text, this.numberClass, this.numberFormat));</span>
+        }
+<span class="fc" id="L80">        return determineValue(NumberUtils.parseNumber(text, this.numberClass));</span>
     }
 
+    /**
+     * Determine value.
+     *
+     * @param value
+     *            the value
+     *
+     * @return the number
+     */
     public Number determineValue(Object value) {
-<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        if (value instanceof Number) {</span>
-<span class="fc" id="L44">            return NumberUtils.convertNumberToTargetClass((Number) value, this.numberClass);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (value instanceof Number) {</span>
+<span class="fc" id="L93">            return NumberUtils.convertNumberToTargetClass((Number) value, this.numberClass);</span>
         }
-<span class="nc" id="L46">        return null;</span>
+<span class="nc" id="L95">        return null;</span>
     }
 
     @Override
     public String toString(Number value) throws Exception {
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (value == null) {</span>
-<span class="nc" id="L52">            return &quot;&quot;;</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (value == null) {</span>
+<span class="nc" id="L101">            return &quot;&quot;;</span>
         }
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (this.numberFormat != null) {</span>
-<span class="fc" id="L55">            return this.numberFormat.format(value);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (this.numberFormat != null) {</span>
+<span class="fc" id="L104">            return this.numberFormat.format(value);</span>
         }
-<span class="fc" id="L57">        return value.toString();</span>
+<span class="fc" id="L106">        return value.toString();</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

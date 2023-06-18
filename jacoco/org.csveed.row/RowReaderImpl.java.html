@@ -1,4 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RowReaderImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.row</a> &gt; <span class="el_source">RowReaderImpl.java</span></div><h1>RowReaderImpl.java</h1><pre class="source lang-java linenums">package org.csveed.row;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RowReaderImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.row</a> &gt; <span class="el_source">RowReaderImpl.java</span></div><h1>RowReaderImpl.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.row;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -13,145 +23,181 @@ import org.csveed.token.ParseException;
 import org.csveed.token.ParseStateMachine;
 
 /**
-* Builds up a List of cells (String) per read row. Note that this class is stateful, so it
-* can support a per-row parse approach as well.
-* @author Robert Bor
-*/
+ * Builds up a List of cells (String) per read row. Note that this class is stateful, so it can support a per-row parse
+ * approach as well.
+ */
 public class RowReaderImpl implements RowReader {
 
-<span class="fc" id="L22">    private ParseStateMachine stateMachine = new ParseStateMachine();</span>
+    /** The state machine. */
+<span class="fc" id="L32">    private ParseStateMachine stateMachine = new ParseStateMachine();</span>
 
+    /** The row instructions. */
     private RowInstructionsImpl rowInstructions;
 
-<span class="fc" id="L26">    private int maxNumberOfColumns = -1;</span>
+    /** The max number of columns. */
+<span class="fc" id="L38">    private int maxNumberOfColumns = -1;</span>
 
+    /** The header. */
     private HeaderImpl header;
 
+    /** The reader. */
     private Reader reader;
 
+    /**
+     * Instantiates a new row reader impl.
+     *
+     * @param reader
+     *            the reader
+     */
     public RowReaderImpl(Reader reader) {
-<span class="fc" id="L33">        this(reader, new RowInstructionsImpl());</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L53">        this(reader, new RowInstructionsImpl());</span>
+<span class="fc" id="L54">    }</span>
 
-<span class="fc" id="L36">    public RowReaderImpl(Reader reader, RowInstructions instructionsInterface) {</span>
-<span class="fc" id="L37">        this.reader = reader;</span>
-<span class="fc" id="L38">        this.rowInstructions = (RowInstructionsImpl) instructionsInterface;</span>
-<span class="fc" id="L39">        stateMachine.setSymbolMapping(rowInstructions.getSymbolMapping());</span>
-<span class="fc" id="L40">    }</span>
+    /**
+     * Instantiates a new row reader impl.
+     *
+     * @param reader
+     *            the reader
+     * @param instructionsInterface
+     *            the instructions interface
+     */
+<span class="fc" id="L64">    public RowReaderImpl(Reader reader, RowInstructions instructionsInterface) {</span>
+<span class="fc" id="L65">        this.reader = reader;</span>
+<span class="fc" id="L66">        this.rowInstructions = (RowInstructionsImpl) instructionsInterface;</span>
+<span class="fc" id="L67">        stateMachine.setSymbolMapping(rowInstructions.getSymbolMapping());</span>
+<span class="fc" id="L68">    }</span>
 
     @Override
     public List&lt;Row&gt; readRows() {
-<span class="fc" id="L44">        List&lt;Row&gt; allRows = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L45" title="All 2 branches covered.">        while (!isFinished()) {</span>
-<span class="fc" id="L46">            Row row = readRow();</span>
-<span class="pc bpc" id="L47" title="1 of 4 branches missed.">            if (row != null &amp;&amp; row.size() &gt; 0) {</span>
-<span class="fc" id="L48">                allRows.add(row);</span>
+<span class="fc" id="L72">        List&lt;Row&gt; allRows = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        while (!isFinished()) {</span>
+<span class="fc" id="L74">            Row row = readRow();</span>
+<span class="pc bpc" id="L75" title="1 of 4 branches missed.">            if (row != null &amp;&amp; row.size() &gt; 0) {</span>
+<span class="fc" id="L76">                allRows.add(row);</span>
             }
-<span class="fc" id="L50">        }</span>
-<span class="fc" id="L51">        return allRows;</span>
+<span class="fc" id="L78">        }</span>
+<span class="fc" id="L79">        return allRows;</span>
     }
 
     @Override
     public Row readRow() {
-<span class="fc" id="L56">        getHeader();</span>
-<span class="fc" id="L57">        Line unmappedLine = readBareLine();</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (unmappedLine == null) {</span>
-<span class="fc" id="L59">            return null;</span>
+<span class="fc" id="L84">        getHeader();</span>
+<span class="fc" id="L85">        Line unmappedLine = readBareLine();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (unmappedLine == null) {</span>
+<span class="fc" id="L87">            return null;</span>
         }
-<span class="fc" id="L61">        checkNumberOfColumns(unmappedLine);</span>
-<span class="fc" id="L62">        return new RowImpl(unmappedLine, getHeader());</span>
+<span class="fc" id="L89">        checkNumberOfColumns(unmappedLine);</span>
+<span class="fc" id="L90">        return new RowImpl(unmappedLine, getHeader());</span>
     }
 
     @Override
     public int getCurrentLine() {
-<span class="fc" id="L67">        return this.stateMachine.getCurrentLine();</span>
+<span class="fc" id="L95">        return this.stateMachine.getCurrentLine();</span>
     }
 
     @Override
     public Header getHeader() {
-<span class="fc bfc" id="L72" title="All 4 branches covered.">        return header == null &amp;&amp; rowInstructions.isUseHeader() ? readHeader() : header;</span>
+<span class="fc bfc" id="L100" title="All 4 branches covered.">        return header == null &amp;&amp; rowInstructions.isUseHeader() ? readHeader() : header;</span>
     }
 
+    /**
+     * Gets the max number of columns.
+     *
+     * @return the max number of columns
+     */
     public int getMaxNumberOfColumns() {
-<span class="fc" id="L76">        return this.maxNumberOfColumns;</span>
+<span class="fc" id="L109">        return this.maxNumberOfColumns;</span>
     }
 
     @Override
     public Header readHeader() {
-<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (header != null) {</span>
-<span class="fc" id="L82">            return header;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if (header != null) {</span>
+<span class="fc" id="L115">            return header;</span>
         }
-<span class="fc" id="L84">        Line unmappedLine = readBareLine();</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        if (unmappedLine == null) {</span>
-<span class="nc" id="L86">            return null;</span>
+<span class="fc" id="L117">        Line unmappedLine = readBareLine();</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        if (unmappedLine == null) {</span>
+<span class="nc" id="L119">            return null;</span>
         }
-<span class="fc" id="L88">        return header = new HeaderImpl(unmappedLine);</span>
+<span class="fc" id="L121">        header = new HeaderImpl(unmappedLine);</span>
+<span class="fc" id="L122">        return header;</span>
     }
 
+    /**
+     * Check number of columns.
+     *
+     * @param unmappedLine
+     *            the unmapped line
+     */
     private void checkNumberOfColumns(Line unmappedLine) {
-<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (maxNumberOfColumns == -1) {</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">            maxNumberOfColumns = header == null ? unmappedLine.size() : header.size();</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (maxNumberOfColumns == -1) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            maxNumberOfColumns = header == null ? unmappedLine.size() : header.size();</span>
         }
-<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (unmappedLine.size() != maxNumberOfColumns) {</span>
-<span class="fc" id="L96">            throw new CsvException(new RowError(</span>
-<span class="fc" id="L97">                    &quot;The expected number of columns is &quot; + maxNumberOfColumns + &quot;, whereas it was &quot; + unmappedLine.size(),</span>
-<span class="fc" id="L98">                    unmappedLine.reportOnEndOfLine(), getCurrentLine()</span>
-                    ));
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (unmappedLine.size() != maxNumberOfColumns) {</span>
+<span class="fc" id="L136">            throw new CsvException(new RowError(&quot;The expected number of columns is &quot; + maxNumberOfColumns</span>
+<span class="fc" id="L137">                    + &quot;, whereas it was &quot; + unmappedLine.size(), unmappedLine.reportOnEndOfLine(), getCurrentLine()));</span>
         }
-<span class="fc" id="L101">    }</span>
+<span class="fc" id="L139">    }</span>
 
     @Override
     public boolean isFinished() {
-<span class="fc" id="L105">        return stateMachine.isFinished();</span>
+<span class="fc" id="L143">        return stateMachine.isFinished();</span>
     }
 
+    /**
+     * Log settings.
+     */
     protected void logSettings() {
-<span class="fc" id="L109">        rowInstructions.logSettings();</span>
-<span class="fc" id="L110">        this.stateMachine.getSymbolMapping().logSettings();</span>
-<span class="fc" id="L111">    }</span>
+<span class="fc" id="L150">        rowInstructions.logSettings();</span>
+<span class="fc" id="L151">        this.stateMachine.getSymbolMapping().logSettings();</span>
+<span class="fc" id="L152">    }</span>
 
+    /**
+     * Read bare line.
+     *
+     * @return the line
+     */
     protected Line readBareLine() {
-<span class="fc" id="L114">        logSettings();</span>
+<span class="fc" id="L160">        logSettings();</span>
 
-<span class="fc" id="L116">        LineWithInfo line = null;</span>
-<span class="fc bfc" id="L117" title="All 4 branches covered.">        while (line == null &amp;&amp; !stateMachine.isFinished()) {</span>
-<span class="fc" id="L118">            line = new LineWithInfo();</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">            while (!stateMachine.isFinished()) {</span>
+<span class="fc" id="L162">        LineWithInfo line = null;</span>
+<span class="fc bfc" id="L163" title="All 4 branches covered.">        while (line == null &amp;&amp; !stateMachine.isFinished()) {</span>
+<span class="fc" id="L164">            line = new LineWithInfo();</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">            while (!stateMachine.isFinished()) {</span>
                 final String token;
                 final int symbol;
                 try {
-<span class="fc" id="L123">                    symbol = reader.read();</span>
-<span class="nc" id="L124">                } catch (IOException err) {</span>
-<span class="nc" id="L125">                    throw new RuntimeException(err);</span>
-<span class="fc" id="L126">                }</span>
+<span class="fc" id="L169">                    symbol = reader.read();</span>
+<span class="nc" id="L170">                } catch (IOException err) {</span>
+<span class="nc" id="L171">                    throw new RuntimeException(err);</span>
+<span class="fc" id="L172">                }</span>
                 try {
-<span class="fc" id="L128">                    token = stateMachine.offerSymbol(symbol);</span>
-<span class="fc" id="L129">                } catch (ParseException e) {</span>
-<span class="fc" id="L130">                    throw new CsvException(new RowError(e.getMessage(), line.reportOnEndOfLine(), getCurrentLine()));</span>
-<span class="fc" id="L131">                }</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">                if (stateMachine.isTrash()) {</span>
-<span class="fc" id="L133">                    continue;</span>
+<span class="fc" id="L174">                    token = stateMachine.offerSymbol(symbol);</span>
+<span class="fc" id="L175">                } catch (ParseException e) {</span>
+<span class="fc" id="L176">                    throw new CsvException(new RowError(e.getMessage(), line.reportOnEndOfLine(), getCurrentLine()));</span>
+<span class="fc" id="L177">                }</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">                if (stateMachine.isTrash()) {</span>
+<span class="fc" id="L179">                    continue;</span>
                 }
-<span class="fc bfc" id="L135" title="All 2 branches covered.">                if (stateMachine.isTokenStart()) {</span>
-<span class="fc" id="L136">                    line.markStartOfColumn();</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">                if (stateMachine.isTokenStart()) {</span>
+<span class="fc" id="L182">                    line.markStartOfColumn();</span>
                 }
-<span class="fc bfc" id="L138" title="All 2 branches covered.">                if (token != null) {</span>
-<span class="fc" id="L139">                    line.addCell(token);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">                if (token != null) {</span>
+<span class="fc" id="L185">                    line.addCell(token);</span>
                 }
-<span class="fc" id="L141">                line.addCharacter(symbol);</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">                if (stateMachine.isLineFinished()) {</span>
-<span class="fc" id="L143">                    break;</span>
+<span class="fc" id="L187">                line.addCharacter(symbol);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">                if (stateMachine.isLineFinished()) {</span>
+<span class="fc" id="L189">                    break;</span>
                 }
-<span class="fc" id="L145">            }</span>
-<span class="fc bfc" id="L146" title="All 4 branches covered.">            line = stateMachine.ignoreLine() &amp;&amp; rowInstructions.isSkipEmptyLines() ? null : line;</span>
+<span class="fc" id="L191">            }</span>
+<span class="fc bfc" id="L192" title="All 4 branches covered.">            line = stateMachine.ignoreLine() &amp;&amp; rowInstructions.isSkipEmptyLines() ? null : line;</span>
         }
-<span class="fc" id="L148">        return line;</span>
+<span class="fc" id="L194">        return line;</span>
     }
 
     @Override
     public RowInstructions getRowInstructions() {
-<span class="fc" id="L153">        return this.rowInstructions;</span>
+<span class="fc" id="L199">        return this.rowInstructions;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

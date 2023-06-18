@@ -1,130 +1,162 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RowInstructionsImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.row</a> &gt; <span class="el_source">RowInstructionsImpl.java</span></div><h1>RowInstructionsImpl.java</h1><pre class="source lang-java linenums">package org.csveed.row;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RowInstructionsImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.row</a> &gt; <span class="el_source">RowInstructionsImpl.java</span></div><h1>RowInstructionsImpl.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.row;
 
 import org.csveed.token.EncounteredSymbol;
 import org.csveed.token.SymbolMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-<span class="fc" id="L8">public class RowInstructionsImpl implements RowInstructions {</span>
+/**
+ * The Class RowInstructionsImpl.
+ */
+<span class="fc" id="L21">public class RowInstructionsImpl implements RowInstructions {</span>
 
-<span class="fc" id="L10">    private static final Logger LOG = LoggerFactory.getLogger(RowInstructionsImpl.class);</span>
+    /** The Constant LOG. */
+<span class="fc" id="L24">    private static final Logger LOG = LoggerFactory.getLogger(RowInstructionsImpl.class);</span>
 
-<span class="fc" id="L12">    private SymbolMapping symbolMapping = new SymbolMapping();</span>
+    /** The symbol mapping. */
+<span class="fc" id="L27">    private SymbolMapping symbolMapping = new SymbolMapping();</span>
 
-<span class="fc" id="L14">    private boolean useHeader = true;</span>
+    /** The use header. */
+<span class="fc" id="L30">    private boolean useHeader = true;</span>
 
-<span class="fc" id="L16">    private boolean skipEmptyLines = true;</span>
+    /** The skip empty lines. */
+<span class="fc" id="L33">    private boolean skipEmptyLines = true;</span>
 
+    /** The settings logged. */
     private boolean settingsLogged;
 
-<span class="fc" id="L20">    private boolean quoteFields = true;</span>
+    /** The quote fields. */
+<span class="fc" id="L39">    private boolean quoteFields = true;</span>
 
+    /**
+     * Log settings.
+     */
     public void logSettings() {
-<span class="fc bfc" id="L23" title="All 2 branches covered.">        if (settingsLogged) {</span>
-<span class="fc" id="L24">            return;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (settingsLogged) {</span>
+<span class="fc" id="L46">            return;</span>
         }
-<span class="fc bfc" id="L26" title="All 2 branches covered.">        LOG.info(&quot;- CSV config / skip empty lines? {}&quot;, isSkipEmptyLines() ? &quot;yes&quot; : &quot;no&quot;);</span>
-<span class="fc bfc" id="L27" title="All 2 branches covered.">        LOG.info(&quot;- CSV config / has header line? {}&quot;, isUseHeader() ? &quot;yes&quot; : &quot;no&quot;);</span>
-<span class="fc" id="L28">        settingsLogged = true;</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        LOG.info(&quot;- CSV config / skip empty lines? {}&quot;, isSkipEmptyLines() ? &quot;yes&quot; : &quot;no&quot;);</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        LOG.info(&quot;- CSV config / has header line? {}&quot;, isUseHeader() ? &quot;yes&quot; : &quot;no&quot;);</span>
+<span class="fc" id="L50">        settingsLogged = true;</span>
+<span class="fc" id="L51">    }</span>
 
+    /**
+     * Gets the symbol mapping.
+     *
+     * @return the symbol mapping
+     */
     public SymbolMapping getSymbolMapping() {
-<span class="fc" id="L32">        return symbolMapping;</span>
+<span class="fc" id="L59">        return symbolMapping;</span>
     }
 
+    /**
+     * Checks if is skip empty lines.
+     *
+     * @return true, if is skip empty lines
+     */
     public boolean isSkipEmptyLines() {
-<span class="fc" id="L36">        return skipEmptyLines;</span>
+<span class="fc" id="L68">        return skipEmptyLines;</span>
     }
 
     @Override
     public boolean isUseHeader() {
-<span class="fc" id="L41">        return useHeader;</span>
+<span class="fc" id="L73">        return useHeader;</span>
     }
 
     @Override
     public RowInstructions setUseHeader(boolean useHeader) {
-<span class="fc" id="L46">        this.useHeader = useHeader;</span>
-<span class="fc" id="L47">        return this;</span>
+<span class="fc" id="L78">        this.useHeader = useHeader;</span>
+<span class="fc" id="L79">        return this;</span>
     }
 
     @Override
     public RowInstructions setStartRow(int startRow) {
-<span class="fc" id="L52">        this.symbolMapping.setStartLine(startRow);</span>
-<span class="fc" id="L53">        return this;</span>
+<span class="fc" id="L84">        this.symbolMapping.setStartLine(startRow);</span>
+<span class="fc" id="L85">        return this;</span>
     }
 
     @Override
     public char getEscape() {
-<span class="fc" id="L58">        return this.symbolMapping.getFirstMappedCharacter(EncounteredSymbol.ESCAPE_SYMBOL);</span>
+<span class="fc" id="L90">        return this.symbolMapping.getFirstMappedCharacter(EncounteredSymbol.ESCAPE_SYMBOL);</span>
     }
 
     @Override
     public RowInstructions setEscape(char symbol) {
-<span class="fc" id="L63">        this.symbolMapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, symbol);</span>
-<span class="fc" id="L64">        return this;</span>
+<span class="fc" id="L95">        this.symbolMapping.addMapping(EncounteredSymbol.ESCAPE_SYMBOL, symbol);</span>
+<span class="fc" id="L96">        return this;</span>
     }
 
     @Override
     public char getQuote() {
-<span class="fc" id="L69">        return symbolMapping.getFirstMappedCharacter(EncounteredSymbol.QUOTE_SYMBOL);</span>
+<span class="fc" id="L101">        return symbolMapping.getFirstMappedCharacter(EncounteredSymbol.QUOTE_SYMBOL);</span>
     }
 
     @Override
     public RowInstructions setQuotingEnabled(boolean quoteFields) {
-<span class="fc" id="L74">        this.quoteFields = quoteFields;</span>
-<span class="fc" id="L75">        return this;</span>
+<span class="fc" id="L106">        this.quoteFields = quoteFields;</span>
+<span class="fc" id="L107">        return this;</span>
     }
 
     @Override
     public boolean getQuotingEnabled() {
-<span class="fc" id="L80">        return quoteFields;</span>
+<span class="fc" id="L112">        return quoteFields;</span>
     }
 
     @Override
     public RowInstructions setQuote(char symbol) {
-<span class="fc" id="L85">        this.symbolMapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, symbol);</span>
-<span class="fc" id="L86">        return this;</span>
+<span class="fc" id="L117">        this.symbolMapping.addMapping(EncounteredSymbol.QUOTE_SYMBOL, symbol);</span>
+<span class="fc" id="L118">        return this;</span>
     }
 
     @Override
     public char getSeparator() {
-<span class="fc" id="L91">        return symbolMapping.getFirstMappedCharacter(EncounteredSymbol.SEPARATOR_SYMBOL);</span>
+<span class="fc" id="L123">        return symbolMapping.getFirstMappedCharacter(EncounteredSymbol.SEPARATOR_SYMBOL);</span>
     }
 
     @Override
     public RowInstructions setSeparator(char symbol) {
-<span class="fc" id="L96">        this.symbolMapping.addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, symbol);</span>
-<span class="fc" id="L97">        return this;</span>
+<span class="fc" id="L128">        this.symbolMapping.addMapping(EncounteredSymbol.SEPARATOR_SYMBOL, symbol);</span>
+<span class="fc" id="L129">        return this;</span>
     }
 
     @Override
     public RowInstructions setComment(char symbol) {
-<span class="fc" id="L102">        this.symbolMapping.addMapping(EncounteredSymbol.COMMENT_SYMBOL, symbol);</span>
-<span class="fc" id="L103">        return this;</span>
+<span class="fc" id="L134">        this.symbolMapping.addMapping(EncounteredSymbol.COMMENT_SYMBOL, symbol);</span>
+<span class="fc" id="L135">        return this;</span>
     }
 
     @Override
     public char[] getEndOfLine() {
-<span class="fc" id="L108">        return this.symbolMapping.getMappedCharacters(EncounteredSymbol.EOL_SYMBOL);</span>
+<span class="fc" id="L140">        return this.symbolMapping.getMappedCharacters(EncounteredSymbol.EOL_SYMBOL);</span>
     }
 
     @Override
     public RowInstructions setEndOfLine(char[] symbols) {
-<span class="fc" id="L113">        this.symbolMapping.addMapping(EncounteredSymbol.EOL_SYMBOL, symbols);</span>
-<span class="fc" id="L114">        return this;</span>
+<span class="fc" id="L145">        this.symbolMapping.addMapping(EncounteredSymbol.EOL_SYMBOL, symbols);</span>
+<span class="fc" id="L146">        return this;</span>
     }
 
     @Override
     public RowInstructions skipEmptyLines(boolean skip) {
-<span class="fc" id="L119">        this.skipEmptyLines = skip;</span>
-<span class="fc" id="L120">        return this;</span>
+<span class="fc" id="L151">        this.skipEmptyLines = skip;</span>
+<span class="fc" id="L152">        return this;</span>
     }
 
     @Override
     public RowInstructions skipCommentLines(boolean skip) {
-<span class="fc" id="L125">        this.symbolMapping.setSkipCommentLines(skip);</span>
-<span class="fc" id="L126">        return this;</span>
+<span class="fc" id="L157">        this.symbolMapping.setSkipCommentLines(skip);</span>
+<span class="fc" id="L158">        return this;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,26 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractCsvError.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.report</a> &gt; <span class="el_source">AbstractCsvError.java</span></div><h1>AbstractCsvError.java</h1><pre class="source lang-java linenums">package org.csveed.report;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractCsvError.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.report</a> &gt; <span class="el_source">AbstractCsvError.java</span></div><h1>AbstractCsvError.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.report;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class AbstractCsvError.
+ */
 public abstract class AbstractCsvError implements CsvError {
 
+    /** The message. */
     private String message;
 
-<span class="fc" id="L10">    public AbstractCsvError(String message) {</span>
-<span class="fc" id="L11">        this.message = message;</span>
-<span class="fc" id="L12">    }</span>
+    /**
+     * Instantiates a new abstract csv error.
+     *
+     * @param message
+     *            the message
+     */
+<span class="fc" id="L30">    protected AbstractCsvError(String message) {</span>
+<span class="fc" id="L31">        this.message = message;</span>
+<span class="fc" id="L32">    }</span>
 
     @Override
     public String getMessage() {
-<span class="fc" id="L16">        return this.message;</span>
+<span class="fc" id="L36">        return this.message;</span>
     }
 
+    /**
+     * Gets the message as list.
+     *
+     * @return the message as list
+     */
     protected List&lt;String&gt; getMessageAsList() {
-<span class="fc" id="L20">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L21">        lines.add(getMessage());</span>
-<span class="fc" id="L22">        return lines;</span>
+<span class="fc" id="L45">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L46">        lines.add(getMessage());</span>
+<span class="fc" id="L47">        return lines;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

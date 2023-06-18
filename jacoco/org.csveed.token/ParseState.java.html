@@ -1,77 +1,152 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ParseState.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.token</a> &gt; <span class="el_source">ParseState.java</span></div><h1>ParseState.java</h1><pre class="source lang-java linenums">package org.csveed.token;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ParseState.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSVeed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.token</a> &gt; <span class="el_source">ParseState.java</span></div><h1>ParseState.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.token;
 
-<span class="fc" id="L3">public enum ParseState {</span>
-<span class="fc" id="L4">    SKIP_LINE                      (false, false, false, false, true),</span>
-<span class="fc" id="L5">    SKIP_LINE_FINISHED             (false, true,  false, false, true),</span>
-<span class="fc" id="L6">    COMMENT_LINE                   (false, false, false, false, true),</span>
-<span class="fc" id="L7">    COMMENT_LINE_FINISHED          (false, true,  false, false, true),</span>
-<span class="fc" id="L8">    START_OF_LINE                  (false, false, false, false, false),</span>
-<span class="fc" id="L9">    OUTSIDE_BEFORE_FIELD           (false, false, false, false, false),</span>
-<span class="fc" id="L10">    OUTSIDE_AFTER_FIELD            (false, false, false, false, false),</span>
-<span class="fc" id="L11">    INSIDE_FIELD                   (true,  false, false, false, false),</span>
-<span class="fc" id="L12">    FIRST_CHAR_INSIDE_QUOTED_FIELD (false, false, false, true,  false),</span>
-<span class="fc" id="L13">    INSIDE_QUOTED_FIELD            (true,  false, false, true,  false),</span>
-<span class="fc" id="L14">    ESCAPING                       (false, false, false, false, false),</span>
-<span class="fc" id="L15">    SEPARATOR                      (false, false, true,  false, false),</span>
-<span class="fc" id="L16">    LINE_FINISHED                  (false, true,  true,  false, false),</span>
-<span class="fc" id="L17">    FINISHED                       (false, true,  true,  false, false);</span>
+/**
+ * The Enum ParseState.
+ */
+<span class="fc" id="L16">public enum ParseState {</span>
+
+    /** The skip line. */
+<span class="fc" id="L19">    SKIP_LINE(false, false, false, false, true),</span>
+
+    /** The skip line finished. */
+<span class="fc" id="L22">    SKIP_LINE_FINISHED(false, true, false, false, true),</span>
+
+    /** The comment line. */
+<span class="fc" id="L25">    COMMENT_LINE(false, false, false, false, true),</span>
+
+    /** The comment line finished. */
+<span class="fc" id="L28">    COMMENT_LINE_FINISHED(false, true, false, false, true),</span>
+
+    /** The start of line. */
+<span class="fc" id="L31">    START_OF_LINE(false, false, false, false, false),</span>
+
+    /** The outside before field. */
+<span class="fc" id="L34">    OUTSIDE_BEFORE_FIELD(false, false, false, false, false),</span>
+
+    /** The outside after field. */
+<span class="fc" id="L37">    OUTSIDE_AFTER_FIELD(false, false, false, false, false),</span>
+
+    /** The inside field. */
+<span class="fc" id="L40">    INSIDE_FIELD(true, false, false, false, false),</span>
+
+    /** The first char inside quoted field. */
+<span class="fc" id="L43">    FIRST_CHAR_INSIDE_QUOTED_FIELD(false, false, false, true, false),</span>
+
+    /** The inside quoted field. */
+<span class="fc" id="L46">    INSIDE_QUOTED_FIELD(true, false, false, true, false),</span>
+
+    /** The escaping. */
+<span class="fc" id="L49">    ESCAPING(false, false, false, false, false),</span>
+
+    /** The separator. */
+<span class="fc" id="L52">    SEPARATOR(false, false, true, false, false),</span>
+
+    /** The line finished. */
+<span class="fc" id="L55">    LINE_FINISHED(false, true, true, false, false),</span>
+
+    /** The finished. */
+<span class="fc" id="L58">    FINISHED(false, true, true, false, false);</span>
+
+    /** When in this state, encountered symbols must be made part of the token. */
+    private final boolean tokenize;
+
+    /** When in this state, reading of the line is done. */
+    private final boolean lineFinished;
+
+    /** When in this state, the token may be popped. */
+    private final boolean popToken;
+
+    /** When a quote character is encountered here, this state MAY trigger an upgrade of the encountered symbol. */
+    private final boolean upgradeQuoteToEscape;
+
+    /** When in this state, ignore the entire line. */
+    private final boolean ignore;
 
     /**
-    * When in this state, encountered symbols must be made part of the token
-    */
-    private boolean tokenize;
+     * Instantiates a new parses the state.
+     *
+     * @param tokenize
+     *            the tokenize
+     * @param lineFinished
+     *            the line finished
+     * @param popToken
+     *            the pop token
+     * @param upgradeQuoteToEscape
+     *            the upgrade quote to escape
+     * @param ignore
+     *            the ignore
+     */
+    ParseState(final boolean tokenize, final boolean lineFinished, final boolean popToken,
+<span class="fc" id="L90">            final boolean upgradeQuoteToEscape, final boolean ignore) {</span>
+<span class="fc" id="L91">        this.tokenize = tokenize;</span>
+<span class="fc" id="L92">        this.lineFinished = lineFinished;</span>
+<span class="fc" id="L93">        this.popToken = popToken;</span>
+<span class="fc" id="L94">        this.upgradeQuoteToEscape = upgradeQuoteToEscape;</span>
+<span class="fc" id="L95">        this.ignore = ignore;</span>
+<span class="fc" id="L96">    }</span>
 
     /**
-    * When in this state, reading of the line is done
-    */
-    private boolean lineFinished;
-
-    /**
-    * When in this state, the token may be popped
-    */
-    private boolean popToken;
-
-    /**
-    * When a quote character is encountered here, this state MAY trigger an upgrade of the encountered symbol
-    */
-    private boolean upgradeQuoteToEscape;
-
-    /**
-    * When in this state, ignore the entire line
-    */
-    private boolean ignore;
-
-    private ParseState(final boolean tokenize, final boolean lineFinished, final boolean popToken,
-<span class="fc" id="L45">                       final boolean upgradeQuoteToEscape, final boolean ignore) {</span>
-<span class="fc" id="L46">        this.tokenize = tokenize;</span>
-<span class="fc" id="L47">        this.lineFinished = lineFinished;</span>
-<span class="fc" id="L48">        this.popToken = popToken;</span>
-<span class="fc" id="L49">        this.upgradeQuoteToEscape = upgradeQuoteToEscape;</span>
-<span class="fc" id="L50">        this.ignore = ignore;</span>
-<span class="fc" id="L51">    }</span>
-
+     * Checks if is tokenize.
+     *
+     * @return true, if is tokenize
+     */
     public boolean isTokenize() {
-<span class="fc" id="L54">        return this.tokenize;</span>
+<span class="fc" id="L104">        return this.tokenize;</span>
     }
 
+    /**
+     * Checks if is line finished.
+     *
+     * @return true, if is line finished
+     */
     public boolean isLineFinished() {
-<span class="fc" id="L58">        return this.lineFinished;</span>
+<span class="fc" id="L113">        return this.lineFinished;</span>
     }
 
+    /**
+     * Checks if is pop token.
+     *
+     * @return true, if is pop token
+     */
     public boolean isPopToken() {
-<span class="fc" id="L62">        return this.popToken;</span>
+<span class="fc" id="L122">        return this.popToken;</span>
     }
 
+    /**
+     * Checks if is upgrade quote to escape.
+     *
+     * @return true, if is upgrade quote to escape
+     */
     public boolean isUpgradeQuoteToEscape() {
-<span class="fc" id="L66">        return this.upgradeQuoteToEscape;</span>
+<span class="fc" id="L131">        return this.upgradeQuoteToEscape;</span>
     }
 
+    /**
+     * Checks if is ignore.
+     *
+     * @return true, if is ignore
+     */
     public boolean isIgnore() {
-<span class="fc" id="L70">        return this.ignore;</span>
+<span class="fc" id="L140">        return this.ignore;</span>
     }
 
+    /**
+     * Trim.
+     *
+     * @return true, if successful
+     */
     public boolean trim() {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">        return this == INSIDE_FIELD;</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        return this == INSIDE_FIELD;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
