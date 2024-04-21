@@ -3,7 +3,7 @@
 
     CSVeed (https://github.com/42BV/CSVeed)
 
-    Copyright 2013-2023 CSVeed.
+    Copyright 2013-2024 CSVeed.
 
     All rights reserved. This program and the accompanying materials
     are made available under the terms of The Apache Software License,
@@ -17,7 +17,7 @@
     <parent>
         <groupId>com.github.hazendaz</groupId>
         <artifactId>base-parent</artifactId>
-        <version>44</version>
+        <version>45</version>
         <relativePath />
     </parent>
 
@@ -25,7 +25,7 @@
     <artifactId>csveed</artifactId>
     <version>0.7.6-SNAPSHOT</version>
 
-    <name>CSVeed</name>
+    <name>csveed</name>
     <description>Java toolkit for mapping CSV-to-Bean mapping and vice versa.  Redirection to Introduction in 5 seconds!</description>
     <inceptionYear>2013</inceptionYear>
     <url>http://csveed.org</url>
@@ -77,7 +77,7 @@
         <java.release.version>8</java.release.version>
 
         <junit.version>5.10.2</junit.version>
-        <slf4j.version>2.0.12</slf4j.version>
+        <slf4j.version>2.0.13</slf4j.version>
     </properties>
 
     <dependencies>
