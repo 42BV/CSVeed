@@ -27,8 +27,8 @@
 
     <name>csveed</name>
     <description>Java toolkit for mapping CSV-to-Bean mapping and vice versa.  Redirection to Introduction in 5 seconds!</description>
-    <inceptionYear>2013</inceptionYear>
     <url>http://csveed.org</url>
+    <inceptionYear>2013</inceptionYear>
 
     <organization>
         <name>42 BV</name>
@@ -43,11 +43,18 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <name>Robert Bor</name>
+            <organization>42</organization>
+        </developer>
+    </developers>
+
     <scm>
         <connection>scm:git:ssh://git@github.com/42BV/CSVeed.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/42BV/CSVeed.git</developerConnection>
-        <url>https://github.com/42BV/CSVeed</url>
         <tag>HEAD</tag>
+        <url>https://github.com/42BV/CSVeed</url>
     </scm>
     <issueManagement>
         <system>GitHub Issue Management</system>
@@ -64,13 +71,6 @@
             <url>scm:git:ssh://git@github.com/42BV/CSVeed.git</url>
         </site>
     </distributionManagement>
-
-    <developers>
-        <developer>
-            <name>Robert Bor</name>
-            <organization>42</organization>
-        </developer>
-    </developers>
 
     <properties>
         <java.version>8</java.version>
