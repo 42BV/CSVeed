@@ -1,0 +1,206 @@
+<!--
+
+    CSVeed (https://github.com/42BV/CSVeed)
+
+    Copyright 2013-2023 CSVeed.
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of The Apache Software License,
+    Version 2.0 which accompanies this distribution, and is available at
+    https://www.apache.org/licenses/LICENSE-2.0.txt
+
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/csveed.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>CSVeed / Design Choices</title>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-39322956-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</head>
+
+<body>
+<header>
+    <div class="inner">
+        <h1>CSVeed</h1>
+        <h2>Easy-to-use CSV to Java Bean utility</h2>
+        <img class="csveed-logo" src="images/csveed-logo-white.png">
+        <a href="https://github.com/42BV/CSVeed" class="button"><small>View project on</small>GitHub</a>
+    </div>
+</header>
+
+<div id="content-wrapper">
+    <div class="inner clearfix">
+        <section id="main-content">
+
+            <h1>Design choices</h1>
+
+            <ul>
+                <li><a href="#tokenizer">Tokenizer</a>; why build the tokenizer the way you did?</li>
+                <li><a href="#v1.0.0">v1.0.0</a>; why not make a v1.0.0 immediately?</li>
+                <li><a href="#spring">Spring</a>; why use Spring?</li>
+                <li><a href="#writer">Writer</a>; why is there not a CsvWriter?</li>
+                <li><a href="#layering">Architecture</a>; why have the layering of CSV and not roll all into one layer?</li>
+                <li><a href="#errors">Error feedback</a>; what is your thing with error feedback?</li>
+                <li><a href="#facade">Facade</a>; why the Facade?</li>
+                <li><a href="#deep-conversion">Deep conversion</a>; will CSVeed have deep conversion in due time?</li>
+                <li><a href="#split-and-join">Splits and joins</a>; will CSVeed have splits and joins in due time?</li>
+                <li><a href="#dryruns">Dry runs</a>; will CSVeed support dry runs?</li>
+            </ul>
+
+            <h2 id="tokenizer">Tokenizer</h2>
+
+            <p>Most CSV tools that I have seen use a mix of if-then-else logic and forward references for CSV parsing. Having tried these approaches myself as well, I find them error-prone and hard to maintain.</p>
+
+            <p>The goal of CSVeed was to have a tokenizer that read just one symbol at a time, without forward referencing. Also, I wanted it to determine its next state purely on the current symbol and state. I can imagine that people hate the huge switch-case construction (Cobertura does!), I can just as well imagine that people love it for its clarity and overview. I belong to the latter category.</p>
+
+            <h2 id="v1.0.0">v1.0.0</h2>
+
+            <p>I believe a version 1 must have seen some time in the trenches before it can be elevated to that position. That means people must have used it, it must have run stable in production software and in general it must have existed for some time. Software that is immediately released as version 1 is not to be trusted.</p>
+
+            <p>I am aware that this may hamper the attraction of CSVeed, but I think the community and the prestige of the software is better served if the practice of steadfast growth to maturity prevails over a false sense of stability.</p>
+
+            <h2 id="spring">Spring</h2>
+
+            <div class="solved">
+
+                <p>This was one of the harder decisions to make. Spring gave the project a headstart because it offers great out-of-the-box functionality for converting String objects to Bean properties.</p>
+
+                <p>The functionality of Spring that is used has to do with <a href="http://static.springsource.org/spring/docs/1.2.9/api/org/springframework/beans/BeanWrapperImpl.html">BeanWrapperImpl</a>. One can use this class to wrap around a bean and set/get its properties sending/receiving only String instances. Spring has a number of PropertyEditor classes it supplies, which currently powers its popular Spring MVC web framework.</p>
+
+                <p>However, the Spring dependency comes at a price. Both Spring Beans and Spring Core are included in the dependency tree. The library is commonly used in web applications, although, it is undesirable for libraries. Therefore, the Spring dependency will in time be replaced with an innate conversion ability.</p>
+
+            </div>
+
+            <h2 id="writer">Writer</h2>
+
+            <div class="solved">
+
+                <p>The focus of CSVeed is first and foremost on reading of the CSV. Writing to CSV is literally an afterthought, since it is much easier to write from a realiable structure (such as a Java Bean) to an unreliable one (CSV).</p>
+
+                <p>CSVeed caters to those people that need to get a grip on their CSV. It is aimed at the group of people that have experienced that reading CSV implies dealing with errors. Writing to CSV is flawless by definition and therefore without challenge.</p>
+
+                <p>In the future, a CsvWriter will be added to CSVeed, but there is no hurry to realize this. Error feedback has a much higher priority.</p>
+
+            </div>
+
+            <h2 id="layering">Architecture</h2>
+
+            <p>Layering serves a crucial purpose as it helps to define system boundaries. Every layer in CSVeed aims to solve one particular problem.</p>
+
+            <p>CSVeed also offers three points of entry into the library. The easiest and recommend route is through the Facade, aka the <a href="architecture.html#api">api</a> layer. The other two options are to plug directly into the <a href="architecture.html#bean">bean</a> or <a href="architecture.html#row">row</a> layers. The <a href="architecture.html#token">token</a> layer is not intended for direct access, though it would be possible.</p>
+
+            <h2 id="errors">Error feedback</h2>
+
+            <p>Dealing with the reading of CSV is synonymous to dealing with errors. The 'structure' of a CSV file leaves a lot to be desired – there is no file that says what it structure will be like with XML. Users can (and often do) change CSV at will before sending it off to an import job. Anyone having worked with CSV for a prolonged period of time knows that errors are part of the essence of CSV files.</p>
+
+            <p>Errors that happen during the parsing process, in any of the layers, can probably be traced back to an error in the original CSV. Therefore it is of paramount importance that the library reports back on the original error, not just the error that it it generates in a particular layer.</p>
+
+            <img src="images/information-flow.png"/>
+
+            <p>Also, errors that happen after the parsing process has completed, can probably still be traced back to the original CSV file. CSVeed can currently only report back on errors that it encounters itself. In the near future, it will be made so that clients can use the CSVeed context to refer back to the original CSV cell where the error occurred.</p>
+
+            <h2 id="facade">Facade</h2>
+
+            <p>The Facade has been inspired by <a href="comparison.html#javacsv">JavaCSV</a>. This library has just two classes; a writer and a reader. Every bit of logic has been pushed into those two classes. It must be a nightmare to maintain those classes.</p>
+
+            <p>The user, on the other hand, is given a treat; it gets the simplest possible interface to interact with the library. The community has shown itself very enthousiastic over the simplicity of JavaCSV.</p>
+
+            <p>CSVeed takes a different route. The maintenance mess of just two classes has been evaded, while the user still gets a simple interface. The way this is done is by setting up a Facade that shields the underlying complexity.</p>
+
+            <h2 id="deep-conversion">Deep Conversion</h2>
+
+            <p>Deep Conversion is the ability to build up a uni-directional graph of entities from a CSV file:</p>
+
+            <img src="images/deep-conversion.png" width="500"/>
+
+            <p>Deep Conversion is currently not support by CSVeed, this this is planned for the near future.</p>
+
+            <h2 id="split-and-join">Splits and Joins</h2>
+
+            <p>A split is the ability to split a single cell into multiple Bean properties:</p>
+
+            <img src="images/split.png"/>
+
+            <p>A practical example would to split a cell like, for example, "€ 50" into separate currency and amount.</p>
+
+            <p>A join is the ability to join multiple cells into a single Bean property:</p>
+
+            <img src="images/join.png"/>
+
+            <p>A practical example would be to merge first name and last name into a single property called full name.</p>
+
+            <p>The main challenge with splits and joins is basically to supply a structure where clients can create converters for an array of Strings or BeanProperty instances, so that symbols can either be inserted or removed.</p>
+
+            <p>CSVeed currently does not have split and join capabilities, though this is planned for the near future.</p>
+
+            <h2 id="dryruns">Dry runs</h2>
+
+            <p>A dry run is a crucial concept in processing CSV files. CSV files are processed up to the point that enough is known to generate a comprehensive error report, without committing the data to its next stage, such as being persisted to the database.</p>
+
+            <p>The way a dry run must work, is that it returns a list of Bean with their original CSV context and a comprehensive list of errors, so that the client can post-process the beans and add their own errors to the list. The entire list can then be fed back to the owner of the CSV file.</p>
+
+            <p>This functionality is currently not supported by CSVeed, but will be in the near future.</p>
+
+        </section>
+
+        <aside id="sidebar">
+
+            <p class="site-link"><a href="index.html">Home</a></p>
+            <p class="site-link">Manual</p>
+            <p class="site-link-sub"><a href="annotations.html">Annotations</a></p>
+            <p class="site-link-sub"><a href="http://javadocs.csveed.org">API</a></p>
+            <p class="site-link">Roadmap</p>
+            <p class="site-link-sub"><a href="release-notes.html">Release notes</a></p>
+            <p class="site-link">Background</p>
+            <p class="site-link-sub"><a href="architecture.html">Architecture</a></p>
+            <p class="site-link-sub"><a href="design-choices.html">Design choices</a></p>
+            <p class="site-link-sub"><a href="comparison.html">Comparison</a></p>
+            <p class="site-link-sub2"><a href="comparison-matrix.html">Comparison matrix</a></p>
+            <p class="site-link-sub"><a href="rfc4180.html">RFC 4180</a></p>
+
+            <hr>
+
+            <a href="https://github.com/42BV/CSVeed/zipball/master" class="button">
+                <small>Download</small>
+                .zip file
+            </a>
+            <a href="https://github.com/42BV/CSVeed/tarball/master" class="button">
+                <small>Download</small>
+                .tar.gz file
+            </a>
+
+            <p class="repo-owner"><a href="https://github.com/42BV/CSVeed"></a> is maintained by <a href="https://github.com/robert-bor">robert-bor</a>.</p>
+
+            <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+    </div>
+</div>
+
+
+</body>
+</html>

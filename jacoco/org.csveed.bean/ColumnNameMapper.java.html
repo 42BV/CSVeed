@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColumnNameMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">csveed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean</a> &gt; <span class="el_source">ColumnNameMapper.java</span></div><h1>ColumnNameMapper.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.bean;
+
+import java.util.Set;
+
+import org.csveed.api.Header;
+import org.csveed.api.Row;
+import org.csveed.common.Column;
+import org.csveed.report.CsvException;
+import org.csveed.report.RowError;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * The Class ColumnNameMapper.
+ *
+ * @param &lt;T&gt;
+ *            the generic type
+ */
+<span class="fc" id="L29">public class ColumnNameMapper&lt;T&gt; extends AbstractMapper&lt;T&gt; {</span>
+
+    /** The Constant logger. */
+<span class="fc" id="L32">    private static final Logger logger = LoggerFactory.getLogger(ColumnNameMapper.class);</span>
+
+    @Override
+    protected Set&lt;Column&gt; keys() {
+<span class="fc" id="L36">        return beanInstructions.getProperties().columnNameKeys();</span>
+    }
+
+    @Override
+    public BeanProperty getBeanProperty(Column column) {
+<span class="fc" id="L41">        return beanInstructions.getProperties().fromName(column);</span>
+    }
+
+    @Override
+    protected void checkKey(Header header, Column key) {
+        try {
+<span class="fc" id="L47">            header.getIndex(key.getColumnName());</span>
+<span class="fc" id="L48">        } catch (CsvException e) {</span>
+<span class="fc" id="L49">            logger.trace(&quot;&quot;, e);</span>
+<span class="fc" id="L50">            throw new CsvException(new RowError(&quot;The header row does not contain column \&quot;&quot; + key</span>
+<span class="fc" id="L51">                    + &quot;\&quot;. Originally mapped to property \&quot;&quot; + getBeanProperty(key).getPropertyName() + &quot;\&quot;&quot;,</span>
+<span class="fc" id="L52">                    header.reportOnEndOfLine(), 0));</span>
+<span class="fc" id="L53">        }</span>
+<span class="fc" id="L54">    }</span>
+
+    @Override
+    protected Column getColumn(Row row) {
+<span class="fc" id="L58">        return new Column().setHeader(row.getHeader());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

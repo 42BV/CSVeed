@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LineWithInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">csveed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.row</a> &gt; <span class="el_source">LineWithInfo.java</span></div><h1>LineWithInfo.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.row;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.csveed.common.Column;
+import org.csveed.report.RowReport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * The Class LineWithInfo.
+ */
+<span class="fc" id="L27">public class LineWithInfo implements Line {</span>
+
+    /** The Constant LOG. */
+<span class="fc" id="L30">    private static final Logger LOG = LoggerFactory.getLogger(LineWithInfo.class);</span>
+
+    /** The cells. */
+<span class="fc" id="L33">    private List&lt;String&gt; cells = new ArrayList&lt;&gt;();</span>
+
+    /** The original line. */
+<span class="fc" id="L36">    private StringBuilder originalLine = new StringBuilder();</span>
+
+    /** The cell positions. */
+<span class="fc" id="L39">    private Map&lt;Column, CellPositionInRow&gt; cellPositions = new TreeMap&lt;&gt;();</span>
+
+    /** The print length. */
+    private int printLength;
+
+    /** The current column. */
+<span class="fc" id="L45">    private Column currentColumn = new Column();</span>
+
+    /**
+     * Adds the cell.
+     *
+     * @param cell
+     *            the cell
+     */
+    public void addCell(String cell) {
+<span class="fc" id="L54">        this.cells.add(cell);</span>
+<span class="fc bfc" id="L55" title="All 4 branches covered.">        if (cell == null || &quot;&quot;.equals(cell)) {</span>
+<span class="fc" id="L56">            markStartOfColumn();</span>
+        }
+<span class="fc" id="L58">        markEndOfColumn();</span>
+<span class="fc" id="L59">    }</span>
+
+    @Override
+    public Iterator&lt;String&gt; iterator() {
+<span class="fc" id="L63">        return cells.iterator();</span>
+    }
+
+    /**
+     * Mark start of column.
+     */
+    public void markStartOfColumn() {
+<span class="fc" id="L70">        LOG.debug(&quot;Start of column: {}&quot;, printLength);</span>
+<span class="fc" id="L71">        getCellPosition(currentColumn).setStart(printLength);</span>
+<span class="fc" id="L72">    }</span>
+
+    /**
+     * Mark end of column.
+     */
+    protected void markEndOfColumn() {
+<span class="fc" id="L78">        LOG.debug(&quot;End of column: {}&quot;, printLength);</span>
+<span class="fc" id="L79">        getCellPosition(currentColumn).setEnd(printLength);</span>
+<span class="fc" id="L80">        currentColumn = currentColumn.nextColumn();</span>
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * Gets the cell position.
+     *
+     * @param column
+     *            the column
+     *
+     * @return the cell position
+     */
+    protected CellPositionInRow getCellPosition(Column column) {
+<span class="fc" id="L92">        CellPositionInRow cellPosition = cellPositions.get(column);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (cellPosition == null) {</span>
+<span class="fc" id="L94">            cellPosition = new CellPositionInRow();</span>
+<span class="fc" id="L95">            cellPositions.put(column, cellPosition);</span>
+        }
+<span class="fc" id="L97">        return cellPosition;</span>
+    }
+
+    /**
+     * Adds the character.
+     *
+     * @param symbol
+     *            the symbol
+     */
+    public void addCharacter(int symbol) {
+<span class="fc" id="L107">        String printableChar = convertToPrintable(symbol);</span>
+<span class="fc" id="L108">        originalLine.append(printableChar);</span>
+<span class="fc" id="L109">        printLength += printableChar.length();</span>
+<span class="fc" id="L110">    }</span>
+
+    /**
+     * Convert to printable.
+     *
+     * @param symbol
+     *            the symbol
+     *
+     * @return the string
+     */
+    public String convertToPrintable(int symbol) {
+<span class="fc bfc" id="L121" title="All 7 branches covered.">        switch (symbol) {</span>
+            case -1:
+<span class="fc" id="L123">                return &quot;[EOF]&quot;;</span>
+            case '\b':
+<span class="fc" id="L125">                return &quot;\\b&quot;;</span>
+            case '\f':
+<span class="fc" id="L127">                return &quot;\\f&quot;;</span>
+            case '\n':
+<span class="fc" id="L129">                return &quot;\\n&quot;;</span>
+            case '\r':
+<span class="fc" id="L131">                return &quot;\\r&quot;;</span>
+            case '\t':
+<span class="fc" id="L133">                return &quot;\\t&quot;;</span>
+            default:
+<span class="fc" id="L135">                return Character.toString((char) symbol);</span>
+        }
+    }
+
+    @Override
+    public int size() {
+<span class="fc" id="L141">        return this.cells.size();</span>
+    }
+
+    @Override
+    public String get(int index) {
+<span class="fc" id="L146">        return this.cells.get(index);</span>
+    }
+
+    @Override
+    public RowReport reportOnColumn(Column column) {
+<span class="fc" id="L151">        CellPositionInRow cellPosition = cellPositions.get(column);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (cellPosition == null) {</span>
+<span class="fc" id="L153">            return null;</span>
+        }
+<span class="fc" id="L155">        return new RowReport(originalLine.toString(), cellPosition.getStart(), cellPosition.getEnd());</span>
+    }
+
+    @Override
+    public RowReport reportOnEndOfLine() {
+<span class="fc" id="L160">        return new RowReport(originalLine.toString(), printLength, printLength);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

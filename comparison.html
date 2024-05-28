@@ -1,0 +1,190 @@
+<!--
+
+    CSVeed (https://github.com/42BV/CSVeed)
+
+    Copyright 2013-2023 CSVeed.
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of The Apache Software License,
+    Version 2.0 which accompanies this distribution, and is available at
+    https://www.apache.org/licenses/LICENSE-2.0.txt
+
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/csveed.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>CSVeed / Comparison</title>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-39322956-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</head>
+
+<body>
+<header>
+    <div class="inner">
+        <h1>CSVeed</h1>
+        <h2>Easy-to-use CSV to Java Bean utility</h2>
+        <img class="csveed-logo" src="images/csveed-logo-white.png">
+        <a href="https://github.com/42BV/CSVeed" class="button"><small>View project on</small>GitHub</a>
+    </div>
+</header>
+
+<div id="content-wrapper">
+    <div class="inner clearfix">
+        <section id="main-content">
+
+            <h1>CSVeed Compared</h1>
+
+            <p><em>Disclaimer: this page is the personal opinion of Robert Bor</em></p>
+
+            <p>I have taken a look at the following Java CSV libraries:</p>
+
+            <ul>
+                <li>
+                    <strong><a href="#commonscsv">Commons CSV</a></strong>; Apache Commons project</li>
+                <li>
+                    <strong><a href="#flatpack">Flatpack</a></strong>; extensive tool, much more than just CSV</li>
+                <li>
+                    <strong><a href="#javacsv">JavaCSV</a></strong>; two-class solution</li>
+                <li>
+                    <strong><a href="#opencsv">opencsv</a></strong>; very popular Csv-to-Bean transformer</li>
+                <li>
+                    <strong><a href="#supercsv">Super CSV</a></strong>; extensively details Csv-to-Bean transformer </li>
+                <li>
+                    <strong><a href="#jcsv">jcsv</a></strong>; Csv parser experimenting with annotations</li>
+                <li>
+                    <strong><a href="#jsefa">JSefa</a>; XML/CSV/FLR reader/writer with annotations</strong></li>
+            </ul>
+
+            <p>I checked out all the documentation and sites I could find on the tooling. After that I downloaded the latest know versions of the libraries and proceeded to run a couple of tests against them. The combination of these two activities gave me a pretty good feeling of the quality of the products. Enough to make a quality appraisal on each of them. Check out the <a href="comparison-matrix.html">Comparison Matrix</a> to see the differences.</p>
+
+            <h2 id="commonscsv"><a href="http://commons.apache.org/sandbox/csv/">Commons CSV</a></h2>
+
+            <p>Apache Commons CSV set out with a noble goal:</p>
+
+            <blockquote>
+                <p>There are three pre-existing BSD compatible CSV parsers which this component will hopefully make redundant</p>
+            </blockquote>
+
+            <p>The project is still in the sandbox phase and has no releases in Maven Central yet. Given the time that has passed, it is doubtful it will ever grow to see its goal fulfilled. JARs have to be manually retrieved and added to the Maven dependencies.</p>
+
+            <p>Its primary focus is on the tokenizing process at which it excels. There is no support for Bean conversions. The documentation is extremely poor and mostly outdated, although the project is still being maintained.</p>
+
+            <h2 id="flatpack"><a href="http://flatpack.sourceforge.net/">Flatpack</a></h2>
+
+            <p>Flatpack is obviously a lot more than just CSV handling, which a glance at the website shows. Configuring the instructions is a convoluted and disassociated, using old-school XML configuration files. </p>
+
+            <p>Flatpack can be a bit mean by failing silently. You will have to check the errors logs, because situations can become very nasty by its apparent willingness to gobble it all. </p>
+
+            <p>I dislike how you are forced to read the entire file in a DataSet and then have to iterate over that set. </p>
+
+            <p>Though the project has Maven Central entries (albeit without source), it is outdated (last update: 2008) and offers no support for Bean conversion. The documentation of the project is quite good.</p>
+
+            <h2 id="javacsv"><a href="http://sourceforge.net/projects/javacsv/">JavaCSV</a></h2>
+
+            <p>The first thing that is noteworthy about this library is that it has only two classes; CsvClient and CsvWriter. The ease of its interface is clamored and has been a huge incentive for me to add the Facade layer to CSVeed.</p>
+
+            <p>The project has releases in Maven Central, although without source. The process lets you read a line one by one, there seems to be no way to get them all at once. There is no support for bean conversion. Documentation is somewhat poor since the website seems to have been used for another purpose as well.</p>
+
+            <h2 id="opencsv"><a href="http://opencsv.sourceforge.net/">opencsv</a></h2>
+
+            <p>Adorable statement in the author's blog:</p>
+
+            <blockquote>
+                <p>For reasons I’ll never understand, my little Apache2 open source CSV parser, opencsv has recently trucked through the 20,000 download mark. </p>
+            </blockquote>
+
+            <p>And understandably so. The library was far ahead of its time with rudimentary Bean conversion support. The coupling is slightly tedious, but it works. Documentation is fine, albeit a bit on the thin side. The library is registered in Maven Central. Active community with speedy bug fixing.</p>
+
+            <p>Very poor in its error feedback, a definitive negative. Also does NOT support all basic Objects out of the box. No support for comment and empty line skipping. Nevertheless, disruptive technology at that time and much needed, given its success.</p>
+
+            <h2 id="supercsv"><a href="http://supercsv.sourceforge.net/">Super CSV</a></h2>
+
+            <p>I really have a soft spot for Super CSV. What the author says and does and the quality of his documentation and code, references to RFC 4180, it all fits. Just have a look at the landing page and see the motivation and the author's background. Super CSV is nothing, if not ambitious. </p>
+
+            <p>The project is extremely well documented and releases are available in Maven Central. If you are a corporate developer, eat your heart out.</p>
+
+            <p>Mapping must be done by column name mapping, there does not seem to be a way to do this by column index. There are no annotations and conversions to other classes have to be set manually with a disassociated mapping table (the "CellProcessor" approach). Advertisedly, Super CSV also supports deep conversions, although I haven't tried those.</p>
+
+            <p>Personally, I do not find the interface very good. It is irksome and counter-intuitive. The CellProcessor approach is the wrong way to go about in my humble opinion. Error handling is better than opencsv's, but still not the way it should be.</p>
+
+            <h2 id="jcsv"><a href="http://code.google.com/p/jcsv/">jcsv</a></h2>
+
+            <p>I mainly adopted this library into my comparison because of its usage of annotations. The project is obviously short-lived and has not been refined much. Interestingly enough it has some nice documentation, including examples and reference to RFC 4180.</p>
+
+            <p>The error feedback of jcsv is extremely poor and its bean conversion is error-ridden. Immature technology, not suitable for usage.</p>
+
+            <h2 id="jsefa"><a href="http://jsefa.sourceforge.net/">JSefa</a></h2>
+
+            <p>A colleague pointed me to JSefa as a reliable CSV reader. The first thing that caught my eye is that it aims to provide for XML, CSV and FLR. This approach has up and downsides, it is more versatile, but it is also harder to cater to the special requirements of a file structure, be they technical or process-wise.</p>
+
+            <p>Of the above libraries this one cost me the most trouble to get to the intricacies. Documentation on the API is scarce, though a number of useful sample projects have been provided. The library works with the concept of high- and low-level interfaces, high being similar to the bean reader and low the row reader. Its killer feature is that it supports deep conversion.</p>
+
+            <p>What irks me most about this interface is that one must define all properties with annotations, even having to tell it what converter it must use, for example for converting text to Long. This is not very convenient. I find error feedback lacking, although the line and position are reported, you cannot see the cell that went wrong.</p>
+
+            <h1>Comparison matrix</h1>
+
+            <p>Check out the different attributes of the afore-mentioned Java CSV libraries and CSVeed in the <a href="comparison-matrix.html">Comparison Matrix</a>.</p>
+
+        </section>
+
+        <aside id="sidebar">
+
+            <p class="site-link"><a href="index.html">Home</a></p>
+            <p class="site-link">Manual</p>
+            <p class="site-link-sub"><a href="annotations.html">Annotations</a></p>
+            <p class="site-link-sub"><a href="http://javadocs.csveed.org">API</a></p>
+            <p class="site-link">Roadmap</p>
+            <p class="site-link-sub"><a href="release-notes.html">Release notes</a></p>
+            <p class="site-link">Background</p>
+            <p class="site-link-sub"><a href="architecture.html">Architecture</a></p>
+            <p class="site-link-sub"><a href="design-choices.html">Design choices</a></p>
+            <p class="site-link-sub"><a href="comparison.html">Comparison</a></p>
+            <p class="site-link-sub2"><a href="comparison-matrix.html">Comparison matrix</a></p>
+            <p class="site-link-sub"><a href="rfc4180.html">RFC 4180</a></p>
+
+            <hr>
+
+            <a href="https://github.com/42BV/CSVeed/zipball/master" class="button">
+                <small>Download</small>
+                .zip file
+            </a>
+            <a href="https://github.com/42BV/CSVeed/tarball/master" class="button">
+                <small>Download</small>
+                .tar.gz file
+            </a>
+
+            <p class="repo-owner"><a href="https://github.com/42BV/CSVeed"></a> is maintained by <a href="https://github.com/robert-bor">robert-bor</a>.</p>
+
+            <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+    </div>
+</div>
+
+
+</body>
+</html>

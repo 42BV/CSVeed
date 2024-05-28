@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NumberUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">csveed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.bean.conversion</a> &gt; <span class="el_source">NumberUtils.java</span></div><h1>NumberUtils.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.bean.conversion;
+
+import static org.csveed.bean.conversion.ConversionUtil.trimAllWhitespace;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+
+/**
+ * The Class NumberUtils.
+ */
+public abstract class NumberUtils {
+
+    /**
+     * Instantiates a new number utils.
+     */
+    private NumberUtils() {
+        // Do not allow instantiation of static utils class
+    }
+
+    /**
+     * Convert number to target class.
+     *
+     * @param &lt;T&gt;
+     *            the generic type
+     * @param number
+     *            the number
+     * @param targetClass
+     *            the target class
+     *
+     * @return the t
+     *
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static &lt;T extends Number&gt; T convertNumberToTargetClass(Number number, Class&lt;T&gt; targetClass)
+            throws IllegalArgumentException {
+
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (targetClass.isInstance(number)) {</span>
+<span class="fc" id="L53">            return (T) number;</span>
+        }
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (targetClass.equals(Byte.class)) {</span>
+<span class="fc" id="L56">            long value = number.longValue();</span>
+<span class="pc bpc" id="L57" title="2 of 4 branches missed.">            if (value &lt; Byte.MIN_VALUE || value &gt; Byte.MAX_VALUE) {</span>
+<span class="nc" id="L58">                raiseOverflowException(number, targetClass);</span>
+            }
+<span class="fc" id="L60">            return (T) Byte.valueOf(number.byteValue());</span>
+        }
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (targetClass.equals(Short.class)) {</span>
+<span class="fc" id="L63">            long value = number.longValue();</span>
+<span class="pc bpc" id="L64" title="2 of 4 branches missed.">            if (value &lt; Short.MIN_VALUE || value &gt; Short.MAX_VALUE) {</span>
+<span class="nc" id="L65">                raiseOverflowException(number, targetClass);</span>
+            }
+<span class="fc" id="L67">            return (T) Short.valueOf(number.shortValue());</span>
+        }
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (targetClass.equals(Integer.class)) {</span>
+<span class="fc" id="L70">            long value = number.longValue();</span>
+<span class="pc bpc" id="L71" title="2 of 4 branches missed.">            if (value &lt; Integer.MIN_VALUE || value &gt; Integer.MAX_VALUE) {</span>
+<span class="nc" id="L72">                raiseOverflowException(number, targetClass);</span>
+            }
+<span class="fc" id="L74">            return (T) Integer.valueOf(number.intValue());</span>
+        }
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (targetClass.equals(Long.class)) {</span>
+<span class="nc" id="L77">            return (T) Long.valueOf(number.longValue());</span>
+        }
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if (targetClass.equals(BigInteger.class)) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">            if (number instanceof BigDecimal) {</span>
+                // do not lose precision - use BigDecimal's own conversion
+<span class="nc" id="L82">                return (T) ((BigDecimal) number).toBigInteger();</span>
+            }
+            // original value is not a Big* number - use standard long conversion
+<span class="nc" id="L85">            return (T) BigInteger.valueOf(number.longValue());</span>
+        }
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (targetClass.equals(Float.class)) {</span>
+<span class="fc" id="L88">            return (T) Float.valueOf(number.floatValue());</span>
+        }
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (targetClass.equals(Double.class)) {</span>
+<span class="nc" id="L91">            return (T) Double.valueOf(number.doubleValue());</span>
+        }
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (targetClass.equals(BigDecimal.class)) {</span>
+            // always use BigDecimal(String) here to avoid unpredictability of BigDecimal(double)
+            // (see BigDecimal javadoc for details)
+<span class="nc" id="L96">            return (T) new BigDecimal(number.toString());</span>
+        }
+<span class="nc" id="L98">        throw new IllegalArgumentException(&quot;Could not convert number [&quot; + number + &quot;] of type [&quot;</span>
+<span class="nc" id="L99">                + number.getClass().getName() + &quot;] to unknown target class [&quot; + targetClass.getName() + &quot;]&quot;);</span>
+    }
+
+    /**
+     * Raise overflow exception.
+     *
+     * @param number
+     *            the number
+     * @param targetClass
+     *            the target class
+     */
+    private static void raiseOverflowException(Number number, Class targetClass) {
+<span class="nc" id="L111">        throw new IllegalArgumentException(&quot;Could not convert number [&quot; + number + &quot;] of type [&quot;</span>
+<span class="nc" id="L112">                + number.getClass().getName() + &quot;] to target class [&quot; + targetClass.getName() + &quot;]: overflow&quot;);</span>
+    }
+
+    /**
+     * Parses the number.
+     *
+     * @param &lt;T&gt;
+     *            the generic type
+     * @param text
+     *            the text
+     * @param targetClass
+     *            the target class
+     *
+     * @return the t
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    public static &lt;T extends Number&gt; T parseNumber(String text, Class&lt;T&gt; targetClass) {
+<span class="fc" id="L129">        String trimmed = trimAllWhitespace(text);</span>
+
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">        if (targetClass.equals(Byte.class)) {</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            return (T) (isHexNumber(trimmed) ? Byte.decode(trimmed) : Byte.valueOf(trimmed));</span>
+        }
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">        if (targetClass.equals(Short.class)) {</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">            return (T) (isHexNumber(trimmed) ? Short.decode(trimmed) : Short.valueOf(trimmed));</span>
+        }
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (targetClass.equals(Integer.class)) {</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">            return (T) (isHexNumber(trimmed) ? Integer.decode(trimmed) : Integer.valueOf(trimmed));</span>
+        }
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (targetClass.equals(Long.class)) {</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">            return (T) (isHexNumber(trimmed) ? Long.decode(trimmed) : Long.valueOf(trimmed));</span>
+        }
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (targetClass.equals(BigInteger.class)) {</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">            return (T) (isHexNumber(trimmed) ? decodeBigInteger(trimmed) : new BigInteger(trimmed));</span>
+        }
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if (targetClass.equals(Float.class)) {</span>
+<span class="nc" id="L147">            return (T) Float.valueOf(trimmed);</span>
+        }
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        if (targetClass.equals(Double.class)) {</span>
+<span class="nc" id="L150">            return (T) Double.valueOf(trimmed);</span>
+        }
+<span class="nc bnc" id="L152" title="All 4 branches missed.">        if (targetClass.equals(BigDecimal.class) || targetClass.equals(Number.class)) {</span>
+<span class="nc" id="L153">            return (T) new BigDecimal(trimmed);</span>
+        }
+<span class="nc" id="L155">        throw new IllegalArgumentException(</span>
+<span class="nc" id="L156">                &quot;Cannot convert String [&quot; + text + &quot;] to target class [&quot; + targetClass.getName() + &quot;]&quot;);</span>
+    }
+
+    /**
+     * Parses the number.
+     *
+     * @param &lt;T&gt;
+     *            the generic type
+     * @param text
+     *            the text
+     * @param targetClass
+     *            the target class
+     * @param numberFormat
+     *            the number format
+     *
+     * @return the t
+     */
+    public static &lt;T extends Number&gt; T parseNumber(String text, Class&lt;T&gt; targetClass, NumberFormat numberFormat) {
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        if (numberFormat != null) {</span>
+<span class="fc" id="L175">            DecimalFormat decimalFormat = null;</span>
+<span class="fc" id="L176">            boolean resetBigDecimal = false;</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">            if (numberFormat instanceof DecimalFormat) {</span>
+<span class="fc" id="L178">                decimalFormat = (DecimalFormat) numberFormat;</span>
+<span class="pc bpc" id="L179" title="1 of 4 branches missed.">                if (BigDecimal.class.equals(targetClass) &amp;&amp; !decimalFormat.isParseBigDecimal()) {</span>
+<span class="fc" id="L180">                    decimalFormat.setParseBigDecimal(true);</span>
+<span class="fc" id="L181">                    resetBigDecimal = true;</span>
+                }
+            }
+            try {
+<span class="fc" id="L185">                Number number = numberFormat.parse(trimAllWhitespace(text));</span>
+<span class="fc" id="L186">                return convertNumberToTargetClass(number, targetClass);</span>
+<span class="fc" id="L187">            } catch (ParseException ex) {</span>
+<span class="fc" id="L188">                throw new IllegalArgumentException(&quot;Could not parse number: &quot; + ex.getMessage());</span>
+            } finally {
+<span class="pc bpc" id="L190" title="1 of 4 branches missed.">                if (resetBigDecimal &amp;&amp; decimalFormat != null) {</span>
+<span class="fc" id="L191">                    decimalFormat.setParseBigDecimal(false);</span>
+                }
+            }
+        }
+<span class="nc" id="L195">        return parseNumber(text, targetClass);</span>
+    }
+
+    /**
+     * Checks if is hex number.
+     *
+     * @param value
+     *            the value
+     *
+     * @return true, if is hex number
+     */
+    private static boolean isHexNumber(String value) {
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">        int index = value.startsWith(&quot;-&quot;) ? 1 : 0;</span>
+<span class="pc bpc" id="L208" title="3 of 6 branches missed.">        return value.startsWith(&quot;0x&quot;, index) || value.startsWith(&quot;0X&quot;, index) || value.startsWith(&quot;#&quot;, index);</span>
+    }
+
+    /**
+     * Decode big integer.
+     *
+     * @param value
+     *            the value
+     *
+     * @return the big integer
+     */
+    private static BigInteger decodeBigInteger(String value) {
+<span class="nc" id="L220">        int radix = 10;</span>
+<span class="nc" id="L221">        int index = 0;</span>
+<span class="nc" id="L222">        boolean negative = false;</span>
+
+        // Handle minus sign, if present.
+<span class="nc bnc" id="L225" title="All 2 branches missed.">        if (value.startsWith(&quot;-&quot;)) {</span>
+<span class="nc" id="L226">            negative = true;</span>
+<span class="nc" id="L227">            index++;</span>
+        }
+
+        // Handle radix specifier, if present.
+<span class="nc bnc" id="L231" title="All 4 branches missed.">        if (value.startsWith(&quot;0x&quot;, index) || value.startsWith(&quot;0X&quot;, index)) {</span>
+<span class="nc" id="L232">            index += 2;</span>
+<span class="nc" id="L233">            radix = 16;</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">        } else if (value.startsWith(&quot;#&quot;, index)) {</span>
+<span class="nc" id="L235">            index++;</span>
+<span class="nc" id="L236">            radix = 16;</span>
+<span class="nc bnc" id="L237" title="All 4 branches missed.">        } else if (value.startsWith(&quot;0&quot;, index) &amp;&amp; value.length() &gt; 1 + index) {</span>
+<span class="nc" id="L238">            index++;</span>
+<span class="nc" id="L239">            radix = 8;</span>
+        }
+
+<span class="nc" id="L242">        BigInteger result = new BigInteger(value.substring(index), radix);</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">        return negative ? result.negate() : result;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

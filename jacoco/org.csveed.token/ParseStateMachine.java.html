@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ParseStateMachine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">csveed</a> &gt; <a href="index.source.html" class="el_package">org.csveed.token</a> &gt; <span class="el_source">ParseStateMachine.java</span></div><h1>ParseStateMachine.java</h1><pre class="source lang-java linenums">/*
+ * CSVeed (https://github.com/42BV/CSVeed)
+ *
+ * Copyright 2013-2023 CSVeed.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of The Apache Software License,
+ * Version 2.0 which accompanies this distribution, and is available at
+ * https://www.apache.org/licenses/LICENSE-2.0.txt
+ */
+package org.csveed.token;
+
+import static org.csveed.token.ParseState.COMMENT_LINE;
+import static org.csveed.token.ParseState.COMMENT_LINE_FINISHED;
+import static org.csveed.token.ParseState.ESCAPING;
+import static org.csveed.token.ParseState.FINISHED;
+import static org.csveed.token.ParseState.FIRST_CHAR_INSIDE_QUOTED_FIELD;
+import static org.csveed.token.ParseState.INSIDE_FIELD;
+import static org.csveed.token.ParseState.INSIDE_QUOTED_FIELD;
+import static org.csveed.token.ParseState.LINE_FINISHED;
+import static org.csveed.token.ParseState.OUTSIDE_AFTER_FIELD;
+import static org.csveed.token.ParseState.OUTSIDE_BEFORE_FIELD;
+import static org.csveed.token.ParseState.SEPARATOR;
+import static org.csveed.token.ParseState.SKIP_LINE;
+import static org.csveed.token.ParseState.SKIP_LINE_FINISHED;
+import static org.csveed.token.ParseState.START_OF_LINE;
+
+import org.csveed.common.Column;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Yep, a state machine. Managing all kinds of booleans to form a pseudo-state doesn't work really well whereas a state
+ * machine does. The state machine takes one character at a time, checks routes to the new state if necessary and holds
+ * tokens, which it returns whenever a field-end ('popToken') has been found.
+ */
+<span class="fc" id="L37">public class ParseStateMachine {</span>
+
+    /** The Constant LOG. */
+<span class="fc" id="L40">    private static final Logger LOG = LoggerFactory.getLogger(ParseStateMachine.class);</span>
+
+    /** The state. */
+<span class="fc" id="L43">    private ParseState state = START_OF_LINE;</span>
+
+    /** The token. */
+<span class="fc" id="L46">    private StringBuilder token = new StringBuilder();</span>
+
+    /** The characters read. */
+    private int charactersRead;
+
+    /** The symbol mapping. */
+<span class="fc" id="L52">    private SymbolMapping symbolMapping = new SymbolMapping();</span>
+
+    /** The token state. */
+<span class="fc" id="L55">    private TokenState tokenState = TokenState.RESET;</span>
+
+    /** The trim. */
+<span class="fc" id="L58">    private boolean trim = true;</span>
+
+    /** The trash. */
+    private boolean trash;
+
+    /** The current column. */
+<span class="fc" id="L64">    private Column currentColumn = new Column();</span>
+
+    /** The current line. */
+<span class="fc" id="L67">    private int currentLine = 1;</span>
+
+    /** The new line. */
+<span class="fc" id="L70">    private int newLine = currentLine;</span>
+
+    /**
+     * Gets the current line.
+     *
+     * @return the current line
+     */
+    public int getCurrentLine() {
+<span class="fc" id="L78">        return this.currentLine;</span>
+    }
+
+    /**
+     * Gets the current column.
+     *
+     * @return the current column
+     */
+    public int getCurrentColumn() {
+<span class="fc" id="L87">        return this.currentColumn.getColumnIndex();</span>
+    }
+
+    /**
+     * Checks if is trash.
+     *
+     * @return true, if is trash
+     */
+    public boolean isTrash() {
+<span class="fc" id="L96">        return this.trash;</span>
+    }
+
+    /**
+     * Offer symbol.
+     *
+     * @param symbolCharacter
+     *            the symbol character
+     *
+     * @return the string
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
+    public String offerSymbol(int symbolCharacter) throws ParseException {
+
+<span class="fc" id="L112">        this.trash = false;</span>
+
+<span class="fc" id="L114">        EncounteredSymbol symbol = symbolMapping.find(symbolCharacter, state);</span>
+
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (symbol.isTrash()) {</span>
+<span class="fc" id="L117">            this.trash = true;</span>
+<span class="fc" id="L118">            return null;</span>
+        }
+
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (isFinished()) {</span>
+<span class="fc" id="L122">            throw new ParseException(state, symbolCharacter, symbol);</span>
+        }
+
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (currentLine != newLine) {</span>
+<span class="fc" id="L126">            state = START_OF_LINE;</span>
+<span class="fc" id="L127">            charactersRead = 0;</span>
+<span class="fc" id="L128">            currentColumn = currentColumn.nextLine();</span>
+<span class="fc" id="L129">            currentLine = newLine;</span>
+        }
+
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (currentLine &lt; symbolMapping.getStartLine()) {</span>
+<span class="fc" id="L133">            state = SKIP_LINE;</span>
+        }
+
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (tokenState.isStart()) {</span>
+<span class="fc" id="L137">            tokenState = tokenState.next();</span>
+        }
+
+<span class="fc" id="L140">        ParseState newState = determineState(symbolCharacter, symbol);</span>
+<span class="fc" id="L141">        LOG.debug(&quot;{} ({}): {} =&gt; {}&quot;, (char) symbolCharacter, symbol, state, newState);</span>
+
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (newState.isTokenize()) {</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            if (tokenState.isReset()) {</span>
+<span class="fc" id="L145">                trim = newState.trim();</span>
+<span class="fc" id="L146">                tokenState = tokenState.next();</span>
+            }
+<span class="fc" id="L148">            token.append((char) symbolCharacter);</span>
+        }
+<span class="fc" id="L150">        String returnToken = null;</span>
+
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (newState.isPopToken()) {</span>
+<span class="fc" id="L153">            returnToken = token.toString();</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            if (trim) {</span>
+<span class="fc" id="L155">                returnToken = returnToken.trim();</span>
+            }
+<span class="fc" id="L157">            token = new StringBuilder();</span>
+<span class="fc" id="L158">            tokenState = tokenState.next();</span>
+<span class="fc" id="L159">            currentColumn = currentColumn.nextColumn();</span>
+        }
+
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (newState.isLineFinished()) {</span>
+<span class="fc" id="L163">            newLine++;</span>
+        } else {
+<span class="fc" id="L165">            charactersRead++;</span>
+        }
+
+<span class="fc" id="L168">        state = newState;</span>
+
+<span class="fc" id="L170">        return returnToken;</span>
+    }
+
+    /**
+     * Checks if is token start.
+     *
+     * @return true, if is token start
+     */
+    public boolean isTokenStart() {
+<span class="fc" id="L179">        return tokenState.isStart();</span>
+    }
+
+    /**
+     * Checks if is line finished.
+     *
+     * @return true, if is line finished
+     */
+    public boolean isLineFinished() {
+<span class="fc" id="L188">        return state.isLineFinished();</span>
+    }
+
+    /**
+     * Checks if is finished.
+     *
+     * @return true, if is finished
+     */
+    public boolean isFinished() {
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        return state == FINISHED;</span>
+    }
+
+    /**
+     * Ignore line.
+     *
+     * @return true, if successful
+     */
+    public boolean ignoreLine() {
+<span class="fc bfc" id="L206" title="All 4 branches covered.">        return state.isIgnore() || isEmptyLine();</span>
+    }
+
+    /**
+     * Checks if is empty line.
+     *
+     * @return true, if is empty line
+     */
+    public boolean isEmptyLine() {
+<span class="fc bfc" id="L215" title="All 2 branches covered.">        return charactersRead == 0;</span>
+    }
+
+    /**
+     * Determine state.
+     *
+     * @param symbolCharacter
+     *            the symbol character
+     * @param symbol
+     *            the symbol
+     *
+     * @return the parses the state
+     *
+     * @throws ParseException
+     *             the parse exception
+     */
+    protected ParseState determineState(int symbolCharacter, EncounteredSymbol symbol) throws ParseException {
+
+<span class="pc bpc" id="L233" title="1 of 10 branches missed.">        switch (state) {</span>
+            case SKIP_LINE:
+<span class="pc bpc" id="L235" title="1 of 3 branches missed.">                switch (symbol) {</span>
+                    case EOL_SYMBOL:
+<span class="fc" id="L237">                        return SKIP_LINE_FINISHED;</span>
+                    case END_OF_FILE_SYMBOL:
+<span class="nc" id="L239">                        return FINISHED;</span>
+                    default:
+<span class="fc" id="L241">                        return SKIP_LINE;</span>
+                }
+            case COMMENT_LINE:
+<span class="pc bpc" id="L244" title="1 of 3 branches missed.">                switch (symbol) {</span>
+                    case EOL_SYMBOL:
+<span class="fc" id="L246">                        return COMMENT_LINE_FINISHED;</span>
+                    case END_OF_FILE_SYMBOL:
+<span class="nc" id="L248">                        return FINISHED;</span>
+                    default:
+<span class="fc" id="L250">                        return COMMENT_LINE;</span>
+                }
+            case START_OF_LINE:
+<span class="fc bfc" id="L253" title="All 4 branches covered.">                if (EncounteredSymbol.COMMENT_SYMBOL.equals(symbol) &amp;&amp; symbolMapping.isSkipCommentLines()) {</span>
+<span class="fc" id="L254">                    return COMMENT_LINE;</span>
+                }
+                //$FALL-THROUGH$
+            case SEPARATOR:
+<span class="fc bfc" id="L258" title="All 6 branches covered.">                switch (symbol) {</span>
+                    case SPACE_SYMBOL:
+<span class="fc" id="L260">                        return OUTSIDE_BEFORE_FIELD;</span>
+                    case QUOTE_SYMBOL:
+<span class="fc" id="L262">                        return FIRST_CHAR_INSIDE_QUOTED_FIELD;</span>
+                    case SEPARATOR_SYMBOL:
+<span class="fc" id="L264">                        return SEPARATOR;</span>
+                    case END_OF_FILE_SYMBOL:
+<span class="fc" id="L266">                        return FINISHED;</span>
+                    case EOL_SYMBOL:
+<span class="fc" id="L268">                        return LINE_FINISHED;</span>
+                    default:
+<span class="fc" id="L270">                        return INSIDE_FIELD;</span>
+                }
+            case OUTSIDE_BEFORE_FIELD:
+<span class="fc bfc" id="L273" title="All 6 branches covered.">                switch (symbol) {</span>
+                    case SPACE_SYMBOL:
+<span class="fc" id="L275">                        return OUTSIDE_BEFORE_FIELD;</span>
+                    case SEPARATOR_SYMBOL:
+<span class="fc" id="L277">                        return SEPARATOR;</span>
+                    case END_OF_FILE_SYMBOL:
+<span class="fc" id="L279">                        return FINISHED;</span>
+                    case EOL_SYMBOL:
+<span class="fc" id="L281">                        return LINE_FINISHED;</span>
+                    case QUOTE_SYMBOL:
+<span class="fc" id="L283">                        return FIRST_CHAR_INSIDE_QUOTED_FIELD;</span>
+                    default:
+<span class="fc" id="L285">                        return INSIDE_FIELD;</span>
+                }
+            case OUTSIDE_AFTER_FIELD:
+<span class="fc bfc" id="L288" title="All 5 branches covered.">                switch (symbol) {</span>
+                    case SPACE_SYMBOL:
+<span class="fc" id="L290">                        return OUTSIDE_AFTER_FIELD;</span>
+                    case SEPARATOR_SYMBOL:
+<span class="fc" id="L292">                        return SEPARATOR;</span>
+                    case END_OF_FILE_SYMBOL:
+<span class="fc" id="L294">                        return FINISHED;</span>
+                    case EOL_SYMBOL:
+<span class="fc" id="L296">                        return LINE_FINISHED;</span>
+                    default:
+<span class="fc" id="L298">                        throw new ParseException(state, symbolCharacter, symbol);</span>
+                }
+            case INSIDE_FIELD:
+<span class="fc bfc" id="L301" title="All 5 branches covered.">                switch (symbol) {</span>
+                    case SEPARATOR_SYMBOL:
+<span class="fc" id="L303">                        return SEPARATOR;</span>
+                    case END_OF_FILE_SYMBOL:
+<span class="fc" id="L305">                        return FINISHED;</span>
+                    case EOL_SYMBOL:
+<span class="fc" id="L307">                        return LINE_FINISHED;</span>
+                    case QUOTE_SYMBOL:
+<span class="fc" id="L309">                        throw new ParseException(state, symbolCharacter, symbol);</span>
+                    default:
+<span class="fc" id="L311">                        return INSIDE_FIELD;</span>
+                }
+            case FIRST_CHAR_INSIDE_QUOTED_FIELD:
+            case INSIDE_QUOTED_FIELD:
+<span class="fc bfc" id="L315" title="All 4 branches covered.">                switch (symbol) {</span>
+                    case QUOTE_SYMBOL:
+<span class="fc" id="L317">                        return OUTSIDE_AFTER_FIELD;</span>
+                    case ESCAPE_SYMBOL:
+<span class="fc" id="L319">                        return ESCAPING;</span>
+                    case END_OF_FILE_SYMBOL:
+<span class="fc" id="L321">                        throw new ParseException(state, symbolCharacter, symbol);</span>
+                    default:
+<span class="fc" id="L323">                        return INSIDE_QUOTED_FIELD;</span>
+                }
+            case ESCAPING:
+<span class="fc bfc" id="L326" title="All 2 branches covered.">                if (symbolMapping.isSameCharactersForEscapeAndQuote()) { // This is the default</span>
+<span class="fc bfc" id="L327" title="All 6 branches covered.">                    switch (symbol) {</span>
+                        case SPACE_SYMBOL:
+<span class="fc" id="L329">                            return OUTSIDE_AFTER_FIELD;</span>
+                        case QUOTE_SYMBOL:
+<span class="fc" id="L331">                            return INSIDE_QUOTED_FIELD;</span>
+                        case EOL_SYMBOL: // Needed when quote/escape are the same: ...abc&quot;\n
+<span class="fc" id="L333">                            return LINE_FINISHED;</span>
+                        case SEPARATOR_SYMBOL: // Needed when quote/escape are the same: ...abc&quot;;
+<span class="fc" id="L335">                            return SEPARATOR;</span>
+                        case END_OF_FILE_SYMBOL:
+<span class="fc" id="L337">                            return FINISHED;</span>
+                        default:
+<span class="fc" id="L339">                            throw new ParseException(state, symbolCharacter, symbol);</span>
+                    }
+                }
+                // We're lenient -- accept everything
+<span class="fc" id="L343">                return INSIDE_QUOTED_FIELD;</span>
+            default:
+<span class="nc" id="L345">                throw new ParseException(state, symbolCharacter, symbol);</span>
+        }
+    }
+
+    /**
+     * Sets the symbol mapping.
+     *
+     * @param symbolMapping
+     *            the new symbol mapping
+     */
+    public void setSymbolMapping(SymbolMapping symbolMapping) {
+<span class="fc" id="L356">        this.symbolMapping = symbolMapping;</span>
+<span class="fc" id="L357">    }</span>
+
+    /**
+     * Gets the symbol mapping.
+     *
+     * @return the symbol mapping
+     */
+    public SymbolMapping getSymbolMapping() {
+<span class="fc" id="L365">        return this.symbolMapping;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

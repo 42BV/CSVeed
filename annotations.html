@@ -1,0 +1,392 @@
+<!--
+
+    CSVeed (https://github.com/42BV/CSVeed)
+
+    Copyright 2013-2023 CSVeed.
+
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of The Apache Software License,
+    Version 2.0 which accompanies this distribution, and is available at
+    https://www.apache.org/licenses/LICENSE-2.0.txt
+
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/csveed.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>CSVeed / Manual / Annotations</title>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-39322956-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</head>
+
+<body>
+<header>
+    <div class="inner">
+        <h1>CSVeed</h1>
+        <h2>Easy-to-use CSV to Java Bean utility</h2>
+        <img class="csveed-logo" src="images/csveed-logo-white.png">
+        <a href="https://github.com/42BV/CSVeed" class="button"><small>View project on</small>GitHub</a>
+    </div>
+</header>
+
+<div id="content-wrapper">
+<div class="inner clearfix">
+<section id="main-content">
+
+<h1>Annotations</h1>
+
+<p>CSVeed currently has the following annotations:</p>
+
+<ul>
+    <li>
+        <strong><a href="#csvfile">CsvFile</a></strong>; generic instructions for parsing the CSV file and converting to Rows and Beans</li>
+    <li>
+        <strong><a href="#csvcell">CsvCell</a></strong>; custom instructions for properties, allowing mappings to column index or names and whether value is required</li>
+    <li>
+        <strong><a href="#csvignore">CsvIgnore</a></strong>; orders CSVeed to ignore a property</li>
+    <li>
+        <strong><a href="#csvdate">CsvDate</a></strong>; allows a custom date format to be applied to a property</li>
+    <li>
+        <strong><a href="#csvconverter">CsvConverter</a></strong>; set a custom Converted to be applied for converting text to a property</li>
+</ul>
+
+<p>For the annotations to work, the Bean class must be passed to CsvClient:</p>
+
+<div class="highlight"><pre>  <span class="n">CsvClient</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;</span> <span class="n">csvReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CsvClientImpl</span><span class="o">&lt;</span><span class="n">Bean</span><span class="o">&gt;(</span><span class="n">reader</span><span class="o">,</span> <span class="n">Bean</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</pre></div>
+
+<h2 id="csvfile">CsvFile</h2>
+
+<p>This annotation is set on the Bean class. Contains the generic instructions for parsing the CSV file and converting to Rows and Beans. The following settings are supported by CsvFile:</p>
+
+<ul>
+    <li>
+        <strong>parse instructions</strong>; escape, quote, separator, end-of-line and comment -- this determines what your CSV file looks like</li>
+    <li>
+        <strong>use header</strong>; whether the CSV file contains a header and must be read as such. Using the header is essential for employing the ColumnNameMapping strategy.</li>
+    <li>
+        <strong>start row</strong>; the line from where to start reading the CSV file, zero-based</li>
+    <li>
+        <strong>skip lines</strong>; both empty and comment lines and whether they must be ignored or parse must be attempted</li>
+    <li>
+        <strong>mapping strategy</strong>; by default this will be ColumnIndexMapping, which maps to Bean properties on the basis of the column index. Alternatively, this could be ColumnNameMapping, which maps to Bean properties on the basis of the name of the column (ie, the header name).</li>
+</ul><h3>Parse instructions</h3>
+
+<p>Parse instructions help CsvClient to read and interpret the CSV file. Assume the following CSV:</p>
+
+<div class="highlight"><pre>  <span class="n">first</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">street</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">trademark</span>
+  <span class="o">%</span> <span class="n">First</span> <span class="n">a</span> <span class="n">line</span> <span class="n">on</span> <span class="n">mr</span> <span class="n">Hawking</span>
+  '<span class="n">Stephen</span>'<span class="p">,</span> '<span class="n">Hawking</span>'<span class="p">,</span> '<span class="mi">110</span><span class="n">th</span> <span class="n">Avenue</span>'<span class="p">,</span> '<span class="n">New</span> <span class="n">York</span>'<span class="p">,</span> '<span class="n">History</span> <span class="n">of</span> <span class="n">the</span> \'<span class="n">Universe</span>\''
+  <span class="o">%</span> <span class="n">Then</span> <span class="n">on</span> <span class="n">mr</span> <span class="n">Einstein</span>
+  '<span class="n">Albert</span>'<span class="p">,</span> '<span class="n">Einstein</span>'<span class="p">,</span> '<span class="n">Leipzigerstrasse</span>'<span class="p">,</span> '<span class="n">Berlin</span>'<span class="p">,</span> <span class="sc">'\'</span><span class="n">E</span><span class="o">=</span><span class="n">mc2</span>\''
+</pre></div>
+
+<p>The Bean header can be annotated as follows:</p>
+
+<div class="highlight"><pre>  <span class="nd">@CsvFile</span><span class="o">(</span><span class="n">comment</span> <span class="o">=</span> <span class="sc">'%'</span><span class="o">,</span> <span class="n">quote</span><span class="o">=</span><span class="sc">'\'</span>'<span class="o">,</span> <span class="n">escape</span><span class="o">=</span>'\\'<span class="o">,</span> <span class="n">separator</span><span class="o">=</span><span class="sc">','</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bean</span> <span class="o">{</span>
+</pre></div>
+
+<p>The following parse instructions are available:</p>
+
+<ul>
+    <li>
+        <strong>separator</strong>; the character used to separate two cells. This is usually a ';' (northern Europe, also the default), ',' (USA), tab symbol or a pipe '|'. Default is ';'.</li>
+    <li>
+        <strong>quote</strong>; the character used to signal the start and the end of a cell. Within a cell thus delimited, it is possible to have newlines and use the quote symbol, if escaped. Default is '"'.</li>
+    <li>
+        <strong>escape</strong>; the character used to escape a quote symbol within a quoted field. This one is contentious, since <a href="http://www.ietf.org/rfc/rfc4180.txt">RFC 4180</a> states that the escape symbol is the same as the quote symbol, so you use them twice to have one. Sometimes, it is desirable to have a custom escape character, which you can set here. Default is '"'.</li>
+    <li>
+        <strong>end of line</strong>; a number of characters indicating when the end of a line has been reached. Default is '\r' and '\n'</li>
+    <li>
+        <strong>comment</strong>; if a line starts with the comment character, it is assumed to be a comment line. Only used if skip comments is true (default). Default is '#'. </li>
+</ul><h3>Use header</h3>
+
+<p>Suppose your CSV file does not have a header:</p>
+
+<div class="highlight"><pre>  <span class="s">"line 1"</span><span class="p">;</span><span class="mi">1</span>
+  <span class="s">"line 2"</span><span class="p">;</span><span class="mi">2</span>
+  <span class="s">"line 3"</span><span class="p">;</span><span class="mi">3</span>
+</pre></div>
+
+<p>You need to disable useHeader in @CsvFile:</p>
+
+<div class="highlight"><pre>  <span class="nd">@CsvFile</span><span class="o">(</span><span class="n">useHeader</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bean</span> <span class="o">{</span>
+</pre></div>
+
+<p>Note: it is now impossible to use ColumnNameMapping, since there is no header to supply the column names.</p>
+
+<h3>Start row</h3>
+
+<p>CSV files exist the contain a lot of non-essential information before the actual content starts, while not being marked as comment lines:</p>
+
+<div class="highlight"><pre>  <span class="n">Roses</span> <span class="n">are</span> <span class="n">red</span><span class="p">,</span>
+  <span class="n">Violets</span> <span class="n">are</span> <span class="n">blue</span><span class="p">,</span>
+  <span class="n">And</span> <span class="n">some</span> <span class="n">more</span> <span class="n">of</span> <span class="n">that</span>
+  <span class="s">"Here"</span><span class="p">;</span><span class="s">"We"</span><span class="p">;</span><span class="s">"Go"</span>
+</pre></div>
+
+<p>If you are in the lucky position that you can identify the exact start row, you could pass that information on in @CsvFile:</p>
+
+<div class="highlight"><pre>  <span class="nd">@CsvFile</span><span class="o">(</span><span class="n">startRow</span> <span class="o">=</span> <span class="mi">3</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bean</span> <span class="o">{</span>
+</pre></div>
+
+<h3>Skip lines</h3>
+
+<p>There are two skip instructions:</p>
+
+<ul>
+    <li>
+        <strong>skip empty lines</strong>; it can be useful to convert empty lines into single-column rows. By default empty lines will be skipped. </li>
+    <li>
+        <strong>skip comment lines</strong>; it can be useful to disable the skipping of comment lines when the comment symbol can be a legitimate symbol in your CSV file. By default comment lines will be skipped.</li>
+</ul><p>Example of a file where you may want to include empty lines:</p>
+
+<div class="highlight"><pre>  <span class="n">Alpha</span>
+
+  <span class="n">Beta</span>
+  <span class="n">Gamma</span>
+</pre></div>
+
+<p>Example of a file where you may want to ignore comments:</p>
+
+<div class="highlight"><pre>  <span class="n">issue</span> <span class="n">number</span><span class="p">;</span> <span class="n">description</span>
+  #<span class="mi">12</span><span class="p">;</span><span class="n">Some</span> <span class="n">error</span> <span class="n">somewhere</span>
+  #<span class="mi">31</span><span class="p">;</span><span class="n">NPE</span>
+</pre></div>
+
+<p>In these cases, make sure to instruct @CsvFile properly:</p>
+
+<div class="highlight"><pre>  <span class="nd">@CsvFile</span><span class="o">(</span><span class="n">skipCommentLines</span> <span class="o">=</span> <span class="kc">false</span><span class="o">,</span> <span class="n">skipEmptyLines</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Bean</span> <span class="o">{</span>
+</pre></div>
+
+<h3>Mapping strategy</h3>
+
+<p>For converting Rows to Beans, this is the most important setting of @CsvFile. There are two mapping strategies currently supported:</p>
+
+<ul>
+    <li>
+        <strong>ColumnIndexMapper</strong>; maps cells based on their column index to Bean properties</li>
+    <li>
+        <strong>ColumnNameMapper</strong>; maps cells based on their column name (ie, header name) to Bean properties</li>
+</ul><h3>ColumnIndexMapper</h3>
+
+<p><strong>The default strategy to employ if none is passed.</strong> Cells will be mapped to Bean properties by their column index. When no instructions are passed to a property (using @CsvCell#columnIndex), CSVeed will take the declared order of the property and use that order to self-assemble the index.</p>
+
+<p>The following Bean properties (assuming they have public getters and setters):</p>
+
+<div class="highlight"><pre>  <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="n">Date</span> <span class="n">birthdate</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="n">Integer</span> <span class="n">creditRating</span><span class="o">;</span>
+</pre></div>
+
+<p>Will lead to the following index:</p>
+
+<div class="highlight"><pre> <span class="mi">0</span> <span class="o">-&gt;</span> <span class="n">name</span>
+ <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">birthdate</span>
+ <span class="mi">2</span> <span class="o">-&gt;</span> <span class="n">creditRating</span>
+</pre></div>
+
+<h3>ColumnNameMapper</h3>
+
+<p>Cells will be mapped to Bean properties by their column name (ie, header name). When no instructions are passed to a property (using @CsvCell#columnName), CSVeed will take the property name and use that to self-assemble the index.</p>
+
+<p>The following Bean properties (assuming public getters/setters):</p>
+
+<div class="highlight"><pre>  <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="n">Date</span> <span class="n">birthdate</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="n">Integer</span> <span class="n">creditRating</span><span class="o">;</span>
+</pre></div>
+
+<p>Will lead to the following index:</p>
+
+<div class="highlight"><pre>  <span class="n">name</span> <span class="o">-&gt;</span> <span class="n">name</span>
+  <span class="n">birthdate</span> <span class="o">-&gt;</span> <span class="n">birthdate</span>
+  <span class="n">creditrating</span> <span class="o">-&gt;</span> <span class="n">creditRating</span>
+</pre></div>
+
+<p>Note that the key 'creditrating' is all lower-case. Property-names are all lower-cased before storing them in the index. Lookups will also be done with lookup keys that are first lower-cased. Therefore ColumnNameMapper is case-insensitive.</p>
+
+<h2 id="csvcell">CsvCell</h2>
+
+<p>This annotation is set on a Bean property. @CsvCell offers three tools:</p>
+
+<ul>
+    <li>
+        <strong>columnIndex</strong>; maps a column index to this Bean property</li>
+    <li>
+        <strong>columnName</strong>; maps a column name to this Bean property</li>
+    <li>
+        <strong>required</strong>; when this value is true, the content of the cell must be not empty</li>
+</ul><h3>columnIndex</h3>
+
+<p>When not all columns in a CSV file are needed, columnIndex may be of great help. We have a CSV file here with multiple columns and no headers:</p>
+
+<div class="highlight"><pre>  <span class="n">L1C1</span><span class="p">;</span><span class="n">L1C2</span><span class="p">;</span><span class="n">L1C3</span><span class="p">;</span><span class="n">L1C4</span><span class="p">;</span><span class="n">valuable</span> <span class="n">info</span> <span class="mi">1</span><span class="p">;</span><span class="n">l1C6</span>
+  <span class="n">L2C1</span><span class="p">;</span><span class="n">L2C2</span><span class="p">;</span><span class="n">L2C3</span><span class="p">;</span><span class="n">L2C4</span><span class="p">;</span><span class="n">valuable</span> <span class="n">info</span> <span class="mi">2</span><span class="p">;</span><span class="n">l2C6</span>
+</pre></div>
+
+<p>The Bean property can now be annotated as follows:</p>
+
+<div class="highlight"><pre>  <span class="nd">@CsvCell</span><span class="o">(</span><span class="n">columnIndex</span> <span class="o">=</span> <span class="mi">4</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">valuableInfo</span><span class="o">;</span>
+</pre></div>
+
+<p>Note that the columnIndex works zero-based. Also note that Bean properties following valuableInfo will use the set columnIndex as their starting point. In other words, the next property will automatically have index column 5 mapped to itself.</p>
+
+<h3>columnName</h3>
+
+<p>It is possible to set up your own mapping for ColumnNameMapper, which is especially useful if the CSV header tends to be verbose, contains lots of special characters or has a name which you do not want to reuse, ie have names that translate badly to property names:</p>
+
+<div class="highlight"><pre>  <span class="n">the</span> <span class="n">first</span> <span class="n">column</span><span class="p">;</span> <span class="n">my</span> <span class="n">my</span><span class="p">,</span> <span class="n">how</span> <span class="n">verbose</span><span class="p">;</span> <span class="n">isn</span>'<span class="n">t</span> <span class="n">it</span><span class="o">?</span>
+</pre></div>
+
+<div class="highlight"><pre>  <span class="nd">@CsvCell</span><span class="o">(</span><span class="n">columnName</span> <span class="o">=</span> <span class="s">"the first column"</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">first</span><span class="o">;</span>
+  <span class="nd">@CsvCell</span><span class="o">(</span><span class="n">columnName</span> <span class="o">=</span> <span class="s">"my my, how verbose"</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">second</span><span class="o">;</span>
+  <span class="nd">@CsvCell</span><span class="o">(</span><span class="n">columnName</span> <span class="o">=</span> <span class="s">"isn't it?"</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">third</span><span class="o">;</span>
+</pre></div>
+
+<h3>required</h3>
+
+<p>Although validation is not the providence of CSVeed, this annotation does a little bit to help you along. When Bean properties are marked as required and they are found to be null or "", an exception will be thrown.</p>
+
+<div class="highlight"><pre>  <span class="n">first</span> <span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">,</span> <span class="n">street</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">trademark</span>
+  '<span class="n">Stephen</span>'<span class="p">,</span> '<span class="n">Hawking</span>'<span class="p">,</span> '<span class="mi">110</span><span class="n">th</span> <span class="n">Avenue</span>'<span class="p">,</span> '<span class="n">New</span> <span class="n">York</span>'<span class="p">,</span> '<span class="n">History</span> <span class="n">of</span> <span class="n">the</span> \'<span class="n">Universe</span>\''
+  '<span class="n">Albert</span>'<span class="p">,</span> '<span class="n">Einstein</span>'<span class="p">,</span> ''<span class="p">,</span> '<span class="n">Berlin</span>'<span class="p">,</span> <span class="sc">'\'</span><span class="n">E</span><span class="o">=</span><span class="n">mc2</span>\''
+</pre></div>
+
+<p>Note how Einstein's street cell is empty.</p>
+
+<div class="highlight"><pre>  <span class="nd">@CsvCell</span><span class="o">(</span><span class="n">required</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">street</span><span class="o">;</span>
+</pre></div>
+
+<p>This will result in the following error:</p>
+
+<div class="highlight"><pre><span class="n">Exception</span> <span class="n">in</span> <span class="kr">thread</span> <span class="s">"main"</span> <span class="n">nl</span><span class="p">.</span><span class="n">tweeenveertig</span><span class="p">.</span><span class="n">csveed</span><span class="p">.</span><span class="n">report</span><span class="p">.</span><span class="n">CsvException</span><span class="o">:</span> <span class="n">Bean</span> <span class="n">property</span> <span class="s">"street"</span> <span class="n">is</span> <span class="n">required</span> <span class="n">and</span> <span class="n">may</span> <span class="n">not</span> <span class="n">be</span> <span class="n">empty</span> <span class="n">or</span> <span class="n">null</span>
+<span class="mi">2</span><span class="o">:</span> '<span class="n">Albert</span>'<span class="p">,</span> '<span class="n">Einstein</span>'<span class="p">,</span> ''<span class="p">,</span> '<span class="n">Berlin</span>'<span class="p">,</span> <span class="sc">'\'</span><span class="n">E</span><span class="o">=</span><span class="n">mc2</span>\''<span class="p">[</span><span class="n">EOF</span><span class="p">]</span>
+<span class="mi">2</span><span class="o">:</span>                         <span class="o">^</span>
+</pre></div>
+
+<h2 id="csvignore">CsvIgnore</h2>
+
+<p>Marking Bean properties to be ignored, means they will not be automatically picked up for indexing, neither for ColumnIndexMapper, nor for ColumnNameMapper. The Bean property will be completely ignored. </p>
+
+<div class="highlight"><pre>  <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+  <span class="nd">@CsvIgnore</span>
+  <span class="kd">private</span> <span class="n">Date</span> <span class="n">birthdate</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="n">Integer</span> <span class="n">creditRating</span><span class="o">;</span>
+</pre></div>
+
+<p>Will lead to the following index:</p>
+
+<div class="highlight"><pre> <span class="mi">0</span> <span class="o">-&gt;</span> <span class="n">name</span>
+ <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">creditRating</span>
+</pre></div>
+
+<h2 id="csvdate">CsvDate</h2>
+
+<p>Converting to java.util.Date from String brings it owns challenges. This annotation lets you determine the date format to employ. The default format that will be used is "yyyy-MM-dd" (for example: 2013-02-28), the date format that also sorts very well.</p>
+
+<div class="highlight"><pre>  <span class="n">name</span><span class="p">;</span><span class="n">date</span>
+  <span class="n">Jane</span><span class="p">;</span><span class="mi">21</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">2011</span>
+  <span class="n">Jill</span><span class="p">;</span><span class="mo">03</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">2013</span>
+</pre></div>
+
+<p>So the date format is day-month-year, or "dd-MM-yyyy".</p>
+
+<div class="highlight"><pre>  <span class="nd">@CsvDate</span><span class="o">(</span><span class="n">format</span> <span class="o">=</span> <span class="s">"dd-MM-yyyy"</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="n">String</span> <span class="n">date</span><span class="o">;</span>
+</pre></div>
+
+<p>Be sure to check the docs on Java SDK's <a href="http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</a> for a better understanding of the syntax involved.</p>
+
+<h2 id="csvconverter">CsvConverter</h2>
+
+<p>It is conceivable that you bring your own String-to-property conversion wishes into the game, which is why this annotation exists. First make sure that you create or supply your converter, based on the Converter pattern, similar to how Spring does it.</p>
+
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BeanSimpleConverter</span> <span class="kd">extends</span> <span class="n">AbstractConverter</span><span class="o">&lt;</span><span class="n">BeanSimple</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">BeanSimple</span> <span class="nf">fromString</span><span class="o">(</span><span class="n">String</span> <span class="n">text</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">BeanSimple</span><span class="o">(</span><span class="n">text</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Class</span> <span class="nf">getType</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">BeanSimple</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+
+<p>As you can see, it is basically a matter of supplying a way to go from String to a Class and vice versa. Nothing much to it, really.</p>
+
+</section>
+
+<aside id="sidebar">
+
+    <p class="site-link"><a href="index.html">Home</a></p>
+    <p class="site-link">Manual</p>
+    <p class="site-link-sub"><a href="annotations.html">Annotations</a></p>
+    <p class="site-link-sub"><a href="http://javadocs.csveed.org">API</a></p>
+    <p class="site-link">Roadmap</p>
+    <p class="site-link-sub"><a href="release-notes.html">Release notes</a></p>
+    <p class="site-link">Background</p>
+    <p class="site-link-sub"><a href="architecture.html">Architecture</a></p>
+    <p class="site-link-sub"><a href="design-choices.html">Design choices</a></p>
+    <p class="site-link-sub"><a href="comparison.html">Comparison</a></p>
+    <p class="site-link-sub2"><a href="comparison-matrix.html">Comparison matrix</a></p>
+    <p class="site-link-sub"><a href="rfc4180.html">RFC 4180</a></p>
+
+    <hr>
+
+    <a href="https://github.com/42BV/CSVeed/zipball/master" class="button">
+        <small>Download</small>
+        .zip file
+    </a>
+    <a href="https://github.com/42BV/CSVeed/tarball/master" class="button">
+        <small>Download</small>
+        .tar.gz file
+    </a>
+
+    <p class="repo-owner"><a href="https://github.com/42BV/CSVeed"></a> is maintained by <a href="https://github.com/robert-bor">robert-bor</a>.</p>
+
+    <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+</aside>
+</div>
+</div>
+
+
+</body>
+</html>
