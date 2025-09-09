@@ -23,7 +23,7 @@
 
     <groupId>org.csveed</groupId>
     <artifactId>csveed</artifactId>
-    <version>0.8.3-SNAPSHOT</version>
+    <version>0.8.3</version>
 
     <name>csveed</name>
     <description>Java toolkit for mapping CSV-to-Bean mapping and vice versa.  Redirection to Introduction in 5 seconds!</description>
@@ -53,7 +53,7 @@
     <scm>
         <connection>scm:git:ssh://git@github.com/42BV/CSVeed.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/42BV/CSVeed.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>csveed-0.8.3</tag>
         <url>https://github.com/42BV/CSVeed</url>
     </scm>
     <issueManagement>
