@@ -17,7 +17,7 @@
     <parent>
         <groupId>com.github.hazendaz</groupId>
         <artifactId>base-parent</artifactId>
-        <version>55</version>
+        <version>57</version>
         <relativePath />
     </parent>
 
@@ -76,7 +76,7 @@
         <java.version>11</java.version>
         <java.release.version>11</java.release.version>
 
-        <junit.version>6.0.0</junit.version>
+        <junit.version>6.0.2</junit.version>
         <slf4j.version>2.0.17</slf4j.version>
     </properties>
 
