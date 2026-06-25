@@ -26,7 +26,16 @@ public enum TokenState {
      * @return the token state
      */
     public TokenState next() {
-        return values()[(ordinal() + 1) % 3];
+        switch (this) {
+            case RESET:
+                return START;
+            case START:
+                return PROCESSING;
+            case PROCESSING:
+                return RESET;
+            default:
+                throw new IllegalStateException("Unknown TokenState: " + this);
+        }
     }
 
     /**
