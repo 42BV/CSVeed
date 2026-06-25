@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    CSVeed (https://github.com/42BV/CSVeed)
+    SPDX-License-Identifier: Apache-2.0
+    See LICENSE file for details.
 
-    Copyright 2013-2025 CSVeed.
-
-    All rights reserved. This program and the accompanying materials
-    are made available under the terms of The Apache Software License,
-    Version 2.0 which accompanies this distribution, and is available at
-    https://www.apache.org/licenses/LICENSE-2.0.txt
+    Copyright 2013-2026 42 BV
 
 -->
 <settings xmlns="http://maven.apache.org/SETTINGS/1.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
