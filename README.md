@@ -1,9 +1,9 @@
 CSVeed
 ======
 
-[![Java CI](https://github.com/42BV/CSVeed/workflows/Java%20CI/badge.svg)](https://github.com/42BV/CSVeed/actions?query=workflow%3A%22Java+CI%22)
+[![Java CI](https://github.com/42BV/CSVeed/actions/workflows/ci.yaml/badge.svg)](https://github.com/42BV/CSVeed/actions/workflows/ci.yaml)
 [![Coverage Status](https://coveralls.io/repos/github/42BV/CSVeed/badge.svg?branch=master)](https://coveralls.io/github/42BV/CSVeed?branch=master)
-[![Maven central](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.csveed/csveed)
+[![Maven Central](https://img.shields.io/maven-central/v/org.csveed/csveed.svg)](https://central.sonatype.com/artifact/org.csveed/csveed)
 [![Apache 2](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Be sure to check the project site at [csveed](https://42BV.github.io/CSVeed).
