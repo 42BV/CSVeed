@@ -310,7 +310,7 @@ class BeanWrapperTest {
     @Test
     void setBooleanObject() throws Exception {
         beanWrapper.setProperty(properties.fromName(new Column("booleanObject")), "on");
-        assertEquals(Boolean.TRUE, bean.getBooleanObject());
+        assertTrue(bean.getBooleanObject());
     }
 
     /**
